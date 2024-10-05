@@ -49,7 +49,7 @@ android {
 }
 
 dependencies {
-
+    implementation(projects.core.common)
     implementation(libs.core.ktx)
     implementation(libs.lifecycle.runtime.ktx)
     implementation(libs.activity.compose)
