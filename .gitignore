@@ -6,3 +6,8 @@ build/
 captures/
 local.properties
 .kotlin
+
+!/.idea/codeStyles
+/.idea/codeStyles/*
+!/.idea/codeStyles/Project.xml
+!/.idea/codeStyles/codeStyleConfig.xml
