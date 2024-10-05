@@ -4,5 +4,23 @@ plugins {
     alias(libs.plugins.androidApplication) apply false
     alias(libs.plugins.kotlinAndroid) apply false
     alias(libs.plugins.composeCompiler) apply false
+    alias(libs.plugins.ktlintGradle) apply false
 }
+
+allprojects {
+    afterEvaluate {
+        apply(plugin = libs.plugins.ktlintGradle.get().pluginId)
+        configure<org.jlleitschuh.gradle.ktlint.KtlintExtension> {
+            reporters {
+                reporter(org.jlleitschuh.gradle.ktlint.reporter.ReporterType.CHECKSTYLE)
+            }
+            filter {
+                include("**.kt")
+                include("**.kts")
+                exclude("**/build/**")
+            }
+        }
+    }
+}
+
 true // Needed to make the Suppress annotation work for the plugins block
