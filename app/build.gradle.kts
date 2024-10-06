@@ -7,12 +7,12 @@ plugins {
 
 android {
     namespace = "io.github.daiji256.sandbox"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "io.github.daiji256.sandbox"
         minSdk = 28
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
