@@ -38,6 +38,7 @@ android {
 
 dependencies {
     implementation(projects.core.common)
+    implementation(projects.core.designsystem)
     implementation(projects.feature.ktlint)
     implementation(libs.core.ktx)
     implementation(libs.lifecycle.runtime.ktx)
