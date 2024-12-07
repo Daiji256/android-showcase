@@ -30,3 +30,4 @@ ktlintGradle = { id = "org.jlleitschuh.gradle.ktlint", version = "12.1.1" }
 
 buildlogic-android-application = { id = "buildlogic.android.application", version = "unspecified" }
 buildlogic-android-library = { id = "buildlogic.android.library", version = "unspecified" }
+buildlogic-android-compose = { id = "buildlogic.android.compose", version = "unspecified" }

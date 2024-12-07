@@ -29,5 +29,9 @@ gradlePlugin {
             id = "buildlogic.android.library"
             implementationClass = "io.github.daiji256.buildlogic.AndroidLibraryPlugin"
         }
+        register("android.compose") {
+            id = "buildlogic.android.compose"
+            implementationClass = "io.github.daiji256.buildlogic.AndroidComposePlugin"
+        }
     }
 }
