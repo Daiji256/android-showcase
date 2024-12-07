@@ -12,6 +12,7 @@ allprojects {
     afterEvaluate {
         apply(plugin = libs.plugins.ktlintGradle.get().pluginId)
         configure<org.jlleitschuh.gradle.ktlint.KtlintExtension> {
+            version.set("1.5.0")
             reporters {
                 reporter(org.jlleitschuh.gradle.ktlint.reporter.ReporterType.CHECKSTYLE)
             }
