@@ -1,8 +1,6 @@
 [versions]
 agp = "8.7.3"
 kotlin = "2.1.0"
-core-ktx = "1.15.0"
-lifecycle-runtime-ktx = "2.8.7"
 activity-compose = "1.9.3"
 compose-bom = "2024.12.01"
 kotlinx-coroutines = "1.10.1"
@@ -12,8 +10,6 @@ testParameterInjector = "1.18"
 ktlintGradle = "12.1.2"
 
 [libraries]
-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycle-runtime-ktx" }
 activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activity-compose" }
 compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "compose-bom" }
 compose-ui = { group = "androidx.compose.ui", name = "ui" }
