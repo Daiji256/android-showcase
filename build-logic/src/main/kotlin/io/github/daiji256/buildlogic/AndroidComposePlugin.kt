@@ -26,10 +26,10 @@ class AndroidComposePlugin : Plugin<Project> {
 
             dependencies {
                 implementation(platform(libs.library("compose.bom")))
-                implementation(libs.library("ui"))
-                implementation(libs.library("ui.tooling.preview"))
-                implementation(libs.library("material3"))
-                debugImplementation(libs.library("ui.tooling"))
+                implementation(libs.library("compose.ui"))
+                implementation(libs.library("compose.ui.tooling.preview"))
+                implementation(libs.library("compose.material3"))
+                debugImplementation(libs.library("compose.ui.tooling"))
                 ktlintRuleset(libs.library("composeRules"))
             }
         }
