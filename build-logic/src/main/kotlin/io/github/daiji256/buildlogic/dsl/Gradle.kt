@@ -15,3 +15,6 @@ internal fun DependencyHandlerScope.debugImplementation(artifact: MinimalExterna
 
 internal fun DependencyHandlerScope.testImplementation(artifact: MinimalExternalModuleDependency) =
     add("testImplementation", artifact)
+
+internal fun DependencyHandlerScope.ktlintRuleset(artifact: MinimalExternalModuleDependency) =
+    add("ktlintRuleset", artifact)
