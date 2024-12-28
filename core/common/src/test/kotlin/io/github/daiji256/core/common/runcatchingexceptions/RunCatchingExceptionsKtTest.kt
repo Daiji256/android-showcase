@@ -1,23 +1,23 @@
 package io.github.daiji256.core.common.runcatchingexceptions
 
-import com.google.common.truth.Truth.assertThat
 import com.google.testing.junit.testparameterinjector.TestParameter
 import com.google.testing.junit.testparameterinjector.TestParameterInjector
-import java.util.concurrent.CancellationException
+import kotlin.coroutines.cancellation.CancellationException
+import kotlin.test.assertEquals
 import kotlinx.coroutines.test.runTest
 import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(TestParameterInjector::class)
 class RunCatchingExceptionsKtTest {
-    class Value
+    private class Value
 
-    val value = Value()
-    val exception = Exception()
-    val cancellationException = CancellationException()
-    val error = Error()
-    val success = Result.success(Value())
-    val failure = Result.failure<Value>(Exception())
+    private val value = Value()
+    private val exception = Exception()
+    private val cancellationException = CancellationException()
+    private val error = Error()
+    private val success = Result.success(Value())
+    private val failure = Result.failure<Value>(Exception())
 
     enum class RunTestCase {
         ReturnValue,
@@ -26,7 +26,7 @@ class RunCatchingExceptionsKtTest {
         ThrowError,
     }
 
-    fun RunTestCase.block() =
+    private fun RunTestCase.block() =
         when (this) {
             RunTestCase.ReturnValue -> value
             RunTestCase.ThrowException -> throw exception
@@ -34,7 +34,7 @@ class RunCatchingExceptionsKtTest {
             RunTestCase.ThrowError -> throw error
         }
 
-    val RunTestCase.expected: Result<Result<Value>>
+    private val RunTestCase.expected: Result<Result<Value>>
         get() = when (this) {
             RunTestCase.ReturnValue ->
                 Result.success(Result.success(value))
@@ -49,7 +49,7 @@ class RunCatchingExceptionsKtTest {
                 Result.failure(error)
         }
 
-    val RunTestCase.suspendExpected: Result<Result<Value>>
+    private val RunTestCase.suspendExpected: Result<Result<Value>>
         get() = when (this) {
             RunTestCase.ReturnValue ->
                 Result.success(Result.success(value))
@@ -66,36 +66,32 @@ class RunCatchingExceptionsKtTest {
 
     @Test
     fun runCatchingExceptions(@TestParameter case: RunTestCase) {
-        assertThat(
+        assertEquals(
             runCatching { runCatchingExceptions { case.block() } },
-        ).isEqualTo(
             case.expected,
         )
     }
 
     @Test
     fun runCatchingExceptions_extension(@TestParameter case: RunTestCase) {
-        assertThat(
+        assertEquals(
             runCatching { Unit.runCatchingExceptions { case.block() } },
-        ).isEqualTo(
             case.expected,
         )
     }
 
     @Test
     fun suspendRunCatchingExceptions(@TestParameter case: RunTestCase) = runTest {
-        assertThat(
+        assertEquals(
             runCatching { suspendRunCatchingExceptions { case.block() } },
-        ).isEqualTo(
             case.suspendExpected,
         )
     }
 
     @Test
     fun suspendRunCatchingExceptions_extension(@TestParameter case: RunTestCase) = runTest {
-        assertThat(
+        assertEquals(
             runCatching { Unit.suspendRunCatchingExceptions { case.block() } },
-        ).isEqualTo(
             case.suspendExpected,
         )
     }
@@ -111,7 +107,7 @@ class RunCatchingExceptionsKtTest {
         FailureThrowError,
     }
 
-    val MapTestCase.thiz: Result<Value>
+    private val MapTestCase.thiz: Result<Value>
         get() = when (this) {
             MapTestCase.SuccessReturnValue,
             MapTestCase.SuccessThrowException,
@@ -128,7 +124,7 @@ class RunCatchingExceptionsKtTest {
                 failure
         }
 
-    fun MapTestCase.block() =
+    private fun MapTestCase.block() =
         when (this) {
             MapTestCase.SuccessReturnValue,
             MapTestCase.FailureReturnValue,
@@ -151,7 +147,7 @@ class RunCatchingExceptionsKtTest {
                 throw error
         }
 
-    val MapTestCase.expected: Result<Result<Value>>
+    private val MapTestCase.expected: Result<Result<Value>>
         get() = when (this) {
             MapTestCase.SuccessReturnValue ->
                 Result.success(Result.success(value))
@@ -173,7 +169,7 @@ class RunCatchingExceptionsKtTest {
                 Result.success(failure)
         }
 
-    val MapTestCase.suspendExpected: Result<Result<Value>>
+    private val MapTestCase.suspendExpected: Result<Result<Value>>
         get() = when (this) {
             MapTestCase.SuccessReturnValue ->
                 Result.success(Result.success(value))
@@ -197,28 +193,26 @@ class RunCatchingExceptionsKtTest {
 
     @Test
     fun mapCatchingExceptions(@TestParameter case: MapTestCase) {
-        assertThat(
+        assertEquals(
             runCatching {
                 case.thiz.mapCatchingExceptions {
-                    assertThat(it).isEqualTo(case.thiz.getOrNull())
+                    assertEquals(it, case.thiz.getOrNull())
                     case.block()
                 }
             },
-        ).isEqualTo(
             case.expected,
         )
     }
 
     @Test
     fun suspendMapCatchingExceptions(@TestParameter case: MapTestCase) = runTest {
-        assertThat(
+        assertEquals(
             runCatching {
                 case.thiz.suspendMapCatchingExceptions {
-                    assertThat(it).isEqualTo(case.thiz.getOrNull())
+                    assertEquals(it, case.thiz.getOrNull())
                     case.block()
                 }
             },
-        ).isEqualTo(
             case.suspendExpected,
         )
     }
@@ -234,7 +228,7 @@ class RunCatchingExceptionsKtTest {
         FailureThrowError,
     }
 
-    val RecoverTestCase.thiz: Result<Value>
+    private val RecoverTestCase.thiz: Result<Value>
         get() = when (this) {
             RecoverTestCase.SuccessReturnValue,
             RecoverTestCase.SuccessThrowException,
@@ -251,7 +245,7 @@ class RunCatchingExceptionsKtTest {
                 failure
         }
 
-    fun RecoverTestCase.block() =
+    private fun RecoverTestCase.block() =
         when (this) {
             RecoverTestCase.SuccessReturnValue,
             RecoverTestCase.FailureReturnValue,
@@ -274,7 +268,7 @@ class RunCatchingExceptionsKtTest {
                 throw error
         }
 
-    val RecoverTestCase.expected: Result<Result<Value>>
+    private val RecoverTestCase.expected: Result<Result<Value>>
         get() = when (this) {
             RecoverTestCase.SuccessReturnValue,
             RecoverTestCase.SuccessThrowException,
@@ -296,7 +290,7 @@ class RunCatchingExceptionsKtTest {
                 Result.failure(error)
         }
 
-    val RecoverTestCase.suspendExpected: Result<Result<Value>>
+    private val RecoverTestCase.suspendExpected: Result<Result<Value>>
         get() = when (this) {
             RecoverTestCase.SuccessReturnValue,
             RecoverTestCase.SuccessThrowException,
@@ -320,28 +314,26 @@ class RunCatchingExceptionsKtTest {
 
     @Test
     fun recoverCatchingExceptions(@TestParameter case: RecoverTestCase) {
-        assertThat(
+        assertEquals(
             runCatching {
                 case.thiz.recoverCatchingExceptions {
-                    assertThat(it).isEqualTo(case.thiz.exceptionOrNull())
+                    assertEquals(it, case.thiz.exceptionOrNull())
                     case.block()
                 }
             },
-        ).isEqualTo(
             case.expected,
         )
     }
 
     @Test
     fun suspendRecoverCatchingExceptions(@TestParameter case: RecoverTestCase) = runTest {
-        assertThat(
+        assertEquals(
             runCatching {
                 case.thiz.suspendRecoverCatchingExceptions {
-                    assertThat(it).isEqualTo(case.thiz.exceptionOrNull())
+                    assertEquals(it, case.thiz.exceptionOrNull())
                     case.block()
                 }
             },
-        ).isEqualTo(
             case.suspendExpected,
         )
     }
