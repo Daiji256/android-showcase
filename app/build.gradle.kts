@@ -1,6 +1,6 @@
 plugins {
     alias(libs.plugins.buildlogic.android.application)
-    alias(libs.plugins.composeCompiler)
+    alias(libs.plugins.buildlogic.android.compose)
 }
 
 android {
@@ -26,9 +26,6 @@ android {
             )
         }
     }
-    buildFeatures {
-        compose = true
-    }
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
@@ -43,10 +40,4 @@ dependencies {
     implementation(libs.core.ktx)
     implementation(libs.lifecycle.runtime.ktx)
     implementation(libs.activity.compose)
-    implementation(platform(libs.compose.bom))
-    implementation(libs.ui)
-    implementation(libs.ui.graphics)
-    implementation(libs.ui.tooling.preview)
-    implementation(libs.material3)
-    debugImplementation(libs.ui.tooling)
 }
