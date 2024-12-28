@@ -1,39 +1,39 @@
 [versions]
-androidGradlePlugin = "8.7.3"
-kotlin = "2.1.0"
 activity-compose = "1.9.3"
+androidGradlePlugin = "8.7.3"
 compose-bom = "2024.12.01"
-kotlinx-coroutines = "1.10.1"
-kotlinx-collections-immutable = "0.3.8"
 composeRules = "0.4.22"
-testParameterInjector = "1.18"
+kotlin = "2.1.0"
+kotlinx-collections-immutable = "0.3.8"
+kotlinx-coroutines = "1.10.1"
 ktlintGradle = "12.1.2"
+testParameterInjector = "1.18"
 
 [libraries]
 activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activity-compose" }
 compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "compose-bom" }
+compose-material3 = { group = "androidx.compose.material3", name = "material3" }
 compose-ui = { group = "androidx.compose.ui", name = "ui" }
 compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
 compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
-compose-material3 = { group = "androidx.compose.material3", name = "material3" }
 composeRules = { group = "io.nlopez.compose.rules", name = "ktlint", version.ref = "composeRules" }
 kotlin-test = { group = "org.jetbrains.kotlin", name = "kotlin-test", version.ref = "kotlin" }
+kotlinx-collections-immutable = { group = "org.jetbrains.kotlinx", name = "kotlinx-collections-immutable", version.ref = "kotlinx-collections-immutable" }
 kotlinx-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
 kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "kotlinx-coroutines" }
-kotlinx-collections-immutable = { group = "org.jetbrains.kotlinx", name = "kotlinx-collections-immutable", version.ref = "kotlinx-collections-immutable" }
 testParameterInjector = { group = "com.google.testparameterinjector", name = "test-parameter-injector", version.ref = "testParameterInjector" }
 
 android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "androidGradlePlugin" }
-kotlin-gradlePlugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
 compose-gradlePlugin = { group = "org.jetbrains.kotlin", name = "compose-compiler-gradle-plugin", version.ref = "kotlin" }
+kotlin-gradlePlugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "androidGradlePlugin" }
 androidLibrary = { id = "com.android.library", version.ref = "androidGradlePlugin" }
-kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 composeCompiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 ktlintGradle = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlintGradle" }
 
 buildlogic-android-application = { id = "buildlogic.android.application", version = "unspecified" }
-buildlogic-android-library = { id = "buildlogic.android.library", version = "unspecified" }
 buildlogic-android-compose = { id = "buildlogic.android.compose", version = "unspecified" }
+buildlogic-android-library = { id = "buildlogic.android.library", version = "unspecified" }
