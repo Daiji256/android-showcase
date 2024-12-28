@@ -6,7 +6,3 @@ plugins {
 android {
     namespace = "io.github.daiji256.feature.ktlint"
 }
-
-dependencies {
-    implementation(libs.core.ktx)
-}
