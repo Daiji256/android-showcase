@@ -7,7 +7,6 @@ activity-compose = "1.9.2"
 compose-bom = "2024.09.02"
 kotlinx-coroutines = "1.10.1"
 composeRules = "0.4.22"
-junit = "4.13.2"
 truth = "1.4.4"
 testParameterInjector = "1.18"
 
