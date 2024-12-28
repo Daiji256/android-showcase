@@ -4,7 +4,6 @@ import com.android.build.api.dsl.ApplicationBaseFlavor
 import com.android.build.api.dsl.CommonExtension
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
-import org.gradle.kotlin.dsl.dependencies
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.dsl.KotlinAndroidProjectExtension
 
@@ -18,9 +17,5 @@ internal fun Project.configureKotlinAndroid(extension: CommonExtension<*, *, *, 
     configure<KotlinAndroidProjectExtension> {
         jvmToolchain(21)
         compilerOptions.jvmTarget.set(JvmTarget.JVM_21)
-    }
-
-    dependencies {
-        // TODO
     }
 }
