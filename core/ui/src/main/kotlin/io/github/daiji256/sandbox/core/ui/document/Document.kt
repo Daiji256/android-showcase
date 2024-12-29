@@ -1,4 +1,4 @@
-package io.github.daiji256.sandbox.core.designsystem.ui.document
+package io.github.daiji256.sandbox.core.ui.document
 
 import androidx.compose.foundation.layout.calculateEndPadding
 import androidx.compose.foundation.layout.calculateStartPadding

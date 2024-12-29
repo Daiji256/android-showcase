@@ -1,4 +1,4 @@
-package io.github.daiji256.sandbox.core.designsystem.ui.markdown
+package io.github.daiji256.sandbox.core.ui.markdown
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
