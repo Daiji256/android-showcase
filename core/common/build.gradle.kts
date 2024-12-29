@@ -3,7 +3,7 @@ plugins {
 }
 
 android {
-    namespace = "io.github.daiji256.core.common"
+    namespace = "io.github.daiji256.sandbox.core.common"
 }
 
 dependencies {

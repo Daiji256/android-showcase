@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "io.github.daiji256.core.designsystem"
+    namespace = "io.github.daiji256.sandbox.core.designsystem"
 }
 
 dependencies {
