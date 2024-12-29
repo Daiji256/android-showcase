@@ -1,0 +1,27 @@
+<resources>
+    <string name="title">Ktlint</string>
+    <string name="document_md">
+<![CDATA[\
+[Ktlint](https://pinterest.github.io/ktlint/) is used as the linter for this project.\
+## Ktlint Integration\
+[Ktlint Gradle](https://github.com/JLLeitschuh/ktlint-gradle)
+is used to integrate ktlint into the project.\
+## Jetpack Compose Rules\
+[Jetpack Compose Rules](https://mrmans0n.github.io/compose-rules/) is a set of custom ktlint rules
+designed to help prevent common pitfalls when working with composables.
+It is used to maintain a healthy Compose implementation.\
+## Configuration\
+The `.editorconfig` file includes the following settings:\
+```ini\
+[*.{kt,kts}]\
+ktlint_code_style = android_studio\
+ktlint_experimental = enabled\
+ktlint_standard_class-signature = disabled\
+ktlint_standard_function-signature = disabled\
+ktlint_function_naming_ignore_when_annotated_with = Composable, Test\
+ij_kotlin_allow_trailing_comma = true\
+ij_kotlin_allow_trailing_comma_on_call_site = true\
+```
+]]>
+    </string>
+</resources>
