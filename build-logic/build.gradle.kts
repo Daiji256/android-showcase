@@ -2,7 +2,7 @@ plugins {
     `kotlin-dsl`
 }
 
-group = "io.github.daiji256.sandbox.buildlogic"
+group = "io.github.daiji256.showcase.buildlogic"
 
 repositories {
     google()
@@ -23,15 +23,15 @@ gradlePlugin {
     plugins {
         register("android.application") {
             id = "buildlogic.android.application"
-            implementationClass = "io.github.daiji256.sandbox.buildlogic.AndroidApplicationPlugin"
+            implementationClass = "io.github.daiji256.showcase.buildlogic.AndroidApplicationPlugin"
         }
         register("android.library") {
             id = "buildlogic.android.library"
-            implementationClass = "io.github.daiji256.sandbox.buildlogic.AndroidLibraryPlugin"
+            implementationClass = "io.github.daiji256.showcase.buildlogic.AndroidLibraryPlugin"
         }
         register("android.compose") {
             id = "buildlogic.android.compose"
-            implementationClass = "io.github.daiji256.sandbox.buildlogic.AndroidComposePlugin"
+            implementationClass = "io.github.daiji256.showcase.buildlogic.AndroidComposePlugin"
         }
     }
 }

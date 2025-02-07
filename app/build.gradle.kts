@@ -4,10 +4,10 @@ plugins {
 }
 
 android {
-    namespace = "io.github.daiji256.sandbox"
+    namespace = "io.github.daiji256.showcase"
 
     defaultConfig {
-        applicationId = "io.github.daiji256.sandbox"
+        applicationId = "io.github.daiji256.showcase"
         versionCode = 1
         versionName = "1.0"
     }

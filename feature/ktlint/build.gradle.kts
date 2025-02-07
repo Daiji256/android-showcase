@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "io.github.daiji256.sandbox.feature.ktlint"
+    namespace = "io.github.daiji256.showcase.feature.ktlint"
 }
 
 dependencies {

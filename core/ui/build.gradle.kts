@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "io.github.daiji256.sandbox.core.ui"
+    namespace = "io.github.daiji256.showcase.core.ui"
 }
 
 dependencies {
