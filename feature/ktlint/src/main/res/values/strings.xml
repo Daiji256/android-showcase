@@ -1,6 +1,6 @@
 <resources>
-    <string name="title">Ktlint</string>
-    <string name="document_md">
+    <string name="feature_ktlint_title">Ktlint</string>
+    <string name="feature_ktlint_document_md">
 <![CDATA[\
 [Ktlint](https://pinterest.github.io/ktlint/) is used as the linter for this project.\
 ## Ktlint Integration\

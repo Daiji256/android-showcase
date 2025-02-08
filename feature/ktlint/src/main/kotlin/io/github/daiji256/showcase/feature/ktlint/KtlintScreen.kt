@@ -11,8 +11,8 @@ fun KtlintScreen(
     modifier: Modifier = Modifier,
 ) {
     Document(
-        title = stringResource(id = R.string.title),
-        markdown = stringResource(id = R.string.document_md),
+        title = stringResource(id = R.string.feature_ktlint_title),
+        markdown = stringResource(id = R.string.feature_ktlint_document_md),
         onNavigateUpClick = { /*TODO*/ },
         modifier = modifier,
     )
