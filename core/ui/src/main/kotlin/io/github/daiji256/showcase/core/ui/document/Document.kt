@@ -21,30 +21,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalLayoutDirection
-import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-
-@Composable
-fun Document(
-    title: String,
-    text: String,
-    onNavigateUpClick: () -> Unit,
-    modifier: Modifier = Modifier,
-) {
-    Document(
-        title = title,
-        text = AnnotatedString(text),
-        onNavigateUpClick = onNavigateUpClick,
-        modifier = modifier,
-    )
-}
+import io.github.daiji256.showcase.core.ui.markdown.Markdown
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Document(
     title: String,
-    text: AnnotatedString,
+    markdown: String,
     onNavigateUpClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -77,8 +62,8 @@ fun Document(
             .nestedScroll(topAppBarScrollBehavior.nestedScrollConnection),
     ) { padding ->
         val layoutDirection = LocalLayoutDirection.current
-        Text(
-            text = text,
+        Markdown(
+            markdown = markdown,
             style = MaterialTheme.typography.bodyLarge,
             modifier = Modifier
                 .padding(
@@ -99,7 +84,7 @@ fun Document(
 private fun DocumentPreview() {
     Document(
         title = "Title",
-        text = "text ".repeat(1000).trimEnd(),
+        markdown = "text ".repeat(1000).trimEnd(),
         onNavigateUpClick = {},
     )
 }
