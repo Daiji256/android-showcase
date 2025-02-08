@@ -36,5 +36,6 @@ dependencies {
     implementation(projects.core.designsystem)
     implementation(projects.core.ui)
     implementation(projects.feature.ktlint)
+    implementation(projects.feature.roborazzi)
     implementation(libs.activity.compose)
 }
