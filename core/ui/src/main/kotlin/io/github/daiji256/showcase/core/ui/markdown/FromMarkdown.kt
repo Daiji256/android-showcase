@@ -38,12 +38,12 @@ import org.intellij.markdown.parser.MarkdownParser
 @Stable
 fun AnnotatedString.Companion.fromMarkdown(
     markdownString: String,
-    style: MarkdownStyle = MarkdownStyle.Default,
+    style: LegacyMarkdownStyle = LegacyMarkdownStyle.Default,
 ): AnnotatedString =
     buildAnnotatedString {
         val flavour = CommonMarkFlavourDescriptor()
         val node = MarkdownParser(flavour).buildMarkdownTreeFromString(markdownString)
-        val blocks = node.getBlocks(markdownString)
+        val blocks = node.getLegacyBlocks(markdownString)
         blocks.forEachIndexed { index, block ->
             // Add spacing between paragraphs
             if (index != 0) withStyle(style = ParagraphStyle()) {}
@@ -52,7 +52,7 @@ fun AnnotatedString.Companion.fromMarkdown(
     }
 
 @Immutable
-data class MarkdownStyle(
+data class LegacyMarkdownStyle(
     val emph: SpanStyle,
     val strong: SpanStyle,
     val code: SpanStyle,
@@ -63,10 +63,10 @@ data class MarkdownStyle(
     val h4: SpanStyle,
     val h5: SpanStyle,
     val h6: SpanStyle,
-    val codeBlock: SpanStyle,
+    val codeLegacyBlock: SpanStyle,
 ) {
     companion object {
-        val Default = MarkdownStyle(
+        val Default = LegacyMarkdownStyle(
             emph = SpanStyle(fontStyle = FontStyle.Italic),
             strong = SpanStyle(fontWeight = FontWeight.Bold),
             code = SpanStyle(fontFamily = FontFamily.Monospace),
@@ -82,15 +82,15 @@ data class MarkdownStyle(
             h4 = SpanStyle(fontSize = 1.25.em),
             h5 = SpanStyle(fontSize = 1.125.em),
             h6 = SpanStyle(fontSize = 1.0625.em),
-            codeBlock = SpanStyle(fontFamily = FontFamily.Monospace, fontSize = 0.875.em),
+            codeLegacyBlock = SpanStyle(fontFamily = FontFamily.Monospace, fontSize = 0.875.em),
         )
     }
 }
 
-private fun ASTNode.getBlocks(markdownString: String): List<Block> =
+private fun ASTNode.getLegacyBlocks(markdownString: String): List<LegacyBlock> =
     when (this.type) {
         MarkdownElementTypes.MARKDOWN_FILE ->
-            children.flatMap { it.getBlocks(markdownString) }
+            children.flatMap { it.getLegacyBlocks(markdownString) }
 
         MarkdownElementTypes.PARAGRAPH,
         MarkdownElementTypes.UNORDERED_LIST,
@@ -98,9 +98,9 @@ private fun ASTNode.getBlocks(markdownString: String): List<Block> =
         MarkdownElementTypes.BLOCK_QUOTE,
         ->
             listOf(
-                Block.Paragraph(
+                LegacyBlock.Paragraph(
                     contents = children.mapNotNull {
-                        it.getContent(markdownString)
+                        it.getLegacyContent(markdownString)
                     },
                 ),
             )
@@ -109,11 +109,11 @@ private fun ASTNode.getBlocks(markdownString: String): List<Block> =
         MarkdownElementTypes.SETEXT_2,
         ->
             listOf(
-                Block.h(
+                LegacyBlock.h(
                     type = this.type,
                     contents = children
                         .dropLast(2) // === or --- and EOL
-                        .mapNotNull { it.getContent(markdownString) },
+                        .mapNotNull { it.getLegacyContent(markdownString) },
                 ),
             )
 
@@ -125,65 +125,65 @@ private fun ASTNode.getBlocks(markdownString: String): List<Block> =
         MarkdownElementTypes.ATX_6,
         ->
             listOf(
-                Block.h(
+                LegacyBlock.h(
                     type = this.type,
                     contents = children
                         .drop(1) // # or ## or ### or #### or ##### or ######
-                        .mapNotNull { it.getContent(markdownString) },
+                        .mapNotNull { it.getLegacyContent(markdownString) },
                 ),
             )
 
         MarkdownElementTypes.CODE_FENCE ->
             listOf(
-                Block.Code(
+                LegacyBlock.Code(
                     contents = children
                         .filterNot { it.type == MarkdownTokenTypes.CODE_FENCE_START }
                         .filterNot { it.type == MarkdownTokenTypes.CODE_FENCE_END }
                         .filterNot { it.type == MarkdownTokenTypes.FENCE_LANG }
                         .dropWhile { it.type == MarkdownTokenTypes.EOL }
                         .dropLastWhile { it.type == MarkdownTokenTypes.EOL }
-                        .mapNotNull { it.getContent(markdownString) },
+                        .mapNotNull { it.getLegacyContent(markdownString) },
                 ),
             )
 
         else -> emptyList()
     }
 
-private fun ASTNode.getContent(markdownString: String): Content? =
+private fun ASTNode.getLegacyContent(markdownString: String): LegacyContent? =
     when (this.type) {
         MarkdownTokenTypes.FENCE_LANG ->
             null
 
         MarkdownElementTypes.EMPH ->
-            Content.Emph(
+            LegacyContent.Emph(
                 contents = children
                     .drop(1) // * or _
                     .dropLast(1) // * or _
-                    .mapNotNull { it.getContent(markdownString) },
+                    .mapNotNull { it.getLegacyContent(markdownString) },
             )
 
         MarkdownElementTypes.STRONG ->
-            Content.Strong(
+            LegacyContent.Strong(
                 contents = children
                     .drop(2) // ** or __
                     .dropLast(2) // ** or __
-                    .mapNotNull { it.getContent(markdownString) },
+                    .mapNotNull { it.getLegacyContent(markdownString) },
             )
 
         MarkdownElementTypes.CODE_SPAN ->
-            Content.Code(
+            LegacyContent.Code(
                 contents = children
                     .drop(1) // `
                     .dropLast(1) // `
-                    .mapNotNull { it.getContent(markdownString) },
+                    .mapNotNull { it.getLegacyContent(markdownString) },
             )
 
         MarkdownElementTypes.INLINE_LINK -> run {
-            Content.Link(
+            LegacyContent.Link(
                 contents = children.find { it.type == MarkdownElementTypes.LINK_TEXT }?.children
                     ?.drop(1) // [
                     ?.dropLast(1) // ]
-                    ?.mapNotNull { it.getContent(markdownString) }
+                    ?.mapNotNull { it.getLegacyContent(markdownString) }
                     ?: return@run null,
                 url = children.findLast { it.type == MarkdownElementTypes.LINK_DESTINATION }
                     ?.getTextInNode(markdownString)?.toString()
@@ -192,26 +192,26 @@ private fun ASTNode.getContent(markdownString: String): Content? =
         }
 
         MarkdownTokenTypes.ATX_CONTENT ->
-            Content.Text(text = getTextInNode(markdownString).toString().trimStart())
+            LegacyContent.Text(text = getTextInNode(markdownString).toString().trimStart())
 
         else ->
-            Content.Text(text = getTextInNode(markdownString).toString())
+            LegacyContent.Text(text = getTextInNode(markdownString).toString())
     }
 
-private sealed interface Block {
-    val contents: List<Content>
+private sealed interface LegacyBlock {
+    val contents: List<LegacyContent>
 
-    data class Paragraph(override val contents: List<Content>) : Block
-    data class H1(override val contents: List<Content>) : Block
-    data class H2(override val contents: List<Content>) : Block
-    data class H3(override val contents: List<Content>) : Block
-    data class H4(override val contents: List<Content>) : Block
-    data class H5(override val contents: List<Content>) : Block
-    data class H6(override val contents: List<Content>) : Block
-    data class Code(override val contents: List<Content>) : Block
+    data class Paragraph(override val contents: List<LegacyContent>) : LegacyBlock
+    data class H1(override val contents: List<LegacyContent>) : LegacyBlock
+    data class H2(override val contents: List<LegacyContent>) : LegacyBlock
+    data class H3(override val contents: List<LegacyContent>) : LegacyBlock
+    data class H4(override val contents: List<LegacyContent>) : LegacyBlock
+    data class H5(override val contents: List<LegacyContent>) : LegacyBlock
+    data class H6(override val contents: List<LegacyContent>) : LegacyBlock
+    data class Code(override val contents: List<LegacyContent>) : LegacyBlock
 
     companion object {
-        fun h(type: IElementType, contents: List<Content>): Block =
+        fun h(type: IElementType, contents: List<LegacyContent>): LegacyBlock =
             when (type) {
                 MarkdownElementTypes.SETEXT_1 -> H1(contents = contents)
                 MarkdownElementTypes.SETEXT_2 -> H2(contents = contents)
@@ -226,26 +226,26 @@ private sealed interface Block {
     }
 }
 
-private sealed interface Content {
-    data class Text(val text: String) : Content
-    data class Emph(val contents: List<Content>) : Content
-    data class Strong(val contents: List<Content>) : Content
-    data class Code(val contents: List<Content>) : Content
-    data class Link(val contents: List<Content>, val url: String) : Content
+private sealed interface LegacyContent {
+    data class Text(val text: String) : LegacyContent
+    data class Emph(val contents: List<LegacyContent>) : LegacyContent
+    data class Strong(val contents: List<LegacyContent>) : LegacyContent
+    data class Code(val contents: List<LegacyContent>) : LegacyContent
+    data class Link(val contents: List<LegacyContent>, val url: String) : LegacyContent
 }
 
-private fun AnnotatedString.Builder.append(block: Block, style: MarkdownStyle) {
+private fun AnnotatedString.Builder.append(block: LegacyBlock, style: LegacyMarkdownStyle) {
     withStyle(style = ParagraphStyle()) {
         withStyle(
             style = when (block) {
-                is Block.Paragraph -> SpanStyle()
-                is Block.H1 -> style.h1
-                is Block.H2 -> style.h2
-                is Block.H3 -> style.h3
-                is Block.H4 -> style.h4
-                is Block.H5 -> style.h5
-                is Block.H6 -> style.h6
-                is Block.Code -> style.codeBlock
+                is LegacyBlock.Paragraph -> SpanStyle()
+                is LegacyBlock.H1 -> style.h1
+                is LegacyBlock.H2 -> style.h2
+                is LegacyBlock.H3 -> style.h3
+                is LegacyBlock.H4 -> style.h4
+                is LegacyBlock.H5 -> style.h5
+                is LegacyBlock.H6 -> style.h6
+                is LegacyBlock.Code -> style.codeLegacyBlock
             },
         ) {
             block.contents.forEach {
@@ -255,33 +255,33 @@ private fun AnnotatedString.Builder.append(block: Block, style: MarkdownStyle) {
     }
 }
 
-private fun AnnotatedString.Builder.append(content: Content, style: MarkdownStyle) {
+private fun AnnotatedString.Builder.append(content: LegacyContent, style: LegacyMarkdownStyle) {
     when (content) {
-        is Content.Text ->
+        is LegacyContent.Text ->
             append(text = content.text)
 
-        is Content.Emph ->
+        is LegacyContent.Emph ->
             withStyle(style = style.emph) {
                 content.contents.forEach {
                     append(content = it, style = style)
                 }
             }
 
-        is Content.Strong ->
+        is LegacyContent.Strong ->
             withStyle(style = style.strong) {
                 content.contents.forEach {
                     append(content = it, style = style)
                 }
             }
 
-        is Content.Code ->
+        is LegacyContent.Code ->
             withStyle(style = style.code) {
                 content.contents.forEach {
                     append(content = it, style = style)
                 }
             }
 
-        is Content.Link ->
+        is LegacyContent.Link ->
             withLink(link = LinkAnnotation.Url(url = content.url, styles = style.link)) {
                 content.contents.forEach {
                     append(content = it, style = style)
@@ -319,8 +319,8 @@ private fun MarkdownPreview() {
                     a. Item 2a
                     a. Item 2b
 
-                > Blockquotes1
-                >> Blockquotes1
+                > LegacyBlockquotes1
+                >> LegacyBlockquotes1
                 
                 ```kotlin
                 @Composable
