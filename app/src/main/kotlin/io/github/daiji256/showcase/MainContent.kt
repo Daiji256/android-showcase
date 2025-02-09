@@ -8,7 +8,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalUriHandler
 import io.github.daiji256.showcase.core.designsystem.theme.ShowcaseTheme
 import io.github.daiji256.showcase.core.ui.urihandler.SafeUriHandler
-import io.github.daiji256.showcase.feature.ktlint.KtlintScreen
 
 @Composable
 internal fun MainContent(modifier: Modifier = Modifier) {
@@ -19,7 +18,7 @@ internal fun MainContent(modifier: Modifier = Modifier) {
         LocalUriHandler provides uriHandler,
     ) {
         ShowcaseTheme {
-            KtlintScreen(modifier = modifier)
+            // TODO
         }
     }
 }
