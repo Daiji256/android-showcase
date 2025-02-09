@@ -11,7 +11,7 @@ import io.github.daiji256.showcase.core.ui.urihandler.SafeUriHandler
 import io.github.daiji256.showcase.feature.ktlint.KtlintScreen
 
 @Composable
-fun MainContent(modifier: Modifier = Modifier) {
+internal fun MainContent(modifier: Modifier = Modifier) {
     val context = LocalContext.current
     val uriHandler = remember(context) { SafeUriHandler(context) }
 
