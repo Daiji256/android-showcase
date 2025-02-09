@@ -18,7 +18,7 @@ internal fun MainContent(modifier: Modifier = Modifier) {
         LocalUriHandler provides uriHandler,
     ) {
         ShowcaseTheme {
-            // TODO
+            MainNavHost(modifier = modifier)
         }
     }
 }
