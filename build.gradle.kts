@@ -6,6 +6,7 @@ plugins {
     alias(libs.plugins.composeCompiler) apply false
     alias(libs.plugins.kotlinAndroid) apply false
     alias(libs.plugins.ktlintGradle) apply false
+    alias(libs.plugins.kotlinSerialization) apply false
 }
 
 allprojects {

@@ -18,6 +18,7 @@ class AndroidLibraryPlugin : Plugin<Project> {
             with(pluginManager) {
                 apply(libs.plugin("androidLibrary").pluginId)
                 apply(libs.plugin("kotlinAndroid").pluginId)
+                apply(libs.plugin("kotlinSerialization").pluginId)
             }
 
             androidLibrary {
@@ -27,6 +28,7 @@ class AndroidLibraryPlugin : Plugin<Project> {
             dependencies {
                 implementation(libs.library("kotlinx.coroutines.core"))
                 implementation(libs.library("kotlinx.collections.immutable"))
+                implementation(libs.library("kotlinx.serialization.core"))
                 testImplementation(libs.library("kotlin.test"))
                 testImplementation(libs.library("kotlinx.coroutines.test"))
             }
