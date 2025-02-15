@@ -6,19 +6,26 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalUriHandler
+import androidx.navigation.compose.rememberNavController
 import io.github.daiji256.showcase.core.designsystem.theme.ShowcaseTheme
+import io.github.daiji256.showcase.core.ui.navigation.LocalNavController
 import io.github.daiji256.showcase.core.ui.urihandler.SafeUriHandler
 
 @Composable
 internal fun MainContent(modifier: Modifier = Modifier) {
     val context = LocalContext.current
     val uriHandler = remember(context) { SafeUriHandler(context) }
+    val navController = rememberNavController()
 
     CompositionLocalProvider(
         LocalUriHandler provides uriHandler,
+        LocalNavController provides navController,
     ) {
         ShowcaseTheme {
-            MainNavHost(modifier = modifier)
+            MainNavHost(
+                navController = navController,
+                modifier = modifier,
+            )
         }
     }
 }
