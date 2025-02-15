@@ -6,7 +6,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import io.github.daiji256.showcase.core.ui.document.Document
 
 @Composable
-fun RoborazziScreen() {
+internal fun RoborazziScreen() {
     Document(
         title = stringResource(id = R.string.feature_roborazzi_title),
         markdown = "TODO",
