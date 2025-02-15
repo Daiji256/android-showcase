@@ -39,4 +39,5 @@ dependencies {
     implementation(projects.feature.roborazzi)
     implementation(projects.feature.showcase)
     implementation(libs.activity.compose)
+    implementation(libs.kotlinx.collections.immutable)
 }
