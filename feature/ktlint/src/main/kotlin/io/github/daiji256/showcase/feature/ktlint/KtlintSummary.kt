@@ -7,8 +7,8 @@ import io.github.daiji256.showcase.core.ui.feature.FeatureSummary
 import io.github.daiji256.showcase.core.ui.navigation.LocalNavController
 
 data object KtlintSummary : FeatureSummary {
-    @Composable
-    override fun title(): String = stringResource(id = R.string.feature_ktlint_title)
+    override val title: String
+        @Composable get() = stringResource(id = R.string.feature_ktlint_title)
 
     override val navigateCallback: () -> Unit
         @Composable get() = LocalNavController.current.run {

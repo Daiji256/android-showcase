@@ -69,7 +69,7 @@ private fun FeatureItem(
     modifier: Modifier = Modifier,
 ) {
     Text(
-        text = feature.title(),
+        text = feature.title,
         modifier = modifier
             .clickable(onClick = feature.navigateCallback)
             .padding(12.dp),
@@ -83,10 +83,11 @@ private fun ShowcaseScreenPreview() {
     val features = remember {
         List(20) {
             object : FeatureSummary {
-                @Composable
-                override fun title(): String = "Feature$it"
+                override val title: String
+                    @Composable get() = "Feature$it"
 
-                override val navigateCallback: () -> Unit @Composable get() = {}
+                override val navigateCallback: () -> Unit
+                    @Composable get() = {}
             }
         }.toImmutableList()
     }
