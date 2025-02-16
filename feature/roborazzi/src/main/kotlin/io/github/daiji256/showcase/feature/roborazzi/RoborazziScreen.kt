@@ -10,7 +10,6 @@ internal fun RoborazziScreen() {
     Document(
         title = stringResource(id = R.string.feature_roborazzi_title),
         markdown = "TODO",
-        onNavigateUpClick = { /*TODO*/ },
     )
 }
 

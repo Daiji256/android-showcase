@@ -10,7 +10,6 @@ internal fun KtlintScreen() {
     Document(
         title = stringResource(id = R.string.feature_ktlint_title),
         markdown = stringResource(id = R.string.feature_ktlint_document_md),
-        onNavigateUpClick = { /*TODO*/ },
     )
 }
 

@@ -20,18 +20,26 @@ import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.dropUnlessResumed
 import io.github.daiji256.showcase.core.ui.markdown.Markdown
+import io.github.daiji256.showcase.core.ui.navigation.LocalNavController
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Document(
     title: String,
     markdown: String,
-    onNavigateUpClick: () -> Unit,
     modifier: Modifier = Modifier,
+    onNavigateUpClick: () -> Unit = if (LocalInspectionMode.current) {
+        {}
+    } else {
+        val navController = LocalNavController.current
+        dropUnlessResumed { navController.navigateUp() }
+    },
 ) {
     val scrollState = rememberScrollState()
     val topAppBarState = rememberTopAppBarState()
@@ -85,6 +93,5 @@ private fun DocumentPreview() {
     Document(
         title = "Title",
         markdown = "text ".repeat(1000).trimEnd(),
-        onNavigateUpClick = {},
     )
 }
