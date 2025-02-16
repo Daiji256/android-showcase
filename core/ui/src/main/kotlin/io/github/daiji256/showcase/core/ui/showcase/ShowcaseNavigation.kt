@@ -1,4 +1,4 @@
-package io.github.daiji256.showcase.feature.showcase
+package io.github.daiji256.showcase.core.ui.showcase
 
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder

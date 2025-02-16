@@ -1,4 +1,4 @@
-package io.github.daiji256.showcase.feature.showcase
+package io.github.daiji256.showcase.core.ui.showcase
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.PaddingValues
@@ -20,6 +20,7 @@ import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import io.github.daiji256.showcase.core.ui.R
 import io.github.daiji256.showcase.core.ui.feature.FeatureSummary
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
@@ -34,7 +35,7 @@ internal fun ShowcaseScreen(
             CenterAlignedTopAppBar(
                 title = {
                     Text(
-                        text = stringResource(id = R.string.feature_showcase_title),
+                        text = stringResource(id = R.string.core_ui_showcase_title),
                     )
                 },
             )
