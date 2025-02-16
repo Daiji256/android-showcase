@@ -12,6 +12,6 @@ data object RoborazziSummary : FeatureSummary {
 
     override val navigateCallback: () -> Unit
         @Composable get() = LocalNavController.current.run {
-            dropUnlessResumed { navigateToRoborazziScreen() }
+            dropUnlessResumed(block = ::navigateToRoborazziScreen)
         }
 }

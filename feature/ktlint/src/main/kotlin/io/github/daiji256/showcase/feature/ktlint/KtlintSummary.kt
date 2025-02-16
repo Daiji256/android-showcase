@@ -12,6 +12,6 @@ data object KtlintSummary : FeatureSummary {
 
     override val navigateCallback: () -> Unit
         @Composable get() = LocalNavController.current.run {
-            dropUnlessResumed { navigateToKtlintScreen() }
+            dropUnlessResumed(block = ::navigateToKtlintScreen)
         }
 }
