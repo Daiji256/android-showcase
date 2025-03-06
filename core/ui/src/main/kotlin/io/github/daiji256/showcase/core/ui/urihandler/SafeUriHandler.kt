@@ -23,7 +23,7 @@ class SafeUriHandler(private val context: Context) : UriHandler {
     override fun openUri(uri: String) {
         try {
             context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(uri)))
-        } catch (e: ActivityNotFoundException) {
+        } catch (_: ActivityNotFoundException) {
             Toast.makeText(context, "Can't open $uri.", Toast.LENGTH_SHORT).show()
         }
     }
