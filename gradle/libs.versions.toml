@@ -1,15 +1,15 @@
 [versions]
-activity-compose = "1.10.0"
-androidGradlePlugin = "8.7.3"
+activity-compose = "1.10.1"
+androidGradlePlugin = "8.9.0"
 compose-bom = "2025.02.00"
 composeRules = "0.4.22"
-kotlin = "2.1.0"
+kotlin = "2.1.10"
 kotlinx-collections-immutable = "0.3.8"
 kotlinx-coroutines = "1.10.1"
 kotlinx-serialization = "1.8.0"
-ktlintGradle = "12.1.2"
+ktlintGradle = "12.2.0"
 markdown = "0.7.3"
-navigation-compose = "2.8.7"
+navigation-compose = "2.8.8"
 testParameterInjector = "1.18"
 
 [libraries]
