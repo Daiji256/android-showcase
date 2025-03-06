@@ -6,6 +6,9 @@ import android.content.Intent
 import android.widget.Toast
 import androidx.compose.ui.platform.UriHandler
 import androidx.core.net.toUri
+import io.github.oshai.kotlinlogging.KotlinLogging
+
+private val logger = KotlinLogging.logger {}
 
 /**
  * A [UriHandler] that shows a Toast instead of throwing [IllegalArgumentException].
@@ -23,7 +26,8 @@ class SafeUriHandler(private val context: Context) : UriHandler {
     override fun openUri(uri: String) {
         try {
             context.startActivity(Intent(Intent.ACTION_VIEW, uri.toUri()))
-        } catch (_: ActivityNotFoundException) {
+        } catch (e: ActivityNotFoundException) {
+            logger.error(e) { "Can't open $uri." }
             Toast.makeText(context, "Can't open $uri.", Toast.LENGTH_SHORT).show()
         }
     }
