@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.buildlogic.android.library)
     alias(libs.plugins.buildlogic.android.compose)
+    alias(libs.plugins.buildlogic.android.hilt)
 }
 
 android {
@@ -9,4 +10,5 @@ android {
 
 dependencies {
     implementation(projects.core.ui)
+    implementation(libs.browser)
 }
