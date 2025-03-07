@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.buildlogic.android.application)
     alias(libs.plugins.buildlogic.android.compose)
+    alias(libs.plugins.buildlogic.android.hilt)
 }
 
 android {

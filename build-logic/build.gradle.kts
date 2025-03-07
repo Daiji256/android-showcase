@@ -17,6 +17,7 @@ dependencies {
     implementation(libs.android.gradlePlugin)
     implementation(libs.kotlin.gradlePlugin)
     implementation(libs.compose.gradlePlugin)
+    implementation(libs.ksp.gradlePlugin)
 }
 
 gradlePlugin {
@@ -28,6 +29,10 @@ gradlePlugin {
         register("android.library") {
             id = "buildlogic.android.library"
             implementationClass = "io.github.daiji256.showcase.buildlogic.AndroidLibraryPlugin"
+        }
+        register("android.hilt") {
+            id = "buildlogic.android.hilt"
+            implementationClass = "io.github.daiji256.showcase.buildlogic.AndroidHiltPlugin"
         }
         register("android.compose") {
             id = "buildlogic.android.compose"
