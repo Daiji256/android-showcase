@@ -6,6 +6,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import io.github.daiji256.showcase.core.ui.showcase.ShowcaseScreenRoute
 import io.github.daiji256.showcase.core.ui.showcase.showcaseScreen
+import io.github.daiji256.showcase.feature.customtabs.CustomTabsSummary
+import io.github.daiji256.showcase.feature.customtabs.customTabsScreen
 import io.github.daiji256.showcase.feature.ktlint.KtlintSummary
 import io.github.daiji256.showcase.feature.ktlint.ktlintScreen
 import io.github.daiji256.showcase.feature.roborazzi.RoborazziSummary
@@ -24,10 +26,12 @@ internal fun MainNavHost(
     ) {
         showcaseScreen(
             features = persistentListOf(
+                CustomTabsSummary,
                 KtlintSummary,
                 RoborazziSummary,
             ),
         )
+        customTabsScreen()
         ktlintScreen()
         roborazziScreen()
     }

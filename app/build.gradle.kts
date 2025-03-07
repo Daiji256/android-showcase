@@ -35,6 +35,7 @@ dependencies {
     implementation(projects.core.common)
     implementation(projects.core.designsystem)
     implementation(projects.core.ui)
+    implementation(projects.feature.customtabs)
     implementation(projects.feature.ktlint)
     implementation(projects.feature.roborazzi)
     implementation(libs.activity.compose)
