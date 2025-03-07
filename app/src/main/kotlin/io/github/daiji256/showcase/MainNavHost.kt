@@ -26,9 +26,9 @@ internal fun MainNavHost(
     ) {
         showcaseScreen(
             features = persistentListOf(
-                CustomTabsSummary,
-                KtlintSummary,
-                RoborazziSummary,
+                CustomTabsSummary(navController = navController),
+                KtlintSummary(navController = navController),
+                RoborazziSummary(navController = navController),
             ),
         )
         customTabsScreen()

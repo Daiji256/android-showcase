@@ -7,5 +7,5 @@ import androidx.compose.runtime.Immutable
 interface FeatureSummary {
     val title: String @Composable get
 
-    val navigateCallback: () -> Unit @Composable get
+    fun navigate()
 }
