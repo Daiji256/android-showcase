@@ -1,6 +1,5 @@
 package io.github.daiji256.showcase.core.ui.showcase
 
-import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import io.github.daiji256.showcase.core.ui.feature.FeatureSummary
@@ -17,5 +16,3 @@ fun NavGraphBuilder.showcaseScreen(
         ShowcaseScreen(features = features)
     }
 }
-
-fun NavController.navigateToShowcaseScreen() = navigate(route = ShowcaseScreenRoute)
