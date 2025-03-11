@@ -1,5 +1,8 @@
 package io.github.daiji256.showcase.core.ui.document
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.calculateEndPadding
 import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -8,6 +11,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -18,6 +22,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalLayoutDirection
@@ -32,6 +37,26 @@ fun Document(
     markdown: String,
     onNavigateUpClick: () -> Unit,
     modifier: Modifier = Modifier,
+) {
+    Document(
+        title = title,
+        onNavigateUpClick = onNavigateUpClick,
+        modifier = modifier,
+    ) {
+        Markdown(
+            markdown = markdown,
+            style = MaterialTheme.typography.bodyLarge,
+        )
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun Document(
+    title: String,
+    onNavigateUpClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    content: @Composable ColumnScope.() -> Unit,
 ) {
     val scrollState = rememberScrollState()
     val topAppBarState = rememberTopAppBarState()
@@ -62,9 +87,9 @@ fun Document(
             .nestedScroll(topAppBarScrollBehavior.nestedScrollConnection),
     ) { padding ->
         val layoutDirection = LocalLayoutDirection.current
-        Markdown(
-            markdown = markdown,
-            style = MaterialTheme.typography.bodyLarge,
+        Column(
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+            horizontalAlignment = Alignment.Start,
             modifier = Modifier
                 .padding(
                     top = padding.calculateTopPadding(),
@@ -75,16 +100,30 @@ fun Document(
                 .fillMaxWidth()
                 .verticalScroll(scrollState)
                 .padding(bottom = padding.calculateBottomPadding()),
-        )
+        ) {
+            content()
+        }
     }
 }
 
 @Preview
 @Composable
-private fun DocumentPreview() {
+private fun DocumentMarkdownPreview() {
     Document(
         title = "Title",
         markdown = "text ".repeat(1000).trimEnd(),
         onNavigateUpClick = {},
     )
+}
+
+@Preview
+@Composable
+private fun DocumentContentPreview() {
+    Document(
+        title = "Title",
+        onNavigateUpClick = {},
+    ) {
+        Markdown(markdown = "## H2\n\nParagraph")
+        Button(onClick = {}) { Text("Button") }
+    }
 }
