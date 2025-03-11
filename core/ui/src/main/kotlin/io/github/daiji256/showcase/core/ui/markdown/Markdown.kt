@@ -2,6 +2,7 @@ package io.github.daiji256.showcase.core.ui.markdown
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -59,10 +60,16 @@ fun Markdown(
         modifier = modifier,
     ) {
         Blocks(markdown).forEach { block ->
-            Text(
-                text = block.toAnnotatedString(style = markdownStyle),
-                style = style,
-            )
+            when (block) {
+                is Block.Text ->
+                    Text(
+                        text = block.toAnnotatedString(style = markdownStyle),
+                        style = style,
+                    )
+
+                is Block.HorizontalRule ->
+                    HorizontalDivider()
+            }
         }
     }
 }
@@ -220,6 +227,9 @@ private fun ASTNode.getBlocks(markdownString: String): List<Block> =
                 ),
             )
 
+        MarkdownTokenTypes.HORIZONTAL_RULE ->
+            listOf(Block.HorizontalRule)
+
         else -> emptyList()
     }
 
@@ -287,16 +297,19 @@ private interface Blocks : List<Block> {
 
 @Immutable
 private sealed interface Block {
-    val contents: List<Content>
+    sealed interface Text : Block {
+        val contents: List<Content>
+    }
 
-    data class Paragraph(override val contents: List<Content>) : Block
-    data class H1(override val contents: List<Content>) : Block
-    data class H2(override val contents: List<Content>) : Block
-    data class H3(override val contents: List<Content>) : Block
-    data class H4(override val contents: List<Content>) : Block
-    data class H5(override val contents: List<Content>) : Block
-    data class H6(override val contents: List<Content>) : Block
-    data class Code(override val contents: List<Content>) : Block
+    data class Paragraph(override val contents: List<Content>) : Text
+    data class H1(override val contents: List<Content>) : Text
+    data class H2(override val contents: List<Content>) : Text
+    data class H3(override val contents: List<Content>) : Text
+    data class H4(override val contents: List<Content>) : Text
+    data class H5(override val contents: List<Content>) : Text
+    data class H6(override val contents: List<Content>) : Text
+    data class Code(override val contents: List<Content>) : Text
+    data object HorizontalRule : Block
 }
 
 @Immutable
@@ -309,7 +322,7 @@ private sealed interface Content {
 }
 
 @Stable
-private fun Block.toAnnotatedString(style: MarkdownStyle): AnnotatedString =
+private fun Block.Text.toAnnotatedString(style: MarkdownStyle): AnnotatedString =
     buildAnnotatedString {
         withStyle(
             style = when (this@toAnnotatedString) {
@@ -398,6 +411,10 @@ private fun MarkdownPreview() {
                 _emph **strong-emph**_
 
                 [link](https://example.com)
+
+                ---
+
+                ***
 
                 Inline `code1`.
                 *Inline `code2`.*
