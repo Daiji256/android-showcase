@@ -21,8 +21,9 @@ import io.github.oshai.kotlinlogging.KotlinLogging
 private val logger = KotlinLogging.logger {}
 
 class CustomTabsLauncher(private val context: Context) {
+    private val activity by lazy { context.findActivity() }
+
     fun launch(uri: Uri) {
-        val activity = context.findActivity()
         try {
             CustomTabsIntent.Builder().build()
                 .apply {
