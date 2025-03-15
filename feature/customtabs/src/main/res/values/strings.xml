@@ -1,3 +1,8 @@
 <resources>
     <string name="feature_custom_tabs_title">Custom Tabs</string>
+    <string name="feature_custom_tabs_document_summary_md">This sample shows how to launch [Custom Tabs](https://developer.chrome.com/docs/android/custom-tabs/) using both an `Activity` `Context` and an `Application` `Context`.</string>
+    <string name="feature_custom_tabs_document_demos_header_md">## Demos</string>
+    <string name="feature_custom_tabs_document_demos_activity_context_md">When using an **`Activity`** `Context`, the Custom Tab is launched within the **same `Activity`**.</string>
+    <string name="feature_custom_tabs_document_demos_application_context_md">In contrast, when using an **`Application`** `Context`, the Custom Tab is launched within a **new `Activity`**.</string>
+    <string name="feature_custom_tabs_document_demos_launch_button">launch</string>
 </resources>

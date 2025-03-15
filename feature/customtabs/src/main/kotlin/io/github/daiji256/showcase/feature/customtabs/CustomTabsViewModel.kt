@@ -9,5 +9,6 @@ import javax.inject.Inject
 internal class CustomTabsViewModel @Inject constructor(
     private val customTabsLauncher: CustomTabsLauncher,
 ) : ViewModel() {
-    fun onOpenUriClick(uri: Uri) = customTabsLauncher.launch(uri = uri)
+    fun launchCustomTabFromApplicationContext(uri: Uri) =
+        customTabsLauncher.launch(uri = uri)
 }
