@@ -30,7 +30,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import io.github.daiji256.showcase.core.ui.markdown.Markdown
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Document(
     title: String,
