@@ -20,9 +20,23 @@ import io.github.oshai.kotlinlogging.KotlinLogging
 
 private val logger = KotlinLogging.logger {}
 
+/**
+ * Launcher for Custom Tabs.
+ */
 class CustomTabsLauncher(private val context: Context) {
     private val activity by lazy { context.findActivity() }
 
+    /**
+     * Launches the specified [uri] in a Custom Tab.
+     *
+     * If no [Activity] can be found in the provided [context],
+     * the Custom Tab is started as a new task.
+     *
+     * Shows a Toast instead of throwing [ActivityNotFoundException]
+     * if Custom Tab cannot be launched.
+     *
+     * Note: [ActivityNotFoundException] is not thrown if Custom Tab cannot be launched.
+     */
     fun launch(uri: Uri) {
         try {
             CustomTabsIntent.Builder().build()
@@ -54,6 +68,9 @@ internal object CustomTabsLauncherModule {
         CustomTabsLauncher(context = context)
 }
 
+/**
+ * Creates a [CustomTabsLauncher] that is remembered across compositions.
+ */
 @Composable
 fun rememberCustomTabsLauncher(): CustomTabsLauncher {
     val context = LocalContext.current
