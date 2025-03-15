@@ -20,12 +20,8 @@ import io.github.oshai.kotlinlogging.KotlinLogging
 
 private val logger = KotlinLogging.logger {}
 
-interface CustomTabsLauncher {
-    fun launch(uri: Uri)
-}
-
-private class CustomTabsLauncherImpl(val context: Context) : CustomTabsLauncher {
-    override fun launch(uri: Uri) {
+class CustomTabsLauncher(private val context: Context) {
+    fun launch(uri: Uri) {
         val activity = context.findActivity()
         try {
             CustomTabsIntent.Builder().build()
@@ -54,11 +50,11 @@ private fun Context.findActivity(): Activity? =
 internal object CustomTabsLauncherModule {
     @Provides
     fun providesCustomTabsLauncher(@ApplicationContext context: Context): CustomTabsLauncher =
-        CustomTabsLauncherImpl(context = context)
+        CustomTabsLauncher(context = context)
 }
 
 @Composable
 fun rememberCustomTabsLauncher(): CustomTabsLauncher {
     val context = LocalContext.current
-    return remember(context) { CustomTabsLauncherImpl(context = context) }
+    return remember(context) { CustomTabsLauncher(context = context) }
 }
