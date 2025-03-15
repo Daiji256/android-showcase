@@ -11,17 +11,17 @@ import io.github.oshai.kotlinlogging.KotlinLogging
 private val logger = KotlinLogging.logger {}
 
 /**
- * A [UriHandler] that shows a Toast instead of throwing [IllegalArgumentException].
+ * A [UriHandler] that shows a Toast instead of throwing [ActivityNotFoundException].
  *
- * Note: [IllegalArgumentException] is not thrown if the URI cannot be opened.
+ * Note: [ActivityNotFoundException] is not thrown if the URI cannot be opened.
  */
 class SafeUriHandler(private val context: Context) : UriHandler {
     /**
      * Open given [uri] in browser.
      *
-     * Shows a Toast instead of throwing [IllegalArgumentException] if [uri] cannot be opened.
+     * Shows a Toast instead of throwing [ActivityNotFoundException] if [uri] cannot be opened.
      *
-     * Note: [IllegalArgumentException] is not thrown if [uri] cannot be opened.
+     * Note: [ActivityNotFoundException] is not thrown if [uri] cannot be opened.
      */
     override fun openUri(uri: String) {
         try {
