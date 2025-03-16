@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
+import io.github.daiji256.showcase.core.designsystem.theme.ShowcaseAnimations
 import io.github.daiji256.showcase.core.ui.showcase.ShowcaseScreenRoute
 import io.github.daiji256.showcase.core.ui.showcase.showcaseScreen
 import io.github.daiji256.showcase.feature.customtabs.CustomTabsSummary
@@ -22,6 +23,10 @@ internal fun MainNavHost(
     NavHost(
         startDestination = ShowcaseScreenRoute,
         navController = navController,
+        enterTransition = ShowcaseAnimations.enterTransition,
+        exitTransition = ShowcaseAnimations.exitTransition,
+        popEnterTransition = ShowcaseAnimations.popEnterTransition,
+        popExitTransition = ShowcaseAnimations.popExitTransition,
         modifier = modifier,
     ) {
         showcaseScreen(
