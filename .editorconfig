@@ -1,10 +1,10 @@
 [*.{kt,kts}]
-ktlint_code_style = android_studio
-ktlint_experimental = enabled
-ktlint_standard_class-signature = disabled
-ktlint_standard_function-signature = disabled
-ktlint_function_naming_ignore_when_annotated_with = Composable, Test
-ktlint_property_naming_constant_naming = pascal_case
+compose_allowed_composition_locals = LocalNavController
 ij_kotlin_allow_trailing_comma = true
 ij_kotlin_allow_trailing_comma_on_call_site = true
-compose_allowed_composition_locals = LocalNavController
+ktlint_code_style = android_studio
+ktlint_experimental = enabled
+ktlint_function_naming_ignore_when_annotated_with = Composable,Test
+ktlint_property_naming_constant_naming = pascal_case
+ktlint_standard_class-signature = disabled
+ktlint_standard_function-signature = disabled
