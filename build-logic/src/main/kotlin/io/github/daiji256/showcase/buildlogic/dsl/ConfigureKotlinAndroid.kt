@@ -16,6 +16,9 @@ internal fun Project.configureKotlinAndroid(extension: CommonExtension<*, *, *, 
 
     configure<KotlinAndroidProjectExtension> {
         jvmToolchain(21)
-        compilerOptions.jvmTarget.set(JvmTarget.JVM_21)
+        compilerOptions {
+            jvmTarget.set(JvmTarget.JVM_21)
+            freeCompilerArgs.add("-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi")
+        }
     }
 }
