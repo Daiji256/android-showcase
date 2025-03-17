@@ -12,6 +12,6 @@ dependencies {
     api(libs.kotlinx.collections.immutable)
     api(libs.kotlinx.serialization.core)
     api(libs.slf4j.simple)
+    testImplementation(projects.core.testing)
     testImplementation(libs.testParameterInjector)
-    testImplementation(libs.turbine)
 }

@@ -13,4 +13,5 @@ dependencies {
     implementation(projects.core.ui)
     implementation(libs.activity.compose)
     implementation(libs.browser)
+    testImplementation(projects.core.testing)
 }
