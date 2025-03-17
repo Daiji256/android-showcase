@@ -1,6 +1,7 @@
 [versions]
 activity-compose = "1.10.1"
 androidGradlePlugin = "8.9.0"
+androidxTestRules = "1.6.1"
 browser = "1.8.0"
 compose-bom = "2025.02.00"
 composeRules = "0.4.22"
@@ -22,6 +23,7 @@ turbine = "1.2.0"
 
 [libraries]
 activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activity-compose" }
+androidx-test-rules = { group = "androidx.test", name = "rules", version.ref = "androidxTestRules" }
 browser = { group = "androidx.browser", name = "browser", version.ref = "browser" }
 compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "compose-bom" }
 compose-material3 = { group = "androidx.compose.material3", name = "material3" }
