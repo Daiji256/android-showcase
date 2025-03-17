@@ -26,11 +26,6 @@ class AndroidLibraryPlugin : Plugin<Project> {
             }
 
             dependencies {
-                implementation(libs.library("kotlin.logging"))
-                implementation(libs.library("kotlinx.coroutines.core"))
-                implementation(libs.library("kotlinx.collections.immutable"))
-                implementation(libs.library("kotlinx.serialization.core"))
-                implementation(libs.library("slf4j.simple"))
                 testImplementation(libs.library("kotlin.test"))
                 testImplementation(libs.library("kotlinx.coroutines.test"))
             }

@@ -40,5 +40,4 @@ dependencies {
     implementation(projects.feature.ktlint)
     implementation(projects.feature.roborazzi)
     implementation(libs.activity.compose)
-    implementation(libs.kotlinx.collections.immutable)
 }
