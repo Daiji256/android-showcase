@@ -8,17 +8,17 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.net.toUri
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.dropUnlessResumed
 import io.github.daiji256.showcase.core.ui.document.Document
 import io.github.daiji256.showcase.core.ui.markdown.Markdown
-import io.github.daiji256.showcase.core.ui.navigation.LocalNavController
 
 @Composable
-internal fun CustomTabsScreen(viewModel: CustomTabsViewModel = hiltViewModel()) {
-    val navController = LocalNavController.current
+internal fun CustomTabsScreen(
+    onNavigateUpClick: () -> Unit,
+    viewModel: CustomTabsViewModel = hiltViewModel(),
+) {
     val customTabsLauncher = rememberCustomTabsLauncher()
     CustomTabsScreen(
-        onNavigateUpClick = dropUnlessResumed(block = navController::navigateUp),
+        onNavigateUpClick = onNavigateUpClick,
         launchCustomTabFromActivityContext = customTabsLauncher::launch,
         launchCustomTabFromApplicationContext = viewModel::launchCustomTabFromApplicationContext,
     )

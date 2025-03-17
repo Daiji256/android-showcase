@@ -36,8 +36,8 @@ internal fun MainNavHost(
                 RoborazziSummary(navController = navController),
             ),
         )
-        customTabsScreen()
-        ktlintScreen()
-        roborazziScreen()
+        customTabsScreen(navController = navController)
+        ktlintScreen(navController = navController)
+        roborazziScreen(navController = navController)
     }
 }
