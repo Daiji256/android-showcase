@@ -13,4 +13,5 @@ dependencies {
     api(libs.kotlinx.serialization.core)
     api(libs.slf4j.simple)
     testImplementation(libs.testParameterInjector)
+    testImplementation(libs.turbine)
 }
