@@ -5,6 +5,8 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
+import io.github.daiji256.showcase.feature.navigationarguments.child1.child1Screen
+import io.github.daiji256.showcase.feature.navigationarguments.child1.navigateToChild1Screen
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -15,6 +17,7 @@ fun NavGraphBuilder.navigationArgumentsNavGraph(navController: NavController) {
         startDestination = NavigationArgumentsScreenRoute,
     ) {
         navigationArgumentsScreen(navController = navController)
+        child1Screen(navController = navController)
     }
 }
 
@@ -28,6 +31,7 @@ internal fun NavGraphBuilder.navigationArgumentsScreen(navController: NavControl
     composable<NavigationArgumentsScreenRoute> {
         NavigationArgumentsScreen(
             onNavigateUpClick = dropUnlessResumed(block = navController::navigateUp),
+            onNavigateToChild1ScreenClick = navController::navigateToChild1Screen,
         )
     }
 }
