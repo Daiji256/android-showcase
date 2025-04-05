@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.buildlogic.android.library)
     alias(libs.plugins.buildlogic.android.compose)
     alias(libs.plugins.buildlogic.android.hilt)
+    alias(libs.plugins.buildlogic.roborazzi)
 }
 
 android {
