@@ -32,13 +32,13 @@ gradlePlugin {
             id = "buildlogic.android.library"
             implementationClass = "io.github.daiji256.showcase.buildlogic.AndroidLibraryPlugin"
         }
-        register("android.hilt") {
-            id = "buildlogic.android.hilt"
-            implementationClass = "io.github.daiji256.showcase.buildlogic.AndroidHiltPlugin"
-        }
         register("android.compose") {
             id = "buildlogic.android.compose"
             implementationClass = "io.github.daiji256.showcase.buildlogic.AndroidComposePlugin"
+        }
+        register("hilt") {
+            id = "buildlogic.hilt"
+            implementationClass = "io.github.daiji256.showcase.buildlogic.HiltPlugin"
         }
         register("roborazzi") {
             id = "buildlogic.roborazzi"
