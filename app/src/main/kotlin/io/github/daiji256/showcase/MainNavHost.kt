@@ -11,6 +11,8 @@ import io.github.daiji256.showcase.feature.customtabs.CustomTabsSummary
 import io.github.daiji256.showcase.feature.customtabs.customTabsScreen
 import io.github.daiji256.showcase.feature.ktlint.KtlintSummary
 import io.github.daiji256.showcase.feature.ktlint.ktlintScreen
+import io.github.daiji256.showcase.feature.navigationarguments.NavigationArgumentsSummary
+import io.github.daiji256.showcase.feature.navigationarguments.navigationArgumentsScreen
 import io.github.daiji256.showcase.feature.roborazzi.RoborazziSummary
 import io.github.daiji256.showcase.feature.roborazzi.roborazziScreen
 import kotlinx.collections.immutable.persistentListOf
@@ -33,11 +35,13 @@ internal fun MainNavHost(
             features = persistentListOf(
                 CustomTabsSummary(navController = navController),
                 KtlintSummary(navController = navController),
+                NavigationArgumentsSummary(navController = navController),
                 RoborazziSummary(navController = navController),
             ),
         )
         customTabsScreen(navController = navController)
         ktlintScreen(navController = navController)
+        navigationArgumentsScreen(navController = navController)
         roborazziScreen(navController = navController)
     }
 }
