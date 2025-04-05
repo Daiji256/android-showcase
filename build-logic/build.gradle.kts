@@ -18,6 +18,8 @@ dependencies {
     implementation(libs.kotlin.gradlePlugin)
     implementation(libs.compose.gradlePlugin)
     implementation(libs.ksp.gradlePlugin)
+    implementation(libs.roborazzi.gradlePlugin)
+    implementation(libs.roborazzi.core)
 }
 
 gradlePlugin {
@@ -37,6 +39,10 @@ gradlePlugin {
         register("android.compose") {
             id = "buildlogic.android.compose"
             implementationClass = "io.github.daiji256.showcase.buildlogic.AndroidComposePlugin"
+        }
+        register("roborazzi") {
+            id = "buildlogic.roborazzi"
+            implementationClass = "io.github.daiji256.showcase.buildlogic.RoborazziPlugin"
         }
     }
 }

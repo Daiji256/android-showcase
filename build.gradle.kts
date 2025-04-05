@@ -7,6 +7,7 @@ plugins {
     alias(libs.plugins.ktlintGradle) apply false
     alias(libs.plugins.kotlinSerialization) apply false
     alias(libs.plugins.ksp) apply false
+    alias(libs.plugins.roborazzi) apply false
 }
 
 allprojects {

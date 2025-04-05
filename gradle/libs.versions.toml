@@ -4,9 +4,11 @@ androidGradlePlugin = "8.9.0"
 androidxTestRules = "1.6.1"
 browser = "1.8.0"
 compose-bom = "2025.02.00"
+composable-preview-scanner = "0.5.1"
 composeRules = "0.4.22"
 hilt = "2.55"
 hiltNavigationCompose = "1.2.0"
+junit = "4.13.2"
 kotlin = "2.1.10"
 kotlin-logging = "7.0.4"
 kotlinx-collections-immutable = "0.3.8"
@@ -17,6 +19,8 @@ ktlintGradle = "12.2.0"
 lifecycle = "2.8.7"
 markdown = "0.7.3"
 navigation-compose = "2.8.8"
+robolectric = "4.14.1"
+roborazzi = "1.39.0"
 slf4j = "2.0.17"
 testParameterInjector = "1.18"
 turbine = "1.2.0"
@@ -28,13 +32,16 @@ browser = { group = "androidx.browser", name = "browser", version.ref = "browser
 compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "compose-bom" }
 compose-material3 = { group = "androidx.compose.material3", name = "material3" }
 compose-ui = { group = "androidx.compose.ui", name = "ui" }
+compose-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
 compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
+composable-preview-scanner-android = { group = "io.github.sergio-sastre.ComposablePreviewScanner", name = "android", version.ref = "composable-preview-scanner" }
 composeRules = { group = "io.nlopez.compose.rules", name = "ktlint", version.ref = "composeRules" }
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
 hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.ref = "hilt" }
 hilt-core = { group = "com.google.dagger", name = "hilt-core", version.ref = "hilt" }
 hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hiltNavigationCompose" }
+junit = { module = "junit:junit", version.ref = "junit" }
 kotlin-logging = { group = "io.github.oshai", name = "kotlin-logging-jvm", version.ref = "kotlin-logging" }
 kotlin-test = { group = "org.jetbrains.kotlin", name = "kotlin-test", version.ref = "kotlin" }
 kotlinx-collections-immutable = { group = "org.jetbrains.kotlinx", name = "kotlinx-collections-immutable", version.ref = "kotlinx-collections-immutable" }
@@ -45,6 +52,11 @@ lifecycle-runtimeCompose = { group = "androidx.lifecycle", name = "lifecycle-run
 lifecycle-viewModelCompose = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "lifecycle" }
 markdown = { group = "org.jetbrains", name = "markdown", version.ref = "markdown" }
 navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigation-compose" }
+robolectric = { group = "org.robolectric", name = "robolectric", version.ref = "robolectric" }
+roborazzi = { group = "io.github.takahirom.roborazzi", name = "roborazzi", version.ref = "roborazzi" }
+roborazzi-compose = { group = "io.github.takahirom.roborazzi", name = "roborazzi-compose", version.ref = "roborazzi" }
+roborazzi-compose-preview-scanner-support = { group = "io.github.takahirom.roborazzi", name = "roborazzi-compose-preview-scanner-support", version.ref = "roborazzi" }
+roborazzi-core = { group = "io.github.takahirom.roborazzi", name = "roborazzi-core", version.ref = "roborazzi" }
 slf4j-simple = { group = "org.slf4j", name = "slf4j-simple", version.ref = "slf4j" }
 testParameterInjector = { group = "com.google.testparameterinjector", name = "test-parameter-injector", version.ref = "testParameterInjector" }
 turbine = { group = "app.cash.turbine", name = "turbine", version.ref = "turbine" }
@@ -53,6 +65,7 @@ android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", ver
 compose-gradlePlugin = { group = "org.jetbrains.kotlin", name = "compose-compiler-gradle-plugin", version.ref = "kotlin" }
 kotlin-gradlePlugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
 ksp-gradlePlugin = { group = "com.google.devtools.ksp", name = "com.google.devtools.ksp.gradle.plugin", version.ref = "ksp" }
+roborazzi-gradlePlugin = { module = "io.github.takahirom.roborazzi:roborazzi-gradle-plugin", version.ref = "roborazzi" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "androidGradlePlugin" }
@@ -63,8 +76,10 @@ kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 ktlintGradle = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlintGradle" }
 kotlinSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+roborazzi = { id = "io.github.takahirom.roborazzi", version.ref = "roborazzi" }
 
 buildlogic-android-application = { id = "buildlogic.android.application", version = "unspecified" }
 buildlogic-android-compose = { id = "buildlogic.android.compose", version = "unspecified" }
 buildlogic-android-hilt = { id = "buildlogic.android.hilt", version = "unspecified" }
 buildlogic-android-library = { id = "buildlogic.android.library", version = "unspecified" }
+buildlogic-roborazzi = { id = "buildlogic.roborazzi", version = "unspecified" }
