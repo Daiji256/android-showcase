@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.buildlogic.android.library)
+    alias(libs.plugins.buildlogic.android.compose)
 }
 
 android {
@@ -7,8 +8,16 @@ android {
 }
 
 dependencies {
+    api(libs.junit)
     api(libs.kotlin.test)
     api(libs.kotlinx.coroutines.test)
+    api(libs.robolectric)
     api(libs.turbine)
     implementation(libs.androidx.test.rules)
+    implementation(libs.compose.ui.test.junit4)
+    implementation(libs.composable.preview.scanner.android)
+    implementation(libs.roborazzi)
+    implementation(libs.roborazzi.compose)
+    implementation(libs.roborazzi.compose.preview.scanner.support)
+    implementation(libs.roborazzi.core)
 }
