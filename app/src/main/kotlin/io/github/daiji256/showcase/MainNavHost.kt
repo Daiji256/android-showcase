@@ -12,7 +12,7 @@ import io.github.daiji256.showcase.feature.customtabs.customTabsScreen
 import io.github.daiji256.showcase.feature.ktlint.KtlintSummary
 import io.github.daiji256.showcase.feature.ktlint.ktlintScreen
 import io.github.daiji256.showcase.feature.navigationarguments.NavigationArgumentsSummary
-import io.github.daiji256.showcase.feature.navigationarguments.navigationArgumentsScreen
+import io.github.daiji256.showcase.feature.navigationarguments.navigationArgumentsNavGraph
 import io.github.daiji256.showcase.feature.roborazzi.RoborazziSummary
 import io.github.daiji256.showcase.feature.roborazzi.roborazziScreen
 import kotlinx.collections.immutable.persistentListOf
@@ -41,7 +41,7 @@ internal fun MainNavHost(
         )
         customTabsScreen(navController = navController)
         ktlintScreen(navController = navController)
-        navigationArgumentsScreen(navController = navController)
+        navigationArgumentsNavGraph(navController = navController)
         roborazziScreen(navController = navController)
     }
 }

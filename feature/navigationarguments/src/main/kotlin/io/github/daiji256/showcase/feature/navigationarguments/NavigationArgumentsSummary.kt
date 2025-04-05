@@ -11,5 +11,5 @@ class NavigationArgumentsSummary(private val navController: NavController) : Fea
     override val title: String
         @Composable get() = stringResource(id = R.string.feature_navigation_arguments_title)
 
-    override fun navigate() = navController.navigateToNavigationArgumentsScreen()
+    override fun navigate() = navController.navigateToNavigationArgumentsNavGraph()
 }
