@@ -1,6 +1,5 @@
 package io.github.daiji256.showcase.feature.navigationarguments.child1
 
-import androidx.lifecycle.compose.dropUnlessResumed
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
@@ -15,7 +14,7 @@ internal fun NavGraphBuilder.child1Screen(navController: NavController) {
         val route = entry.toRoute<Child1ScreenRoute>()
         Child1Screen(
             value = route.value,
-            onNavigateUpClick = dropUnlessResumed(block = navController::navigateUp),
+            onNavigateUpClick = navController::navigateUp,
         )
     }
 }

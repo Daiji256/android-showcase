@@ -28,6 +28,7 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.dropUnlessResumed
 import io.github.daiji256.showcase.core.ui.markdown.Markdown
 
 @Composable
@@ -72,7 +73,7 @@ fun Document(
             LargeTopAppBar(
                 title = { Text(text = title) },
                 navigationIcon = {
-                    IconButton(onClick = onNavigateUpClick) {
+                    IconButton(onClick = dropUnlessResumed(block = onNavigateUpClick)) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = null, // TODO

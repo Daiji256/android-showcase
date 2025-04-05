@@ -20,7 +20,7 @@ import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.compose.dropUnlessStarted
+import androidx.lifecycle.compose.dropUnlessResumed
 import io.github.daiji256.showcase.core.ui.R
 import io.github.daiji256.showcase.core.ui.feature.FeatureSummary
 import kotlinx.collections.immutable.ImmutableList
@@ -73,7 +73,7 @@ private fun FeatureItem(
     Text(
         text = feature.title,
         modifier = modifier
-            .clickable(onClick = dropUnlessStarted { feature.navigate() })
+            .clickable(onClick = dropUnlessResumed { feature.navigate() })
             .padding(12.dp),
     )
 }
