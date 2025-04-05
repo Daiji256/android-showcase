@@ -14,11 +14,11 @@ kotlin {
 }
 
 dependencies {
-    implementation(libs.android.gradlePlugin)
-    implementation(libs.kotlin.gradlePlugin)
-    implementation(libs.compose.gradlePlugin)
-    implementation(libs.ksp.gradlePlugin)
-    implementation(libs.roborazzi.gradlePlugin)
+    compileOnly(libs.android.gradlePlugin)
+    compileOnly(libs.kotlin.gradlePlugin)
+    compileOnly(libs.compose.gradlePlugin)
+    compileOnly(libs.ksp.gradlePlugin)
+    compileOnly(libs.roborazzi.gradlePlugin)
     implementation(libs.roborazzi.core)
 }
 
