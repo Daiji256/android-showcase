@@ -17,6 +17,7 @@ import io.github.daiji256.showcase.core.ui.document.Document
 internal fun NavigationArgumentsScreen(
     onNavigateUpClick: () -> Unit,
     onNavigateToChild1ScreenClick: (value: String) -> Unit,
+    onNavigateToChild2ScreenClick: (value: String) -> Unit,
 ) {
     var value by rememberSaveable { mutableStateOf("") }
     Document(
@@ -31,7 +32,14 @@ internal fun NavigationArgumentsScreen(
             onClick = dropUnlessResumed { onNavigateToChild1ScreenClick(value) },
         ) {
             Text(
-                text = "TODO",
+                text = "1",
+            )
+        }
+        Button(
+            onClick = dropUnlessResumed { onNavigateToChild2ScreenClick(value) },
+        ) {
+            Text(
+                text = "2",
             )
         }
     }
@@ -44,5 +52,6 @@ private fun NavigationArgumentsScreenPreview() {
     NavigationArgumentsScreen(
         onNavigateUpClick = {},
         onNavigateToChild1ScreenClick = {},
+        onNavigateToChild2ScreenClick = {},
     )
 }

@@ -10,7 +10,7 @@ internal fun Child1Screen(
     onNavigateUpClick: () -> Unit,
 ) {
     Document(
-        title = "TODO",
+        title = "Child1",
         markdown = value,
         onNavigateUpClick = onNavigateUpClick,
     )
