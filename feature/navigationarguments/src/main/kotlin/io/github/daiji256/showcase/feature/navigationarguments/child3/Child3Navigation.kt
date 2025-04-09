@@ -25,18 +25,18 @@ internal fun NavGraphBuilder.child3Screen(navController: NavController) {
 internal fun NavController.navigateToChild3Screen(argument: String) =
     navigate(route = Child3ScreenRoute(argument = argument))
 
-internal interface Child3ArgumentsGetter {
-    fun getArgument(): String
+internal interface Child3Arguments {
+    val argument: String
 }
 
 @Module
 @InstallIn(ViewModelComponent::class)
-internal object Child3ArgumentsGetterModule {
+internal object Child3ArgumentsModule {
     @Provides
-    fun providesChild3ArgumentsGetter(savedStateHandle: SavedStateHandle): Child3ArgumentsGetter =
-        object : Child3ArgumentsGetter {
+    fun providesChild3Arguments(savedStateHandle: SavedStateHandle): Child3Arguments =
+        object : Child3Arguments {
             private val route = savedStateHandle.toRoute<Child3ScreenRoute>()
 
-            override fun getArgument(): String = route.argument
+            override val argument: String = route.argument
         }
 }

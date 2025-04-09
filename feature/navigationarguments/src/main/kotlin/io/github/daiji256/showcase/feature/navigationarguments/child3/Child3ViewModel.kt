@@ -6,7 +6,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 internal class Child3ViewModel @Inject constructor(
-    argumentsGetter: Child3ArgumentsGetter,
+    arguments: Child3Arguments,
 ) : ViewModel() {
-    val argument: String = argumentsGetter.getArgument()
+    val argument: String = arguments.argument
 }
