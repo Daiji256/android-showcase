@@ -18,6 +18,7 @@ internal fun NavigationArgumentsScreen(
     onNavigateUpClick: () -> Unit,
     onNavigateToChild1ScreenClick: (value: String) -> Unit,
     onNavigateToChild2ScreenClick: (value: String) -> Unit,
+    onNavigateToChild3ScreenClick: (value: String) -> Unit,
 ) {
     var value by rememberSaveable { mutableStateOf("") }
     Document(
@@ -42,6 +43,13 @@ internal fun NavigationArgumentsScreen(
                 text = "2",
             )
         }
+        Button(
+            onClick = dropUnlessResumed { onNavigateToChild3ScreenClick(value) },
+        ) {
+            Text(
+                text = "3",
+            )
+        }
     }
 }
 
@@ -53,5 +61,6 @@ private fun NavigationArgumentsScreenPreview() {
         onNavigateUpClick = {},
         onNavigateToChild1ScreenClick = {},
         onNavigateToChild2ScreenClick = {},
+        onNavigateToChild3ScreenClick = {},
     )
 }

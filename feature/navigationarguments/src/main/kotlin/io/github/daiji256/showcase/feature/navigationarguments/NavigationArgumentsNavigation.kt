@@ -8,6 +8,8 @@ import io.github.daiji256.showcase.feature.navigationarguments.child1.child1Scre
 import io.github.daiji256.showcase.feature.navigationarguments.child1.navigateToChild1Screen
 import io.github.daiji256.showcase.feature.navigationarguments.child2.child2Screen
 import io.github.daiji256.showcase.feature.navigationarguments.child2.navigateToChild2Screen
+import io.github.daiji256.showcase.feature.navigationarguments.child3.child3Screen
+import io.github.daiji256.showcase.feature.navigationarguments.child3.navigateToChild3Screen
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -20,6 +22,7 @@ fun NavGraphBuilder.navigationArgumentsNavGraph(navController: NavController) {
         navigationArgumentsScreen(navController = navController)
         child1Screen(navController = navController)
         child2Screen(navController = navController)
+        child3Screen(navController = navController)
     }
 }
 
@@ -35,6 +38,7 @@ internal fun NavGraphBuilder.navigationArgumentsScreen(navController: NavControl
             onNavigateUpClick = navController::navigateUp,
             onNavigateToChild1ScreenClick = navController::navigateToChild1Screen,
             onNavigateToChild2ScreenClick = navController::navigateToChild2Screen,
+            onNavigateToChild3ScreenClick = navController::navigateToChild3Screen,
         )
     }
 }
