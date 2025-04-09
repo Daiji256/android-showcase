@@ -11,19 +11,19 @@ internal fun Child3Screen(
     viewModel: Child3ViewModel = hiltViewModel(),
 ) {
     Child3Screen(
-        value = viewModel.value,
+        argument = viewModel.argument,
         onNavigateUpClick = onNavigateUpClick,
     )
 }
 
 @Composable
 private fun Child3Screen(
-    value: String,
+    argument: String,
     onNavigateUpClick: () -> Unit,
 ) {
     Document(
         title = "Child3",
-        markdown = value,
+        markdown = argument,
         onNavigateUpClick = onNavigateUpClick,
     )
 }
@@ -33,7 +33,7 @@ private fun Child3Screen(
 private fun Child3ScreenPreview() {
     // TODO: Theme
     Child3Screen(
-        value = "TODO",
+        argument = "TODO",
         onNavigateUpClick = {},
     )
 }

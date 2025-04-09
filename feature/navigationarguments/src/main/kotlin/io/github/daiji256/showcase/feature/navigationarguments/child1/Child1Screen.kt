@@ -6,12 +6,12 @@ import io.github.daiji256.showcase.core.ui.document.Document
 
 @Composable
 internal fun Child1Screen(
-    value: String,
+    argument: String,
     onNavigateUpClick: () -> Unit,
 ) {
     Document(
         title = "Child1",
-        markdown = value,
+        markdown = argument,
         onNavigateUpClick = onNavigateUpClick,
     )
 }
@@ -21,7 +21,7 @@ internal fun Child1Screen(
 private fun Child1ScreenPreview() {
     // TODO: Theme
     Child1Screen(
-        value = "TODO",
+        argument = "TODO",
         onNavigateUpClick = {},
     )
 }

@@ -12,7 +12,7 @@ import dagger.hilt.android.components.ViewModelComponent
 import kotlinx.serialization.Serializable
 
 @Serializable
-internal data class Child3ScreenRoute(val value: String)
+internal data class Child3ScreenRoute(val argument: String)
 
 internal fun NavGraphBuilder.child3Screen(navController: NavController) {
     composable<Child3ScreenRoute> {
@@ -22,11 +22,11 @@ internal fun NavGraphBuilder.child3Screen(navController: NavController) {
     }
 }
 
-internal fun NavController.navigateToChild3Screen(value: String) =
-    navigate(route = Child3ScreenRoute(value = value))
+internal fun NavController.navigateToChild3Screen(argument: String) =
+    navigate(route = Child3ScreenRoute(argument = argument))
 
 internal interface Child3ArgumentsGetter {
-    fun getValue(): String
+    fun getArgument(): String
 }
 
 @Module
@@ -37,6 +37,6 @@ internal object Child3ArgumentsGetterModule {
         object : Child3ArgumentsGetter {
             private val route = savedStateHandle.toRoute<Child3ScreenRoute>()
 
-            override fun getValue(): String = route.value
+            override fun getArgument(): String = route.argument
         }
 }

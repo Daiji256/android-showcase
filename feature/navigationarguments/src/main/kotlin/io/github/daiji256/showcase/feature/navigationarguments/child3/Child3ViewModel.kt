@@ -8,5 +8,5 @@ import javax.inject.Inject
 internal class Child3ViewModel @Inject constructor(
     argumentsGetter: Child3ArgumentsGetter,
 ) : ViewModel() {
-    val value: String = argumentsGetter.getValue()
+    val argument: String = argumentsGetter.getArgument()
 }

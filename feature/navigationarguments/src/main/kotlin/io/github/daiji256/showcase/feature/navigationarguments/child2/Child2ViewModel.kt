@@ -10,5 +10,5 @@ import javax.inject.Inject
 internal class Child2ViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
-    val value: String = savedStateHandle.toRoute<Child2ScreenRoute>().value
+    val argument: String = savedStateHandle.toRoute<Child2ScreenRoute>().argument
 }

@@ -6,7 +6,7 @@ import androidx.navigation.compose.composable
 import kotlinx.serialization.Serializable
 
 @Serializable
-internal data class Child2ScreenRoute(val value: String)
+internal data class Child2ScreenRoute(val argument: String)
 
 internal fun NavGraphBuilder.child2Screen(navController: NavController) {
     composable<Child2ScreenRoute> {
@@ -16,5 +16,5 @@ internal fun NavGraphBuilder.child2Screen(navController: NavController) {
     }
 }
 
-internal fun NavController.navigateToChild2Screen(value: String) =
-    navigate(route = Child2ScreenRoute(value = value))
+internal fun NavController.navigateToChild2Screen(argument: String) =
+    navigate(route = Child2ScreenRoute(argument = argument))
