@@ -9,6 +9,7 @@ import io.github.daiji256.showcase.buildlogic.dsl.roborazzi
 import io.github.daiji256.showcase.buildlogic.dsl.testImplementation
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.kotlin.dsl.apply
 import org.gradle.kotlin.dsl.assign
 import org.gradle.kotlin.dsl.dependencies
 
@@ -18,13 +19,13 @@ class RoborazziPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {
             with(pluginManager) {
+                apply(RobolectricPlugin::class)
                 apply(libs.plugin("roborazzi").pluginId)
             }
 
             android {
                 testOptions {
                     unitTests {
-                        isIncludeAndroidResources = true
                         all {
                             it.systemProperties["robolectric.pixelCopyRenderMode"] = "hardware"
                         }
@@ -48,8 +49,6 @@ class RoborazziPlugin : Plugin<Project> {
 
             dependencies {
                 testImplementation(libs.library("composable.preview.scanner.android"))
-                testImplementation(libs.library("junit"))
-                testImplementation(libs.library("robolectric"))
                 testImplementation(libs.library("roborazzi"))
                 testImplementation(libs.library("roborazzi.compose"))
                 testImplementation(libs.library("roborazzi.compose.preview.scanner.support"))

@@ -40,6 +40,10 @@ gradlePlugin {
             id = "buildlogic.hilt"
             implementationClass = "io.github.daiji256.showcase.buildlogic.HiltPlugin"
         }
+        register("robolectric") {
+            id = "buildlogic.robolectric"
+            implementationClass = "io.github.daiji256.showcase.buildlogic.RobolectricPlugin"
+        }
         register("roborazzi") {
             id = "buildlogic.roborazzi"
             implementationClass = "io.github.daiji256.showcase.buildlogic.RoborazziPlugin"
