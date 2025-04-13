@@ -1,4 +1,4 @@
-package io.github.daiji256.showcase.feature.navigationarguments
+package io.github.daiji256.showcase.feature.navigationarguments.argumentsender
 
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
@@ -12,9 +12,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.dropUnlessResumed
 import io.github.daiji256.showcase.core.ui.document.Document
+import io.github.daiji256.showcase.feature.navigationarguments.R
 
 @Composable
-internal fun NavigationArgumentsScreen(
+internal fun ArgumentSenderScreen(
     onNavigateUpClick: () -> Unit,
     onNavigateToChild1ScreenClick: (value: String) -> Unit,
     onNavigateToChild2ScreenClick: (value: String) -> Unit,
@@ -55,9 +56,9 @@ internal fun NavigationArgumentsScreen(
 
 @Preview
 @Composable
-private fun NavigationArgumentsScreenPreview() {
+private fun ArgumentSenderScreenPreview() {
     // TODO: Theme
-    NavigationArgumentsScreen(
+    ArgumentSenderScreen(
         onNavigateUpClick = {},
         onNavigateToChild1ScreenClick = {},
         onNavigateToChild2ScreenClick = {},

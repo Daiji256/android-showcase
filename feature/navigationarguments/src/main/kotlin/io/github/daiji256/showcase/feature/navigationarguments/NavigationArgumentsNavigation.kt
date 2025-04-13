@@ -2,14 +2,12 @@ package io.github.daiji256.showcase.feature.navigationarguments
 
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
-import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
+import io.github.daiji256.showcase.feature.navigationarguments.argumentsender.ArgumentSenderScreenRoute
+import io.github.daiji256.showcase.feature.navigationarguments.argumentsender.argumentSenderScreen
 import io.github.daiji256.showcase.feature.navigationarguments.child1.child1Screen
-import io.github.daiji256.showcase.feature.navigationarguments.child1.navigateToChild1Screen
 import io.github.daiji256.showcase.feature.navigationarguments.child2.child2Screen
-import io.github.daiji256.showcase.feature.navigationarguments.child2.navigateToChild2Screen
 import io.github.daiji256.showcase.feature.navigationarguments.child3.child3Screen
-import io.github.daiji256.showcase.feature.navigationarguments.child3.navigateToChild3Screen
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -17,9 +15,9 @@ internal data object NavigationArgumentsNavGraphRoute
 
 fun NavGraphBuilder.navigationArgumentsNavGraph(navController: NavController) {
     navigation<NavigationArgumentsNavGraphRoute>(
-        startDestination = NavigationArgumentsScreenRoute,
+        startDestination = ArgumentSenderScreenRoute,
     ) {
-        navigationArgumentsScreen(navController = navController)
+        argumentSenderScreen(navController = navController)
         child1Screen(navController = navController)
         child2Screen(navController = navController)
         child3Screen(navController = navController)
@@ -28,17 +26,3 @@ fun NavGraphBuilder.navigationArgumentsNavGraph(navController: NavController) {
 
 fun NavController.navigateToNavigationArgumentsNavGraph() =
     navigate(route = NavigationArgumentsNavGraphRoute)
-
-@Serializable
-internal data object NavigationArgumentsScreenRoute
-
-internal fun NavGraphBuilder.navigationArgumentsScreen(navController: NavController) {
-    composable<NavigationArgumentsScreenRoute> {
-        NavigationArgumentsScreen(
-            onNavigateUpClick = navController::navigateUp,
-            onNavigateToChild1ScreenClick = navController::navigateToChild1Screen,
-            onNavigateToChild2ScreenClick = navController::navigateToChild2Screen,
-            onNavigateToChild3ScreenClick = navController::navigateToChild3Screen,
-        )
-    }
-}
