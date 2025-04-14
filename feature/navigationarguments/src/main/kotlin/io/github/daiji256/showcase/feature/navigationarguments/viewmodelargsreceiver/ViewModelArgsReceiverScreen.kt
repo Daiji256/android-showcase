@@ -1,4 +1,4 @@
-package io.github.daiji256.showcase.feature.navigationarguments.child3
+package io.github.daiji256.showcase.feature.navigationarguments.viewmodelargsreceiver
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
@@ -6,34 +6,34 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import io.github.daiji256.showcase.core.ui.document.Document
 
 @Composable
-internal fun Child3Screen(
+internal fun ViewModelArgsReceiverScreen(
     onNavigateUpClick: () -> Unit,
-    viewModel: Child3ViewModel = hiltViewModel(),
+    viewModel: ViewModelArgsReceiverViewModel = hiltViewModel(),
 ) {
-    Child3Screen(
-        argument = viewModel.argument,
+    ViewModelArgsReceiverScreen(
+        arg = viewModel.arg,
         onNavigateUpClick = onNavigateUpClick,
     )
 }
 
 @Composable
-private fun Child3Screen(
-    argument: String,
+private fun ViewModelArgsReceiverScreen(
+    arg: String,
     onNavigateUpClick: () -> Unit,
 ) {
     Document(
-        title = "Child3",
-        markdown = argument,
+        title = "ViewModelArgsReceiver",
+        markdown = arg,
         onNavigateUpClick = onNavigateUpClick,
     )
 }
 
 @Preview
 @Composable
-private fun Child3ScreenPreview() {
+private fun ViewModelArgsReceiverScreenPreview() {
     // TODO: Theme
-    Child3Screen(
-        argument = "TODO",
+    ViewModelArgsReceiverScreen(
+        arg = "TODO",
         onNavigateUpClick = {},
     )
 }

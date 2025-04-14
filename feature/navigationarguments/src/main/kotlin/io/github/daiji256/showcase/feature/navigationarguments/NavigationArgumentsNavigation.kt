@@ -3,11 +3,11 @@ package io.github.daiji256.showcase.feature.navigationarguments
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.navigation
-import io.github.daiji256.showcase.feature.navigationarguments.argumentsender.ArgumentSenderScreenRoute
-import io.github.daiji256.showcase.feature.navigationarguments.argumentsender.argumentSenderScreen
-import io.github.daiji256.showcase.feature.navigationarguments.child1.child1Screen
-import io.github.daiji256.showcase.feature.navigationarguments.child2.child2Screen
-import io.github.daiji256.showcase.feature.navigationarguments.child3.child3Screen
+import io.github.daiji256.showcase.feature.navigationarguments.argssender.ArgsSenderScreenRoute
+import io.github.daiji256.showcase.feature.navigationarguments.argssender.argsSenderScreen
+import io.github.daiji256.showcase.feature.navigationarguments.diargsreceiver.diArgsReceiverScreen
+import io.github.daiji256.showcase.feature.navigationarguments.directargsreceiver.directArgsReceiverScreen
+import io.github.daiji256.showcase.feature.navigationarguments.viewmodelargsreceiver.viewModelArgsReceiverScreen
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -15,12 +15,12 @@ internal data object NavigationArgumentsNavGraphRoute
 
 fun NavGraphBuilder.navigationArgumentsNavGraph(navController: NavController) {
     navigation<NavigationArgumentsNavGraphRoute>(
-        startDestination = ArgumentSenderScreenRoute,
+        startDestination = ArgsSenderScreenRoute,
     ) {
-        argumentSenderScreen(navController = navController)
-        child1Screen(navController = navController)
-        child2Screen(navController = navController)
-        child3Screen(navController = navController)
+        argsSenderScreen(navController = navController)
+        directArgsReceiverScreen(navController = navController)
+        viewModelArgsReceiverScreen(navController = navController)
+        diArgsReceiverScreen(navController = navController)
     }
 }
 

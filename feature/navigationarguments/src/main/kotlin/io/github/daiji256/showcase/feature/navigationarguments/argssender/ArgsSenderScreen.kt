@@ -1,4 +1,4 @@
-package io.github.daiji256.showcase.feature.navigationarguments.argumentsender
+package io.github.daiji256.showcase.feature.navigationarguments.argssender
 
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
@@ -15,11 +15,11 @@ import io.github.daiji256.showcase.core.ui.document.Document
 import io.github.daiji256.showcase.feature.navigationarguments.R
 
 @Composable
-internal fun ArgumentSenderScreen(
+internal fun ArgsSenderScreen(
     onNavigateUpClick: () -> Unit,
-    onNavigateToChild1ScreenClick: (value: String) -> Unit,
-    onNavigateToChild2ScreenClick: (value: String) -> Unit,
-    onNavigateToChild3ScreenClick: (value: String) -> Unit,
+    onNavigateToDirectArgsReceiverScreenClick: (value: String) -> Unit,
+    onNavigateToViewModelArgsReceiverScreenClick: (value: String) -> Unit,
+    onNavigateToDiArgsReceiverScreenClick: (value: String) -> Unit,
 ) {
     var value by rememberSaveable { mutableStateOf("") }
     Document(
@@ -31,21 +31,21 @@ internal fun ArgumentSenderScreen(
             onValueChange = { value = it },
         )
         Button(
-            onClick = dropUnlessResumed { onNavigateToChild1ScreenClick(value) },
+            onClick = dropUnlessResumed { onNavigateToDirectArgsReceiverScreenClick(value) },
         ) {
             Text(
                 text = "1",
             )
         }
         Button(
-            onClick = dropUnlessResumed { onNavigateToChild2ScreenClick(value) },
+            onClick = dropUnlessResumed { onNavigateToViewModelArgsReceiverScreenClick(value) },
         ) {
             Text(
                 text = "2",
             )
         }
         Button(
-            onClick = dropUnlessResumed { onNavigateToChild3ScreenClick(value) },
+            onClick = dropUnlessResumed { onNavigateToDiArgsReceiverScreenClick(value) },
         ) {
             Text(
                 text = "3",
@@ -56,12 +56,12 @@ internal fun ArgumentSenderScreen(
 
 @Preview
 @Composable
-private fun ArgumentSenderScreenPreview() {
+private fun ArgsSenderScreenPreview() {
     // TODO: Theme
-    ArgumentSenderScreen(
+    ArgsSenderScreen(
         onNavigateUpClick = {},
-        onNavigateToChild1ScreenClick = {},
-        onNavigateToChild2ScreenClick = {},
-        onNavigateToChild3ScreenClick = {},
+        onNavigateToDirectArgsReceiverScreenClick = {},
+        onNavigateToViewModelArgsReceiverScreenClick = {},
+        onNavigateToDiArgsReceiverScreenClick = {},
     )
 }

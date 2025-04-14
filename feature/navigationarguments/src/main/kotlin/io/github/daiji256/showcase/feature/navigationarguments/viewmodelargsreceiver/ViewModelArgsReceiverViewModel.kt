@@ -1,4 +1,4 @@
-package io.github.daiji256.showcase.feature.navigationarguments.child2
+package io.github.daiji256.showcase.feature.navigationarguments.viewmodelargsreceiver
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -7,8 +7,8 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-internal class Child2ViewModel @Inject constructor(
+internal class ViewModelArgsReceiverViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
-    val argument: String = savedStateHandle.toRoute<Child2ScreenRoute>().argument
+    val arg: String = savedStateHandle.toRoute<ViewModelArgsReceiverScreenRoute>().arg
 }
