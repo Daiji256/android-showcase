@@ -29,14 +29,17 @@ internal interface DiArgsReceiverArgs {
     val arg: String
 }
 
+private class DiArgsReceiverArgsImpl(
+    savedStateHandle: SavedStateHandle,
+) : DiArgsReceiverArgs {
+    private val route = savedStateHandle.toRoute<DiArgsReceiverScreenRoute>()
+    override val arg: String = route.arg
+}
+
 @Module
 @InstallIn(ViewModelComponent::class)
 internal object DiArgsReceiverArgsModule {
     @Provides
     fun providesDiArgsReceiverArgs(savedStateHandle: SavedStateHandle): DiArgsReceiverArgs =
-        object : DiArgsReceiverArgs {
-            private val route = savedStateHandle.toRoute<DiArgsReceiverScreenRoute>()
-
-            override val arg: String = route.arg
-        }
+        DiArgsReceiverArgsImpl(savedStateHandle = savedStateHandle)
 }
