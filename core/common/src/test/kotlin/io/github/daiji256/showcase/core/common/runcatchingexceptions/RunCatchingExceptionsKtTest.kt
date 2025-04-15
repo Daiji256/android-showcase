@@ -113,14 +113,14 @@ class RunCatchingExceptionsKtTest {
             MapTestCase.SuccessThrowException,
             MapTestCase.SuccessThrowCancellationException,
             MapTestCase.SuccessThrowError,
-            ->
+                ->
                 success
 
             MapTestCase.FailureReturnValue,
             MapTestCase.FailureThrowException,
             MapTestCase.FailureThrowCancellationException,
             MapTestCase.FailureThrowError,
-            ->
+                ->
                 failure
         }
 
@@ -128,22 +128,22 @@ class RunCatchingExceptionsKtTest {
         when (this) {
             MapTestCase.SuccessReturnValue,
             MapTestCase.FailureReturnValue,
-            ->
+                ->
                 value
 
             MapTestCase.SuccessThrowException,
             MapTestCase.FailureThrowException,
-            ->
+                ->
                 throw exception
 
             MapTestCase.SuccessThrowCancellationException,
             MapTestCase.FailureThrowCancellationException,
-            ->
+                ->
                 throw cancellationException
 
             MapTestCase.SuccessThrowError,
             MapTestCase.FailureThrowError,
-            ->
+                ->
                 throw error
         }
 
@@ -165,7 +165,7 @@ class RunCatchingExceptionsKtTest {
             MapTestCase.FailureThrowException,
             MapTestCase.FailureThrowCancellationException,
             MapTestCase.FailureThrowError,
-            ->
+                ->
                 Result.success(failure)
         }
 
@@ -187,7 +187,7 @@ class RunCatchingExceptionsKtTest {
             MapTestCase.FailureThrowException,
             MapTestCase.FailureThrowCancellationException,
             MapTestCase.FailureThrowError,
-            ->
+                ->
                 Result.success(failure)
         }
 
@@ -234,14 +234,14 @@ class RunCatchingExceptionsKtTest {
             RecoverTestCase.SuccessThrowException,
             RecoverTestCase.SuccessThrowCancellationException,
             RecoverTestCase.SuccessThrowError,
-            ->
+                ->
                 success
 
             RecoverTestCase.FailureReturnValue,
             RecoverTestCase.FailureThrowException,
             RecoverTestCase.FailureThrowCancellationException,
             RecoverTestCase.FailureThrowError,
-            ->
+                ->
                 failure
         }
 
@@ -249,22 +249,22 @@ class RunCatchingExceptionsKtTest {
         when (this) {
             RecoverTestCase.SuccessReturnValue,
             RecoverTestCase.FailureReturnValue,
-            ->
+                ->
                 value
 
             RecoverTestCase.SuccessThrowException,
             RecoverTestCase.FailureThrowException,
-            ->
+                ->
                 throw exception
 
             RecoverTestCase.SuccessThrowCancellationException,
             RecoverTestCase.FailureThrowCancellationException,
-            ->
+                ->
                 throw cancellationException
 
             RecoverTestCase.SuccessThrowError,
             RecoverTestCase.FailureThrowError,
-            ->
+                ->
                 throw error
         }
 
@@ -274,7 +274,7 @@ class RunCatchingExceptionsKtTest {
             RecoverTestCase.SuccessThrowException,
             RecoverTestCase.SuccessThrowCancellationException,
             RecoverTestCase.SuccessThrowError,
-            ->
+                ->
                 Result.success(success)
 
             RecoverTestCase.FailureReturnValue ->
@@ -296,7 +296,7 @@ class RunCatchingExceptionsKtTest {
             RecoverTestCase.SuccessThrowException,
             RecoverTestCase.SuccessThrowCancellationException,
             RecoverTestCase.SuccessThrowError,
-            ->
+                ->
                 Result.success(success)
 
             RecoverTestCase.FailureReturnValue ->

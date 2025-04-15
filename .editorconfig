@@ -1,6 +1,7 @@
 [*.{kt,kts}]
 ij_kotlin_allow_trailing_comma = true
 ij_kotlin_allow_trailing_comma_on_call_site = true
+ij_kotlin_indent_before_arrow_on_new_line = true
 ktlint_code_style = android_studio
 ktlint_experimental = enabled
 ktlint_function_naming_ignore_when_annotated_with = Composable,Test
