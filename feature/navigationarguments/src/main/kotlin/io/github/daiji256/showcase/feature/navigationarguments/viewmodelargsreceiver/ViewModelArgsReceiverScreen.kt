@@ -1,9 +1,11 @@
 package io.github.daiji256.showcase.feature.navigationarguments.viewmodelargsreceiver
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
-import io.github.daiji256.showcase.core.ui.document.Document
+import io.github.daiji256.showcase.feature.navigationarguments.R
+import io.github.daiji256.showcase.feature.navigationarguments.ReceiverDocument
 
 @Composable
 internal fun ViewModelArgsReceiverScreen(
@@ -21,9 +23,10 @@ private fun ViewModelArgsReceiverScreen(
     arg: String,
     onNavigateUpClick: () -> Unit,
 ) {
-    Document(
-        title = "ViewModelArgsReceiver",
-        markdown = arg,
+    ReceiverDocument(
+        arg = arg,
+        title = stringResource(id = R.string.feature_nav_args_receiver_view_model_title),
+        methodMd = stringResource(id = R.string.feature_nav_args_receiver_view_model_method_md),
         onNavigateUpClick = onNavigateUpClick,
     )
 }

@@ -15,11 +15,9 @@ internal fun NavGraphBuilder.argsSenderScreen(navController: NavController) {
     composable<ArgsSenderScreenRoute> {
         ArgsSenderScreen(
             onNavigateUpClick = navController::navigateUp,
-            onNavigateToDirectArgsReceiverScreenClick =
-            navController::navigateToDirectArgsReceiverScreen,
-            onNavigateToViewModelArgsReceiverScreenClick =
-            navController::navigateToViewModelArgsReceiverScreen,
-            onNavigateToDiArgsReceiverScreenClick = navController::navigateToDiArgsReceiverScreen,
+            onReceiveArgDirectlyClick = navController::navigateToDirectArgsReceiverScreen,
+            onReceiveArgViaViewModelClick = navController::navigateToViewModelArgsReceiverScreen,
+            onReceiveArgViaDiClick = navController::navigateToDiArgsReceiverScreen,
         )
     }
 }

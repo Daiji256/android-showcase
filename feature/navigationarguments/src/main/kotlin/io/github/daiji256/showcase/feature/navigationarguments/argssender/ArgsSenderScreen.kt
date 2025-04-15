@@ -1,7 +1,6 @@
 package io.github.daiji256.showcase.feature.navigationarguments.argssender
 
 import androidx.compose.material3.Button
-import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -12,43 +11,60 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.dropUnlessResumed
 import io.github.daiji256.showcase.core.ui.document.Document
+import io.github.daiji256.showcase.core.ui.markdown.Markdown
 import io.github.daiji256.showcase.feature.navigationarguments.R
 
 @Composable
 internal fun ArgsSenderScreen(
     onNavigateUpClick: () -> Unit,
-    onNavigateToDirectArgsReceiverScreenClick: (value: String) -> Unit,
-    onNavigateToViewModelArgsReceiverScreenClick: (value: String) -> Unit,
-    onNavigateToDiArgsReceiverScreenClick: (value: String) -> Unit,
+    onReceiveArgDirectlyClick: (arg: String) -> Unit,
+    onReceiveArgViaViewModelClick: (arg: String) -> Unit,
+    onReceiveArgViaDiClick: (arg: String) -> Unit,
 ) {
-    var value by rememberSaveable { mutableStateOf("") }
+    var arg by rememberSaveable { mutableStateOf("") }
     Document(
-        title = stringResource(id = R.string.feature_navigation_arguments_title),
+        title = stringResource(id = R.string.feature_nav_args_title),
         onNavigateUpClick = onNavigateUpClick,
     ) {
+        Markdown(
+            markdown = stringResource(id = R.string.feature_nav_args_sender_doc_summary_md),
+        )
         TextField(
-            value = value,
-            onValueChange = { value = it },
+            value = arg,
+            label = {
+                Markdown(
+                    markdown = stringResource(
+                        id = R.string.feature_nav_args_sender_doc_arg_label_md,
+                    ),
+                )
+            },
+            onValueChange = { arg = it },
         )
         Button(
-            onClick = dropUnlessResumed { onNavigateToDirectArgsReceiverScreenClick(value) },
+            onClick = dropUnlessResumed { onReceiveArgDirectlyClick(arg) },
         ) {
-            Text(
-                text = "1",
+            Markdown(
+                markdown = stringResource(
+                    id = R.string.feature_nav_args_sender_doc_direct_button_label_md,
+                ),
             )
         }
         Button(
-            onClick = dropUnlessResumed { onNavigateToViewModelArgsReceiverScreenClick(value) },
+            onClick = dropUnlessResumed { onReceiveArgViaViewModelClick(arg) },
         ) {
-            Text(
-                text = "2",
+            Markdown(
+                markdown = stringResource(
+                    id = R.string.feature_nav_args_sender_doc_view_model_button_label_md,
+                ),
             )
         }
         Button(
-            onClick = dropUnlessResumed { onNavigateToDiArgsReceiverScreenClick(value) },
+            onClick = dropUnlessResumed { onReceiveArgViaDiClick(arg) },
         ) {
-            Text(
-                text = "3",
+            Markdown(
+                markdown = stringResource(
+                    id = R.string.feature_nav_args_sender_doc_di_button_label_md,
+                ),
             )
         }
     }
@@ -60,8 +76,8 @@ private fun ArgsSenderScreenPreview() {
     // TODO: Theme
     ArgsSenderScreen(
         onNavigateUpClick = {},
-        onNavigateToDirectArgsReceiverScreenClick = {},
-        onNavigateToViewModelArgsReceiverScreenClick = {},
-        onNavigateToDiArgsReceiverScreenClick = {},
+        onReceiveArgDirectlyClick = {},
+        onReceiveArgViaViewModelClick = {},
+        onReceiveArgViaDiClick = {},
     )
 }

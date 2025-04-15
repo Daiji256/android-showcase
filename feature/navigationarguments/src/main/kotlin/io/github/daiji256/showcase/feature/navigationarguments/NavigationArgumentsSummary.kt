@@ -9,7 +9,7 @@ import io.github.daiji256.showcase.core.ui.feature.FeatureSummary
 @Stable
 class NavigationArgumentsSummary(private val navController: NavController) : FeatureSummary {
     override val title: String
-        @Composable get() = stringResource(id = R.string.feature_navigation_arguments_title)
+        @Composable get() = stringResource(id = R.string.feature_nav_args_title)
 
     override fun navigate() = navController.navigateToNavigationArgumentsNavGraph()
 }
