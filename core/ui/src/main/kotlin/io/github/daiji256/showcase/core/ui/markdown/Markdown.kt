@@ -1,7 +1,15 @@
 package io.github.daiji256.showcase.core.ui.markdown
 
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.border
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
@@ -67,10 +75,44 @@ fun Markdown(
                         style = style,
                     )
 
+                is Block.Code ->
+                    CodeBlock(
+                        block = block,
+                        style = style,
+                        markdownStyle = markdownStyle,
+                    )
+
                 is Block.HorizontalRule ->
                     HorizontalDivider()
             }
         }
+    }
+}
+
+@Composable
+private fun CodeBlock(
+    block: Block.Code,
+    style: TextStyle,
+    markdownStyle: MarkdownStyle,
+    modifier: Modifier = Modifier,
+) {
+    Box(
+        modifier = modifier
+            .fillMaxWidth()
+            .border(markdownStyle.codeBlock.borderStroke)
+            .horizontalScroll(rememberScrollState())
+            .padding(markdownStyle.codeBlock.contentPadding),
+    ) {
+        Text(
+            text = buildAnnotatedString {
+                withStyle(style = markdownStyle.codeBlock.spanStyle) {
+                    block.contents.forEach { content ->
+                        append(content = content, style = markdownStyle)
+                    }
+                }
+            },
+            style = style,
+        )
     }
 }
 
@@ -102,7 +144,7 @@ data class MarkdownStyle(
     val h4: SpanStyle,
     val h5: SpanStyle,
     val h6: SpanStyle,
-    val codeBlock: SpanStyle,
+    val codeBlock: CodeBlockStyle,
     val space: Dp,
 ) {
     companion object {
@@ -123,8 +165,35 @@ data class MarkdownStyle(
                 h4 = SpanStyle(fontSize = 1.25.em),
                 h5 = SpanStyle(fontSize = 1.125.em),
                 h6 = SpanStyle(fontSize = 1.0625.em),
-                codeBlock = SpanStyle(fontFamily = FontFamily.Monospace, fontSize = 0.875.em),
+                codeBlock = CodeBlockStyle.Default,
                 space = 8.dp,
+            )
+    }
+}
+
+/**
+ * The style applied to code block.
+ *
+ * @property spanStyle the style for code text
+ * @property borderStroke the border for code block
+ * @property contentPadding the spacing values to apply internally between the container and the
+ * text
+ */
+@Immutable
+data class CodeBlockStyle(
+    val spanStyle: SpanStyle,
+    val borderStroke: BorderStroke,
+    val contentPadding: PaddingValues,
+) {
+    companion object {
+        val Default
+            @Composable get() = CodeBlockStyle(
+                spanStyle = SpanStyle(fontFamily = FontFamily.Monospace, fontSize = 0.875.em),
+                borderStroke = BorderStroke(
+                    width = 1.dp,
+                    color = MaterialTheme.colorScheme.outlineVariant,
+                ),
+                contentPadding = PaddingValues(all = 4.dp),
             )
     }
 }
@@ -308,7 +377,7 @@ private sealed interface Block {
     data class H4(override val contents: List<Content>) : Text
     data class H5(override val contents: List<Content>) : Text
     data class H6(override val contents: List<Content>) : Text
-    data class Code(override val contents: List<Content>) : Text
+    data class Code(val contents: List<Content>) : Block
     data object HorizontalRule : Block
 }
 
@@ -333,7 +402,6 @@ private fun Block.Text.toAnnotatedString(style: MarkdownStyle): AnnotatedString 
                 is Block.H4 -> style.h4
                 is Block.H5 -> style.h5
                 is Block.H6 -> style.h6
-                is Block.Code -> style.codeBlock
             },
         ) {
             contents.forEach { content ->
