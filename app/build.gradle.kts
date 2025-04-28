@@ -39,6 +39,7 @@ dependencies {
     implementation(projects.feature.customtabs)
     implementation(projects.feature.ktlint)
     implementation(projects.feature.navigationarguments)
+    implementation(projects.feature.pullpaging)
     implementation(projects.feature.roborazzi)
     implementation(libs.activity.compose)
     testImplementation(projects.core.testing)

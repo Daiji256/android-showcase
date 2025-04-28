@@ -13,6 +13,8 @@ import io.github.daiji256.showcase.feature.ktlint.KtlintSummary
 import io.github.daiji256.showcase.feature.ktlint.ktlintScreen
 import io.github.daiji256.showcase.feature.navigationarguments.NavigationArgumentsSummary
 import io.github.daiji256.showcase.feature.navigationarguments.navigationArgumentsNavGraph
+import io.github.daiji256.showcase.feature.pullpaging.PullPagingSummary
+import io.github.daiji256.showcase.feature.pullpaging.pullPagingScreen
 import io.github.daiji256.showcase.feature.roborazzi.RoborazziSummary
 import io.github.daiji256.showcase.feature.roborazzi.roborazziScreen
 import kotlinx.collections.immutable.persistentListOf
@@ -36,12 +38,14 @@ internal fun MainNavHost(
                 CustomTabsSummary(navController = navController),
                 KtlintSummary(navController = navController),
                 NavigationArgumentsSummary(navController = navController),
+                PullPagingSummary(navController = navController),
                 RoborazziSummary(navController = navController),
             ),
         )
         customTabsScreen(navController = navController)
         ktlintScreen(navController = navController)
         navigationArgumentsNavGraph(navController = navController)
+        pullPagingScreen(navController = navController)
         roborazziScreen(navController = navController)
     }
 }
