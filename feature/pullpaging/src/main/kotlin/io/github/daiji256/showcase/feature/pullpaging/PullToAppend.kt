@@ -297,10 +297,11 @@ fun AppendIndicator(
                 .align(Alignment.TopCenter)
                 .layout { measurable, constraints ->
                     val placeable = measurable.measure(constraints)
+                    val progress = if (isReached) 1f else pullToAppendState.distanceFraction
                     layout(
                         width = placeable.width,
                         height = max(
-                            (placeable.height * pullToAppendState.distanceFraction).roundToInt(),
+                            (placeable.height * progress).roundToInt(),
                             IndicatorInitialHeight.roundToPx(),
                         ),
                     ) {
@@ -311,11 +312,16 @@ fun AppendIndicator(
             when {
                 isReached ->
                     Box(
+                        contentAlignment = Alignment.Center,
                         modifier = Modifier
-                            .padding(vertical = ReachedDotVerticalPadding)
-                            .size(ReachedDotSize)
-                            .background(color = color, shape = CircleShape),
-                    )
+                            .size(width = IndicatorSize, height = ReachedHeight),
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .size(ReachedDotSize)
+                                .background(color = color, shape = CircleShape),
+                        )
+                    }
 
                 isAppending ->
                     CircularProgressIndicator(
@@ -323,7 +329,7 @@ fun AppendIndicator(
                         color = color,
                         modifier = Modifier
                             .padding(vertical = CircularIndicatorVerticalPadding)
-                            .size(CircularIndicatorSize),
+                            .size(IndicatorSize),
                     )
 
                 else ->
@@ -335,7 +341,7 @@ fun AppendIndicator(
                         trackColor = Color.Transparent,
                         modifier = Modifier
                             .padding(vertical = CircularIndicatorVerticalPadding)
-                            .size(CircularIndicatorSize)
+                            .size(IndicatorSize)
                             .graphicsLayer {
                                 rotationZ = pullToAppendState.distanceFraction * 360
                                 alpha = pullToAppendState.distanceFraction
@@ -348,10 +354,10 @@ fun AppendIndicator(
 
 private val DefaultPositionalThreshold = 80.dp
 private val IndicatorCrossfadeAnimationSpec = tween<Float>(durationMillis = 100)
+private val IndicatorSize = 16.dp
 private val IndicatorInitialHeight = 32.dp
 private val CircularIndicatorStrokeWidth = 2.5.dp
-private val CircularIndicatorSize = 16.dp
 private val CircularIndicatorVerticalPadding = 32.dp
 private val ReachedDotSize = 4.dp
-private val ReachedDotVerticalPadding = 22.dp
+private val ReachedHeight = 48.dp
 private const val DragMultiplier = 0.5f
