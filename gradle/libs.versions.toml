@@ -1,6 +1,6 @@
 [versions]
 activity-compose = "1.10.1"
-androidGradlePlugin = "8.9.2"
+androidGradlePlugin = "8.10.0"
 androidxTestRules = "1.6.1"
 browser = "1.8.0"
 compose-bom = "2025.04.01"
