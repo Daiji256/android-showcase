@@ -23,7 +23,7 @@ robolectric = "4.14.1"
 roborazzi = "1.43.1"
 slf4j = "2.0.17"
 testParameterInjector = "1.18"
-turbine = "1.2.0"
+turbine = "1.2.1"
 
 [libraries]
 activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activity-compose" }
