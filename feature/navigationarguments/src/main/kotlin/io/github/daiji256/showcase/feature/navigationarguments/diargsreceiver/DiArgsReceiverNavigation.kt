@@ -29,15 +29,10 @@ internal data class DiArgsReceiverArgs(
     val arg: String,
 )
 
-private fun SavedStateHandle.toDiArgsReceiverArgs(): DiArgsReceiverArgs {
-    val route = this.toRoute<DiArgsReceiverScreenRoute>()
-    return DiArgsReceiverArgs(arg = route.arg)
-}
-
 @Module
 @InstallIn(ViewModelComponent::class)
 internal object DiArgsReceiverArgsModule {
     @Provides
     fun providesDiArgsReceiverArgs(savedStateHandle: SavedStateHandle): DiArgsReceiverArgs =
-        savedStateHandle.toDiArgsReceiverArgs()
+        DiArgsReceiverArgs(arg = savedStateHandle.toRoute<DiArgsReceiverScreenRoute>().arg)
 }
