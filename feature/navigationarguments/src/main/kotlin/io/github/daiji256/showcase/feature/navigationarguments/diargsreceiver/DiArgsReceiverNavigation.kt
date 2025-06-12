@@ -25,14 +25,12 @@ internal fun NavGraphBuilder.diArgsReceiverScreen(navController: NavController) 
 internal fun NavController.navigateToDiArgsReceiverScreen(arg: String) =
     navigate(route = DiArgsReceiverScreenRoute(arg = arg))
 
-internal data class DiArgsReceiverArgs(
-    val arg: String,
-)
-
 @Module
 @InstallIn(ViewModelComponent::class)
-internal object DiArgsReceiverArgsModule {
+internal object DiArgsReceiverScreenRouteModule {
     @Provides
-    fun providesDiArgsReceiverArgs(savedStateHandle: SavedStateHandle): DiArgsReceiverArgs =
-        DiArgsReceiverArgs(arg = savedStateHandle.toRoute<DiArgsReceiverScreenRoute>().arg)
+    fun providesDiArgsReceiverScreenRoute(
+        savedStateHandle: SavedStateHandle,
+    ): DiArgsReceiverScreenRoute =
+        savedStateHandle.toRoute<DiArgsReceiverScreenRoute>()
 }

@@ -6,7 +6,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 internal class DiArgsReceiverViewModel @Inject constructor(
-    args: DiArgsReceiverArgs,
+    route: DiArgsReceiverScreenRoute,
 ) : ViewModel() {
-    val arg: String = args.arg
+    val arg: String = route.arg
 }
