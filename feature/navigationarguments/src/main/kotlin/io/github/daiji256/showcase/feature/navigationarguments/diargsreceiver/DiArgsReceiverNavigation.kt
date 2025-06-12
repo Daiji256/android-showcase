@@ -25,15 +25,13 @@ internal fun NavGraphBuilder.diArgsReceiverScreen(navController: NavController) 
 internal fun NavController.navigateToDiArgsReceiverScreen(arg: String) =
     navigate(route = DiArgsReceiverScreenRoute(arg = arg))
 
-internal interface DiArgsReceiverArgs {
-    val arg: String
-}
+internal data class DiArgsReceiverArgs(
+    val arg: String,
+)
 
-private class DiArgsReceiverArgsImpl(
-    savedStateHandle: SavedStateHandle,
-) : DiArgsReceiverArgs {
-    private val route = savedStateHandle.toRoute<DiArgsReceiverScreenRoute>()
-    override val arg: String = route.arg
+private fun SavedStateHandle.toDiArgsReceiverArgs(): DiArgsReceiverArgs {
+    val route = this.toRoute<DiArgsReceiverScreenRoute>()
+    return DiArgsReceiverArgs(arg = route.arg)
 }
 
 @Module
@@ -41,5 +39,5 @@ private class DiArgsReceiverArgsImpl(
 internal object DiArgsReceiverArgsModule {
     @Provides
     fun providesDiArgsReceiverArgs(savedStateHandle: SavedStateHandle): DiArgsReceiverArgs =
-        DiArgsReceiverArgsImpl(savedStateHandle = savedStateHandle)
+        savedStateHandle.toDiArgsReceiverArgs()
 }

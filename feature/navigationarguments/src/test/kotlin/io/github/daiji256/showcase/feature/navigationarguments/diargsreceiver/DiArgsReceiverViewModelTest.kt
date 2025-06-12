@@ -7,9 +7,7 @@ class DiArgsReceiverViewModelTest {
     @Test
     fun test_dummy_arg() {
         val viewModel = DiArgsReceiverViewModel(
-            args = object : DiArgsReceiverArgs {
-                override val arg: String = "dummy"
-            },
+            args = DiArgsReceiverArgs(arg = "dummy"),
         )
         assertEquals(viewModel.arg, "dummy")
     }
