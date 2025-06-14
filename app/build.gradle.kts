@@ -40,6 +40,7 @@ dependencies {
     implementation(projects.feature.ktlint)
     implementation(projects.feature.navigationarguments)
     implementation(projects.feature.roborazzi)
+    implementation(projects.feature.safeurihandler)
     implementation(libs.activity.compose)
     testImplementation(projects.core.testing)
 }
