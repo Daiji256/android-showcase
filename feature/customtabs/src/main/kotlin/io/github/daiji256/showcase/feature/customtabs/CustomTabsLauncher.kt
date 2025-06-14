@@ -16,9 +16,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ActivityRetainedComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
-import io.github.oshai.kotlinlogging.KotlinLogging
-
-private val logger = KotlinLogging.logger {}
+import io.github.aakira.napier.Napier
 
 /**
  * Launcher for Custom Tabs.
@@ -47,7 +45,7 @@ class CustomTabsLauncher(private val context: Context) {
                 }
                 .launchUrl(activity ?: context, uri)
         } catch (e: ActivityNotFoundException) {
-            logger.error(e) { "Can't open $uri." }
+            Napier.e(e) { "Can't open $uri." }
             Toast.makeText(activity ?: context, "Can't open $uri.", Toast.LENGTH_SHORT).show()
         }
     }
