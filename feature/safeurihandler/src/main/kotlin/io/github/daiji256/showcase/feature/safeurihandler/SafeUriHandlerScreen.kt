@@ -78,5 +78,6 @@ private fun SafeUriHandlerScreenPreview() {
     // TODO: Theme
     SafeUriHandlerScreen(
         onNavigateUpClick = {},
+        openUri = {},
     )
 }
