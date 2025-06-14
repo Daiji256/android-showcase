@@ -49,7 +49,7 @@ private fun CustomTabsScreen(
                 id = R.string.feature_custom_tabs_document_demos_activity_context_md,
             ),
         )
-        Button(onClick = { launchCustomTabFromActivityContext(exampleUri) }) {
+        Button(onClick = { launchCustomTabFromActivityContext(ExampleUri) }) {
             Text(
                 text = stringResource(
                     id = R.string.feature_custom_tabs_document_demos_launch_button,
@@ -61,7 +61,7 @@ private fun CustomTabsScreen(
                 id = R.string.feature_custom_tabs_document_demos_application_context_md,
             ),
         )
-        Button(onClick = { launchCustomTabFromApplicationContext(exampleUri) }) {
+        Button(onClick = { launchCustomTabFromApplicationContext(ExampleUri) }) {
             Text(
                 text = stringResource(
                     id = R.string.feature_custom_tabs_document_demos_launch_button,
@@ -71,7 +71,7 @@ private fun CustomTabsScreen(
     }
 }
 
-private val exampleUri = "https://example.com".toUri()
+private val ExampleUri = "https://example.com".toUri()
 
 @Preview
 @Composable
