@@ -1,3 +1,8 @@
 <resources>
     <string name="feature_safe_uri_handler_title">Safe Uri Handler</string>
+    <string name="feature_safe_uri_handler_document_summary_md">`SafeUriHandler` is a `UriHandler` that catches `ActivityNotFoundException` and shows a Toast instead of throwing.</string>
+    <string name="feature_safe_uri_handler_document_demos_header_md">## Demos</string>
+    <string name="feature_safe_uri_handler_document_demos_can_open_md">When the URI can be opened by an external app (e.g., a browser), it launches that app.</string>
+    <string name="feature_safe_uri_handler_document_demos_cannot_open_md">When the URI cannot be opened by any app, a Toast message is displayed.</string>
+    <string name="feature_safe_uri_handler_document_demos_open_button">open</string>
 </resources>
