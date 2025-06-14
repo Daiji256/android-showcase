@@ -15,6 +15,8 @@ import io.github.daiji256.showcase.feature.navigationarguments.NavigationArgumen
 import io.github.daiji256.showcase.feature.navigationarguments.navigationArgumentsNavGraph
 import io.github.daiji256.showcase.feature.roborazzi.RoborazziSummary
 import io.github.daiji256.showcase.feature.roborazzi.roborazziScreen
+import io.github.daiji256.showcase.feature.safeurihandler.SafeUriHandlerSummary
+import io.github.daiji256.showcase.feature.safeurihandler.safeUriHandlerScreen
 import kotlinx.collections.immutable.persistentListOf
 
 @Composable
@@ -37,11 +39,13 @@ internal fun MainNavHost(
                 KtlintSummary(navController = navController),
                 NavigationArgumentsSummary(navController = navController),
                 RoborazziSummary(navController = navController),
+                SafeUriHandlerSummary(navController = navController),
             ),
         )
         customTabsScreen(navController = navController)
         ktlintScreen(navController = navController)
         navigationArgumentsNavGraph(navController = navController)
         roborazziScreen(navController = navController)
+        safeUriHandlerScreen(navController = navController)
     }
 }
