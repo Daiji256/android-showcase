@@ -38,6 +38,7 @@ dependencies {
     implementation(projects.core.ui)
     implementation(projects.feature.customtabs)
     implementation(projects.feature.ktlint)
+    implementation(projects.feature.localsnackbarhoststate)
     implementation(projects.feature.navigationarguments)
     implementation(projects.feature.roborazzi)
     implementation(projects.feature.safeurihandler)
