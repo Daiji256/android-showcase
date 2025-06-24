@@ -1,3 +1,11 @@
 <resources>
-    <string name="feature_lshs_title">"LocalSnackBarHostState"</string>
+    <string name="feature_lshs_title">"LocalSnackbarHostState"</string>
+    <string name="feature_lshs_first_title">"LocalSnackbarHostState (1)"</string>
+    <string name="feature_lshs_first_snackbar_message">"snackbar 1"</string>
+    <string name="feature_lshs_first_document_summary_md">"Providing `SnackbarHostState` per screen enables screen-specific snackbar display. This allows child components to show snackbars on the correct screen without scope awareness.\n\nFor example, using `MyScaffold` per screen:\n\n```kotlin\n@Composable\nfun MyScaffold(\n    snackbarHostState: SnackbarHostState =\n        remember { SnackbarHostState() },\n    // …\n) {\n    CompositionLocalProvider(\n        LocalSnackbarHostState provides snackbarHostState,\n    ) {\n        Scaffold(\n            snackbarHost = {\n                SnackbarHost(\n                    hostState = snackbarHostState,\n                )\n            },\n            // …\n        )\n    }\n}\n```\n\n```kotlin\n@Composable\nfun SampleScreen() {\n    MyScaffold {\n        SomethingComposable()\n    }\n}\n\n@Composable\nfun SomethingComposable() {\n    val snackbarHostState =\n        LocalSnackbarHostState.current\n    // …\n}\n```"</string>
+    <string name="feature_lshs_first_document_show_snackbar_button">"show snackbar 1"</string>
+    <string name="feature_lshs_first_navigate_to_second_screen_button">"navigate to second screen"</string>
+    <string name="feature_lshs_second_title">"LocalSnackbarHostState (2)"</string>
+    <string name="feature_lshs_second_snackbar_message">"snackbar 2"</string>
+    <string name="feature_lshs_second_document_show_snackbar_button">"show snackbar 2"</string>
 </resources>
