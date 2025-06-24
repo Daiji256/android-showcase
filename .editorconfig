@@ -1,4 +1,5 @@
 [*.{kt,kts}]
+compose_allowed_composition_locals = LocalSnackbarHostState
 ij_kotlin_allow_trailing_comma = true
 ij_kotlin_allow_trailing_comma_on_call_site = true
 ij_kotlin_indent_before_arrow_on_new_line = true
