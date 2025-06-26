@@ -1,6 +1,6 @@
 package io.github.daiji256.showcase.core.ui.localsnackbarhoststate
 
 import androidx.compose.material3.SnackbarHostState
-import androidx.compose.runtime.compositionLocalOf
+import androidx.compose.runtime.staticCompositionLocalOf
 
-val LocalSnackbarHostState = compositionLocalOf { SnackbarHostState() }
+val LocalSnackbarHostState = staticCompositionLocalOf { SnackbarHostState() }
