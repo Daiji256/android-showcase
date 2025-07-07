@@ -2,7 +2,6 @@ package io.github.daiji256.showcase.buildlogic
 
 import io.github.daiji256.showcase.buildlogic.dsl.androidLibrary
 import io.github.daiji256.showcase.buildlogic.dsl.configureKotlinAndroid
-import io.github.daiji256.showcase.buildlogic.dsl.implementation
 import io.github.daiji256.showcase.buildlogic.dsl.library
 import io.github.daiji256.showcase.buildlogic.dsl.libs
 import io.github.daiji256.showcase.buildlogic.dsl.plugin
