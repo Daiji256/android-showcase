@@ -4,7 +4,7 @@
 <![CDATA[\
 [Ktlint](https://pinterest.github.io/ktlint/) is used as the linter for this project.\
 ## Ktlint Integration\
-[Ktlint Gradle](https://github.com/JLLeitschuh/ktlint-gradle)
+[diffplug/spotless](https://github.com/diffplug/spotless/tree/main/plugin-gradle#applying-ktlint-to-kotlin-files)
 is used to integrate ktlint into the project.\
 ## Jetpack Compose Rules\
 [Jetpack Compose Rules](https://mrmans0n.github.io/compose-rules/) is a set of custom ktlint rules
