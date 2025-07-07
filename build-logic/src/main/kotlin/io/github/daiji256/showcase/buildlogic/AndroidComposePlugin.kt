@@ -3,7 +3,6 @@ package io.github.daiji256.showcase.buildlogic
 import io.github.daiji256.showcase.buildlogic.dsl.android
 import io.github.daiji256.showcase.buildlogic.dsl.debugImplementation
 import io.github.daiji256.showcase.buildlogic.dsl.implementation
-import io.github.daiji256.showcase.buildlogic.dsl.ktlintRuleset
 import io.github.daiji256.showcase.buildlogic.dsl.library
 import io.github.daiji256.showcase.buildlogic.dsl.libs
 import io.github.daiji256.showcase.buildlogic.dsl.plugin
@@ -17,7 +16,6 @@ class AndroidComposePlugin : Plugin<Project> {
         with(target) {
             with(pluginManager) {
                 apply(libs.plugin("composeCompiler").pluginId)
-                apply(libs.plugin("ktlintGradle").pluginId)
             }
 
             android {
@@ -34,7 +32,6 @@ class AndroidComposePlugin : Plugin<Project> {
                 implementation(libs.library("lifecycle.viewModelCompose"))
                 implementation(libs.library("navigation.compose"))
                 debugImplementation(libs.library("compose.ui.tooling"))
-                ktlintRuleset(libs.library("composeRules"))
             }
         }
     }
