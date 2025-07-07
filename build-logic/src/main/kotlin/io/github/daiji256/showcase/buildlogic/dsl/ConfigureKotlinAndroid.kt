@@ -9,9 +9,9 @@ import org.jetbrains.kotlin.gradle.dsl.KotlinAndroidProjectExtension
 
 internal fun Project.configureKotlinAndroid(extension: CommonExtension<*, *, *, *, *, *>) {
     with(extension) {
-        compileSdk = 35
-        defaultConfig.minSdk = 28
-        (defaultConfig as? ApplicationBaseFlavor)?.targetSdk = 35
+        compileSdk = libs.version("compileSdk").toInt()
+        defaultConfig.minSdk = libs.version("minSdk").toInt()
+        (defaultConfig as? ApplicationBaseFlavor)?.targetSdk = libs.version("targetSdk").toInt()
     }
 
     configure<KotlinAndroidProjectExtension> {

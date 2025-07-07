@@ -1,4 +1,8 @@
 [versions]
+minSdk = "28"
+targetSdk = "35"
+compileSdk = "35"
+
 activity-compose = "1.10.1"
 androidGradlePlugin = "8.11.0"
 androidxTestRules = "1.6.1"
