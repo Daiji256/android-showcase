@@ -80,7 +80,7 @@ class CombineStateKtTest {
     fun combine_vararg() {
         val flow1 = MutableStateFlow(1)
         val flow2 = MutableStateFlow(2.0f)
-        val target = combineState(
+        val target = combineState<Any, String>(
             flow1,
             flow2,
         ) { values ->
