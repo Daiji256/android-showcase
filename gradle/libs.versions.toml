@@ -14,12 +14,14 @@ kotlinx-collections-immutable = "0.4.0"
 kotlinx-coroutines = "1.10.2"
 kotlinx-serialization = "1.9.0"
 ksp = "2.2.0-2.0.2"
+ktlint = "1.5.0"
 lifecycle = "2.9.1"
 markdown = "0.7.3"
 napier = "2.7.1"
 navigation-compose = "2.9.1"
 robolectric = "4.15.1"
 roborazzi = "1.46.1"
+spotless = "7.0.4"
 testParameterInjector = "1.18"
 turbine = "1.2.1"
 
@@ -45,6 +47,7 @@ kotlinx-collections-immutable = { group = "org.jetbrains.kotlinx", name = "kotli
 kotlinx-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
 kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "kotlinx-coroutines" }
 kotlinx-serialization-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-core", version.ref = "kotlinx-serialization" }
+ktlint-cli = { group = "com.pinterest.ktlint", name = "ktlint-cli", version.ref = "ktlint" }
 lifecycle-runtimeCompose = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "lifecycle" }
 lifecycle-viewModelCompose = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "lifecycle" }
 markdown = { group = "org.jetbrains", name = "markdown", version.ref = "markdown" }
@@ -73,6 +76,7 @@ kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlinSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 roborazzi = { id = "io.github.takahirom.roborazzi", version.ref = "roborazzi" }
+spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
 
 buildlogic-android-application = { id = "buildlogic.android.application", version = "unspecified" }
 buildlogic-android-compose = { id = "buildlogic.android.compose", version = "unspecified" }
