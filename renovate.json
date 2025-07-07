@@ -11,5 +11,13 @@
         "/^com.google.devtools.ksp/"
       ]
     }
+  ],
+  "ignoreDeps": [
+    "buildlogic.android.application",
+    "buildlogic.android.library",
+    "buildlogic.android.compose",
+    "buildlogic.hilt",
+    "buildlogic.robolectric",
+    "buildlogic.roborazzi"
   ]
 }
