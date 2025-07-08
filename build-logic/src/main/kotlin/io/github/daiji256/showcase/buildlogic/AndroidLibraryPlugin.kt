@@ -2,13 +2,10 @@ package io.github.daiji256.showcase.buildlogic
 
 import io.github.daiji256.showcase.buildlogic.dsl.androidLibrary
 import io.github.daiji256.showcase.buildlogic.dsl.configureKotlinAndroid
-import io.github.daiji256.showcase.buildlogic.dsl.library
 import io.github.daiji256.showcase.buildlogic.dsl.libs
 import io.github.daiji256.showcase.buildlogic.dsl.plugin
-import io.github.daiji256.showcase.buildlogic.dsl.testImplementation
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import org.gradle.kotlin.dsl.dependencies
 
 @Suppress("unused")
 class AndroidLibraryPlugin : Plugin<Project> {
