@@ -23,11 +23,6 @@ class AndroidLibraryPlugin : Plugin<Project> {
             androidLibrary {
                 configureKotlinAndroid(this)
             }
-
-            dependencies {
-                testImplementation(libs.library("kotlin.test"))
-                testImplementation(libs.library("kotlinx.coroutines.test"))
-            }
         }
     }
 }
