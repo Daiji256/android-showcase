@@ -1,6 +1,5 @@
 package io.github.daiji256.showcase.feature.customtabs
 
-import android.net.Uri
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -19,16 +18,20 @@ internal fun CustomTabsScreen(
     val customTabsLauncher = rememberCustomTabsLauncher()
     CustomTabsScreen(
         onNavigateUpClick = onNavigateUpClick,
-        launchCustomTabFromActivityContext = customTabsLauncher::launch,
-        launchCustomTabFromApplicationContext = viewModel::launchCustomTabFromApplicationContext,
+        launchCustomTabFromActivityContext = { uri ->
+            customTabsLauncher.launch(uri = uri.toUri())
+        },
+        launchCustomTabFromApplicationContext = { uri ->
+            viewModel.launchCustomTabFromApplicationContext(uri = uri.toUri())
+        },
     )
 }
 
 @Composable
 private fun CustomTabsScreen(
     onNavigateUpClick: () -> Unit,
-    launchCustomTabFromActivityContext: (Uri) -> Unit,
-    launchCustomTabFromApplicationContext: (Uri) -> Unit,
+    launchCustomTabFromActivityContext: (uri: String) -> Unit,
+    launchCustomTabFromApplicationContext: (uri: String) -> Unit,
 ) {
     Document(
         title = stringResource(id = R.string.feature_custom_tabs_title),
@@ -71,7 +74,7 @@ private fun CustomTabsScreen(
     }
 }
 
-private val ExampleUri = "https://example.com".toUri()
+private const val ExampleUri = "https://example.com"
 
 @Preview
 @Composable
