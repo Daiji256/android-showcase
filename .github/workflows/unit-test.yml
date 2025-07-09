@@ -27,7 +27,7 @@ jobs:
         uses: gradle/actions/setup-gradle@ac638b010cf58a27ee6c972d7336334ccaf61c96 # v4
 
       - name: Run Unit Test
-        run: ./gradlew testDebugUnitTest
+        run: ./gradlew testDebugUnitTest -Proborazzi.test.compare=true
 
       - name: Display Unit Test Report
         if: success() || failure()
