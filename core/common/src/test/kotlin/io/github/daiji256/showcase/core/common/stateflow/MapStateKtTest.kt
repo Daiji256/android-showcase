@@ -2,10 +2,10 @@ package io.github.daiji256.showcase.core.common.stateflow
 
 import app.cash.turbine.test
 import kotlin.math.roundToInt
+import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.test.runTest
-import org.junit.Test
 
 class MapStateKtTest {
     @Test

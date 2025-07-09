@@ -1,7 +1,7 @@
 package io.github.daiji256.showcase.feature.navigationarguments.diargsreceiver
 
+import kotlin.test.Test
 import kotlin.test.assertEquals
-import org.junit.Test
 
 class DiArgsReceiverViewModelTest {
     @Test
