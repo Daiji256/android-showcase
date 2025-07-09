@@ -1,8 +1,8 @@
 package io.github.daiji256.showcase.feature.navigationarguments.viewmodelargsreceiver
 
 import androidx.lifecycle.SavedStateHandle
+import kotlin.test.Test
 import kotlin.test.assertEquals
-import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 
