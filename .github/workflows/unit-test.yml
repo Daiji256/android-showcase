@@ -26,7 +26,7 @@ jobs:
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@ac638b010cf58a27ee6c972d7336334ccaf61c96 # v4
 
-      - name: Download Screenshots
+      - name: Download screenshots
         uses: dawidd6/action-download-artifact@ac66b43f0e6a346234dd65d4d0c8fbb31cb316e5 # v11
         continue-on-error: true
         with:
@@ -34,10 +34,10 @@ jobs:
           workflow: record-screenshots.yml
           branch: ${{ github.base_ref }}
 
-      - name: Run Unit Test
+      - name: Run unit test
         run: ./gradlew testDebugUnitTest -Proborazzi.test.compare=true
 
-      - name: Display Unit Test Report
+      - name: Display unit test report
         if: success() || failure()
         uses: dorny/test-reporter@890a17cecf52a379fc869ab770a71657660be727 # v2.1.0
         with:
@@ -45,7 +45,7 @@ jobs:
           path: '**/build/test-results/**/TEST-*.xml'
           reporter: java-junit
 
-      - name: Upload Screenshot Test Results
+      - name: Upload screenshot test results
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: screenshot-test-results
@@ -74,14 +74,14 @@ jobs:
           git checkout --orphan "$COMPANION_BRANCH"
           git rm -rf .
 
-      - name: Download Screenshot Test Results
+      - name: Download screenshot test results
         uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
         continue-on-error: true
         with:
           name: screenshot-test-results
           path: screenshot-test-results
 
-      - name: Create Report
+      - name: Create report
         id: create-report
         run: |
           files=$(find . -type f -name "*_compare.png" | sort)
@@ -108,7 +108,7 @@ jobs:
             echo "report_present=false" >> "$GITHUB_OUTPUT"
           fi
 
-      - name: Comment Report
+      - name: Comment on report
         if: success() && steps.create-report.outputs.report_present == 'true'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
