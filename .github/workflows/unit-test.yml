@@ -81,7 +81,7 @@ jobs:
 
       - name: Display Screenshot Test Results
         run: |
-          files=$(find . | sort)
+          files=$(find . -type f -name "*_compare.png" | sort)
           if [ -n "$files" ]; then
             echo "## Screenshot Test Results\n" >> "$GITHUB_STEP_SUMMARY"
             echo "| Name | Image |\n" >> "$GITHUB_STEP_SUMMARY"
