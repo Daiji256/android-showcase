@@ -59,8 +59,10 @@ jobs:
       - unit-test
     permissions:
       contents: write
+      pull-requests: write
     env:
       COMPANION_BRANCH: _companion_${{ github.base_ref }}_${{ github.head_ref }}
+      REPORT_FILE: report.md
 
     steps:
       - name: Checkout
@@ -79,27 +81,37 @@ jobs:
           name: screenshot-test-results
           path: screenshot-test-results
 
-      - name: Display Screenshot Test Results
+      - name: Create Screenshot Test Results
         run: |
           files=$(find . -type f -name "*_compare.png" | sort)
           if [ -n "$files" ]; then
-            echo "## Screenshot Test Results" >> "$GITHUB_STEP_SUMMARY"
-            echo "" >> "$GITHUB_STEP_SUMMARY"
-            echo "<details><summary>Expand for details</summary>" >> "$GITHUB_STEP_SUMMARY"
+            echo "## Screenshot Test Results" >> "$REPORT_FILE"
+            echo "" >> "$REPORT_FILE"
+            echo "<details><summary>Expand for details</summary>" >> "$REPORT_FILE"
             for file in $files; do
               image_path="https://github.com/${{ github.repository }}/blob/$COMPANION_BRANCH/$file"
-              echo "" >> "$GITHUB_STEP_SUMMARY"
-              echo "$(basename "$file" | sed 's/_compare\.png$//')" >> "$GITHUB_STEP_SUMMARY"
-              echo "![]($image_path?raw=true)" >> "$GITHUB_STEP_SUMMARY"
+              echo "" >> "$REPORT_FILE"
+              echo "$(basename "$file" | sed 's/_compare\.png$//')" >> "$REPORT_FILE"
+              echo "![]($image_path?raw=true)" >> "$REPORT_FILE"
               git add "$file"
             done
-            echo "" >> "$GITHUB_STEP_SUMMARY"
-            echo "</details>" >> "$GITHUB_STEP_SUMMARY"
+            echo "" >> "$REPORT_FILE"
+            echo "</details>" >> "$REPORT_FILE"
+            echo "report_present=true" >> "$GITHUB_OUTPUT"
             git config --global user.name screenshot-bot
             git config --global user.email 41898282+github-actions[bot]@users.noreply.github.com
             git commit -m "screenshot-test-results"
             git push -f origin HEAD:"$COMPANION_BRANCH"
+          else
+            echo "report_present=false" >> "$GITHUB_OUTPUT"
           fi
+
+      - name: Comment Screenshot Test Results
+        if: success() && steps.check_file.outputs.report_present == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: gh pr comment $PR_NUMBER --body-file $REPORT_FILE --edit-last --create-if-none
 
       - name: Delete outdated _companion branches
         run: |
