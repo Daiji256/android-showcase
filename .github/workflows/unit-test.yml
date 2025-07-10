@@ -81,7 +81,8 @@ jobs:
           name: screenshot-test-results
           path: screenshot-test-results
 
-      - name: Create Screenshot Test Results
+      - name: Create Report
+        id: create-report
         run: |
           files=$(find . -type f -name "*_compare.png" | sort)
           if [ -n "$files" ]; then
@@ -107,8 +108,8 @@ jobs:
             echo "report_present=false" >> "$GITHUB_OUTPUT"
           fi
 
-      - name: Comment Screenshot Test Results
-        if: success() && steps.check_file.outputs.report_present == 'true'
+      - name: Comment Report
+        if: success() && steps.create-report.outputs.report_present == 'true'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PR_NUMBER: ${{ github.event.pull_request.number }}
