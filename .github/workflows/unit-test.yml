@@ -32,7 +32,7 @@ jobs:
         with:
           name: screenshots
           workflow: record-screenshots.yml
-          branch: ${{ github.base.ref }}
+          branch: ${{ github.base_ref }}
 
       - name: Run Unit Test
         run: ./gradlew testDebugUnitTest -Proborazzi.test.compare=true
