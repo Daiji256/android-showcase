@@ -84,7 +84,6 @@ jobs:
           files=$(find . -type f -name "*_compare.png" | sort)
           if [ -n "$files" ]; then
             echo "## Screenshot Test Results" >> "$GITHUB_STEP_SUMMARY"
-            echo "" >> "$GITHUB_STEP_SUMMARY"
             for file in $files; do
               image_path="https://github.com/${{ github.repository }}/blob/$COMPANION_BRANCH/$file"
               echo "" >> "$GITHUB_STEP_SUMMARY"
