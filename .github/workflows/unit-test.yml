@@ -87,7 +87,7 @@ jobs:
             echo "| Name | Image |\n" >> "$GITHUB_STEP_SUMMARY"
             echo "| --- | --- |\n" >> "$GITHUB_STEP_SUMMARY"
             for file in $files; do
-              name=$(basename "$file" | sed -r 's/(.{20})/\1<br>/g')
+              name=$(basename "$file")
               image_path="https://github.com/${{ github.repository }}/blob/$COMPANION_BRANCH/$file"
               image="![]($image_path?raw=true)"
               echo "| $name | $image |\n" >> "$GITHUB_STEP_SUMMARY"
