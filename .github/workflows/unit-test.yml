@@ -84,6 +84,8 @@ jobs:
           files=$(find . -type f -name "*_compare.png" | sort)
           if [ -n "$files" ]; then
             echo "## Screenshot Test Results" >> "$GITHUB_STEP_SUMMARY"
+            echo "" >> "$GITHUB_STEP_SUMMARY"
+            echo "<details><summary>Expand for details</summary>" >> "$GITHUB_STEP_SUMMARY"
             for file in $files; do
               image_path="https://github.com/${{ github.repository }}/blob/$COMPANION_BRANCH/$file"
               echo "" >> "$GITHUB_STEP_SUMMARY"
@@ -91,6 +93,8 @@ jobs:
               echo "![]($image_path?raw=true)" >> "$GITHUB_STEP_SUMMARY"
               git add "$file"
             done
+            echo "" >> "$GITHUB_STEP_SUMMARY"
+            echo "</details>" >> "$GITHUB_STEP_SUMMARY"
             git config --global user.name screenshot-bot
             git config --global user.email 41898282+github-actions[bot]@users.noreply.github.com
             git commit -m "screenshot-test-results"
