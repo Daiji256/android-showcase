@@ -54,6 +54,8 @@ jobs:
   screenshot-test-results:
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    needs:
+      - unit-test
     permissions:
       contents: write
     env:
