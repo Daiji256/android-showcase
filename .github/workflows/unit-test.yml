@@ -83,14 +83,14 @@ jobs:
         run: |
           files=$(find . -type f -name "*_compare.png" | sort)
           if [ -n "$files" ]; then
-            echo "## Screenshot Test Results\n" >> "$GITHUB_STEP_SUMMARY"
-            echo "| Name | Image |\n" >> "$GITHUB_STEP_SUMMARY"
-            echo "| --- | --- |\n" >> "$GITHUB_STEP_SUMMARY"
+            echo "## Screenshot Test Results" >> "$GITHUB_STEP_SUMMARY"
+            echo "| Name | Image |" >> "$GITHUB_STEP_SUMMARY"
+            echo "| --- | --- |" >> "$GITHUB_STEP_SUMMARY"
             for file in $files; do
               name=$(basename "$file")
               image_path="https://github.com/${{ github.repository }}/blob/$COMPANION_BRANCH/$file"
               image="![]($image_path?raw=true)"
-              echo "| $name | $image |\n" >> "$GITHUB_STEP_SUMMARY"
+              echo "| $name | $image |" >> "$GITHUB_STEP_SUMMARY"
               git add "$file"
             done
             git config --global user.name screenshot-bot
