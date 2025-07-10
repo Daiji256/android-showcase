@@ -85,7 +85,8 @@ jobs:
         run: |
           files=$(find . -type f -name "*_compare.png" | sort)
           if [ -n "$files" ]; then
-            echo "## Screenshot Test Results" >> "$REPORT_FILE"
+            echo "> [!NOTE]" >> "$REPORT_FILE"
+            echo "> Differences found in $(echo "$files" | wc -l) screenshots." >> "$REPORT_FILE"
             echo "" >> "$REPORT_FILE"
             echo "<details><summary>Expand for details</summary>" >> "$REPORT_FILE"
             for file in $files; do
