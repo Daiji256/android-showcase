@@ -36,7 +36,7 @@ private fun ViewModelArgsReceiverScreen(
 private fun ViewModelArgsReceiverScreenPreview() {
     // TODO: Theme
     ViewModelArgsReceiverScreen(
-        arg = "TODO",
+        arg = "Arg",
         onNavigateUpClick = {},
     )
 }

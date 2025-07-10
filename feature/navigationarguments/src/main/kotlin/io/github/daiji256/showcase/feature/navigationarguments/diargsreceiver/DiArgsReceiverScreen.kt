@@ -36,7 +36,7 @@ private fun DiArgsReceiverScreen(
 private fun DiArgsReceiverScreenPreview() {
     // TODO: Theme
     DiArgsReceiverScreen(
-        arg = "TODO",
+        arg = "Arg",
         onNavigateUpClick = {},
     )
 }

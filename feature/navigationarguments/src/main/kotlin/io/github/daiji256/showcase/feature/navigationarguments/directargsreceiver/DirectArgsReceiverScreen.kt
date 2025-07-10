@@ -24,7 +24,7 @@ internal fun DirectArgsReceiverScreen(
 private fun DirectArgsReceiverScreenPreview() {
     // TODO: Theme
     DirectArgsReceiverScreen(
-        arg = "TODO",
+        arg = "Arg",
         onNavigateUpClick = {},
     )
 }
