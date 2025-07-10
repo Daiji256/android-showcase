@@ -26,6 +26,14 @@ jobs:
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@ac638b010cf58a27ee6c972d7336334ccaf61c96 # v4
 
+      - name: Download Screenshots
+        uses: dawidd6/action-download-artifact@ac66b43f0e6a346234dd65d4d0c8fbb31cb316e5 # v11
+        continue-on-error: true
+        with:
+          name: screenshots
+          workflow: record-screenshots.yml
+          branch: ${{ github.base.ref }}
+
       - name: Run Unit Test
         run: ./gradlew testDebugUnitTest -Proborazzi.test.compare=true
 
@@ -35,3 +43,66 @@ jobs:
         with:
           path: '**/build/test-results/**/TEST-*.xml'
           reporter: java-junit
+
+      - name: Upload Screenshot Test Results
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: screenshot-test-results
+          path: '**/build/outputs/roborazzi/*_compare.png'
+          retention-days: 30
+
+  screenshot-test-results:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    env:
+      COMPANION_BRANCH: _companion_${{ github.base_ref }}_${{ github.head_ref }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Switch _companion branch
+        run: |
+          git branch -D "$COMPANION_BRANCH" || true
+          git checkout --orphan "$COMPANION_BRANCH"
+          git rm -rf .
+
+      - name: Download Screenshot Test Results
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+        continue-on-error: true
+        with:
+          name: screenshot-test-results
+          path: screenshot-test-results
+
+      - name: Display Screenshot Test Results
+        run: |
+          files=$(find . | sort)
+          if [ -z "$files" ]; then
+            exit 0
+          fi
+          echo "## Screenshot Test Results\n" >> "$GITHUB_STEP_SUMMARY"
+          echo "| Name | Image |\n" >> "$GITHUB_STEP_SUMMARY"
+          echo "| --- | --- |\n" >> "$GITHUB_STEP_SUMMARY"
+          for file in $files; do
+            name=$(basename "$file" | sed -r 's/(.{20})/\1<br>/g')
+            image_path="https://github.com/${{ github.repository }}/blob/$COMPANION_BRANCH/$file"
+            image="![]($image_path?raw=true)"
+            echo "| $name | $image |\n" >> "$GITHUB_STEP_SUMMARY"
+            git add "$file"
+          done
+          git config --global user.name screenshot-bot
+          git config --global user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git commit -m "screenshot-test-results"
+          git push -f origin HEAD:"$COMPANION_BRANCH"
+
+      - name: Delete outdated _companion branches
+        run: |
+          now=$(date +%s)
+          git branch -r --format="%(refname:lstrip=3)" | grep _companion | while read -r branch; do
+            last_commit_date=$(git log -1 --format=%ct "origin/$branch")
+            if [ $((now - last_commit_date)) -gt 2592000 ]; then
+              git push -d origin "$branch"
+            fi
+          done
