@@ -82,23 +82,22 @@ jobs:
       - name: Display Screenshot Test Results
         run: |
           files=$(find . | sort)
-          if [ -z "$files" ]; then
-            exit 0
+          if [ -n "$files" ]; then
+            echo "## Screenshot Test Results\n" >> "$GITHUB_STEP_SUMMARY"
+            echo "| Name | Image |\n" >> "$GITHUB_STEP_SUMMARY"
+            echo "| --- | --- |\n" >> "$GITHUB_STEP_SUMMARY"
+            for file in $files; do
+              name=$(basename "$file" | sed -r 's/(.{20})/\1<br>/g')
+              image_path="https://github.com/${{ github.repository }}/blob/$COMPANION_BRANCH/$file"
+              image="![]($image_path?raw=true)"
+              echo "| $name | $image |\n" >> "$GITHUB_STEP_SUMMARY"
+              git add "$file"
+            done
+            git config --global user.name screenshot-bot
+            git config --global user.email 41898282+github-actions[bot]@users.noreply.github.com
+            git commit -m "screenshot-test-results"
+            git push -f origin HEAD:"$COMPANION_BRANCH"
           fi
-          echo "## Screenshot Test Results\n" >> "$GITHUB_STEP_SUMMARY"
-          echo "| Name | Image |\n" >> "$GITHUB_STEP_SUMMARY"
-          echo "| --- | --- |\n" >> "$GITHUB_STEP_SUMMARY"
-          for file in $files; do
-            name=$(basename "$file" | sed -r 's/(.{20})/\1<br>/g')
-            image_path="https://github.com/${{ github.repository }}/blob/$COMPANION_BRANCH/$file"
-            image="![]($image_path?raw=true)"
-            echo "| $name | $image |\n" >> "$GITHUB_STEP_SUMMARY"
-            git add "$file"
-          done
-          git config --global user.name screenshot-bot
-          git config --global user.email 41898282+github-actions[bot]@users.noreply.github.com
-          git commit -m "screenshot-test-results"
-          git push -f origin HEAD:"$COMPANION_BRANCH"
 
       - name: Delete outdated _companion branches
         run: |
