@@ -31,8 +31,8 @@ private fun HiltComposableScreen(
         title = stringResource(id = R.string.feature_hilt_comp_title),
         onNavigateUpClick = onNavigateUpClick,
     ) {
-        Text(text = foo.name)
-        Text(text = bar.name)
+        Text(text = foo.toString())
+        Text(text = bar.toString())
     }
 }
 
@@ -42,7 +42,7 @@ private fun HiltComposableScreenPreview() {
     // TODO: Theme
     HiltComposableScreen(
         onNavigateUpClick = {},
-        foo = Foo(name = "Foo"),
-        bar = Bar(name = "Bar"),
+        foo = Foo(),
+        bar = Bar(),
     )
 }

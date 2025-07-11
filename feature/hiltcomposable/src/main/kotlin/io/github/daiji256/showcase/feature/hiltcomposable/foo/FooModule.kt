@@ -9,5 +9,5 @@ import dagger.hilt.components.SingletonComponent
 @InstallIn(SingletonComponent::class)
 internal object FooModule {
     @Provides
-    fun providesFoo(): Foo = Foo(name = "Foo")
+    fun providesFoo(): Foo = Foo()
 }

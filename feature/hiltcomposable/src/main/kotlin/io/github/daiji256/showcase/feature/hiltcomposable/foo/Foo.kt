@@ -1,3 +1,6 @@
 package io.github.daiji256.showcase.feature.hiltcomposable.foo
 
-class Foo(val name: String)
+import androidx.annotation.Keep
+
+@Keep
+class Foo

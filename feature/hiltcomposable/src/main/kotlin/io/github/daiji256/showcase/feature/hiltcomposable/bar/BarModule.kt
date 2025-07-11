@@ -9,5 +9,5 @@ import io.github.daiji256.showcase.feature.hiltcomposable.hilt.ComposableCompone
 @InstallIn(ComposableComponent::class)
 internal object BarModule {
     @Provides
-    fun providesBar(): Bar = Bar(name = "Bar")
+    fun providesBar(): Bar = Bar()
 }
