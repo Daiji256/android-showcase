@@ -5,6 +5,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import io.github.daiji256.showcase.core.ui.document.Document
+import io.github.daiji256.showcase.feature.hiltcomposable.bar.Bar
+import io.github.daiji256.showcase.feature.hiltcomposable.bar.rememberBar
 import io.github.daiji256.showcase.feature.hiltcomposable.foo.Foo
 import io.github.daiji256.showcase.feature.hiltcomposable.foo.rememberFoo
 
@@ -15,19 +17,22 @@ internal fun HiltComposableScreen(
     HiltComposableScreen(
         onNavigateUpClick = onNavigateUpClick,
         foo = rememberFoo(),
+        bar = rememberBar(),
     )
 }
 
 @Composable
-internal fun HiltComposableScreen(
+private fun HiltComposableScreen(
     onNavigateUpClick: () -> Unit,
     foo: Foo,
+    bar: Bar,
 ) {
     Document(
         title = stringResource(id = R.string.feature_hilt_comp_title),
         onNavigateUpClick = onNavigateUpClick,
     ) {
         Text(text = foo.name)
+        Text(text = bar.name)
     }
 }
 
@@ -38,5 +43,6 @@ private fun HiltComposableScreenPreview() {
     HiltComposableScreen(
         onNavigateUpClick = {},
         foo = Foo(name = "Foo"),
+        bar = Bar(name = "Bar"),
     )
 }
