@@ -37,6 +37,7 @@ dependencies {
     implementation(projects.core.designsystem)
     implementation(projects.core.ui)
     implementation(projects.feature.customtabs)
+    implementation(projects.feature.hiltcomposable)
     implementation(projects.feature.ktlint)
     implementation(projects.feature.localsnackbarhoststate)
     implementation(projects.feature.navigationarguments)

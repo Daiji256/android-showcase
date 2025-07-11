@@ -1,0 +1,4 @@
+<resources>
+    <string name="feature_hilt_comp_title">"Composable with Hilt"</string>
+    <string name="feature_hilt_comp_document_md">"Instructions for injecting dependencies into Composables using Hilt.\n\n## Singleton Injection\n\nSingleton-scoped instances are accessible from any Composable.\n\nExample instance of `Foo` from a `@Singleton` component:\n\n```\n%s\n```\n\n```kotlin\n@Composable\ninline fun &lt;reified T : Any&gt; rememberSingletonEntryPoint(): T { /* … */ }\n```\n\n## Custom Composable Scope\n\nDependencies can be scoped to a Composable.\n\nExample instance of `Bar` from a `@ComposableScoped` component:\n\n```\n%s\n```\n\n```kotlin\n@Scope\nannotation class ComposableScoped\n\n@ComposableScoped\n@DefineComponent(parent = ActivityComponent::class)\ninterface ComposableComponent\n\n@Composable\ninline fun &lt;reified T : Any&gt; rememberComposableEntryPoint(): T { /* … */ }\n```\n"</string>
+</resources>

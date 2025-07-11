@@ -9,6 +9,8 @@ import io.github.daiji256.showcase.core.ui.showcase.ShowcaseScreenRoute
 import io.github.daiji256.showcase.core.ui.showcase.showcaseScreen
 import io.github.daiji256.showcase.feature.customtabs.CustomTabsSummary
 import io.github.daiji256.showcase.feature.customtabs.customTabsScreen
+import io.github.daiji256.showcase.feature.hiltcomposable.HiltComposableSummary
+import io.github.daiji256.showcase.feature.hiltcomposable.hiltComposableScreen
 import io.github.daiji256.showcase.feature.ktlint.KtlintSummary
 import io.github.daiji256.showcase.feature.ktlint.ktlintScreen
 import io.github.daiji256.showcase.feature.localsnackbarhoststate.LocalSnackbarHostStateSummary
@@ -38,6 +40,7 @@ internal fun MainNavHost(
         showcaseScreen(
             features = persistentListOf(
                 CustomTabsSummary(navController = navController),
+                HiltComposableSummary(navController = navController),
                 KtlintSummary(navController = navController),
                 LocalSnackbarHostStateSummary(navController = navController),
                 NavigationArgumentsSummary(navController = navController),
@@ -46,6 +49,7 @@ internal fun MainNavHost(
             ),
         )
         customTabsScreen(navController = navController)
+        hiltComposableScreen(navController = navController)
         ktlintScreen(navController = navController)
         localSnackbarHostStateNavGraph(navController = navController)
         navigationArgumentsNavGraph(navController = navController)
