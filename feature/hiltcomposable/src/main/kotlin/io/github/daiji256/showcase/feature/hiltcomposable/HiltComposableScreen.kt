@@ -1,6 +1,5 @@
 package io.github.daiji256.showcase.feature.hiltcomposable
 
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -29,11 +28,13 @@ private fun HiltComposableScreen(
 ) {
     Document(
         title = stringResource(id = R.string.feature_hilt_comp_title),
+        markdown = stringResource(
+            id = R.string.feature_hilt_comp_document_md,
+            foo.toString(),
+            bar.toString(),
+        ),
         onNavigateUpClick = onNavigateUpClick,
-    ) {
-        Text(text = foo.toString())
-        Text(text = bar.toString())
-    }
+    )
 }
 
 @Preview
