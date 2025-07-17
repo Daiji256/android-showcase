@@ -59,13 +59,14 @@ private fun sharedIn(forward: Boolean, density: Density): EnterTransition =
             val slideDistance = with(density) { SlideDistanceDp.roundToPx() }
             if (forward) slideDistance else -slideDistance
         },
-    ) + fadeIn(
-        animationSpec = tween(
-            durationMillis = IncomingDurationMillis,
-            delayMillis = OutgoingDurationMillis,
-            easing = LinearOutSlowInEasing,
-        ),
-    )
+    ) +
+        fadeIn(
+            animationSpec = tween(
+                durationMillis = IncomingDurationMillis,
+                delayMillis = OutgoingDurationMillis,
+                easing = LinearOutSlowInEasing,
+            ),
+        )
 
 @Stable
 private fun sharedOut(forward: Boolean, density: Density): ExitTransition =
@@ -78,13 +79,14 @@ private fun sharedOut(forward: Boolean, density: Density): ExitTransition =
             val slideDistance = with(density) { SlideDistanceDp.roundToPx() }
             if (forward) -slideDistance else slideDistance
         },
-    ) + fadeOut(
-        animationSpec = tween(
-            durationMillis = OutgoingDurationMillis,
-            delayMillis = 0,
-            easing = FastOutLinearInEasing,
-        ),
-    )
+    ) +
+        fadeOut(
+            animationSpec = tween(
+                durationMillis = OutgoingDurationMillis,
+                delayMillis = 0,
+                easing = FastOutLinearInEasing,
+            ),
+        )
 
 private val SlideDistanceDp = 30.dp
 private const val ProgressThreshold = 0.35f
