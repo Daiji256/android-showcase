@@ -38,7 +38,7 @@ jobs:
         run: ./gradlew testDebugUnitTest -Proborazzi.test.compare=true
 
       - name: Display unit test report
-        if: success() || failure()
+        if: ${{ !cancelled() }}
         uses: dorny/test-reporter@dc3a92680fcc15842eef52e8c4606ea7ce6bd3f3 # v2.1.1
         with:
           name: unit-test-report
@@ -109,7 +109,7 @@ jobs:
           fi
 
       - name: Comment on report
-        if: success() && steps.create-report.outputs.report_present == 'true'
+        if: ${{ success() && !cancelled() && steps.create-report.outputs.report_present == 'true' }}
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PR_NUMBER: ${{ github.event.pull_request.number }}
