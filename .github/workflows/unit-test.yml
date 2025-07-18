@@ -108,7 +108,7 @@ jobs:
             echo "report_present=false" >> "$GITHUB_OUTPUT"
           fi
 
-      - name: Comment on report
+      - name: Post report
         if: ${{ success() && !cancelled() && steps.create-report.outputs.report_present == 'true' }}
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
