@@ -7,6 +7,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import io.github.daiji256.showcase.core.designsystem.theme.ShowcaseTheme
 import io.github.daiji256.showcase.core.ui.document.Document
 import io.github.daiji256.showcase.core.ui.markdown.Markdown
 import io.github.daiji256.showcase.core.ui.urihandler.SafeUriHandler
@@ -75,9 +76,10 @@ private const val InvalidUri = "invalid-uri"
 @Preview
 @Composable
 private fun SafeUriHandlerScreenPreview() {
-    // TODO: Theme
-    SafeUriHandlerScreen(
-        onNavigateUpClick = {},
-        openUri = {},
-    )
+    ShowcaseTheme {
+        SafeUriHandlerScreen(
+            onNavigateUpClick = {},
+            openUri = {},
+        )
+    }
 }

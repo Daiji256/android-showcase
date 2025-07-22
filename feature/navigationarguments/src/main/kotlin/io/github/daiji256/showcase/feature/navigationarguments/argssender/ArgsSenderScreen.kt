@@ -10,6 +10,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.dropUnlessResumed
+import io.github.daiji256.showcase.core.designsystem.theme.ShowcaseTheme
 import io.github.daiji256.showcase.core.ui.document.Document
 import io.github.daiji256.showcase.core.ui.markdown.Markdown
 import io.github.daiji256.showcase.feature.navigationarguments.R
@@ -73,11 +74,12 @@ internal fun ArgsSenderScreen(
 @Preview
 @Composable
 private fun ArgsSenderScreenPreview() {
-    // TODO: Theme
-    ArgsSenderScreen(
-        onNavigateUpClick = {},
-        onReceiveArgDirectlyClick = {},
-        onReceiveArgViaViewModelClick = {},
-        onReceiveArgViaDiClick = {},
-    )
+    ShowcaseTheme {
+        ArgsSenderScreen(
+            onNavigateUpClick = {},
+            onReceiveArgDirectlyClick = {},
+            onReceiveArgViaViewModelClick = {},
+            onReceiveArgViaDiClick = {},
+        )
+    }
 }

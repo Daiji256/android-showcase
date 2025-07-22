@@ -3,6 +3,7 @@ package io.github.daiji256.showcase.feature.hiltcomposable
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import io.github.daiji256.showcase.core.designsystem.theme.ShowcaseTheme
 import io.github.daiji256.showcase.core.ui.document.Document
 import io.github.daiji256.showcase.feature.hiltcomposable.bar.Bar
 import io.github.daiji256.showcase.feature.hiltcomposable.bar.rememberBar
@@ -40,10 +41,11 @@ private fun HiltComposableScreen(
 @Preview
 @Composable
 private fun HiltComposableScreenPreview() {
-    // TODO: Theme
-    HiltComposableScreen(
-        onNavigateUpClick = {},
-        foo = Foo(),
-        bar = Bar(),
-    )
+    ShowcaseTheme {
+        HiltComposableScreen(
+            onNavigateUpClick = {},
+            foo = Foo(),
+            bar = Bar(),
+        )
+    }
 }

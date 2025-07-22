@@ -10,6 +10,7 @@ android {
 
 dependencies {
     implementation(projects.core.common)
+    implementation(projects.core.designsystem)
     implementation(libs.markdown)
     testImplementation(projects.core.testing)
 }

@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
+import io.github.daiji256.showcase.core.designsystem.theme.ShowcaseTheme
 import io.github.daiji256.showcase.feature.navigationarguments.R
 import io.github.daiji256.showcase.feature.navigationarguments.ReceiverDocument
 
@@ -34,9 +35,10 @@ private fun DiArgsReceiverScreen(
 @Preview
 @Composable
 private fun DiArgsReceiverScreenPreview() {
-    // TODO: Theme
-    DiArgsReceiverScreen(
-        arg = "Arg",
-        onNavigateUpClick = {},
-    )
+    ShowcaseTheme {
+        DiArgsReceiverScreen(
+            arg = "Arg",
+            onNavigateUpClick = {},
+        )
+    }
 }

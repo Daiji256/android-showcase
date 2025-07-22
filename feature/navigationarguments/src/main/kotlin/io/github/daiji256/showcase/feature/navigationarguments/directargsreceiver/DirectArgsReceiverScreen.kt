@@ -3,6 +3,7 @@ package io.github.daiji256.showcase.feature.navigationarguments.directargsreceiv
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import io.github.daiji256.showcase.core.designsystem.theme.ShowcaseTheme
 import io.github.daiji256.showcase.feature.navigationarguments.R
 import io.github.daiji256.showcase.feature.navigationarguments.ReceiverDocument
 
@@ -22,9 +23,10 @@ internal fun DirectArgsReceiverScreen(
 @Preview
 @Composable
 private fun DirectArgsReceiverScreenPreview() {
-    // TODO: Theme
-    DirectArgsReceiverScreen(
-        arg = "Arg",
-        onNavigateUpClick = {},
-    )
+    ShowcaseTheme {
+        DirectArgsReceiverScreen(
+            arg = "Arg",
+            onNavigateUpClick = {},
+        )
+    }
 }
