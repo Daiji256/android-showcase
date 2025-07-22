@@ -9,6 +9,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.dropUnlessResumed
+import io.github.daiji256.showcase.core.designsystem.theme.ShowcaseTheme
 import io.github.daiji256.showcase.core.ui.document.Document
 import io.github.daiji256.showcase.core.ui.localsnackbarhoststate.LocalSnackbarHostState
 import io.github.daiji256.showcase.core.ui.markdown.Markdown
@@ -67,9 +68,10 @@ internal fun FirstScreen(
 @Preview
 @Composable
 private fun FirstScreenPreview() {
-    // TODO: Theme
-    FirstScreen(
-        onNavigateUpClick = {},
-        onNavigateToSecondScreenClick = {},
-    )
+    ShowcaseTheme {
+        FirstScreen(
+            onNavigateUpClick = {},
+            onNavigateToSecondScreenClick = {},
+        )
+    }
 }
