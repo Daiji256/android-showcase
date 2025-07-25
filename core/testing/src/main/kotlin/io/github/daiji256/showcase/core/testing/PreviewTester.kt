@@ -1,8 +1,11 @@
 package io.github.daiji256.showcase.core.testing
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalInspectionMode
-import androidx.compose.ui.test.onRoot
+import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.test.onNodeWithTag
 import com.github.takahirom.roborazzi.AndroidComposePreviewTester
 import com.github.takahirom.roborazzi.ComposePreviewTester
 import com.github.takahirom.roborazzi.ComposePreviewTester.TestParameter.JUnit4TestParameter.AndroidPreviewJUnit4TestParameter
@@ -34,12 +37,14 @@ class PreviewTester :
             CompositionLocalProvider(
                 LocalInspectionMode provides true,
             ) {
-                testParameter.preview()
+                Box(modifier = Modifier.testTag("root")) {
+                    testParameter.preview()
+                }
             }
         }
         val filePath = filePath(preview = testParameter.preview)
         testParameter.composeTestRule.setContent(composable = composable)
-        testParameter.composeTestRule.onRoot().captureRoboImage(filePath = filePath)
+        testParameter.composeTestRule.onNodeWithTag("root").captureRoboImage(filePath = filePath)
     }
 
     private fun filePath(preview: ComposablePreview<AndroidPreviewInfo>): String {
