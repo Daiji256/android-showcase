@@ -8,7 +8,9 @@ import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.test.DarkMode
 import androidx.compose.ui.test.DeviceConfigurationOverride
+import androidx.compose.ui.test.FontScale
 import androidx.compose.ui.test.onNodeWithTag
+import androidx.compose.ui.test.then
 import com.github.takahirom.roborazzi.AndroidComposePreviewTester
 import com.github.takahirom.roborazzi.ComposePreviewTester
 import com.github.takahirom.roborazzi.ComposePreviewTester.TestParameter.JUnit4TestParameter.AndroidPreviewJUnit4TestParameter
@@ -39,7 +41,8 @@ class PreviewTester :
         ) {
             val previewInfo = testParameter.preview.previewInfo
             DeviceConfigurationOverride(
-                override = DeviceConfigurationOverride.DarkMode(previewInfo.isDarkMode),
+                override = DeviceConfigurationOverride.DarkMode(isDarkMode = previewInfo.isDarkMode)
+                    then DeviceConfigurationOverride.FontScale(fontScale = previewInfo.fontScale),
             ) {
                 CompositionLocalProvider(
                     LocalInspectionMode provides true,
