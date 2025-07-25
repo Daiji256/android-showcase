@@ -83,7 +83,7 @@ private fun FeatureItem(
 @Preview
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Preview(fontScale = 0.85f)
-@Preview(fontScale = 2.00f)
+@Preview(fontScale = 2.0f)
 @Composable
 private fun ShowcaseScreenPreview() {
     ShowcaseTheme {
