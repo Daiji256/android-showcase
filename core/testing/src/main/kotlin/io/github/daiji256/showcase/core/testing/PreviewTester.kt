@@ -1,10 +1,13 @@
 package io.github.daiji256.showcase.core.testing
 
+import android.content.res.Configuration
 import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.test.DarkMode
+import androidx.compose.ui.test.DeviceConfigurationOverride
 import androidx.compose.ui.test.onNodeWithTag
 import com.github.takahirom.roborazzi.AndroidComposePreviewTester
 import com.github.takahirom.roborazzi.ComposePreviewTester
@@ -34,11 +37,16 @@ class PreviewTester :
         val composable = testParameter.preview.toRoborazziComposeOptions().configured(
             activityScenario = testParameter.composeTestRule.activityRule.scenario,
         ) {
-            CompositionLocalProvider(
-                LocalInspectionMode provides true,
+            val previewInfo = testParameter.preview.previewInfo
+            DeviceConfigurationOverride(
+                override = DeviceConfigurationOverride.DarkMode(previewInfo.isDarkMode),
             ) {
-                Box(modifier = Modifier.testTag("root")) {
-                    testParameter.preview()
+                CompositionLocalProvider(
+                    LocalInspectionMode provides true,
+                ) {
+                    Box(modifier = Modifier.testTag("root")) {
+                        testParameter.preview()
+                    }
                 }
             }
         }
@@ -46,6 +54,9 @@ class PreviewTester :
         testParameter.composeTestRule.setContent(composable = composable)
         testParameter.composeTestRule.onNodeWithTag("root").captureRoboImage(filePath = filePath)
     }
+
+    val AndroidPreviewInfo.isDarkMode
+        get() = uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
 
     private fun filePath(preview: ComposablePreview<AndroidPreviewInfo>): String {
         val directory = roborazziSystemPropertyOutputDirectory()
