@@ -77,7 +77,7 @@ private fun CustomTabsScreen(
 
 private const val ExampleUri = "https://example.com"
 
-@Preview
+@Preview(showSystemUi = true)
 @Composable
 private fun CustomTabsScreenPreview() {
     ShowcaseTheme {

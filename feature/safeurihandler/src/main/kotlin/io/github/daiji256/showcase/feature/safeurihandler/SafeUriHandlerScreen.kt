@@ -73,7 +73,7 @@ private fun SafeUriHandlerScreen(
 private const val ExampleUri = "https://example.com"
 private const val InvalidUri = "invalid-uri"
 
-@Preview
+@Preview(showSystemUi = true)
 @Composable
 private fun SafeUriHandlerScreenPreview() {
     ShowcaseTheme {

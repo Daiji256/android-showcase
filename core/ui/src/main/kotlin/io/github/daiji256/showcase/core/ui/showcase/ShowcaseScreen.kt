@@ -1,5 +1,6 @@
 package io.github.daiji256.showcase.core.ui.showcase
 
+import android.content.res.Configuration
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.calculateEndPadding
@@ -79,7 +80,10 @@ private fun FeatureItem(
     )
 }
 
-@Preview
+@Preview(showSystemUi = true)
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES, showSystemUi = true)
+@Preview(fontScale = 0.85f, showSystemUi = true)
+@Preview(fontScale = 2.0f, showSystemUi = true)
 @Composable
 private fun ShowcaseScreenPreview() {
     ShowcaseTheme {

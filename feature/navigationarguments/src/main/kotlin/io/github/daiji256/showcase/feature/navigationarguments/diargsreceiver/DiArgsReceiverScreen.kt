@@ -32,7 +32,7 @@ private fun DiArgsReceiverScreen(
     )
 }
 
-@Preview
+@Preview(showSystemUi = true)
 @Composable
 private fun DiArgsReceiverScreenPreview() {
     ShowcaseTheme {

@@ -71,7 +71,7 @@ internal fun ArgsSenderScreen(
     }
 }
 
-@Preview
+@Preview(showSystemUi = true)
 @Composable
 private fun ArgsSenderScreenPreview() {
     ShowcaseTheme {
