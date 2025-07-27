@@ -119,7 +119,7 @@ fun Document(
     }
 }
 
-@Preview
+@Preview(showSystemUi = true)
 @Composable
 private fun DocumentMarkdownPreview() {
     Document(
@@ -129,7 +129,7 @@ private fun DocumentMarkdownPreview() {
     )
 }
 
-@Preview
+@Preview(showSystemUi = true)
 @Composable
 private fun DocumentContentPreview() {
     Document(
