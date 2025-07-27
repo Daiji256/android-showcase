@@ -2,15 +2,24 @@ package io.github.daiji256.showcase.core.testing
 
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.Box
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.toAndroidRect
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.test.DarkMode
 import androidx.compose.ui.test.DeviceConfigurationOverride
 import androidx.compose.ui.test.FontScale
+import androidx.compose.ui.test.WindowInsets
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.then
+import androidx.compose.ui.unit.DpRect
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.roundToIntRect
+import androidx.core.graphics.Insets
+import androidx.core.view.WindowInsetsCompat
 import com.github.takahirom.roborazzi.AndroidComposePreviewTester
 import com.github.takahirom.roborazzi.ComposePreviewTester
 import com.github.takahirom.roborazzi.ComposePreviewTester.TestParameter.JUnit4TestParameter.AndroidPreviewJUnit4TestParameter
@@ -42,7 +51,8 @@ class PreviewTester :
             val previewInfo = testParameter.preview.previewInfo
             DeviceConfigurationOverride(
                 override = DeviceConfigurationOverride.DarkMode(isDarkMode = previewInfo.isDarkMode)
-                    then DeviceConfigurationOverride.FontScale(fontScale = previewInfo.fontScale),
+                    then DeviceConfigurationOverride.FontScale(fontScale = previewInfo.fontScale)
+                    then DeviceConfigurationOverride.WindowInsets(windowInsets = windowInsets()),
             ) {
                 CompositionLocalProvider(
                     LocalInspectionMode provides true,
@@ -57,6 +67,23 @@ class PreviewTester :
         testParameter.composeTestRule.setContent(composable = composable)
         testParameter.composeTestRule.onNodeWithTag("root").captureRoboImage(filePath = filePath)
     }
+
+    @Composable
+    private fun windowInsets() =
+        WindowInsetsCompat.Builder()
+            .setInsets(
+                WindowInsetsCompat.Type.statusBars(),
+                DpRect(left = 0.dp, top = 24.dp, right = 0.dp, bottom = 0.dp).toInsets(),
+            )
+            .setInsets(
+                WindowInsetsCompat.Type.navigationBars(),
+                DpRect(left = 0.dp, top = 0.dp, right = 0.dp, bottom = 24.dp).toInsets(),
+            )
+            .build()
+
+    @Composable
+    private fun DpRect.toInsets(): Insets =
+        Insets.of(with(LocalDensity.current) { toRect() }.roundToIntRect().toAndroidRect())
 
     val AndroidPreviewInfo.isDarkMode
         get() = uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
