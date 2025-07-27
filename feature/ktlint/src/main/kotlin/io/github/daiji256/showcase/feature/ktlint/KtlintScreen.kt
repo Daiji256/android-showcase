@@ -17,7 +17,7 @@ internal fun KtlintScreen(
     )
 }
 
-@Preview
+@Preview(showSystemUi = true)
 @Composable
 private fun KtlintScreenPreview() {
     ShowcaseTheme {

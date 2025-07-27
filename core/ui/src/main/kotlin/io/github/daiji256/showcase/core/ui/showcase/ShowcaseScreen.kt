@@ -80,10 +80,10 @@ private fun FeatureItem(
     )
 }
 
-@Preview
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
-@Preview(fontScale = 0.85f)
-@Preview(fontScale = 2.0f)
+@Preview(showSystemUi = true)
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES, showSystemUi = true)
+@Preview(fontScale = 0.85f, showSystemUi = true)
+@Preview(fontScale = 2.0f, showSystemUi = true)
 @Composable
 private fun ShowcaseScreenPreview() {
     ShowcaseTheme {

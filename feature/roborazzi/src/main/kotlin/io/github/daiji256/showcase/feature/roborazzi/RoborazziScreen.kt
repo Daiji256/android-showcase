@@ -17,7 +17,7 @@ internal fun RoborazziScreen(
     )
 }
 
-@Preview
+@Preview(showSystemUi = true)
 @Composable
 private fun RoborazziScreenPreview() {
     ShowcaseTheme {

@@ -1,10 +1,26 @@
 package io.github.daiji256.showcase.core.testing
 
 import android.content.res.Configuration
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.BatteryStd
+import androidx.compose.material.icons.filled.Wifi
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toAndroidRect
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalInspectionMode
@@ -15,6 +31,7 @@ import androidx.compose.ui.test.FontScale
 import androidx.compose.ui.test.WindowInsets
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.then
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.DpRect
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.roundToIntRect
@@ -59,6 +76,9 @@ class PreviewTester :
                 ) {
                     Box(modifier = Modifier.testTag("root")) {
                         testParameter.preview()
+                        if (previewInfo.showSystemUi) {
+                            SystemUi()
+                        }
                     }
                 }
             }
@@ -87,6 +107,52 @@ class PreviewTester :
 
     val AndroidPreviewInfo.isDarkMode
         get() = uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
+
+    @Composable
+    private fun SystemUi() {
+        Column {
+            Row(
+                verticalAlignment = Alignment.Bottom,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(24.dp)
+                    .padding(horizontal = 4.dp),
+            ) {
+                Text(
+                    text = "15:00",
+                    style = TextStyle(),
+                    fontSize = with(LocalDensity.current) { 16.dp.toSp() },
+                    color = Color.Gray,
+                )
+                Spacer(modifier = Modifier.weight(1f))
+                Icon(
+                    imageVector = Icons.Default.Wifi,
+                    contentDescription = null,
+                    tint = Color.Gray,
+                    modifier = Modifier.size(20.dp),
+                )
+                Icon(
+                    imageVector = Icons.Default.BatteryStd,
+                    contentDescription = null,
+                    tint = Color.Gray,
+                    modifier = Modifier.size(20.dp),
+                )
+            }
+            Spacer(modifier = Modifier.weight(1f))
+            Box(
+                contentAlignment = Alignment.Center,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(24.dp),
+            ) {
+                Box(
+                    modifier = Modifier
+                        .size(width = 100.dp, height = 4.dp)
+                        .background(color = Color.Gray, shape = CircleShape),
+                )
+            }
+        }
+    }
 
     private fun filePath(preview: ComposablePreview<AndroidPreviewInfo>): String {
         val directory = roborazziSystemPropertyOutputDirectory()

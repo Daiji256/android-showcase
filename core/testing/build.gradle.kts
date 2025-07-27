@@ -15,6 +15,7 @@ dependencies {
     api(libs.robolectric)
     api(libs.turbine)
     implementation(libs.androidx.test.rules)
+    implementation(libs.compose.material.icons.extended)
     implementation(libs.composable.preview.scanner.android)
     implementation(libs.roborazzi)
     implementation(libs.roborazzi.compose)
