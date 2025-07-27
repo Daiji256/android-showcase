@@ -44,7 +44,7 @@ internal fun SecondScreen(
     }
 }
 
-@Preview
+@Preview(showSystemUi = true)
 @Composable
 private fun SecondScreenPreview() {
     ShowcaseTheme {

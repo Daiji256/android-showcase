@@ -20,7 +20,7 @@ internal fun DirectArgsReceiverScreen(
     )
 }
 
-@Preview
+@Preview(showSystemUi = true)
 @Composable
 private fun DirectArgsReceiverScreenPreview() {
     ShowcaseTheme {

@@ -65,7 +65,7 @@ internal fun FirstScreen(
     }
 }
 
-@Preview
+@Preview(showSystemUi = true)
 @Composable
 private fun FirstScreenPreview() {
     ShowcaseTheme {

@@ -38,7 +38,7 @@ private fun HiltComposableScreen(
     )
 }
 
-@Preview
+@Preview(showSystemUi = true)
 @Composable
 private fun HiltComposableScreenPreview() {
     ShowcaseTheme {

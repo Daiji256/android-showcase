@@ -32,7 +32,7 @@ private fun ViewModelArgsReceiverScreen(
     )
 }
 
-@Preview
+@Preview(showSystemUi = true)
 @Composable
 private fun ViewModelArgsReceiverScreenPreview() {
     ShowcaseTheme {
