@@ -487,7 +487,7 @@ private fun MarkdownPreview() {
                 Inline `code1`.
                 *Inline `code2`.*
                 **Inline `code3`.**
-                _**Inline `code4`.**_
+                _**Inline `code4`.**_ foo
         """.trimIndent(),
     )
 }
