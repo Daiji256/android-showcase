@@ -17,6 +17,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.Stable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.AnnotatedString
@@ -67,7 +68,13 @@ fun Markdown(
         horizontalAlignment = Alignment.Start,
         modifier = modifier,
     ) {
-        Blocks(markdown).forEach { block ->
+        val markdownParser = remember {
+            MarkdownParser(CommonMarkFlavourDescriptor())
+        }
+        val blocks = remember(markdown) {
+            markdownParser.buildMarkdownTreeFromString(markdown).getBlocks(markdown)
+        }
+        blocks.forEach { block ->
             when (block) {
                 is Block.Text ->
                     Text(
@@ -347,22 +354,6 @@ private fun ASTNode.getContent(markdownString: String): Content? =
         else ->
             Content.Text(text = getTextInNode(markdownString).toString())
     }
-
-@Immutable
-private interface Blocks : List<Block> {
-    companion object {
-        private data class BlocksImpl(val value: List<Block>) : Blocks, List<Block> by value
-
-        @Stable
-        operator fun invoke(markdown: String): Blocks = BlocksImpl(
-            value = run {
-                val flavour = CommonMarkFlavourDescriptor()
-                val node = MarkdownParser(flavour).buildMarkdownTreeFromString(markdown)
-                node.getBlocks(markdown)
-            },
-        )
-    }
-}
 
 @Immutable
 private sealed interface Block {
