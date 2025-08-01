@@ -110,6 +110,24 @@ jobs:
             echo "report_present=false" >> "$GITHUB_OUTPUT"
           fi
 
+      - name: Delete outdated report comments
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          REPOSITORY: ${{ github.repository }}
+        run: |
+          comment_ids=$(
+            gh api "repos/${REPOSITORY}/issues/${PR_NUMBER}/comments" |
+            jq -r '
+              .[]
+              | select(.user.login == "github-actions[bot]")
+              | select(.body | contains("<!-- screenshot-test-report -->"))
+              | .id'
+          )
+          for id in $comment_ids; do
+            gh api -X DELETE "repos/${REPOSITORY}/issues/comments/${id}"
+          done
+
       - name: Post report
         if: ${{ success() && !cancelled() && steps.create-report.outputs.report_present == 'true' }}
         env:
