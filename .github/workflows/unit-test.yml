@@ -133,7 +133,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PR_NUMBER: ${{ github.event.pull_request.number }}
-        run: gh pr comment $PR_NUMBER --body-file $REPORT_FILE --edit-last --create-if-none
+        run: gh pr comment $PR_NUMBER --body-file $REPORT_FILE
 
       - name: Delete outdated _companion branches
         run: |
