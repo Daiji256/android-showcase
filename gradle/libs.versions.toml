@@ -5,7 +5,7 @@ compileSdk = "36"
 
 activity-compose = "1.10.1"
 androidGradlePlugin = "8.11.1"
-androidxTestRules = "1.6.1"
+androidxTestRules = "1.7.0"
 browser = "1.8.0"
 compose-bom = "2025.07.00"
 composable-preview-scanner = "0.6.1"
