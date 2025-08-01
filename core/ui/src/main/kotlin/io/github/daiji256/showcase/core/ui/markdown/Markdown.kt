@@ -68,10 +68,11 @@ fun Markdown(
         horizontalAlignment = Alignment.Start,
         modifier = modifier,
     ) {
-        val blocks = remember(markdown) {
-            val flavour = CommonMarkFlavourDescriptor()
-            val node = MarkdownParser(flavour).buildMarkdownTreeFromString(markdown)
-            node.getBlocks(markdown)
+        val markdownParser = remember {
+            MarkdownParser(CommonMarkFlavourDescriptor())
+        }
+        val blocks = remember(markdownParser, markdown) {
+            markdownParser.buildMarkdownTreeFromString(markdown).getBlocks(markdown)
         }
         blocks.forEach { block ->
             when (block) {
