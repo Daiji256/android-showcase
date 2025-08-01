@@ -71,7 +71,7 @@ fun Markdown(
         val markdownParser = remember {
             MarkdownParser(CommonMarkFlavourDescriptor())
         }
-        val blocks = remember(markdownParser, markdown) {
+        val blocks = remember(markdown) {
             markdownParser.buildMarkdownTreeFromString(markdown).getBlocks(markdown)
         }
         blocks.forEach { block ->
