@@ -36,7 +36,7 @@ class RoborazziPlugin : Plugin<Project> {
             roborazzi {
                 generateComposePreviewRobolectricTests {
                     enable = true
-                    packages = provider { listOf(android.namespace) }
+                    packages = provider { listOf(android.namespace!!) }
                     robolectricConfig = mapOf(
                         "sdk" to "[35]",
                         "qualifiers" to "RobolectricDeviceQualifiers.MediumPhone",
