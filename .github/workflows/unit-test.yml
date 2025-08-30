@@ -143,6 +143,6 @@ jobs:
           git branch -r --format="%(refname:lstrip=3)" | grep _companion | while read -r branch; do
             last_commit_date=$(git log -1 --format=%ct "origin/$branch")
             if [ $((now - last_commit_date)) -gt 2592000 ]; then
-              git push -d origin "$branch"
+              git push origin --delete "$branch"
             fi
           done
