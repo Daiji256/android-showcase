@@ -38,7 +38,7 @@ class RoborazziPlugin : Plugin<Project> {
                     enable = true
                     packages = provider { listOf(android.namespace!!) }
                     robolectricConfig = mapOf(
-                        "sdk" to "[35]",
+                        "sdk" to "[36]",
                         "qualifiers" to "RobolectricDeviceQualifiers.MediumPhone",
                     )
                     includePrivatePreviews = true
