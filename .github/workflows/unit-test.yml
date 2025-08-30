@@ -67,6 +67,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+        with:
+          fetch-depth: 0
 
       - name: Switch _companion branch
         run: |
@@ -141,6 +143,6 @@ jobs:
           git branch -r --format="%(refname:lstrip=3)" | grep _companion | while read -r branch; do
             last_commit_date=$(git log -1 --format=%ct "origin/$branch")
             if [ $((now - last_commit_date)) -gt 2592000 ]; then
-              git push -d origin "$branch"
+              git push origin --delete "$branch"
             fi
           done
