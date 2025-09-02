@@ -21,6 +21,8 @@ import io.github.daiji256.showcase.feature.roborazzi.RoborazziSummary
 import io.github.daiji256.showcase.feature.roborazzi.roborazziScreen
 import io.github.daiji256.showcase.feature.safeurihandler.SafeUriHandlerSummary
 import io.github.daiji256.showcase.feature.safeurihandler.safeUriHandlerScreen
+import io.github.daiji256.showcase.feature.unstyled.UnstyledSummary
+import io.github.daiji256.showcase.feature.unstyled.unstyledScreen
 import kotlinx.collections.immutable.persistentListOf
 
 @Composable
@@ -46,6 +48,7 @@ internal fun MainNavHost(
                 NavigationArgumentsSummary(navController = navController),
                 RoborazziSummary(navController = navController),
                 SafeUriHandlerSummary(navController = navController),
+                UnstyledSummary(navController = navController),
             ),
         )
         customTabsScreen(navController = navController)
@@ -55,5 +58,6 @@ internal fun MainNavHost(
         navigationArgumentsNavGraph(navController = navController)
         roborazziScreen(navController = navController)
         safeUriHandlerScreen(navController = navController)
+        unstyledScreen(navController = navController)
     }
 }
