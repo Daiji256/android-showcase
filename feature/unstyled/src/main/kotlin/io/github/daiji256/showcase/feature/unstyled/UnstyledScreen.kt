@@ -12,9 +12,10 @@ internal fun UnstyledScreen(
 ) {
     Document(
         title = stringResource(id = R.string.feature_unstyled_title),
-        markdown = "TODO",
         onNavigateUpClick = onNavigateUpClick,
-    )
+    ) {
+        SystemStyleValues()
+    }
 }
 
 @Preview(showSystemUi = true)
