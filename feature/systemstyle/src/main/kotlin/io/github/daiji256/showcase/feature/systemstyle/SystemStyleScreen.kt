@@ -1,5 +1,6 @@
 package io.github.daiji256.showcase.feature.systemstyle
 
+import android.content.res.Configuration
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -23,6 +24,7 @@ internal fun SystemStyleScreen(
 }
 
 @Preview(showSystemUi = true)
+@Preview(fontScale = 1.15f, uiMode = Configuration.UI_MODE_NIGHT_YES, showSystemUi = true)
 @Composable
 private fun SystemStyleScreenPreview() {
     ShowcaseTheme {
