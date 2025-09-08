@@ -19,6 +19,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -54,6 +55,20 @@ internal fun SystemStyleValues(modifier: Modifier = Modifier) {
                     false -> stringResource(id = R.string.feature_system_style_theme_value_light)
                     true -> stringResource(id = R.string.feature_system_style_theme_value_dark)
                 },
+            )
+        }
+
+        Row {
+            val density = LocalDensity.current
+            Text(
+                text = stringResource(id = R.string.feature_system_style_font_scale_label) +
+                    labelValueSeparator,
+            )
+            Text(
+                text = stringResource(
+                    id = R.string.feature_system_style_font_scale_value,
+                    density.fontScale,
+                ),
             )
         }
 

@@ -3,6 +3,8 @@
     <string name="feature_system_style_label_value_separator">": "</string>
     <string name="feature_system_style_theme_label">Theme</string>
     <string name="feature_system_style_theme_value_light">Light</string>
+    <string name="feature_system_style_font_scale_label">Font Scale</string>
+    <string name="feature_system_style_font_scale_value">%.2f</string>
     <string name="feature_system_style_theme_value_dark">Dark</string>
     <string name="feature_system_style_color_contrast_label">Color Contrast</string>
     <string name="feature_system_style_color_contrast_value_default">Default</string>
