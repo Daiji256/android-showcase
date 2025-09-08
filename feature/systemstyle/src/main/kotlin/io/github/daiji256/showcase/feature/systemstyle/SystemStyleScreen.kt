@@ -1,4 +1,4 @@
-package io.github.daiji256.showcase.feature.unstyled
+package io.github.daiji256.showcase.feature.systemstyle
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
@@ -7,11 +7,11 @@ import io.github.daiji256.showcase.core.designsystem.theme.ShowcaseTheme
 import io.github.daiji256.showcase.core.ui.document.Document
 
 @Composable
-internal fun UnstyledScreen(
+internal fun SystemStyleScreen(
     onNavigateUpClick: () -> Unit,
 ) {
     Document(
-        title = stringResource(id = R.string.feature_unstyled_title),
+        title = stringResource(id = R.string.feature_system_style_title),
         onNavigateUpClick = onNavigateUpClick,
     ) {
         SystemStyleValues()
@@ -20,9 +20,9 @@ internal fun UnstyledScreen(
 
 @Preview(showSystemUi = true)
 @Composable
-private fun UnstyledScreenPreview() {
+private fun SystemStyleScreenPreview() {
     ShowcaseTheme {
-        UnstyledScreen(
+        SystemStyleScreen(
             onNavigateUpClick = {},
         )
     }

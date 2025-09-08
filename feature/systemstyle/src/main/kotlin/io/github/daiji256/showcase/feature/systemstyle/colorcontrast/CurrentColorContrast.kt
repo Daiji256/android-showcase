@@ -1,4 +1,4 @@
-package io.github.daiji256.showcase.feature.unstyled.colorcontrast
+package io.github.daiji256.showcase.feature.systemstyle.colorcontrast
 
 import android.app.UiModeManager
 import android.content.Context

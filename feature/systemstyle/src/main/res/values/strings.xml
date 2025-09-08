@@ -1,0 +1,15 @@
+<resources>
+    <string name="feature_system_style_title">System Style</string>
+    <string name="feature_system_style_label_value_separator">": "</string>
+    <string name="feature_system_style_theme_label">Theme</string>
+    <string name="feature_system_style_theme_value_light">Light</string>
+    <string name="feature_system_style_theme_value_dark">Dark</string>
+    <string name="feature_system_style_color_contrast_label">Color Contrast</string>
+    <string name="feature_system_style_color_contrast_value_default">Default</string>
+    <string name="feature_system_style_color_contrast_value_medium">Medium</string>
+    <string name="feature_system_style_color_contrast_value_high">High</string>
+    <string name="feature_system_style_primary_color_label">Primary Color</string>
+    <string name="feature_system_style_secondary_color_label">Secondary Color</string>
+    <string name="feature_system_style_tertiary_color_label">Tertiary Color</string>
+    <string name="feature_system_style_color_value">#%06X</string>
+</resources>

@@ -1,4 +1,4 @@
-package io.github.daiji256.showcase.feature.unstyled
+package io.github.daiji256.showcase.feature.systemstyle
 
 import android.os.Build
 import androidx.compose.foundation.background
@@ -26,11 +26,11 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import com.composeunstyled.Text
-import io.github.daiji256.showcase.feature.unstyled.colorcontrast.ColorContrast
-import io.github.daiji256.showcase.feature.unstyled.colorcontrast.currentColorContrast
-import io.github.daiji256.showcase.feature.unstyled.systemcolor.primaryColor
-import io.github.daiji256.showcase.feature.unstyled.systemcolor.secondaryColor
-import io.github.daiji256.showcase.feature.unstyled.systemcolor.tertiaryColor
+import io.github.daiji256.showcase.feature.systemstyle.colorcontrast.ColorContrast
+import io.github.daiji256.showcase.feature.systemstyle.colorcontrast.currentColorContrast
+import io.github.daiji256.showcase.feature.systemstyle.systemcolor.primaryColor
+import io.github.daiji256.showcase.feature.systemstyle.systemcolor.secondaryColor
+import io.github.daiji256.showcase.feature.systemstyle.systemcolor.tertiaryColor
 
 @Composable
 internal fun SystemStyleValues(modifier: Modifier = Modifier) {
@@ -42,17 +42,17 @@ internal fun SystemStyleValues(modifier: Modifier = Modifier) {
             .padding(4.dp),
     ) {
         val labelValueSeparator =
-            stringResource(id = R.string.feature_unstyled_label_value_separator)
+            stringResource(id = R.string.feature_system_style_label_value_separator)
 
         Row {
             Text(
-                text = stringResource(id = R.string.feature_unstyled_theme_label) +
+                text = stringResource(id = R.string.feature_system_style_theme_label) +
                     labelValueSeparator,
             )
             Text(
                 text = when (isSystemInDarkTheme()) {
-                    false -> stringResource(id = R.string.feature_unstyled_theme_value_light)
-                    true -> stringResource(id = R.string.feature_unstyled_theme_value_dark)
+                    false -> stringResource(id = R.string.feature_system_style_theme_value_light)
+                    true -> stringResource(id = R.string.feature_system_style_theme_value_dark)
                 },
             )
         }
@@ -60,24 +60,24 @@ internal fun SystemStyleValues(modifier: Modifier = Modifier) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
             Row {
                 Text(
-                    text = stringResource(id = R.string.feature_unstyled_color_contrast_label) +
+                    text = stringResource(id = R.string.feature_system_style_color_contrast_label) +
                         labelValueSeparator,
                 )
                 Text(
                     text = when (currentColorContrast()) {
                         ColorContrast.Default ->
                             stringResource(
-                                id = R.string.feature_unstyled_color_contrast_value_default,
+                                id = R.string.feature_system_style_color_contrast_value_default,
                             )
 
                         ColorContrast.Medium ->
                             stringResource(
-                                id = R.string.feature_unstyled_color_contrast_value_medium,
+                                id = R.string.feature_system_style_color_contrast_value_medium,
                             )
 
                         ColorContrast.High ->
                             stringResource(
-                                id = R.string.feature_unstyled_color_contrast_value_high,
+                                id = R.string.feature_system_style_color_contrast_value_high,
                             )
                     },
                 )
@@ -87,15 +87,15 @@ internal fun SystemStyleValues(modifier: Modifier = Modifier) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             listOf(
                 Pair(
-                    stringResource(id = R.string.feature_unstyled_primary_color_label),
+                    stringResource(id = R.string.feature_system_style_primary_color_label),
                     primaryColor(),
                 ),
                 Pair(
-                    stringResource(id = R.string.feature_unstyled_secondary_color_label),
+                    stringResource(id = R.string.feature_system_style_secondary_color_label),
                     secondaryColor(),
                 ),
                 Pair(
-                    stringResource(id = R.string.feature_unstyled_tertiary_color_label),
+                    stringResource(id = R.string.feature_system_style_tertiary_color_label),
                     tertiaryColor(),
                 ),
             ).forEach { (label, color) ->
@@ -109,7 +109,7 @@ internal fun SystemStyleValues(modifier: Modifier = Modifier) {
                             withStyle(SpanStyle(fontFamily = FontFamily.Monospace)) {
                                 append(
                                     stringResource(
-                                        id = R.string.feature_unstyled_color_value,
+                                        id = R.string.feature_system_style_color_value,
                                         color.toArgb() and 0xFFFFFF,
                                     ),
                                 )

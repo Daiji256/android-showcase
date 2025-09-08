@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "io.github.daiji256.showcase.feature.unstyled"
+    namespace = "io.github.daiji256.showcase.feature.systemstyle"
 }
 
 dependencies {

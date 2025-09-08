@@ -1,4 +1,4 @@
-package io.github.daiji256.showcase.feature.unstyled.systemcolor
+package io.github.daiji256.showcase.feature.systemstyle.systemcolor
 
 import android.os.Build
 import androidx.annotation.RequiresApi
