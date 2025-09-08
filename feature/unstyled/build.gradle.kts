@@ -12,5 +12,6 @@ dependencies {
     implementation(projects.core.common)
     implementation(projects.core.designsystem)
     implementation(projects.core.ui)
+    implementation(libs.composables.core)
     testImplementation(projects.core.testing)
 }
