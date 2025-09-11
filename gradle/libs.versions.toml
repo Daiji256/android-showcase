@@ -27,7 +27,7 @@ navigation-compose = "2.9.4"
 robolectric = "4.16"
 roborazzi = "1.50.0"
 spotless = "7.2.1"
-testParameterInjector = "1.18"
+testParameterInjector = "1.19"
 turbine = "1.2.1"
 
 [libraries]
