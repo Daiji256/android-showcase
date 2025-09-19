@@ -48,11 +48,11 @@ jobs:
           fi
 
       - name: Record screenshots
-        if: ${{ steps.check-branch.outputs.exists == "false" }}
+        if: ${{ steps.check-branch.outputs.exists == 'false' }}
         run: ./gradlew recordRoborazziDebug
 
       - name: Upload
-        if: ${{ steps.check-branch.outputs.exists == "false" }}
+        if: ${{ steps.check-branch.outputs.exists == 'false' }}
         uses: daiji256/upload-to-orphan-branch@c7b7f47558b9ebd00985945e85b6a2ff3d0ce883 # v0.1.1
         with:
           branch: ${{ steps.branch.outputs.branch }}
