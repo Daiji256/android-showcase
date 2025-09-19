@@ -13,6 +13,13 @@ jobs:
     permissions:
       contents: write
 
+    env:
+      BRANCH_PREFIX: _screenshots_
+      COMMITTER_NAME: github-actions[bot]
+      COMMITTER_EMAIL: 41898282+github-actions[bot]@users.noreply.github.com
+      COMMIT_MESSAGE: screenshots
+      MAX_AGE_SECONDS: 600 # TODO: 14 days
+
     steps:
       - name: Checkout
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
@@ -33,7 +40,7 @@ jobs:
         shell: bash
         run: |
           hash=$(git ls-files -z | xargs -0 sha256sum | sha256sum | awk '{print $1}')
-          echo "branch=_screenshots_${hash:0:7}" >> "$GITHUB_OUTPUT"
+          echo "branch=${BRANCH_PREFIX}${hash:0:7}" >> "$GITHUB_OUTPUT"
 
       - name: Check if branch exists
         id: check-branch
@@ -56,4 +63,33 @@ jobs:
         uses: daiji256/upload-to-orphan-branch@c7b7f47558b9ebd00985945e85b6a2ff3d0ce883 # v0.1.1
         with:
           branch: ${{ steps.branch.outputs.branch }}
+          committer-name: ${{ env.COMMITTER_NAME }}
+          committer-email: ${{ env.COMMITTER_EMAIL }}
+          commit-message: ${{ env.COMMIT_MESSAGE }}
           path: "**/build/outputs/roborazzi"
+
+      - name: Delete outdated screenshots
+        run: |
+          now=$(date +%s)
+          git branch -r --format="%(refname:lstrip=3)" | while read -r branch; do
+            if ! [[ "$branch" =~ "$BRANCH_PREFIX"* ]]; then continue; fi
+
+            commit_count=$(git rev-list --count "origin/$branch")
+            if [ "$commit_count" -ne 1 ]; then continue; fi
+
+            committer_name=$(git log -1 --format=%an "origin/$branch")
+            if [ "$committer_name" != "$COMMITTER_NAME" ]; then continue; fi
+
+            committer_email=$(git log -1 --format=%ae "origin/$branch")
+            if [ "$committer_email" != "$COMMITTER_EMAIL" ]; then continue; fi
+
+            commit_message=$(git log -1 --format=%s "origin/$branch")
+            if [ "$commit_message" != "$COMMIT_MESSAGE" ]; then continue; fi
+
+            commit_date=$(git log -1 --format=%ct "origin/$branch")
+            age=$((now - commit_date))
+            if [ "$age" -lt "$MAX_AGE_SECONDS" ]; then continue; fi
+
+            echo "delete $branch"
+            git push origin --delete "$branch"
+          done
