@@ -26,12 +26,19 @@ jobs:
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@ed408507eac070d1f99cc633dbcf757c94c7933a # v4.4.3
 
+      - name: Get files hash
+        id: hash
+        shell: bash
+        run: |
+          hash=$(git ls-files -z | xargs -0 sha256sum | sha256sum | awk '{print $1}')
+          echo "hash=${hash:0:7}" >> "$GITHUB_OUTPUT"
+
       - name: Record screenshots
         run: ./gradlew recordRoborazziDebug
 
       - name: Upload
         uses: daiji256/upload-to-orphan-branch@c7b7f47558b9ebd00985945e85b6a2ff3d0ce883 # v0.1.1
         with:
-          branch: _screenshots_${{ github.head_ref }}
+          branch: _screenshots_${{ steps.hash.outputs.hash }}
           path: "**/build/outputs/roborazzi"
           overwrite: true
