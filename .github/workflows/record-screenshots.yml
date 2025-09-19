@@ -29,9 +29,9 @@ jobs:
       - name: Record screenshots
         run: ./gradlew recordRoborazziDebug
 
-      - name: Upload artifact
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+      - name: Upload
+        uses: daiji256/upload-to-orphan-branch@c7b7f47558b9ebd00985945e85b6a2ff3d0ce883 # v0.1.1
         with:
-          name: screenshots
+          branch: _screenshots_${{ github.ref }}
           path: "**/build/outputs/roborazzi"
-          retention-days: 30
+          overwrite: true
