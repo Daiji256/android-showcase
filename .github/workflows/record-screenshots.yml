@@ -32,6 +32,6 @@ jobs:
       - name: Upload
         uses: daiji256/upload-to-orphan-branch@c7b7f47558b9ebd00985945e85b6a2ff3d0ce883 # v0.1.1
         with:
-          branch: _screenshots_${{ github.ref }}
+          branch: _screenshots_${{ github.head_ref }}
           path: "**/build/outputs/roborazzi"
           overwrite: true
