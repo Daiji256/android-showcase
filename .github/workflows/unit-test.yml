@@ -258,4 +258,4 @@ jobs:
             echo ""
             echo "</details>"
           } >> "$REPORT_FILE"
-          gh pr comment $PR_NUMBER --body-file $REPORT_FILE
+          gh pr comment "$PR_NUMBER" --body-file "$REPORT_FILE"
