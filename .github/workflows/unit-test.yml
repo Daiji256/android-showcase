@@ -37,7 +37,9 @@ jobs:
             fi
 
             commit_count=$(git rev-list --count "origin/$branch")
-            if [ "$commit_count" -ne 1 ]; then continue; fi
+            if [ "$commit_count" -ne 1 ]; then
+              continue
+            fi
 
             committer_name=$(git log -1 --format=%an "origin/$branch")
             if [ "$committer_name" != "$ORPHAN_BRANCH_COMMITTER_NAME" ]; then
@@ -55,7 +57,6 @@ jobs:
               continue
             fi
 
-            echo "delete $branch"
             git push origin --delete "$branch"
           done
 
