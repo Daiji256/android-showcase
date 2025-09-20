@@ -173,7 +173,7 @@ jobs:
           if [[ "$IS_HEAD_SCREENSHOTS_BRANCH_EXISTS" == "true" && "$IS_COMPANION_SCREENSHOTS_BRANCH_EXISTS" == "true" ]]; then
             ./gradlew testDebugUnitTest
           else
-            ./gradlew testDebugUnitTest -Proborazzi.test.record=true -Proborazzi.test.compare=true
+            ./gradlew testDebugUnitTest -Proborazzi.test.record=true -Proborazzi.test.compare=true -Proborazzi.cleanupOldScreenshots=true
           fi
 
       - name: Display unit test report
