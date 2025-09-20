@@ -37,23 +37,23 @@ jobs:
             fi
 
             commit_count=$(git rev-list --count "origin/$branch")
-            if [ "$commit_count" -ne 1 ]; then
+            if [[ "$commit_count" -ne 1 ]]; then
               continue
             fi
 
             committer_name=$(git log -1 --format=%an "origin/$branch")
-            if [ "$committer_name" != "$ORPHAN_BRANCH_COMMITTER_NAME" ]; then
+            if [[ "$committer_name" != "$ORPHAN_BRANCH_COMMITTER_NAME" ]]; then
               continue
             fi
 
             committer_email=$(git log -1 --format=%ae "origin/$branch")
-            if [ "$committer_email" != "$ORPHAN_BRANCH_COMMITTER_EMAIL" ]; then
+            if [[ "$committer_email" != "$ORPHAN_BRANCH_COMMITTER_EMAIL" ]]; then
               continue
             fi
 
             commit_date=$(git log -1 --format=%ct "origin/$branch")
             age=$((now - commit_date))
-            if [ "$age" -lt "$ORPHAN_BRANCH_MAX_AGE_SECONDS" ]; then
+            if [[ "$age" -lt "$ORPHAN_BRANCH_MAX_AGE_SECONDS" ]]; then
               continue
             fi
 
