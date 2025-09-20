@@ -12,6 +12,7 @@ jobs:
     timeout-minutes: 30
     permissions:
       contents: write
+      pull-requests: write
 
     env:
       SCREENSHOTS_BRANCH_PREFIX: _screenshots_
@@ -182,66 +183,8 @@ jobs:
           commit-message: ${{ env.COMPANION_SCREENSHOTS_COMMIT_MESSAGE }}
           path: "**/build/outputs/roborazzi/*_compare.png"
 
-  screenshot-test-results:
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    needs: [unit-test]
-    permissions:
-      contents: write
-      pull-requests: write
-    env:
-      COMPANION_BRANCH: _companion_${{ github.base_ref }}_${{ github.head_ref }}
-      REPORT_FILE: report.md
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
-        with:
-          fetch-depth: 0
-
-      - name: Switch _companion branch
-        run: |
-          git branch -D "$COMPANION_BRANCH" || true
-          git checkout --orphan "$COMPANION_BRANCH"
-          git rm -rf .
-
-      - name: Download screenshot test results
-        uses: actions/download-artifact@634f93cb2916e3fdff6788551b99b062d0335ce0 # v5.0.0
-        continue-on-error: true
-        with:
-          name: screenshot-test-results
-          path: screenshot-test-results
-
-      - name: Create report
-        id: create-report
-        run: |
-          files=$(find . -type f -name "*_compare.png" | sort)
-          if [ -n "$files" ]; then
-            echo "<!-- screenshot-test-report -->" >> "$REPORT_FILE"
-            echo "" >> "$REPORT_FILE"
-            echo "> [!NOTE]" >> "$REPORT_FILE"
-            echo "> Differences found in $(echo "$files" | wc -l) screenshots." >> "$REPORT_FILE"
-            echo "" >> "$REPORT_FILE"
-            echo "<details><summary>Expand for details</summary>" >> "$REPORT_FILE"
-            for file in $files; do
-              image_path="https://github.com/${{ github.repository }}/blob/$COMPANION_BRANCH/$file"
-              echo "" >> "$REPORT_FILE"
-              echo "\`$(basename "$file" | sed 's/_compare\.png$//')\`" >> "$REPORT_FILE"
-              echo "![]($image_path?raw=true)" >> "$REPORT_FILE"
-              git add "$file"
-            done
-            echo "" >> "$REPORT_FILE"
-            echo "</details>" >> "$REPORT_FILE"
-            echo "report_present=true" >> "$GITHUB_OUTPUT"
-            git config --global user.name screenshot-bot
-            git config --global user.email 41898282+github-actions[bot]@users.noreply.github.com
-            git commit -m "screenshot-test-results"
-            git push -f origin HEAD:"$COMPANION_BRANCH"
-          else
-            echo "report_present=false" >> "$GITHUB_OUTPUT"
-          fi
-
       - name: Delete outdated report
+        shell: bash
         env:
           GH_TOKEN: ${{ github.token }}
           PR_NUMBER: ${{ github.event.pull_request.number }}
@@ -260,18 +203,31 @@ jobs:
           done
 
       - name: Post report
-        if: ${{ success() && !cancelled() && steps.create-report.outputs.report_present == 'true' }}
+        shell: bash
         env:
+          COMPANION_BRANCH: ${{ steps.companion-screenshots-branch.outputs.name }}
+          REPORT_FILE: screenshot-test-report.md
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PR_NUMBER: ${{ github.event.pull_request.number }}
-        run: gh pr comment $PR_NUMBER --body-file $REPORT_FILE
-
-      - name: Delete outdated _companion branches
         run: |
-          now=$(date +%s)
-          git branch -r --format="%(refname:lstrip=3)" | grep _companion | while read -r branch; do
-            last_commit_date=$(git log -1 --format=%ct "origin/$branch")
-            if [ $((now - last_commit_date)) -gt 2592000 ]; then
-              git push origin --delete "$branch"
-            fi
-          done
+          mapfile -d '' files < <(find . -type f -name "*_compare.png" -print0 | sort -z)
+          if [ "${#files[@]}" -eq 0 ]; then
+            exit 0
+          fi
+          {
+            echo "<!-- screenshot-test-report -->"
+            echo ""
+            echo "> [!NOTE]"
+            echo "> Differences found in $(echo "$files" | wc -l) screenshots."
+            echo ""
+            echo "<details><summary>Expand for details</summary>"
+            for file in "${files[@]}"; do
+              echo ""
+              echo "\`$(basename "$file" | sed 's/_compare\.png$//')\`"
+              echo "![](https://github.com/${{ github.repository }}/blob/${COMPANION_BRANCH}/${file}?raw=true)"
+            done
+            echo ""
+            echo "</details>"
+          } >> "$REPORT_FILE"
+          gh pr comment $PR_NUMBER --body-file $REPORT_FILE
+          rm REPORT_FILE
