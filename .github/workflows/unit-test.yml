@@ -69,12 +69,6 @@ jobs:
             echo "exists=false" >> "$GITHUB_OUTPUT"
           fi
 
-      - name: Download base screenshots
-        if: ${{ steps.check-base-screenshots-branch.outputs.exists == 'true' }}
-        uses: daiji256/download-from-orphan-branch@04e2d3ac47d18764bb143b5d5653f898ec54e305 # v0.1.0
-        with:
-          branch: ${{ steps.base-screenshots-branch.outputs.name }}
-
       - name: Record base screenshots
         if: ${{ steps.check-base-screenshots-branch.outputs.exists == 'false' }}
         shell: bash
@@ -92,6 +86,11 @@ jobs:
 
       - name: Checkout head
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+
+      - name: Download base screenshots
+        uses: daiji256/download-from-orphan-branch@04e2d3ac47d18764bb143b5d5653f898ec54e305 # v0.1.0
+        with:
+          branch: ${{ steps.base-screenshots-branch.outputs.name }}
 
       - name: Get head files hash
         id: head-files-hash
