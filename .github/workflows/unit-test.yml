@@ -90,12 +90,6 @@ jobs:
           commit-message: ${{ env.SCREENSHOTS_COMMIT_MESSAGE }}
           path: "**/build/outputs/roborazzi"
 
-      - name: Check
-        run: |
-          shopt -s globstar
-          find **/build/outputs/roborazzi -type f | sort
-          exit 1
-
       - name: Checkout head
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
 
