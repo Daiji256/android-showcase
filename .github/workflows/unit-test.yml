@@ -180,9 +180,7 @@ jobs:
           committer-name: ${{ env.COMPANION_SCREENSHOTS_COMMITTER_NAME }}
           committer-email: ${{ env.COMPANION_SCREENSHOTS_COMMITTER_EMAIL }}
           commit-message: ${{ env.COMPANION_SCREENSHOTS_COMMIT_MESSAGE }}
-          path: |
-            **/build/outputs/roborazzi
-            !**/build/outputs/roborazzi/*_compare.png
+          path: "**/build/outputs/roborazzi/*_compare.png"
 
   screenshot-test-results:
     runs-on: ubuntu-latest
