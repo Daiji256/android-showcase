@@ -54,7 +54,7 @@ jobs:
         env:
           BASE_FILES_HASH: ${{ steps.base-files-hash.outputs.hash }}
         run: |
-          echo "name=$SCREENSHOTS_BRANCH_PREFIX$BASE_FILES_HASH" >> "$GITHUB_OUTPUT"
+          echo "name=${SCREENSHOTS_BRANCH_PREFIX}${BASE_FILES_HASH}" >> "$GITHUB_OUTPUT"
 
       - name: Check if base screenshots branch exists
         id: check-base-screenshots-branch
@@ -105,7 +105,7 @@ jobs:
         env:
           HEAD_FILES_HASH: ${{ steps.head-files-hash.outputs.hash }}
         run: |
-          echo "name=$SCREENSHOTS_BRANCH_PREFIX$HEAD_FILES_HASH" >> "$GITHUB_OUTPUT"
+          echo "name=${SCREENSHOTS_BRANCH_PREFIX}${HEAD_FILES_HASH}" >> "$GITHUB_OUTPUT"
 
       - name: Get companion screenshots branch name
         id: companion-screenshots-branch
