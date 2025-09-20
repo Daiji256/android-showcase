@@ -147,9 +147,13 @@ jobs:
           IS_HEAD_SCREENSHOTS_BRANCH_EXISTS: ${{ steps.check-head-screenshots-branch.outputs.exists }}
           IS_COMPANION_SCREENSHOTS_BRANCH_EXISTS: ${{ steps.check-companion-screenshots-branch.outputs.exists }}
         run: |
+          shopt -s globstar
+          find **/build/outputs/roborazzi -type f
           if [[ "$IS_HEAD_SCREENSHOTS_BRANCH_EXISTS" == "true" && "$IS_COMPANION_SCREENSHOTS_BRANCH_EXISTS" == "true" ]]; then
+            echo "Both screenshots branches exist. Skip unit test."
             ./gradlew testDebugUnitTest
           else
+            echo "At least one of screenshots branches does not exist. Run unit test with screenshot comparison."
             ./gradlew testDebugUnitTest -Proborazzi.test.compare=true
           fi
 
