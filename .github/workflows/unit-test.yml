@@ -36,18 +36,26 @@ jobs:
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@ed408507eac070d1f99cc633dbcf757c94c7933a # v4.4.3
 
-      - name: Get base screenshots branch name
-        id: base-screenshots-branch
+      - name: Get base files hash
+        id: base-files-hash
         shell: bash
         run: |
           hash=$(git ls-files -z | xargs -0 sha256sum | sha256sum | awk '{print $1}')
-          echo "branch=${SCREENSHOTS_BRANCH_PREFIX}${hash:0:7}" >> "$GITHUB_OUTPUT"
+          echo "hash=${hash:0:7}" >> "$GITHUB_OUTPUT"
+
+      - name: Get base screenshots branch name
+        id: base-screenshots-branch
+        shell: bash
+        env:
+          BASE_FILES_HASH: ${{ steps.base-files-hash.outputs.hash }}
+        run: |
+          echo "name=$SCREENSHOTS_BRANCH_PREFIX$BASE_FILES_HASH" >> "$GITHUB_OUTPUT"
 
       - name: Check if base screenshots branch exists
         id: check-base-screenshots-branch
         shell: bash
         env:
-          BRANCH: ${{ steps.base-screenshots-branch.outputs.branch }}
+          BRANCH: ${{ steps.base-screenshots-branch.outputs.name }}
         run: |
           if git show-ref --verify --quiet "refs/remotes/origin/${BRANCH}"; then
             echo "exists=true" >> "$GITHUB_OUTPUT"
