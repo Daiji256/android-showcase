@@ -63,6 +63,7 @@ jobs:
 
       - name: Record base screenshots
         if: ${{ steps.check-base-screenshots-branch.outputs.exists == 'false' }}
+        shell: bash
         run: ./gradlew recordRoborazziDebug
 
       - name: Upload base screenshots
