@@ -11,9 +11,78 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     permissions:
-      contents: read
+      contents: write
+
+    env:
+      SCREENSHOTS_BRANCH_PREFIX: _screenshots_
+      SCREENSHOTS_COMMITTER_NAME: github-actions[bot]
+      SCREENSHOTS_COMMITTER_EMAIL: 41898282+github-actions[bot]@users.noreply.github.com
+      SCREENSHOTS_COMMIT_MESSAGE: screenshots
+      SCREENSHOTS_MAX_AGE_SECONDS: 600 # TODO: 14 days
 
     steps:
+      - name: Checkout
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+        with:
+          ref: ${{ github.event.pull_request.base.ref }}
+
+      - name: Setup JDK
+        uses: actions/setup-java@dded0888837ed1f317902acf8a20df0ad188d165 # v5.0.0
+        with:
+          distribution: temurin
+          java-version: 21
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@ed408507eac070d1f99cc633dbcf757c94c7933a # v4.4.3
+
+      - name: Get base screenshots branch name
+        id: base-screenshots-branch
+        shell: bash
+        run: |
+          hash=$(git ls-files -z | xargs -0 sha256sum | sha256sum | awk '{print $1}')
+          echo "branch=${SCREENSHOTS_BRANCH_PREFIX}${hash:0:7}" >> "$GITHUB_OUTPUT"
+
+      - name: Check if base screenshots branch exists
+        id: check-base-screenshots-branch
+        shell: bash
+        env:
+          BRANCH: ${{ steps.base-screenshots-branch.outputs.branch }}
+        run: |
+          if git show-ref --verify --quiet "refs/remotes/origin/${BRANCH}"; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Download base screenshots
+        if: ${{ steps.check-base-screenshots-branch.outputs.exists == 'true' }}
+        uses: daiji256/download-from-orphan-branch@04e2d3ac47d18764bb143b5d5653f898ec54e305 # v0.1.0
+        with:
+          branch: ${{ steps.base-screenshots-branch.outputs.branch }}
+
+      - name: Record screenshots
+        if: ${{ steps.check-base-screenshots-branch.outputs.exists == 'false' }}
+        run: ./gradlew recordRoborazziDebug
+
+      - name: Upload
+        if: ${{ steps.check-base-screenshots-branch.outputs.exists == 'false' }}
+        uses: daiji256/upload-to-orphan-branch@c7b7f47558b9ebd00985945e85b6a2ff3d0ce883 # v0.1.1
+        with:
+          branch: ${{ steps.bfind **/build/outputs/roborazzi -type ffind **/build/outputs/roborazzi -type franch.outputs.branch }}
+          committer-name: ${{ env.SCREENSHOTS_COMMITTER_NAME }}
+          committer-email: ${{ env.SCREENSHOTS_COMMITTER_EMAIL }}
+          commit-message: ${{ env.SCREENSHOTS_COMMIT_MESSAGE }}
+          path: "**/build/outputs/roborazzi"
+
+      - name: Check
+        shell: bash
+        run: |
+          shopt -s globstar
+          find **/build/outputs/roborazzi -type f
+
+      - name: Failure
+        run: exit 1
+
       - name: Checkout
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
 
@@ -46,11 +115,11 @@ jobs:
           reporter: java-junit
 
       - name: Upload screenshot test results
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        uses: daiji256/upload-to-orphan-branch@c7b7f47558b9ebd00985945e85b6a2ff3d0ce883 # v0.1.1
         with:
-          name: screenshot-test-results
+          name: _screenshot_test_results_${{ github.event.pull_request.number }}
           path: "**/build/outputs/roborazzi"
-          retention-days: 30
+          overwrite: true
 
   screenshot-test-results:
     runs-on: ubuntu-latest
