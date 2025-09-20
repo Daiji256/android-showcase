@@ -83,7 +83,6 @@ jobs:
 
       - name: Get base screenshots branch name
         id: base-screenshots-branch
-        shell: bash
         env:
           BASE_FILES_HASH: ${{ steps.base-files-hash.outputs.hash }}
         run: |
@@ -91,7 +90,6 @@ jobs:
 
       - name: Check if base screenshots branch exists
         id: check-base-screenshots-branch
-        shell: bash
         env:
           BRANCH: ${{ steps.base-screenshots-branch.outputs.name }}
         run: |
@@ -103,7 +101,6 @@ jobs:
 
       - name: Record base screenshots
         if: ${{ steps.check-base-screenshots-branch.outputs.exists == 'false' }}
-        shell: bash
         run: ./gradlew recordRoborazziDebug
 
       - name: Upload base screenshots
@@ -127,7 +124,6 @@ jobs:
 
       - name: Get head screenshots branch name
         id: head-screenshots-branch
-        shell: bash
         env:
           HEAD_FILES_HASH: ${{ steps.head-files-hash.outputs.hash }}
         run: |
@@ -135,7 +131,6 @@ jobs:
 
       - name: Get companion screenshots branch name
         id: companion-screenshots-branch
-        shell: bash
         env:
           BASE_FILES_HASH: ${{ steps.base-files-hash.outputs.hash }}
           HEAD_FILES_HASH: ${{ steps.head-files-hash.outputs.hash }}
@@ -144,7 +139,6 @@ jobs:
 
       - name: Check if head screenshots branch exists
         id: check-head-screenshots-branch
-        shell: bash
         env:
           BRANCH: ${{ steps.head-screenshots-branch.outputs.name }}
         run: |
@@ -156,7 +150,6 @@ jobs:
 
       - name: Check if companion screenshots branch exists
         id: check-companion-screenshots-branch
-        shell: bash
         env:
           BRANCH: ${{ steps.companion-screenshots-branch.outputs.name }}
         run: |
@@ -213,7 +206,6 @@ jobs:
           path: "**/build/outputs/roborazzi/*_compare.png"
 
       - name: Delete outdated report
-        shell: bash
         env:
           GH_TOKEN: ${{ github.token }}
           PR_NUMBER: ${{ github.event.pull_request.number }}
