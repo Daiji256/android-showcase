@@ -105,7 +105,7 @@ jobs:
 
       - name: Upload base screenshots
         if: ${{ steps.check-base-screenshots-branch.outputs.exists == 'false' }}
-        uses: daiji256/upload-to-orphan-branch@3325cab5acaa8d391b2a1ef90eba2f168c7879be
+        uses: daiji256/upload-to-orphan-branch@2d11054e099cf3fc45579e41ff3d90650abfb30b # v0.1.2
         with:
           branch: ${{ steps.base-screenshots-branch.outputs.name }}
           committer-name: ${{ env.ORPHAN_BRANCH_COMMITTER_NAME }}
@@ -186,7 +186,7 @@ jobs:
 
       - name: Upload head screenshots
         if: ${{ !cancelled() && steps.check-head-screenshots-branch.outputs.exists == 'false' }}
-        uses: daiji256/upload-to-orphan-branch@3325cab5acaa8d391b2a1ef90eba2f168c7879be
+        uses: daiji256/upload-to-orphan-branch@2d11054e099cf3fc45579e41ff3d90650abfb30b # v0.1.2
         with:
           branch: ${{ steps.head-screenshots-branch.outputs.name }}
           committer-name: ${{ env.ORPHAN_BRANCH_COMMITTER_NAME }}
@@ -198,7 +198,7 @@ jobs:
 
       - name: Upload companion screenshots
         if: ${{ !cancelled() && steps.check-companion-screenshots-branch.outputs.exists == 'false' }}
-        uses: daiji256/upload-to-orphan-branch@3325cab5acaa8d391b2a1ef90eba2f168c7879be
+        uses: daiji256/upload-to-orphan-branch@2d11054e099cf3fc45579e41ff3d90650abfb30b # v0.1.2
         with:
           branch: ${{ steps.companion-screenshots-branch.outputs.name }}
           committer-name: ${{ env.ORPHAN_BRANCH_COMMITTER_NAME }}
