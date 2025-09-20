@@ -75,6 +75,12 @@ jobs:
         with:
           branch: ${{ steps.base-screenshots-branch.outputs.name }}
 
+      - name: Check
+        run: |
+          shopt -s globstar
+          find **/build/outputs/roborazzi -type f | sort
+          exit 1
+
       - name: Record base screenshots
         if: ${{ steps.check-base-screenshots-branch.outputs.exists == 'false' }}
         shell: bash
