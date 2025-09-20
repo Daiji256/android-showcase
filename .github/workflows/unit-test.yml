@@ -145,7 +145,7 @@ jobs:
         shell: bash
         env:
           IS_HEAD_SCREENSHOTS_BRANCH_EXISTS: ${{ steps.check-head-screenshots-branch.outputs.exists }}
-          IS_COMPANION_SCREENSHOTS_BRANCH_EXISTS: ${{ steps.check-base-screenshots-branch.outputs.exists }}
+          IS_COMPANION_SCREENSHOTS_BRANCH_EXISTS: ${{ steps.check-companion-screenshots-branch.outputs.exists }}
         run: |
           if [ "$IS_HEAD_SCREENSHOTS_BRANCH_EXISTS" = "true" ] && [ "$IS_COMPANION_SCREENSHOTS_BRANCH_EXISTS" = "true" ]; then
             ./gradlew testDebugUnitTest
@@ -218,7 +218,7 @@ jobs:
             echo "<!-- screenshot-test-report -->"
             echo ""
             echo "> [!NOTE]"
-            echo "> Differences found in $(echo "$files" | wc -l) screenshots."
+            echo "> Differences found in ${#files[@]} screenshots."
             echo ""
             echo "<details><summary>Expand for details</summary>"
             for file in "${files[@]}"; do
