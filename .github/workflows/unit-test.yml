@@ -53,7 +53,7 @@ jobs:
 
             commit_date=$(git log -1 --format=%ct "origin/$branch")
             age=$((now - commit_date))
-            if [[ "$age" -gt "$ORPHAN_BRANCH_MAX_AGE_SECONDS" ]]; then
+            if [[ "$age" -lt "$ORPHAN_BRANCH_MAX_AGE_SECONDS" ]]; then
               continue
             fi
 
