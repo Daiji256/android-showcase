@@ -61,11 +61,11 @@ jobs:
         with:
           branch: ${{ steps.base-screenshots-branch.outputs.branch }}
 
-      - name: Record screenshots
+      - name: Record base screenshots
         if: ${{ steps.check-base-screenshots-branch.outputs.exists == 'false' }}
         run: ./gradlew recordRoborazziDebug
 
-      - name: Upload
+      - name: Upload base screenshots
         if: ${{ steps.check-base-screenshots-branch.outputs.exists == 'false' }}
         uses: daiji256/upload-to-orphan-branch@c7b7f47558b9ebd00985945e85b6a2ff3d0ce883 # v0.1.1
         with:
