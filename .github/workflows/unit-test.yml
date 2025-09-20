@@ -134,7 +134,7 @@ jobs:
         env:
           BRANCH: ${{ steps.companion-screenshots-branch.outputs.name }}
         run: |
-          if git show-ref --verify --quiet "refs/remotes/origin/${BRANCH}
+          if git show-ref --verify --quiet "refs/remotes/origin/${BRANCH}"; then
             echo "exists=true" >> "$GITHUB_OUTPUT"
           else
             echo "exists=false" >> "$GITHUB_OUTPUT"
