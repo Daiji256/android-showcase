@@ -157,7 +157,7 @@ jobs:
             ./gradlew testDebugUnitTest
           else
             echo "At least one of screenshots branches does not exist. Run unit test with screenshot comparison."
-            ./gradlew testDebugUnitTest -Proborazzi.test.compare=true
+            ./gradlew testDebugUnitTest -Proborazzi.test.record=true -Proborazzi.test.compare=true
           fi
 
       - name: Display unit test report
@@ -179,6 +179,7 @@ jobs:
           path: |
             **/build/outputs/roborazzi
             !**/build/outputs/roborazzi/*_compare.png
+            !**/build/outputs/roborazzi/*_actual.png
 
       - name: Upload companion screenshots
         if: ${{ !cancelled() && steps.check-companion-screenshots-branch.outputs.exists == 'false' }}
