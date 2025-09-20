@@ -141,19 +141,12 @@ jobs:
             echo "exists=false" >> "$GITHUB_OUTPUT"
           fi
 
-      - name: Download base screenshots
-        uses: daiji256/download-from-orphan-branch@f8dc5de6105bf1040e2004b225174a0ecce5ae59 # v0.1.1
-        with:
-          branch: ${{ steps.base-screenshots-branch.outputs.name }}
-
       - name: Run unit test
         shell: bash
         env:
           IS_HEAD_SCREENSHOTS_BRANCH_EXISTS: ${{ steps.check-head-screenshots-branch.outputs.exists }}
           IS_COMPANION_SCREENSHOTS_BRANCH_EXISTS: ${{ steps.check-companion-screenshots-branch.outputs.exists }}
         run: |
-          shopt -s globstar
-          find **/build/outputs/roborazzi -type f
           if [[ "$IS_HEAD_SCREENSHOTS_BRANCH_EXISTS" == "true" && "$IS_COMPANION_SCREENSHOTS_BRANCH_EXISTS" == "true" ]]; then
             echo "Both screenshots branches exist. Skip unit test."
             ./gradlew testDebugUnitTest
