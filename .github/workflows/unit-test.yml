@@ -141,6 +141,11 @@ jobs:
             echo "exists=false" >> "$GITHUB_OUTPUT"
           fi
 
+      - name: Download base screenshots
+        uses: daiji256/download-from-orphan-branch@f8dc5de6105bf1040e2004b225174a0ecce5ae59 # v0.1.1
+        with:
+          branch: ${{ steps.base-screenshots-branch.outputs.name }}
+
       - name: Run unit test
         shell: bash
         env:
