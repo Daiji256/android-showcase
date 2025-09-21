@@ -21,7 +21,7 @@ jobs:
   unit-test:
     runs-on: ubuntu-latest
     timeout-minutes: 30
-    needs: [cleanup, orphan-branche-name, ensure-base-screenshots]
+    needs: [cleanup, orphan-branch-name, ensure-base-screenshots]
     permissions:
       contents: write
       pull-requests: write
@@ -44,7 +44,7 @@ jobs:
       - name: Download base screenshots
         uses: daiji256/download-from-orphan-branch@f8dc5de6105bf1040e2004b225174a0ecce5ae59 # v0.1.1
         with:
-          branch: ${{ needs.orphan-branche-name.outputs.base-screenshots }}
+          branch: ${{ needs.orphan-branch-name.outputs.base-screenshots }}
 
       - name: Run unit test
         run: |
@@ -65,7 +65,7 @@ jobs:
         if: ${{ !cancelled() }}
         uses: daiji256/upload-to-orphan-branch@2d11054e099cf3fc45579e41ff3d90650abfb30b # v0.1.2
         with:
-          branch: ${{ needs.orphan-branche-name.outputs.head-screenshots }}
+          branch: ${{ needs.orphan-branch-name.outputs.head-screenshots }}
           committer-name: ${{ env.ORPHAN_BRANCH_COMMITTER_NAME }}
           committer-email: ${{ env.ORPHAN_BRANCH_COMMITTER_EMAIL }}
           overwrite: true
@@ -78,7 +78,7 @@ jobs:
         if: ${{ !cancelled() }}
         uses: daiji256/upload-to-orphan-branch@2d11054e099cf3fc45579e41ff3d90650abfb30b # v0.1.2
         with:
-          branch: ${{ needs.orphan-branche-name.outputs.companion-screenshots }}
+          branch: ${{ needs.orphan-branch-name.outputs.companion-screenshots }}
           committer-name: ${{ env.ORPHAN_BRANCH_COMMITTER_NAME }}
           committer-email: ${{ env.ORPHAN_BRANCH_COMMITTER_EMAIL }}
           overwrite: true
@@ -86,7 +86,7 @@ jobs:
 
       - name: Post report
         env:
-          COMPANION_BRANCH: ${{ needs.orphan-branche-name.outputs.companion-screenshots }}
+          COMPANION_BRANCH: ${{ needs.orphan-branch-name.outputs.companion-screenshots }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PR_NUMBER: ${{ github.event.pull_request.number }}
         run: |
@@ -112,7 +112,7 @@ jobs:
   ensure-base-screenshots:
     runs-on: ubuntu-latest
     timeout-minutes: 15
-    needs: [cleanup, orphan-branche-name]
+    needs: [cleanup, orphan-branch-name]
     permissions:
       contents: write
 
@@ -126,7 +126,7 @@ jobs:
       - name: Check if base screenshots branch exists
         id: check-base-screenshots-branch
         env:
-          BRANCH: ${{ needs.orphan-branche-name.outputs.base-screenshots }}
+          BRANCH: ${{ needs.orphan-branch-name.outputs.base-screenshots }}
         run: |
           if git show-ref --verify --quiet "refs/remotes/origin/${BRANCH}"; then
             echo "exists=true" >> "$GITHUB_OUTPUT"
@@ -153,12 +153,12 @@ jobs:
         if: ${{ !cancelled() && success() && steps.check-base-screenshots-branch.outputs.exists == 'false' }}
         uses: daiji256/upload-to-orphan-branch@2d11054e099cf3fc45579e41ff3d90650abfb30b # v0.1.2
         with:
-          branch: ${{ needs.orphan-branche-name.outputs.base-screenshots }}
+          branch: ${{ needs.orphan-branch-name.outputs.base-screenshots }}
           committer-name: ${{ env.ORPHAN_BRANCH_COMMITTER_NAME }}
           committer-email: ${{ env.ORPHAN_BRANCH_COMMITTER_EMAIL }}
           path: "**/build/outputs/roborazzi"
 
-  orphan-branche-name:
+  orphan-branch-name:
     runs-on: ubuntu-latest
     timeout-minutes: 5
 
