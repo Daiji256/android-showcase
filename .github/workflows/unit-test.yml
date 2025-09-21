@@ -209,10 +209,9 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           PR_NUMBER: ${{ github.event.pull_request.number }}
-          REPOSITORY: ${{ github.repository }}
         run: |
           comment_ids=$(
-            gh api "repos/${REPOSITORY}/issues/${PR_NUMBER}/comments" |
+            gh api "repos/${GITHUB_REPOSITORY}/issues/${PR_NUMBER}/comments" |
             jq -r '
               .[]
               | select(.user.login == "github-actions[bot]")
@@ -220,7 +219,7 @@ jobs:
               | .id'
           )
           for comment_id in $comment_ids; do
-            gh api -X DELETE "repos/${REPOSITORY}/issues/comments/${comment_id}"
+            gh api -X DELETE "repos/${GITHUB_REPOSITORY}/issues/comments/${comment_id}"
           done
 
       - name: Post report
