@@ -21,16 +21,15 @@ jobs:
   unit-test:
     runs-on: ubuntu-latest
     timeout-minutes: 30
-    needs: [cleanup, orphan-branche-name]
+    needs: [cleanup, orphan-branche-name, ensure-base-screenshots]
     permissions:
       contents: write
       pull-requests: write
 
     steps:
-      - name: Checkout base
+      - name: Checkout (fetch all)
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
         with:
-          ref: ${{ github.event.pull_request.base.ref }}
           fetch-depth: 0
 
       - name: Setup JDK
@@ -41,33 +40,6 @@ jobs:
 
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@ed408507eac070d1f99cc633dbcf757c94c7933a # v4.4.3
-
-      - name: Check if base screenshots branch exists
-        id: check-base-screenshots-branch
-        env:
-          BRANCH: ${{ needs.orphan-branche-name.outputs.base-screenshots }}
-        run: |
-          if git show-ref --verify --quiet "refs/remotes/origin/${BRANCH}"; then
-            echo "exists=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "exists=false" >> "$GITHUB_OUTPUT"
-          fi
-
-      - name: Record base screenshots
-        if: ${{ steps.check-base-screenshots-branch.outputs.exists == 'false' }}
-        run: ./gradlew recordRoborazziDebug
-
-      - name: Upload base screenshots
-        if: ${{ steps.check-base-screenshots-branch.outputs.exists == 'false' }}
-        uses: daiji256/upload-to-orphan-branch@2d11054e099cf3fc45579e41ff3d90650abfb30b # v0.1.2
-        with:
-          branch: ${{ needs.orphan-branche-name.outputs.base-screenshots }}
-          committer-name: ${{ env.ORPHAN_BRANCH_COMMITTER_NAME }}
-          committer-email: ${{ env.ORPHAN_BRANCH_COMMITTER_EMAIL }}
-          path: "**/build/outputs/roborazzi"
-
-      - name: Checkout head
-        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
 
       - name: Check if head screenshots branch exists
         id: check-head-screenshots-branch
