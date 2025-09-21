@@ -226,7 +226,6 @@ jobs:
       - name: Post report
         env:
           COMPANION_BRANCH: ${{ steps.companion-screenshots-branch.outputs.name }}
-          REPORT_FILE: screenshot-test-report.md
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PR_NUMBER: ${{ github.event.pull_request.number }}
         run: |
@@ -234,19 +233,13 @@ jobs:
           if [[ ${#files[@]} -eq 0 ]]; then
             exit 0
           fi
-          {
-            echo "<!-- screenshot-test-report -->"
-            echo ""
-            echo "> [!NOTE]"
-            echo "> Differences found in ${#files[@]} screenshots."
-            echo ""
-            echo "<details><summary>Expand for details</summary>"
-            for file in "${files[@]}"; do
-              echo ""
-              echo "\`$(basename "$file" | sed 's/_compare\.png$//')\`"
-              echo "![](https://github.com/${{ github.repository }}/blob/${COMPANION_BRANCH}/${file}?raw=true)"
-            done
-            echo ""
-            echo "</details>"
-          } >> "$REPORT_FILE"
-          gh pr comment "$PR_NUMBER" --body-file "$REPORT_FILE"
+          report=$"<!-- screenshot-test-report -->\n\n"
+          report+=$"> [!NOTE]\n"
+          report+=$"> Differences found in ${#files[@]} screenshots.\n\n"
+          report+=$"<details><summary>Expand for details</summary>\n"
+          for file in "${files[@]}"; do
+            report+=$"\n\`$(basename "$file")\`\n"
+            report+="![](https://github.com/${GITHUB_REPOSITORY}/blob/${COMPANION_BRANCH}/${file}?raw=true)"$'\n'
+          done
+          report+=$"\n</details>\n"
+          gh pr comment "$PR_NUMBER" --body "$report"
