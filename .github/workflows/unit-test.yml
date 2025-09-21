@@ -216,7 +216,6 @@ jobs:
         id: base
         run: |
           hash=$(git ls-files -z | xargs -0 sha256sum | sha256sum | awk '{print $1}')
-          echo "$hash"
           echo "hash=${hash:0:7}" >> "$GITHUB_OUTPUT"
 
       - name: Checkout head
@@ -228,7 +227,6 @@ jobs:
         id: head
         run: |
           hash=$(git ls-files -z | xargs -0 sha256sum | sha256sum | awk '{print $1}')
-          echo "$hash"
           echo "hash=${hash:0:7}" >> "$GITHUB_OUTPUT"
 
   cleanup:
