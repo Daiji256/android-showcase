@@ -21,7 +21,7 @@ jobs:
   unit-test:
     runs-on: ubuntu-latest
     timeout-minutes: 30
-    needs: cleanup
+    needs: [cleanup, orphan-branche-name]
     permissions:
       contents: write
       pull-requests: write
@@ -42,23 +42,10 @@ jobs:
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@ed408507eac070d1f99cc633dbcf757c94c7933a # v4.4.3
 
-      - name: Get base files hash
-        id: base-files-hash
-        run: |
-          hash=$(git ls-files -z | xargs -0 sha256sum | sha256sum | awk '{print $1}')
-          echo "hash=${hash:0:7}" >> "$GITHUB_OUTPUT"
-
-      - name: Get base screenshots branch name
-        id: base-screenshots-branch
-        env:
-          BASE_FILES_HASH: ${{ steps.base-files-hash.outputs.hash }}
-        run: |
-          echo "name=${SCREENSHOTS_BRANCH_PREFIX}${BASE_FILES_HASH}" >> "$GITHUB_OUTPUT"
-
       - name: Check if base screenshots branch exists
         id: check-base-screenshots-branch
         env:
-          BRANCH: ${{ steps.base-screenshots-branch.outputs.name }}
+          BRANCH: ${{ needs.orphan-branche-name.outputs.base-screenshots }}
         run: |
           if git show-ref --verify --quiet "refs/remotes/origin/${BRANCH}"; then
             echo "exists=true" >> "$GITHUB_OUTPUT"
@@ -74,7 +61,7 @@ jobs:
         if: ${{ steps.check-base-screenshots-branch.outputs.exists == 'false' }}
         uses: daiji256/upload-to-orphan-branch@2d11054e099cf3fc45579e41ff3d90650abfb30b # v0.1.2
         with:
-          branch: ${{ steps.base-screenshots-branch.outputs.name }}
+          branch: ${{ needs.orphan-branche-name.outputs.base-screenshots }}
           committer-name: ${{ env.ORPHAN_BRANCH_COMMITTER_NAME }}
           committer-email: ${{ env.ORPHAN_BRANCH_COMMITTER_EMAIL }}
           path: "**/build/outputs/roborazzi"
@@ -82,31 +69,10 @@ jobs:
       - name: Checkout head
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
 
-      - name: Get head files hash
-        id: head-files-hash
-        run: |
-          hash=$(git ls-files -z | xargs -0 sha256sum | sha256sum | awk '{print $1}')
-          echo "hash=${hash:0:7}" >> "$GITHUB_OUTPUT"
-
-      - name: Get head screenshots branch name
-        id: head-screenshots-branch
-        env:
-          HEAD_FILES_HASH: ${{ steps.head-files-hash.outputs.hash }}
-        run: |
-          echo "name=${SCREENSHOTS_BRANCH_PREFIX}${HEAD_FILES_HASH}" >> "$GITHUB_OUTPUT"
-
-      - name: Get companion screenshots branch name
-        id: companion-screenshots-branch
-        env:
-          BASE_FILES_HASH: ${{ steps.base-files-hash.outputs.hash }}
-          HEAD_FILES_HASH: ${{ steps.head-files-hash.outputs.hash }}
-        run: |
-          echo "name=${COMPANION_SCREENSHOTS_BRANCH_PREFIX}${BASE_FILES_HASH}_${HEAD_FILES_HASH}" >> "$GITHUB_OUTPUT"
-
       - name: Check if head screenshots branch exists
         id: check-head-screenshots-branch
         env:
-          BRANCH: ${{ steps.head-screenshots-branch.outputs.name }}
+          BRANCH: ${{ needs.orphan-branche-name.outputs.head-screenshots }}
         run: |
           if git show-ref --verify --quiet "refs/remotes/origin/${BRANCH}"; then
             echo "exists=true" >> "$GITHUB_OUTPUT"
@@ -117,7 +83,7 @@ jobs:
       - name: Check if companion screenshots branch exists
         id: check-companion-screenshots-branch
         env:
-          BRANCH: ${{ steps.companion-screenshots-branch.outputs.name }}
+          BRANCH: ${{ needs.orphan-branche-name.outputs.companion-screenshots }}
         run: |
           if git show-ref --verify --quiet "refs/remotes/origin/${BRANCH}"; then
             echo "exists=true" >> "$GITHUB_OUTPUT"
@@ -128,7 +94,7 @@ jobs:
       - name: Download base screenshots
         uses: daiji256/download-from-orphan-branch@f8dc5de6105bf1040e2004b225174a0ecce5ae59 # v0.1.1
         with:
-          branch: ${{ steps.base-screenshots-branch.outputs.name }}
+          branch: ${{ needs.orphan-branche-name.outputs.base-screenshots }}
 
       - name: Run unit test
         env:
@@ -156,7 +122,7 @@ jobs:
         if: ${{ !cancelled() && steps.check-head-screenshots-branch.outputs.exists == 'false' }}
         uses: daiji256/upload-to-orphan-branch@2d11054e099cf3fc45579e41ff3d90650abfb30b # v0.1.2
         with:
-          branch: ${{ steps.head-screenshots-branch.outputs.name }}
+          branch: ${{ needs.orphan-branche-name.outputs.head-screenshots }}
           committer-name: ${{ env.ORPHAN_BRANCH_COMMITTER_NAME }}
           committer-email: ${{ env.ORPHAN_BRANCH_COMMITTER_EMAIL }}
           path: |
@@ -168,14 +134,14 @@ jobs:
         if: ${{ !cancelled() && steps.check-companion-screenshots-branch.outputs.exists == 'false' }}
         uses: daiji256/upload-to-orphan-branch@2d11054e099cf3fc45579e41ff3d90650abfb30b # v0.1.2
         with:
-          branch: ${{ steps.companion-screenshots-branch.outputs.name }}
+          branch: ${{ needs.orphan-branche-name.outputs.companion-screenshots }}
           committer-name: ${{ env.ORPHAN_BRANCH_COMMITTER_NAME }}
           committer-email: ${{ env.ORPHAN_BRANCH_COMMITTER_EMAIL }}
           path: "**/build/outputs/roborazzi/*_compare.png"
 
       - name: Post report
         env:
-          COMPANION_BRANCH: ${{ steps.companion-screenshots-branch.outputs.name }}
+          COMPANION_BRANCH: ${{ needs.orphan-branche-name.outputs.companion-screenshots }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PR_NUMBER: ${{ github.event.pull_request.number }}
         run: |
@@ -198,7 +164,7 @@ jobs:
           report+="</details>"$'\n'
           gh pr comment "$PR_NUMBER" --body "$report"
 
-  orphan-branche-names:
+  orphan-branche-name:
     runs-on: ubuntu-latest
     timeout-minutes: 5
 
