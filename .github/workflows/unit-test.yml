@@ -203,25 +203,31 @@ jobs:
     timeout-minutes: 5
 
     outputs:
-      base-hash: ${{ steps.get-hash.outputs.base }}
-      head-hash: ${{ steps.get-hash.outputs.head }}
+      base-hash: ${{ steps.base.outputs.hash }}
+      head-hash: ${{ steps.head.outputs.hash }}
 
     steps:
-      - name: Checkout
+      - name: Checkout base
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+        with:
+          ref: ${{ github.event.pull_request.base.ref }}
 
-      - name: Get base and head files hash
-        id: get-hash
-        env:
-          BASE_REF: ${{ github.event.pull_request.base.ref }}
-          HEAD_REF: ${{ github.event.pull_request.head.ref }}
+      - name: Get base files hash
+        id: base
         run: |
-          git fetch origin "$BASE_REF"
-          git fetch origin "$HEAD_REF"
-          base_hash=$(git ls-tree -r --full-tree "origin/$BASE_REF" --name-only | xargs -0 sha256sum | sha256sum | awk '{print $1}')
-          head_hash=$(git ls-tree -r --full-tree "origin/$HEAD_REF" --name-only | xargs -0 sha256sum | sha256sum | awk '{print $1}')
-          echo "base=${base_hash:0:7}" >> "$GITHUB_OUTPUT"
-          echo "head=${head_hash:0:7}" >> "$GITHUB_OUTPUT"
+          hash=$(git ls-files -z | xargs -0 sha256sum | sha256sum | awk '{print $1}')
+          echo "hash=${hash:0:7}" >> "$GITHUB_OUTPUT"
+
+      - name: Checkout head
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+
+      - name: Get head files hash
+        id: head
+        run: |
+          hash=$(git ls-files -z | xargs -0 sha256sum | sha256sum | awk '{print $1}')
+          echo "hash=${hash:0:7}" >> "$GITHUB_OUTPUT"
 
   cleanup:
     runs-on: ubuntu-latest
