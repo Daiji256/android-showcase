@@ -233,13 +233,17 @@ jobs:
           if [[ ${#files[@]} -eq 0 ]]; then
             exit 0
           fi
-          report=$"<!-- screenshot-test-report -->\n\n"
-          report+=$"> [!NOTE]\n"
-          report+=$"> Differences found in ${#files[@]} screenshots.\n\n"
-          report+=$"<details><summary>Expand for details</summary>\n"
+          report="<!-- screenshot-test-report -->"$'\n'
+          report+=$'\n'
+          report+="> [!NOTE]"$'\n'
+          report+="> Differences found in ${#files[@]} screenshots."$'\n'
+          report+=$'\n'
+          report+="<details><summary>Expand for details</summary>"$'\n'
           for file in "${files[@]}"; do
-            report+=$"\n\`$(basename "$file")\`\n"
+            report+=$'\n'
+            report+="\`$(basename "$file")\`"$'\n'
             report+="![](https://github.com/${GITHUB_REPOSITORY}/blob/${COMPANION_BRANCH}/${file}?raw=true)"$'\n'
           done
-          report+=$"\n</details>\n"
+          report+=$'\n'
+          report+="</details>"$'\n'
           gh pr comment "$PR_NUMBER" --body "$report"
