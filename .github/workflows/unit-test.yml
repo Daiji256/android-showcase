@@ -198,6 +198,28 @@ jobs:
           report+="</details>"$'\n'
           gh pr comment "$PR_NUMBER" --body "$report"
 
+  files-hash:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    outputs:
+      base-hash: ${{ steps.get-hash.outputs.base }}
+      head-hash: ${{ steps.get-hash.outputs.head }}
+
+    steps:
+      - name: Get base and head files hash
+        id: get-hash
+        env:
+          BASE_REF: ${{ github.event.pull_request.base.ref }}
+          HEAD_REF: ${{ github.event.pull_request.head.ref }}
+        run: |
+          git fetch origin "$BASE_REF"
+          git fetch origin "$HEAD_REF"
+          base_hash=$(git ls-tree -r --full-tree "origin/$BASE_REF" --name-only | xargs -0 sha256sum | sha256sum | awk '{print $1}')
+          head_hash=$(git ls-tree -r --full-tree "origin/$HEAD_REF" --name-only | xargs -0 sha256sum | sha256sum | awk '{print $1}')
+          echo "base=${base_hash:0:7}" >> "$GITHUB_OUTPUT"
+          echo "head=${head_hash:0:7}" >> "$GITHUB_OUTPUT"
+
   cleanup:
     runs-on: ubuntu-latest
     timeout-minutes: 5
