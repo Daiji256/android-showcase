@@ -198,13 +198,14 @@ jobs:
           report+="</details>"$'\n'
           gh pr comment "$PR_NUMBER" --body "$report"
 
-  files-hash:
+  orphan-branche-names:
     runs-on: ubuntu-latest
     timeout-minutes: 5
 
     outputs:
-      base-hash: ${{ steps.base.outputs.hash }}
-      head-hash: ${{ steps.head.outputs.hash }}
+      base-screenshots-branch: ${{ steps.branch-names.outputs.base }}
+      head-screenshots-branch: ${{ steps.branch-names.outputs.head }}
+      companion-screenshots-branch: ${{ steps.branch-names.outputs.companion }}
 
     steps:
       - name: Checkout base
@@ -228,6 +229,16 @@ jobs:
         run: |
           hash=$(git ls-files -z | xargs -0 sha256sum | sha256sum | awk '{print $1}')
           echo "hash=${hash:0:7}" >> "$GITHUB_OUTPUT"
+
+      - name: Get branch names
+        id: branch-names
+        env:
+          BASE_FILES_HASH: ${{ steps.base.outputs.hash }}
+          HEAD_FILES_HASH: ${{ steps.head.outputs.hash }}
+        run: |
+          echo "base=${SCREENSHOTS_BRANCH_PREFIX}${BASE_FILES_HASH}" >> "$GITHUB_OUTPUT"
+          echo "head=${SCREENSHOTS_BRANCH_PREFIX}${HEAD_FILES_HASH}" >> "$GITHUB_OUTPUT"
+          echo "companion=${COMPANION_SCREENSHOTS_BRANCH_PREFIX}${BASE_FILES_HASH}_${HEAD_FILES_HASH}" >> "$GITHUB_OUTPUT"
 
   cleanup:
     runs-on: ubuntu-latest
