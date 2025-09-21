@@ -6,6 +6,10 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number }}
   cancel-in-progress: true
 
+defaults:
+  run:
+    shell: bash
+
 jobs:
   unit-test:
     runs-on: ubuntu-latest
@@ -28,7 +32,6 @@ jobs:
           fetch-depth: 0
 
       - name: Delete outdated orphan branches
-        shell: bash
         run: |
           now=$(date +%s)
           git branch -r --format="%(refname:lstrip=3)" | while read -r branch; do
@@ -76,7 +79,6 @@ jobs:
 
       - name: Get base files hash
         id: base-files-hash
-        shell: bash
         run: |
           hash=$(git ls-files -z | xargs -0 sha256sum | sha256sum | awk '{print $1}')
           echo "hash=${hash:0:7}" >> "$GITHUB_OUTPUT"
@@ -117,7 +119,6 @@ jobs:
 
       - name: Get head files hash
         id: head-files-hash
-        shell: bash
         run: |
           hash=$(git ls-files -z | xargs -0 sha256sum | sha256sum | awk '{print $1}')
           echo "hash=${hash:0:7}" >> "$GITHUB_OUTPUT"
@@ -165,7 +166,6 @@ jobs:
           branch: ${{ steps.base-screenshots-branch.outputs.name }}
 
       - name: Run unit test
-        shell: bash
         env:
           IS_HEAD_SCREENSHOTS_BRANCH_EXISTS: ${{ steps.check-head-screenshots-branch.outputs.exists }}
           IS_COMPANION_SCREENSHOTS_BRANCH_EXISTS: ${{ steps.check-companion-screenshots-branch.outputs.exists }}
@@ -224,7 +224,6 @@ jobs:
           done
 
       - name: Post report
-        shell: bash
         env:
           COMPANION_BRANCH: ${{ steps.companion-screenshots-branch.outputs.name }}
           REPORT_FILE: screenshot-test-report.md
