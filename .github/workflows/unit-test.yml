@@ -10,20 +10,20 @@ defaults:
   run:
     shell: bash
 
+env:
+  SCREENSHOTS_BRANCH_PREFIX: _screenshots_
+  COMPANION_SCREENSHOTS_BRANCH_PREFIX: _companion_screenshots_
+  ORPHAN_BRANCH_COMMITTER_NAME: github-actions[bot]
+  ORPHAN_BRANCH_COMMITTER_EMAIL: 41898282+github-actions[bot]@users.noreply.github.com
+  ORPHAN_BRANCH_MAX_AGE_SECONDS: 600 # TODO: 1209600
+
 jobs:
-  unit-test:
+  cleanup:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 10
     permissions:
       contents: write
       pull-requests: write
-
-    env:
-      SCREENSHOTS_BRANCH_PREFIX: _screenshots_
-      COMPANION_SCREENSHOTS_BRANCH_PREFIX: _companion_screenshots_
-      ORPHAN_BRANCH_COMMITTER_NAME: github-actions[bot]
-      ORPHAN_BRANCH_COMMITTER_EMAIL: 41898282+github-actions[bot]@users.noreply.github.com
-      ORPHAN_BRANCH_MAX_AGE_SECONDS: 1209600 # 14 days
 
     steps:
       - name: Checkout (fetch all)
@@ -63,10 +63,37 @@ jobs:
             git push origin --delete "$branch"
           done
 
+      - name: Delete outdated screenshot test report comments
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: |
+          comment_ids=$(
+            gh api "repos/${GITHUB_REPOSITORY}/issues/${PR_NUMBER}/comments" |
+            jq -r '
+              .[]
+              | select(.user.login == "github-actions[bot]")
+              | select(.body | contains("<!-- screenshot-test-report -->"))
+              | .id'
+          )
+          for comment_id in $comment_ids; do
+            gh api -X DELETE "repos/${GITHUB_REPOSITORY}/issues/comments/${comment_id}"
+          done
+
+  unit-test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    needs: cleanup
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
       - name: Checkout base
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
         with:
           ref: ${{ github.event.pull_request.base.ref }}
+          fetch-depth: 0
 
       - name: Setup JDK
         uses: actions/setup-java@dded0888837ed1f317902acf8a20df0ad188d165 # v5.0.0
@@ -206,23 +233,6 @@ jobs:
           committer-name: ${{ env.ORPHAN_BRANCH_COMMITTER_NAME }}
           committer-email: ${{ env.ORPHAN_BRANCH_COMMITTER_EMAIL }}
           path: "**/build/outputs/roborazzi/*_compare.png"
-
-      - name: Delete outdated report
-        env:
-          GH_TOKEN: ${{ github.token }}
-          PR_NUMBER: ${{ github.event.pull_request.number }}
-        run: |
-          comment_ids=$(
-            gh api "repos/${GITHUB_REPOSITORY}/issues/${PR_NUMBER}/comments" |
-            jq -r '
-              .[]
-              | select(.user.login == "github-actions[bot]")
-              | select(.body | contains("<!-- screenshot-test-report -->"))
-              | .id'
-          )
-          for comment_id in $comment_ids; do
-            gh api -X DELETE "repos/${GITHUB_REPOSITORY}/issues/comments/${comment_id}"
-          done
 
       - name: Post report
         env:
