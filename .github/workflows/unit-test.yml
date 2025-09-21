@@ -6,16 +6,31 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number }}
   cancel-in-progress: true
 
+defaults:
+  run:
+    shell: bash
+
+env:
+  SCREENSHOTS_BRANCH_PREFIX: _screenshots_
+  COMPANION_SCREENSHOTS_BRANCH_PREFIX: _companion_screenshots_
+  ORPHAN_BRANCH_COMMITTER_NAME: github-actions[bot]
+  ORPHAN_BRANCH_COMMITTER_EMAIL: 41898282+github-actions[bot]@users.noreply.github.com
+  ORPHAN_BRANCH_MAX_AGE_SECONDS: 1209600 # 14 days
+
 jobs:
   unit-test:
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    needs: [cleanup, orphan-branch-name, ensure-base-screenshots]
     permissions:
-      contents: read
+      contents: write
+      pull-requests: write
 
     steps:
-      - name: Checkout
+      - name: Checkout (fetch all)
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+        with:
+          fetch-depth: 0
 
       - name: Setup JDK
         uses: actions/setup-java@dded0888837ed1f317902acf8a20df0ad188d165 # v5.0.0
@@ -26,16 +41,17 @@ jobs:
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@ed408507eac070d1f99cc633dbcf757c94c7933a # v4.4.3
 
-      - name: Download screenshots
-        uses: dawidd6/action-download-artifact@ac66b43f0e6a346234dd65d4d0c8fbb31cb316e5 # v11
-        continue-on-error: true
+      - name: Download base screenshots
+        uses: daiji256/download-from-orphan-branch@f8dc5de6105bf1040e2004b225174a0ecce5ae59 # v0.1.1
         with:
-          name: screenshots
-          workflow: record-screenshots.yml
-          branch: ${{ github.base_ref }}
+          branch: ${{ needs.orphan-branch-name.outputs.base-screenshots }}
 
       - name: Run unit test
-        run: ./gradlew testDebugUnitTest -Proborazzi.test.compare=true
+        run: |
+          ./gradlew testDebugUnitTest \
+            -Proborazzi.test.record=true \
+            -Proborazzi.test.compare=true \
+            -Proborazzi.cleanupOldScreenshots=true
 
       - name: Display unit test report
         if: ${{ !cancelled() }}
@@ -45,81 +61,197 @@ jobs:
           path: "**/build/test-results/**/TEST-*.xml"
           reporter: java-junit
 
-      - name: Upload screenshot test results
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+      - name: Upload head screenshots
+        if: ${{ !cancelled() }}
+        uses: daiji256/upload-to-orphan-branch@2d11054e099cf3fc45579e41ff3d90650abfb30b # v0.1.2
         with:
-          name: screenshot-test-results
-          path: "**/build/outputs/roborazzi"
-          retention-days: 30
+          branch: ${{ needs.orphan-branch-name.outputs.head-screenshots }}
+          committer-name: ${{ env.ORPHAN_BRANCH_COMMITTER_NAME }}
+          committer-email: ${{ env.ORPHAN_BRANCH_COMMITTER_EMAIL }}
+          overwrite: true
+          path: |
+            **/build/outputs/roborazzi
+            !**/build/outputs/roborazzi/*_compare.png
+            !**/build/outputs/roborazzi/*_actual.png
 
-  screenshot-test-results:
+      - name: Upload companion screenshots
+        if: ${{ !cancelled() }}
+        uses: daiji256/upload-to-orphan-branch@2d11054e099cf3fc45579e41ff3d90650abfb30b # v0.1.2
+        with:
+          branch: ${{ needs.orphan-branch-name.outputs.companion-screenshots }}
+          committer-name: ${{ env.ORPHAN_BRANCH_COMMITTER_NAME }}
+          committer-email: ${{ env.ORPHAN_BRANCH_COMMITTER_EMAIL }}
+          overwrite: true
+          path: "**/build/outputs/roborazzi/*_compare.png"
+
+      - name: Post report
+        env:
+          COMPANION_BRANCH: ${{ needs.orphan-branch-name.outputs.companion-screenshots }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: |
+          mapfile -d "" files < <(find . -type f -path "**/build/outputs/roborazzi/*_compare.png" -print0)
+          if [[ ${#files[@]} -eq 0 ]]; then
+            exit 0
+          fi
+          report="<!-- screenshot-test-report -->"$'\n'
+          report+=$'\n'
+          report+="> [!NOTE]"$'\n'
+          report+="> Differences found in ${#files[@]} screenshots."$'\n'
+          report+=$'\n'
+          report+="<details><summary>Expand for details</summary>"$'\n'
+          for file in "${files[@]}"; do
+            report+=$'\n'
+            report+="\`$(basename "$file")\`"$'\n'
+            report+="![](https://github.com/${GITHUB_REPOSITORY}/blob/${COMPANION_BRANCH}/${file}?raw=true)"$'\n'
+          done
+          report+=$'\n'
+          report+="</details>"$'\n'
+          gh pr comment "$PR_NUMBER" --body "$report"
+
+  ensure-base-screenshots:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
-    needs:
-      - unit-test
+    timeout-minutes: 15
+    needs: [cleanup, orphan-branch-name]
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout base (fetch all)
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+        with:
+          ref: ${{ github.event.pull_request.base.ref }}
+          fetch-depth: 0
+
+      - name: Check if base screenshots branch exists
+        id: check-base-screenshots-branch
+        env:
+          BRANCH: ${{ needs.orphan-branch-name.outputs.base-screenshots }}
+        run: |
+          if git show-ref --verify --quiet "refs/remotes/origin/${BRANCH}"; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Setup JDK
+        if: ${{ !cancelled() && success() && steps.check-base-screenshots-branch.outputs.exists == 'false' }}
+        uses: actions/setup-java@dded0888837ed1f317902acf8a20df0ad188d165 # v5.0.0
+        with:
+          distribution: temurin
+          java-version: 21
+
+      - name: Setup Gradle
+        if: ${{ !cancelled() && success() && steps.check-base-screenshots-branch.outputs.exists == 'false' }}
+        uses: gradle/actions/setup-gradle@ed408507eac070d1f99cc633dbcf757c94c7933a # v4.4.3
+
+      - name: Record base screenshots
+        if: ${{ !cancelled() && success() && steps.check-base-screenshots-branch.outputs.exists == 'false' }}
+        run: ./gradlew recordRoborazziDebug
+
+      - name: Upload base screenshots
+        if: ${{ !cancelled() && success() && steps.check-base-screenshots-branch.outputs.exists == 'false' }}
+        uses: daiji256/upload-to-orphan-branch@2d11054e099cf3fc45579e41ff3d90650abfb30b # v0.1.2
+        with:
+          branch: ${{ needs.orphan-branch-name.outputs.base-screenshots }}
+          committer-name: ${{ env.ORPHAN_BRANCH_COMMITTER_NAME }}
+          committer-email: ${{ env.ORPHAN_BRANCH_COMMITTER_EMAIL }}
+          path: "**/build/outputs/roborazzi"
+
+  orphan-branch-name:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    outputs:
+      base-screenshots: ${{ steps.branch-names.outputs.base }}
+      head-screenshots: ${{ steps.branch-names.outputs.head }}
+      companion-screenshots: ${{ steps.branch-names.outputs.companion }}
+
+    steps:
+      - name: Checkout base
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+        with:
+          ref: ${{ github.event.pull_request.base.ref }}
+
+      - name: Get base files hash
+        id: base
+        run: |
+          hash=$(git ls-files -z | xargs -0 sha256sum | sha256sum | awk '{print $1}')
+          echo "hash=${hash:0:7}" >> "$GITHUB_OUTPUT"
+
+      - name: Checkout head
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+
+      - name: Get head files hash
+        id: head
+        run: |
+          hash=$(git ls-files -z | xargs -0 sha256sum | sha256sum | awk '{print $1}')
+          echo "hash=${hash:0:7}" >> "$GITHUB_OUTPUT"
+
+      - name: Get branch names
+        id: branch-names
+        env:
+          BASE_FILES_HASH: ${{ steps.base.outputs.hash }}
+          HEAD_FILES_HASH: ${{ steps.head.outputs.hash }}
+        run: |
+          echo "base=${SCREENSHOTS_BRANCH_PREFIX}${BASE_FILES_HASH}" >> "$GITHUB_OUTPUT"
+          echo "head=${SCREENSHOTS_BRANCH_PREFIX}${HEAD_FILES_HASH}" >> "$GITHUB_OUTPUT"
+          echo "companion=${COMPANION_SCREENSHOTS_BRANCH_PREFIX}${BASE_FILES_HASH}_${HEAD_FILES_HASH}" >> "$GITHUB_OUTPUT"
+
+  cleanup:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
     permissions:
       contents: write
       pull-requests: write
-    env:
-      COMPANION_BRANCH: _companion_${{ github.base_ref }}_${{ github.head_ref }}
-      REPORT_FILE: report.md
 
     steps:
-      - name: Checkout
+      - name: Checkout (fetch all)
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
         with:
           fetch-depth: 0
 
-      - name: Switch _companion branch
+      - name: Delete outdated orphan branches
         run: |
-          git branch -D "$COMPANION_BRANCH" || true
-          git checkout --orphan "$COMPANION_BRANCH"
-          git rm -rf .
+          now=$(date +%s)
+          git branch -r --format="%(refname:lstrip=3)" | while read -r branch; do
+            if [[ "$branch" != ${SCREENSHOTS_BRANCH_PREFIX}* && "$branch" != ${COMPANION_SCREENSHOTS_BRANCH_PREFIX}* ]]; then
+              continue
+            fi
 
-      - name: Download screenshot test results
-        uses: actions/download-artifact@634f93cb2916e3fdff6788551b99b062d0335ce0 # v5.0.0
-        continue-on-error: true
-        with:
-          name: screenshot-test-results
-          path: screenshot-test-results
+            commit_count=$(git rev-list --count "origin/$branch")
+            if [[ "$commit_count" -ne 1 ]]; then
+              continue
+            fi
 
-      - name: Create report
-        id: create-report
-        run: |
-          files=$(find . -type f -name "*_compare.png" | sort)
-          if [ -n "$files" ]; then
-            echo "<!-- screenshot-test-report -->" >> "$REPORT_FILE"
-            echo "" >> "$REPORT_FILE"
-            echo "> [!NOTE]" >> "$REPORT_FILE"
-            echo "> Differences found in $(echo "$files" | wc -l) screenshots." >> "$REPORT_FILE"
-            echo "" >> "$REPORT_FILE"
-            echo "<details><summary>Expand for details</summary>" >> "$REPORT_FILE"
-            for file in $files; do
-              image_path="https://github.com/${{ github.repository }}/blob/$COMPANION_BRANCH/$file"
-              echo "" >> "$REPORT_FILE"
-              echo "\`$(basename "$file" | sed 's/_compare\.png$//')\`" >> "$REPORT_FILE"
-              echo "![]($image_path?raw=true)" >> "$REPORT_FILE"
-              git add "$file"
-            done
-            echo "" >> "$REPORT_FILE"
-            echo "</details>" >> "$REPORT_FILE"
-            echo "report_present=true" >> "$GITHUB_OUTPUT"
-            git config --global user.name screenshot-bot
-            git config --global user.email 41898282+github-actions[bot]@users.noreply.github.com
-            git commit -m "screenshot-test-results"
-            git push -f origin HEAD:"$COMPANION_BRANCH"
-          else
-            echo "report_present=false" >> "$GITHUB_OUTPUT"
-          fi
+            committer_name=$(git log -1 --format=%an "origin/$branch")
+            if [[ "$committer_name" != "$ORPHAN_BRANCH_COMMITTER_NAME" ]]; then
+              continue
+            fi
 
-      - name: Delete outdated report
+            committer_email=$(git log -1 --format=%ae "origin/$branch")
+            if [[ "$committer_email" != "$ORPHAN_BRANCH_COMMITTER_EMAIL" ]]; then
+              continue
+            fi
+
+            commit_date=$(git log -1 --format=%ct "origin/$branch")
+            age=$((now - commit_date))
+            if [[ "$age" -lt "$ORPHAN_BRANCH_MAX_AGE_SECONDS" ]]; then
+              continue
+            fi
+
+            git push origin --delete "$branch"
+          done
+
+      - name: Delete outdated screenshot test report comments
         env:
           GH_TOKEN: ${{ github.token }}
           PR_NUMBER: ${{ github.event.pull_request.number }}
-          REPOSITORY: ${{ github.repository }}
         run: |
           comment_ids=$(
-            gh api "repos/${REPOSITORY}/issues/${PR_NUMBER}/comments" |
+            gh api "repos/${GITHUB_REPOSITORY}/issues/${PR_NUMBER}/comments" |
             jq -r '
               .[]
               | select(.user.login == "github-actions[bot]")
@@ -127,22 +259,5 @@ jobs:
               | .id'
           )
           for comment_id in $comment_ids; do
-            gh api -X DELETE "repos/${REPOSITORY}/issues/comments/${comment_id}"
-          done
-
-      - name: Post report
-        if: ${{ success() && !cancelled() && steps.create-report.outputs.report_present == 'true' }}
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          PR_NUMBER: ${{ github.event.pull_request.number }}
-        run: gh pr comment $PR_NUMBER --body-file $REPORT_FILE
-
-      - name: Delete outdated _companion branches
-        run: |
-          now=$(date +%s)
-          git branch -r --format="%(refname:lstrip=3)" | grep _companion | while read -r branch; do
-            last_commit_date=$(git log -1 --format=%ct "origin/$branch")
-            if [ $((now - last_commit_date)) -gt 2592000 ]; then
-              git push origin --delete "$branch"
-            fi
+            gh api -X DELETE "repos/${GITHUB_REPOSITORY}/issues/comments/${comment_id}"
           done
