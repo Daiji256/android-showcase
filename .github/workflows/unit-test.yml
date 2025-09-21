@@ -203,9 +203,9 @@ jobs:
     timeout-minutes: 5
 
     outputs:
-      base-screenshots-branch: ${{ steps.branch-names.outputs.base }}
-      head-screenshots-branch: ${{ steps.branch-names.outputs.head }}
-      companion-screenshots-branch: ${{ steps.branch-names.outputs.companion }}
+      base-screenshots: ${{ steps.branch-names.outputs.base }}
+      head-screenshots: ${{ steps.branch-names.outputs.head }}
+      companion-screenshots: ${{ steps.branch-names.outputs.companion }}
 
     steps:
       - name: Checkout base
