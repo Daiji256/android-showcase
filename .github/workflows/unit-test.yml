@@ -15,7 +15,7 @@ env:
   COMPANION_SCREENSHOTS_BRANCH_PREFIX: _companion_screenshots_
   ORPHAN_BRANCH_COMMITTER_NAME: github-actions[bot]
   ORPHAN_BRANCH_COMMITTER_EMAIL: 41898282+github-actions[bot]@users.noreply.github.com
-  ORPHAN_BRANCH_MAX_AGE_SECONDS: 3600 # TODO: 1209600
+  ORPHAN_BRANCH_MAX_AGE_SECONDS: 1209600 # 14 days
 
 jobs:
   unit-test:
