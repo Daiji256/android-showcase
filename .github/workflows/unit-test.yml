@@ -41,46 +41,17 @@ jobs:
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@ed408507eac070d1f99cc633dbcf757c94c7933a # v4.4.3
 
-      - name: Check if head screenshots branch exists
-        id: check-head-screenshots-branch
-        env:
-          BRANCH: ${{ needs.orphan-branche-name.outputs.head-screenshots }}
-        run: |
-          if git show-ref --verify --quiet "refs/remotes/origin/${BRANCH}"; then
-            echo "exists=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "exists=false" >> "$GITHUB_OUTPUT"
-          fi
-
-      - name: Check if companion screenshots branch exists
-        id: check-companion-screenshots-branch
-        env:
-          BRANCH: ${{ needs.orphan-branche-name.outputs.companion-screenshots }}
-        run: |
-          if git show-ref --verify --quiet "refs/remotes/origin/${BRANCH}"; then
-            echo "exists=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "exists=false" >> "$GITHUB_OUTPUT"
-          fi
-
       - name: Download base screenshots
         uses: daiji256/download-from-orphan-branch@f8dc5de6105bf1040e2004b225174a0ecce5ae59 # v0.1.1
         with:
           branch: ${{ needs.orphan-branche-name.outputs.base-screenshots }}
 
       - name: Run unit test
-        env:
-          HEAD_EXISTS: ${{ steps.check-head-screenshots-branch.outputs.exists }}
-          COMPANION_EXISTS: ${{ steps.check-companion-screenshots-branch.outputs.exists }}
         run: |
-          if [[ "$HEAD_EXISTS" == "true" && "$COMPANION_EXISTS" == "true" ]]; then
-            ./gradlew testDebugUnitTest
-          else
-            ./gradlew testDebugUnitTest \
-              -Proborazzi.test.record=true \
-              -Proborazzi.test.compare=true \
-              -Proborazzi.cleanupOldScreenshots=true
-          fi
+          ./gradlew testDebugUnitTest \
+            -Proborazzi.test.record=true \
+            -Proborazzi.test.compare=true \
+            -Proborazzi.cleanupOldScreenshots=true
 
       - name: Display unit test report
         if: ${{ !cancelled() }}
@@ -91,24 +62,26 @@ jobs:
           reporter: java-junit
 
       - name: Upload head screenshots
-        if: ${{ !cancelled() && steps.check-head-screenshots-branch.outputs.exists == 'false' }}
+        if: ${{ !cancelled() }}
         uses: daiji256/upload-to-orphan-branch@2d11054e099cf3fc45579e41ff3d90650abfb30b # v0.1.2
         with:
           branch: ${{ needs.orphan-branche-name.outputs.head-screenshots }}
           committer-name: ${{ env.ORPHAN_BRANCH_COMMITTER_NAME }}
           committer-email: ${{ env.ORPHAN_BRANCH_COMMITTER_EMAIL }}
+          overwrite: true
           path: |
             **/build/outputs/roborazzi
             !**/build/outputs/roborazzi/*_compare.png
             !**/build/outputs/roborazzi/*_actual.png
 
       - name: Upload companion screenshots
-        if: ${{ !cancelled() && steps.check-companion-screenshots-branch.outputs.exists == 'false' }}
+        if: ${{ !cancelled() }}
         uses: daiji256/upload-to-orphan-branch@2d11054e099cf3fc45579e41ff3d90650abfb30b # v0.1.2
         with:
           branch: ${{ needs.orphan-branche-name.outputs.companion-screenshots }}
           committer-name: ${{ env.ORPHAN_BRANCH_COMMITTER_NAME }}
           committer-email: ${{ env.ORPHAN_BRANCH_COMMITTER_EMAIL }}
+          overwrite: true
           path: "**/build/outputs/roborazzi/*_compare.png"
 
       - name: Post report
