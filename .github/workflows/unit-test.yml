@@ -202,7 +202,8 @@ jobs:
           else
             ./gradlew testDebugUnitTest \
               -Proborazzi.test.record=true \
-              -Proborazzi.test.compare=true \ -Proborazzi.cleanupOldScreenshots=true
+              -Proborazzi.test.compare=true \
+              -Proborazzi.cleanupOldScreenshots=true
           fi
 
       - name: Display unit test report
