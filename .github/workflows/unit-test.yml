@@ -231,7 +231,7 @@ jobs:
           PR_NUMBER: ${{ github.event.pull_request.number }}
         run: |
           mapfile -d "" files < <(find . -type f -path "**/build/outputs/roborazzi/*_compare.png" -print0)
-          if [ "${#files[@]}" -eq 0 ]; then
+          if [[ ${#files[@]} -eq 0 ]]; then
             exit 0
           fi
           {
