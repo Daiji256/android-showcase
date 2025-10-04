@@ -214,36 +214,10 @@ jobs:
           fetch-depth: 0
 
       - name: Delete outdated orphan branches
-        run: |
-          now=$(date +%s)
-          git branch -r --format="%(refname:lstrip=3)" | while read -r branch; do
-            if [[ "$branch" != ${SCREENSHOTS_BRANCH_PREFIX}* && "$branch" != ${COMPANION_SCREENSHOTS_BRANCH_PREFIX}* ]]; then
-              continue
-            fi
-
-            commit_count=$(git rev-list --count "origin/$branch")
-            if [[ "$commit_count" -ne 1 ]]; then
-              continue
-            fi
-
-            committer_name=$(git log -1 --format=%an "origin/$branch")
-            if [[ "$committer_name" != "$ORPHAN_BRANCH_COMMITTER_NAME" ]]; then
-              continue
-            fi
-
-            committer_email=$(git log -1 --format=%ae "origin/$branch")
-            if [[ "$committer_email" != "$ORPHAN_BRANCH_COMMITTER_EMAIL" ]]; then
-              continue
-            fi
-
-            commit_date=$(git log -1 --format=%ct "origin/$branch")
-            age=$((now - commit_date))
-            if [[ "$age" -lt "$ORPHAN_BRANCH_MAX_AGE_SECONDS" ]]; then
-              continue
-            fi
-
-            git push origin --delete "$branch"
-          done
+        uses: daiji256/delete-orphan-branch@4ec7df3983a4a54cd46cfed7af767308629e8805 # v1.0.0
+        with:
+          branch-regex: ^(_screenshots_|_companion_screenshots_).*
+          older-than-seconds: 1209600 # 14 days
 
       - name: Delete outdated screenshot test report comments
         env:
