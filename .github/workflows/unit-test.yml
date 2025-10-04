@@ -56,7 +56,7 @@ jobs:
 
       - name: Upload head screenshots
         if: ${{ !cancelled() }}
-        uses: daiji256/upload-to-orphan-branch@2d11054e099cf3fc45579e41ff3d90650abfb30b # v0.1.2
+        uses: daiji256/upload-to-orphan-branch@8d353234c31aaf2134dc6081b863fcd876fcb2d0 # v1.0.0
         with:
           branch: ${{ needs.orphan-branch-name.outputs.head-screenshots }}
           overwrite: true
@@ -67,7 +67,7 @@ jobs:
 
       - name: Upload companion screenshots
         if: ${{ !cancelled() }}
-        uses: daiji256/upload-to-orphan-branch@2d11054e099cf3fc45579e41ff3d90650abfb30b # v0.1.2
+        uses: daiji256/upload-to-orphan-branch@8d353234c31aaf2134dc6081b863fcd876fcb2d0 # v1.0.0
         with:
           branch: ${{ needs.orphan-branch-name.outputs.companion-screenshots }}
           overwrite: true
@@ -140,7 +140,7 @@ jobs:
 
       - name: Upload base screenshots
         if: ${{ !cancelled() && success() && steps.check-base-screenshots-branch.outputs.exists == 'false' }}
-        uses: daiji256/upload-to-orphan-branch@2d11054e099cf3fc45579e41ff3d90650abfb30b # v0.1.2
+        uses: daiji256/upload-to-orphan-branch@8d353234c31aaf2134dc6081b863fcd876fcb2d0 # v1.0.0
         with:
           branch: ${{ needs.orphan-branch-name.outputs.base-screenshots }}
           path: "**/build/outputs/roborazzi"
