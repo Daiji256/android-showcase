@@ -10,13 +10,6 @@ defaults:
   run:
     shell: bash
 
-env:
-  SCREENSHOTS_BRANCH_PREFIX: _screenshots_
-  COMPANION_SCREENSHOTS_BRANCH_PREFIX: _companion_screenshots_
-  ORPHAN_BRANCH_COMMITTER_NAME: github-actions[bot]
-  ORPHAN_BRANCH_COMMITTER_EMAIL: 41898282+github-actions[bot]@users.noreply.github.com
-  ORPHAN_BRANCH_MAX_AGE_SECONDS: 1209600 # 14 days
-
 jobs:
   unit-test:
     runs-on: ubuntu-latest
@@ -66,8 +59,6 @@ jobs:
         uses: daiji256/upload-to-orphan-branch@2d11054e099cf3fc45579e41ff3d90650abfb30b # v0.1.2
         with:
           branch: ${{ needs.orphan-branch-name.outputs.head-screenshots }}
-          committer-name: ${{ env.ORPHAN_BRANCH_COMMITTER_NAME }}
-          committer-email: ${{ env.ORPHAN_BRANCH_COMMITTER_EMAIL }}
           overwrite: true
           path: |
             **/build/outputs/roborazzi
@@ -79,8 +70,6 @@ jobs:
         uses: daiji256/upload-to-orphan-branch@2d11054e099cf3fc45579e41ff3d90650abfb30b # v0.1.2
         with:
           branch: ${{ needs.orphan-branch-name.outputs.companion-screenshots }}
-          committer-name: ${{ env.ORPHAN_BRANCH_COMMITTER_NAME }}
-          committer-email: ${{ env.ORPHAN_BRANCH_COMMITTER_EMAIL }}
           overwrite: true
           path: "**/build/outputs/roborazzi/*_compare.png"
 
@@ -154,8 +143,6 @@ jobs:
         uses: daiji256/upload-to-orphan-branch@2d11054e099cf3fc45579e41ff3d90650abfb30b # v0.1.2
         with:
           branch: ${{ needs.orphan-branch-name.outputs.base-screenshots }}
-          committer-name: ${{ env.ORPHAN_BRANCH_COMMITTER_NAME }}
-          committer-email: ${{ env.ORPHAN_BRANCH_COMMITTER_EMAIL }}
           path: "**/build/outputs/roborazzi"
 
   orphan-branch-name:
@@ -196,9 +183,9 @@ jobs:
           BASE_FILES_HASH: ${{ steps.base.outputs.hash }}
           HEAD_FILES_HASH: ${{ steps.head.outputs.hash }}
         run: |
-          echo "base=${SCREENSHOTS_BRANCH_PREFIX}${BASE_FILES_HASH}" >> "$GITHUB_OUTPUT"
-          echo "head=${SCREENSHOTS_BRANCH_PREFIX}${HEAD_FILES_HASH}" >> "$GITHUB_OUTPUT"
-          echo "companion=${COMPANION_SCREENSHOTS_BRANCH_PREFIX}${BASE_FILES_HASH}_${HEAD_FILES_HASH}" >> "$GITHUB_OUTPUT"
+          echo "base=_screenshots_${BASE_FILES_HASH}" >> "$GITHUB_OUTPUT"
+          echo "head=_screenshots_${HEAD_FILES_HASH}" >> "$GITHUB_OUTPUT"
+          echo "companion=_companion_screenshots_${BASE_FILES_HASH}_${HEAD_FILES_HASH}" >> "$GITHUB_OUTPUT"
 
   cleanup:
     runs-on: ubuntu-latest
