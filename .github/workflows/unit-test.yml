@@ -35,7 +35,7 @@ jobs:
         uses: gradle/actions/setup-gradle@4d9f0ba0025fe599b4ebab900eb7f3a1d93ef4c2 # v5.0.0
 
       - name: Download base screenshots
-        uses: daiji256/download-from-orphan-branch@f8dc5de6105bf1040e2004b225174a0ecce5ae59 # v0.1.1
+        uses: daiji256/download-from-orphan-branch@d1bdd0b00dbb1dd7145324d93631a5a3226d715d # v1.0.0
         with:
           branch: ${{ needs.orphan-branch-name.outputs.base-screenshots }}
 
