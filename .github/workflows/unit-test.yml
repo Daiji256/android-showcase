@@ -12,7 +12,7 @@ defaults:
 
 jobs:
   unit-test:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     needs: [cleanup, orphan-branch-name, ensure-base-screenshots]
     permissions:
@@ -99,7 +99,7 @@ jobs:
           gh pr comment "$PR_NUMBER" --body "$report"
 
   ensure-base-screenshots:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 15
     needs: [cleanup, orphan-branch-name]
     permissions:
