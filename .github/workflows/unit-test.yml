@@ -146,7 +146,7 @@ jobs:
           path: "**/build/outputs/roborazzi"
 
   orphan-branch-name:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-slim
     timeout-minutes: 5
 
     outputs:
@@ -188,7 +188,7 @@ jobs:
           echo "companion=_companion_screenshots_${BASE_FILES_HASH}_${HEAD_FILES_HASH}" >> "$GITHUB_OUTPUT"
 
   cleanup:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-slim
     timeout-minutes: 5
     permissions:
       contents: write
