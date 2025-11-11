@@ -42,6 +42,7 @@ class RoborazziPlugin : Plugin<Project> {
                         "qualifiers" to "RobolectricDeviceQualifiers.MediumPhone",
                     )
                     includePrivatePreviews = true
+                    useScanOptionParametersInTester = true
                     testerQualifiedClassName =
                         "io.github.daiji256.showcase.core.testing.PreviewTester"
                 }
