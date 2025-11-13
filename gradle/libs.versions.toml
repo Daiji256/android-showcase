@@ -28,7 +28,7 @@ roborazzi = "1.51.0"
 spotless = "8.0.0"
 testParameterInjector = "1.19"
 turbine = "1.2.1"
-unstyled = "1.48.2"
+unstyled = "1.48.3"
 
 [libraries]
 activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activity-compose" }
