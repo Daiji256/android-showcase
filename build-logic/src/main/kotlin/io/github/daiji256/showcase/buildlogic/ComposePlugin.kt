@@ -1,6 +1,6 @@
 package io.github.daiji256.showcase.buildlogic
 
-import io.github.daiji256.showcase.buildlogic.dsl.android
+import com.android.build.gradle.BaseExtension
 import io.github.daiji256.showcase.buildlogic.dsl.debugImplementation
 import io.github.daiji256.showcase.buildlogic.dsl.implementation
 import io.github.daiji256.showcase.buildlogic.dsl.library
@@ -8,6 +8,7 @@ import io.github.daiji256.showcase.buildlogic.dsl.libs
 import io.github.daiji256.showcase.buildlogic.dsl.plugin
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.dependencies
 
 @Suppress("unused")
@@ -18,7 +19,7 @@ class ComposePlugin : Plugin<Project> {
                 apply(libs.plugin("composeCompiler").pluginId)
             }
 
-            android {
+            extensions.configure<BaseExtension> {
                 buildFeatures.compose = true
             }
 

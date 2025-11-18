@@ -1,16 +1,17 @@
 package io.github.daiji256.showcase.buildlogic
 
+import com.android.build.gradle.BaseExtension
 import com.github.takahirom.roborazzi.ExperimentalRoborazziApi
-import io.github.daiji256.showcase.buildlogic.dsl.android
 import io.github.daiji256.showcase.buildlogic.dsl.library
 import io.github.daiji256.showcase.buildlogic.dsl.libs
 import io.github.daiji256.showcase.buildlogic.dsl.plugin
-import io.github.daiji256.showcase.buildlogic.dsl.roborazzi
 import io.github.daiji256.showcase.buildlogic.dsl.testImplementation
+import io.github.takahirom.roborazzi.RoborazziExtension
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.apply
 import org.gradle.kotlin.dsl.assign
+import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.dependencies
 
 @Suppress("unused")
@@ -23,7 +24,7 @@ class RoborazziPlugin : Plugin<Project> {
                 apply(libs.plugin("roborazzi").pluginId)
             }
 
-            android {
+            extensions.configure<BaseExtension> {
                 testOptions {
                     unitTests {
                         all {
@@ -31,20 +32,20 @@ class RoborazziPlugin : Plugin<Project> {
                         }
                     }
                 }
-            }
 
-            roborazzi {
-                generateComposePreviewRobolectricTests {
-                    enable = true
-                    packages = provider { listOf(android.namespace!!) }
-                    robolectricConfig = mapOf(
-                        "sdk" to "[36]",
-                        "qualifiers" to "RobolectricDeviceQualifiers.MediumPhone",
-                    )
-                    includePrivatePreviews = true
-                    useScanOptionParametersInTester = true
-                    testerQualifiedClassName =
-                        "io.github.daiji256.showcase.core.testing.PreviewTester"
+                extensions.configure<RoborazziExtension> {
+                    generateComposePreviewRobolectricTests {
+                        enable = true
+                        packages = provider { listOf(namespace!!) }
+                        robolectricConfig = mapOf(
+                            "sdk" to "[36]",
+                            "qualifiers" to "RobolectricDeviceQualifiers.MediumPhone",
+                        )
+                        includePrivatePreviews = true
+                        useScanOptionParametersInTester = true
+                        testerQualifiedClassName =
+                            "io.github.daiji256.showcase.core.testing.PreviewTester"
+                    }
                 }
             }
 
