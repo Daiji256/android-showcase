@@ -1,6 +1,7 @@
 package io.github.daiji256.showcase.buildlogic
 
 import com.android.build.gradle.LibraryExtension
+import io.github.daiji256.showcase.buildlogic.dsl.configureKotlin
 import io.github.daiji256.showcase.buildlogic.dsl.libs
 import io.github.daiji256.showcase.buildlogic.dsl.plugin
 import io.github.daiji256.showcase.buildlogic.dsl.version
@@ -19,11 +20,9 @@ class AndroidLibraryPlugin : Plugin<Project> {
                 apply(libs.plugin("kotlinSerialization").pluginId)
             }
 
-            extensions.configure<LibraryExtension> {
-                configure<KotlinAndroidProjectExtension> {
-                    jvmToolchain(libs.version("jdk").toInt())
-                }
+            configureKotlin()
 
+            extensions.configure<LibraryExtension> {
                 compileSdk {
                     version = release(libs.version("compileSdk").toInt())
                 }
