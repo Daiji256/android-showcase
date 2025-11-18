@@ -10,7 +10,7 @@ repositories {
 }
 
 kotlin {
-    jvmToolchain(21)
+    jvmToolchain(libs.versions.jdk.get().toInt())
 }
 
 dependencies {
@@ -32,9 +32,9 @@ gradlePlugin {
             id = "buildlogic.android.library"
             implementationClass = "io.github.daiji256.showcase.buildlogic.AndroidLibraryPlugin"
         }
-        register("android.compose") {
-            id = "buildlogic.android.compose"
-            implementationClass = "io.github.daiji256.showcase.buildlogic.AndroidComposePlugin"
+        register("compose") {
+            id = "buildlogic.compose"
+            implementationClass = "io.github.daiji256.showcase.buildlogic.ComposePlugin"
         }
         register("hilt") {
             id = "buildlogic.hilt"
