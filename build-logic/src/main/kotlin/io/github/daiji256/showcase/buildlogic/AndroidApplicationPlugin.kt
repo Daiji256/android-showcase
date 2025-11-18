@@ -8,7 +8,6 @@ import io.github.daiji256.showcase.buildlogic.dsl.version
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
-import org.jetbrains.kotlin.gradle.dsl.KotlinAndroidProjectExtension
 
 @Suppress("unused")
 class AndroidApplicationPlugin : Plugin<Project> {
