@@ -16,7 +16,7 @@ class ComposePlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {
             with(pluginManager) {
-                apply(libs.plugin("composeCompiler").pluginId)
+                apply(libs.plugin("kotlin.compose").pluginId)
             }
 
             extensions.configure<BaseExtension> {

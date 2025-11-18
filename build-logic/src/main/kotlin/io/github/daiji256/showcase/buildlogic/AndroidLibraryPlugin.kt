@@ -14,9 +14,9 @@ class AndroidLibraryPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {
             with(pluginManager) {
-                apply(libs.plugin("androidLibrary").pluginId)
-                apply(libs.plugin("kotlinAndroid").pluginId)
-                apply(libs.plugin("kotlinSerialization").pluginId)
+                apply(libs.plugin("android.library").pluginId)
+                apply(libs.plugin("kotlin.android").pluginId)
+                apply(libs.plugin("kotlin.serialization").pluginId)
             }
 
             configureKotlin()

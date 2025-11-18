@@ -14,8 +14,8 @@ class AndroidApplicationPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {
             with(pluginManager) {
-                apply(libs.plugin("androidApplication").pluginId)
-                apply(libs.plugin("kotlinAndroid").pluginId)
+                apply(libs.plugin("android.application").pluginId)
+                apply(libs.plugin("kotlin.android").pluginId)
             }
 
             configureKotlin()
