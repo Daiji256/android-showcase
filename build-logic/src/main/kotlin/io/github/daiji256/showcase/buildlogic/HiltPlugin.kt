@@ -20,7 +20,6 @@ class HiltPlugin : Plugin<Project> {
 
             dependencies {
                 implementation(libs.library("hilt.android"))
-                implementation(libs.library("hilt.core"))
                 ksp(libs.library("hilt.compiler"))
             }
         }
