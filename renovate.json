@@ -15,7 +15,7 @@
   "ignoreDeps": [
     "buildlogic.android.application",
     "buildlogic.android.library",
-    "buildlogic.android.compose",
+    "buildlogic.compose",
     "buildlogic.hilt",
     "buildlogic.robolectric",
     "buildlogic.roborazzi"

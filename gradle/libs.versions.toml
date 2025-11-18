@@ -87,8 +87,8 @@ roborazzi = { id = "io.github.takahirom.roborazzi", version.ref = "roborazzi" }
 spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
 
 buildlogic-android-application = { id = "buildlogic.android.application", version = "unspecified" }
-buildlogic-android-compose = { id = "buildlogic.android.compose", version = "unspecified" }
 buildlogic-android-library = { id = "buildlogic.android.library", version = "unspecified" }
+buildlogic-compose = { id = "buildlogic.compose", version = "unspecified" }
 buildlogic-hilt = { id = "buildlogic.hilt", version = "unspecified" }
 buildlogic-robolectric = { id = "buildlogic.robolectric", version = "unspecified" }
 buildlogic-roborazzi = { id = "buildlogic.roborazzi", version = "unspecified" }
