@@ -13,6 +13,7 @@ import org.gradle.kotlin.dsl.apply
 import org.gradle.kotlin.dsl.assign
 import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.dependencies
+import org.gradle.kotlin.dsl.getByType
 
 @Suppress("unused")
 @OptIn(ExperimentalRoborazziApi::class)
@@ -32,20 +33,22 @@ class RoborazziPlugin : Plugin<Project> {
                         }
                     }
                 }
+            }
 
-                extensions.configure<RoborazziExtension> {
-                    generateComposePreviewRobolectricTests {
-                        enable = true
-                        packages = provider { listOf(namespace!!) }
-                        robolectricConfig = mapOf(
-                            "sdk" to "[36]",
-                            "qualifiers" to "RobolectricDeviceQualifiers.MediumPhone",
-                        )
-                        includePrivatePreviews = true
-                        useScanOptionParametersInTester = true
-                        testerQualifiedClassName =
-                            "io.github.daiji256.showcase.core.testing.PreviewTester"
+            extensions.configure<RoborazziExtension> {
+                generateComposePreviewRobolectricTests {
+                    enable = true
+                    packages = provider {
+                        listOf(extensions.getByType<BaseExtension>().namespace!!)
                     }
+                    robolectricConfig = mapOf(
+                        "sdk" to "[36]",
+                        "qualifiers" to "RobolectricDeviceQualifiers.MediumPhone",
+                    )
+                    includePrivatePreviews = true
+                    useScanOptionParametersInTester = true
+                    testerQualifiedClassName =
+                        "io.github.daiji256.showcase.core.testing.PreviewTester"
                 }
             }
 
