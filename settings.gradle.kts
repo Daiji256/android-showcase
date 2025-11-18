@@ -1,11 +1,11 @@
 pluginManagement {
-    includeBuild("build-logic")
     repositories {
         google()
         mavenCentral()
         gradlePluginPortal()
     }
 }
+
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
@@ -30,3 +30,5 @@ include(":feature:navigationarguments")
 include(":feature:roborazzi")
 include(":feature:safeurihandler")
 include(":feature:systemstyle")
+
+includeBuild("build-logic")
