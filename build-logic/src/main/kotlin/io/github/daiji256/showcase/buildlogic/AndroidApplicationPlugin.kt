@@ -1,6 +1,6 @@
 package io.github.daiji256.showcase.buildlogic
 
-import com.android.build.gradle.internal.dsl.BaseAppModuleExtension
+import com.android.build.api.dsl.ApplicationExtension
 import io.github.daiji256.showcase.buildlogic.dsl.libs
 import io.github.daiji256.showcase.buildlogic.dsl.plugin
 import io.github.daiji256.showcase.buildlogic.dsl.version
@@ -18,7 +18,7 @@ class AndroidApplicationPlugin : Plugin<Project> {
                 apply(libs.plugin("kotlinAndroid").pluginId)
             }
 
-            extensions.configure<BaseAppModuleExtension> {
+            extensions.configure<ApplicationExtension> {
                 configure<KotlinAndroidProjectExtension> {
                     jvmToolchain(libs.version("jdk").toInt())
                 }
