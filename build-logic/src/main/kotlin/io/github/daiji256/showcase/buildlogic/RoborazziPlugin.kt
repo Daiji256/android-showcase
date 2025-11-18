@@ -42,7 +42,6 @@ class RoborazziPlugin : Plugin<Project> {
                         listOf(extensions.getByType<BaseExtension>().namespace!!)
                     }
                     robolectricConfig = mapOf(
-                        "sdk" to "[36]",
                         "qualifiers" to "RobolectricDeviceQualifiers.MediumPhone",
                     )
                     includePrivatePreviews = true
