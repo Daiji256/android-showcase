@@ -12,5 +12,4 @@ dependencies {
     api(libs.kotlinx.serialization.core)
     api(libs.napier)
     testImplementation(projects.core.testing)
-    testImplementation(libs.testParameterInjector)
 }

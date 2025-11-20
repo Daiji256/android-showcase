@@ -28,7 +28,6 @@ preview-scanner = "0.7.1"
 robolectric = "4.16"
 roborazzi = "1.51.0"
 spotless = "8.1.0"
-testParameterInjector = "1.19"
 turbine = "1.2.1"
 unstyled = "1.49.2"
 
@@ -64,7 +63,6 @@ preview-scanner = { group = "io.github.sergio-sastre.ComposablePreviewScanner", 
 robolectric = { group = "org.robolectric", name = "robolectric", version.ref = "robolectric" }
 roborazzi = { group = "io.github.takahirom.roborazzi", name = "roborazzi", version.ref = "roborazzi" }
 roborazzi-compose-preview-scanner-support = { group = "io.github.takahirom.roborazzi", name = "roborazzi-compose-preview-scanner-support", version.ref = "roborazzi" }
-testParameterInjector = { group = "com.google.testparameterinjector", name = "test-parameter-injector", version.ref = "testParameterInjector" }
 turbine = { group = "app.cash.turbine", name = "turbine", version.ref = "turbine" }
 unstyled-primitives = { group = "com.composables", name = "composeunstyled-primitives", version.ref = "unstyled" }
 
