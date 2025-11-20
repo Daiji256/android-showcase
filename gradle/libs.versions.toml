@@ -6,7 +6,7 @@ compileSdk = "36"
 jdk = "21"
 
 activity-compose = "1.12.0"
-androidGradlePlugin = "8.13.1"
+agp = "8.13.1"
 androidxTestRules = "1.7.0"
 browser = "1.9.0"
 compose-bom = "2025.11.01"
@@ -70,15 +70,15 @@ testParameterInjector = { group = "com.google.testparameterinjector", name = "te
 turbine = { group = "app.cash.turbine", name = "turbine", version.ref = "turbine" }
 unstyled-primitives = { group = "com.composables", name = "composeunstyled-primitives", version.ref = "unstyled" }
 
-android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "androidGradlePlugin" }
+android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "agp" }
 compose-gradlePlugin = { group = "org.jetbrains.kotlin", name = "compose-compiler-gradle-plugin", version.ref = "kotlin" }
 kotlin-gradlePlugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
 ksp-gradlePlugin = { group = "com.google.devtools.ksp", name = "com.google.devtools.ksp.gradle.plugin", version.ref = "ksp" }
 roborazzi-gradlePlugin = { group = "io.github.takahirom.roborazzi", name = "roborazzi-gradle-plugin", version.ref = "roborazzi" }
 
 [plugins]
-android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
-android-library = { id = "com.android.library", version.ref = "androidGradlePlugin" }
+android-application = { id = "com.android.application", version.ref = "agp" }
+android-library = { id = "com.android.library", version.ref = "agp" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
