@@ -1,7 +1,6 @@
 package io.github.daiji256.showcase.buildlogic
 
 import com.android.build.gradle.BaseExtension
-import com.github.takahirom.roborazzi.ExperimentalRoborazziApi
 import io.github.daiji256.showcase.buildlogic.dsl.library
 import io.github.daiji256.showcase.buildlogic.dsl.libs
 import io.github.daiji256.showcase.buildlogic.dsl.plugin
@@ -16,7 +15,6 @@ import org.gradle.kotlin.dsl.dependencies
 import org.gradle.kotlin.dsl.getByType
 
 @Suppress("unused")
-@OptIn(ExperimentalRoborazziApi::class)
 class RoborazziPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {
@@ -52,11 +50,9 @@ class RoborazziPlugin : Plugin<Project> {
             }
 
             dependencies {
-                testImplementation(libs.library("composable.preview.scanner.android"))
+                testImplementation(libs.library("preview.scanner"))
                 testImplementation(libs.library("roborazzi"))
-                testImplementation(libs.library("roborazzi.compose"))
                 testImplementation(libs.library("roborazzi.compose.preview.scanner.support"))
-                testImplementation(libs.library("roborazzi.core"))
             }
         }
     }

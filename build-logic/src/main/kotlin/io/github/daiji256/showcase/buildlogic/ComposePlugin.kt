@@ -16,7 +16,7 @@ class ComposePlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {
             with(pluginManager) {
-                apply(libs.plugin("composeCompiler").pluginId)
+                apply(libs.plugin("kotlin.compose").pluginId)
             }
 
             extensions.configure<BaseExtension> {
@@ -28,9 +28,9 @@ class ComposePlugin : Plugin<Project> {
                 implementation(libs.library("compose.ui"))
                 implementation(libs.library("compose.ui.tooling.preview"))
                 implementation(libs.library("compose.material3"))
-                implementation(libs.library("hilt.lifecycle.viewmodel.compose"))
-                implementation(libs.library("lifecycle.runtimeCompose"))
-                implementation(libs.library("lifecycle.viewModelCompose"))
+                implementation(libs.library("hilt.navigation.compose"))
+                implementation(libs.library("lifecycle.runtime.compose"))
+                implementation(libs.library("lifecycle.viewModel.compose"))
                 implementation(libs.library("navigation.compose"))
                 debugImplementation(libs.library("compose.ui.tooling"))
             }
