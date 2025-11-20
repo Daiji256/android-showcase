@@ -9,7 +9,6 @@ android {
 
 dependencies {
     api(libs.compose.ui.test.junit4)
-    api(libs.junit)
     api(libs.kotlin.test.junit)
     api(libs.kotlinx.coroutines.test)
     api(libs.robolectric)
