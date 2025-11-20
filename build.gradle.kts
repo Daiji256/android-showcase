@@ -16,13 +16,13 @@ allprojects {
         kotlin {
             target("**/*.kt")
             targetExclude("**/build/**/*.kt")
-            ktlint(libs.versions.ktlint.get())
-                .customRuleSets(listOf(libs.composeRules.get().toString()))
+            ktlint(libs.versions.ktlint.asProvider().get())
+                .customRuleSets(listOf(libs.ktlint.compose.rules.get().toString()))
         }
         kotlinGradle {
             target("**/*.kts")
             targetExclude("**/build/**/*.kts")
-            ktlint(libs.versions.ktlint.get())
+            ktlint(libs.versions.ktlint.asProvider().get())
         }
     }
 }
