@@ -65,7 +65,6 @@ robolectric = { group = "org.robolectric", name = "robolectric", version.ref = "
 roborazzi = { group = "io.github.takahirom.roborazzi", name = "roborazzi", version.ref = "roborazzi" }
 roborazzi-compose = { group = "io.github.takahirom.roborazzi", name = "roborazzi-compose", version.ref = "roborazzi" }
 roborazzi-compose-preview-scanner-support = { group = "io.github.takahirom.roborazzi", name = "roborazzi-compose-preview-scanner-support", version.ref = "roborazzi" }
-roborazzi-core = { group = "io.github.takahirom.roborazzi", name = "roborazzi-core", version.ref = "roborazzi" }
 testParameterInjector = { group = "com.google.testparameterinjector", name = "test-parameter-injector", version.ref = "testParameterInjector" }
 turbine = { group = "app.cash.turbine", name = "turbine", version.ref = "turbine" }
 unstyled-primitives = { group = "com.composables", name = "composeunstyled-primitives", version.ref = "unstyled" }

@@ -20,5 +20,4 @@ dependencies {
     implementation(libs.roborazzi)
     implementation(libs.roborazzi.compose)
     implementation(libs.roborazzi.compose.preview.scanner.support)
-    implementation(libs.roborazzi.core)
 }
