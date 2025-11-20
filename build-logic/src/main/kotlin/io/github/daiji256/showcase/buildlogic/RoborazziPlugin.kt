@@ -52,7 +52,6 @@ class RoborazziPlugin : Plugin<Project> {
             dependencies {
                 testImplementation(libs.library("composable.preview.scanner.android"))
                 testImplementation(libs.library("roborazzi"))
-                testImplementation(libs.library("roborazzi.compose"))
                 testImplementation(libs.library("roborazzi.compose.preview.scanner.support"))
             }
         }
