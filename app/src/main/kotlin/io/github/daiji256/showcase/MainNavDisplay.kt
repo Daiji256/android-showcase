@@ -36,6 +36,17 @@ internal fun MainNavDisplay(
         backStack.removeLastOrNull()
         // TODO: Deep links support
     }
+    val features = persistentListOf(
+        customTabsSummary,
+        hiltComposableSummary,
+        ktlintSummary,
+        localSnackbarHostStateSummary,
+        navigation2ArgumentsSummary,
+        roborazziSummary,
+        safeUriHandlerSummary,
+        systemStyleSummary,
+    )
+
     NavDisplay(
         backStack = backStack,
         entryDecorators = listOf(
@@ -46,16 +57,7 @@ internal fun MainNavDisplay(
         modifier = modifier,
         entryProvider = entryProvider {
             showcase(
-                features = persistentListOf(
-                    customTabsSummary,
-                    hiltComposableSummary,
-                    ktlintSummary,
-                    localSnackbarHostStateSummary,
-                    navigation2ArgumentsSummary,
-                    roborazziSummary,
-                    safeUriHandlerSummary,
-                    systemStyleSummary,
-                ),
+                features = features,
                 onFeatureClick = { backStack.add(it.navKey) },
             )
             customTabs(onNavigateUpClick = navigateUp)
