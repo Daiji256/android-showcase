@@ -19,9 +19,9 @@ import io.github.daiji256.showcase.feature.ktlint.ktlint
 import io.github.daiji256.showcase.feature.localsnackbarhoststate.LocalSnackbarHostStateNavKey
 import io.github.daiji256.showcase.feature.localsnackbarhoststate.LocalSnackbarHostStateSummary
 import io.github.daiji256.showcase.feature.localsnackbarhoststate.localSnackbarHostState
-import io.github.daiji256.showcase.feature.navigationarguments.NavigationArgumentsNavKey
-import io.github.daiji256.showcase.feature.navigationarguments.NavigationArgumentsSummary
-import io.github.daiji256.showcase.feature.navigationarguments.navigationArguments
+import io.github.daiji256.showcase.feature.navigation2arguments.Navigation2ArgumentsNavKey
+import io.github.daiji256.showcase.feature.navigation2arguments.Navigation2ArgumentsSummary
+import io.github.daiji256.showcase.feature.navigation2arguments.navigation2Arguments
 import io.github.daiji256.showcase.feature.roborazzi.RoborazziNavKey
 import io.github.daiji256.showcase.feature.roborazzi.RoborazziSummary
 import io.github.daiji256.showcase.feature.roborazzi.roborazzi
@@ -61,8 +61,8 @@ internal fun MainNavDisplay(
                     LocalSnackbarHostStateSummary(
                         navigate = { backStack.add(LocalSnackbarHostStateNavKey) },
                     ),
-                    NavigationArgumentsSummary(
-                        navigate = { backStack.add(NavigationArgumentsNavKey) },
+                    Navigation2ArgumentsSummary(
+                        navigate = { backStack.add(Navigation2ArgumentsNavKey) },
                     ),
                     RoborazziSummary(
                         navigate = { backStack.add(RoborazziNavKey) },
@@ -79,7 +79,7 @@ internal fun MainNavDisplay(
             hiltComposable(onNavigateUpClick = navigateUp)
             ktlint(onNavigateUpClick = navigateUp)
             localSnackbarHostState(onNavigateUpClick = navigateUp)
-            navigationArguments(onNavigateUpClick = navigateUp)
+            navigation2Arguments(onNavigateUpClick = navigateUp)
             roborazzi(onNavigateUpClick = navigateUp)
             safeUriHandler(onNavigateUpClick = navigateUp)
             systemStyle(onNavigateUpClick = navigateUp)
