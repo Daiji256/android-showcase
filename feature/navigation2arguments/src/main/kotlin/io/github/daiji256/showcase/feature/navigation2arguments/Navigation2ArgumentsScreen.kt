@@ -5,6 +5,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import io.github.daiji256.showcase.feature.navigation2arguments.argssender.ArgsSenderRoute
 import io.github.daiji256.showcase.feature.navigation2arguments.argssender.argsSender
+import io.github.daiji256.showcase.feature.navigation2arguments.diargsreceiver.DiArgsReceiverRoute
 import io.github.daiji256.showcase.feature.navigation2arguments.diargsreceiver.diArgsReceiver
 import io.github.daiji256.showcase.feature.navigation2arguments.directargsreceiver.DirectArgsReceiverRoute
 import io.github.daiji256.showcase.feature.navigation2arguments.directargsreceiver.directArgsReceiver
@@ -29,7 +30,7 @@ internal fun Navigation2ArgumentsScreen(
                 navController.navigate(route = ViewModelArgsReceiverRoute(arg = arg))
             },
             onReceiveArgViaDiClick = { arg ->
-                navController.navigate(route = DirectArgsReceiverRoute(arg = arg))
+                navController.navigate(route = DiArgsReceiverRoute(arg = arg))
             },
         )
         directArgsReceiver(
