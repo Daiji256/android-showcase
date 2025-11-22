@@ -3,6 +3,7 @@ package io.github.daiji256.showcase.feature.navigation2arguments
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
+import io.github.daiji256.showcase.core.designsystem.theme.ShowcaseAnimations
 import io.github.daiji256.showcase.feature.navigation2arguments.argssender.ArgsSenderRoute
 import io.github.daiji256.showcase.feature.navigation2arguments.argssender.argsSender
 import io.github.daiji256.showcase.feature.navigation2arguments.diargsreceiver.DiArgsReceiverRoute
@@ -20,6 +21,10 @@ internal fun Navigation2ArgumentsScreen(
     NavHost(
         startDestination = ArgsSenderRoute,
         navController = navController,
+        enterTransition = ShowcaseAnimations.enterTransition(),
+        exitTransition = ShowcaseAnimations.exitTransition(),
+        popEnterTransition = ShowcaseAnimations.popEnterTransition(),
+        popExitTransition = ShowcaseAnimations.popExitTransition(),
     ) {
         argsSender(
             onNavigateUpClick = onNavigateUpClick,

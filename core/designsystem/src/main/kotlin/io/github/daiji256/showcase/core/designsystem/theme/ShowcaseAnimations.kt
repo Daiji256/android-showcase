@@ -1,5 +1,7 @@
 package io.github.daiji256.showcase.core.designsystem.theme
 
+import androidx.compose.animation.AnimatedContentTransitionScope
+import androidx.compose.animation.ContentTransform
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.core.FastOutLinearInEasing
@@ -10,12 +12,58 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.dp
 
 object ShowcaseAnimations {
-    // TODO
+    @Composable
+    fun <T : Any> transitionSpec(): AnimatedContentTransitionScope<T>.() -> ContentTransform {
+        val density = LocalDensity.current
+        return {
+            ContentTransform(
+                targetContentEnter = sharedIn(forward = true, density = density),
+                initialContentExit = sharedOut(forward = true, density = density),
+            )
+        }
+    }
+
+    @Composable
+    fun <T : Any> popTransitionSpec(): AnimatedContentTransitionScope<T>.() -> ContentTransform {
+        val density = LocalDensity.current
+        return {
+            ContentTransform(
+                targetContentEnter = sharedIn(forward = false, density = density),
+                initialContentExit = sharedOut(forward = false, density = density),
+            )
+        }
+    }
+
+    @Composable
+    fun <T : Any> enterTransition(): AnimatedContentTransitionScope<T>.() -> EnterTransition {
+        val density = LocalDensity.current
+        return { sharedIn(forward = true, density = density) }
+    }
+
+    @Composable
+    fun <T : Any> exitTransition(): AnimatedContentTransitionScope<T>.() -> ExitTransition {
+        val density = LocalDensity.current
+        return { sharedOut(forward = true, density = density) }
+    }
+
+    @Composable
+    fun <T : Any> popEnterTransition(): AnimatedContentTransitionScope<T>.() -> EnterTransition {
+        val density = LocalDensity.current
+        return { sharedIn(forward = false, density = density) }
+    }
+
+    @Composable
+    fun <T : Any> popExitTransition(): AnimatedContentTransitionScope<T>.() -> ExitTransition {
+        val density = LocalDensity.current
+        return { sharedOut(forward = false, density = density) }
+    }
 }
 
 @Stable

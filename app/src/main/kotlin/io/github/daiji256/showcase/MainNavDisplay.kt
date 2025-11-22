@@ -7,6 +7,7 @@ import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
+import io.github.daiji256.showcase.core.designsystem.theme.ShowcaseAnimations
 import io.github.daiji256.showcase.core.ui.showcase.ShowcaseNavKey
 import io.github.daiji256.showcase.core.ui.showcase.showcase
 import io.github.daiji256.showcase.feature.customtabs.customTabs
@@ -53,7 +54,9 @@ internal fun MainNavDisplay(
             rememberSaveableStateHolderNavEntryDecorator(),
             rememberViewModelStoreNavEntryDecorator(),
         ),
-        // TODO: Transition
+        transitionSpec = ShowcaseAnimations.transitionSpec(),
+        popTransitionSpec = ShowcaseAnimations.popTransitionSpec(),
+        // TODO: predictivePopTransitionSpec,
         modifier = modifier,
         entryProvider = entryProvider {
             showcase(
