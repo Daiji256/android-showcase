@@ -1,11 +1,8 @@
 package io.github.daiji256.showcase.core.ui.feature
 
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.Stable
+import androidx.navigation3.runtime.NavKey
 
-@Stable
-interface FeatureSummary {
-    val title: String @Composable get
-
-    fun navigate()
-}
+data class FeatureSummary(
+    val title: String,
+    val navKey: NavKey,
+)
