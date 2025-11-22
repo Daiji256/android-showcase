@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.ui.NavDisplay
+import io.github.daiji256.showcase.core.designsystem.theme.ShowcaseAnimations
 import io.github.daiji256.showcase.feature.localsnackbarhoststate.first.FirstNavKey
 import io.github.daiji256.showcase.feature.localsnackbarhoststate.first.first
 import io.github.daiji256.showcase.feature.localsnackbarhoststate.second.SecondNavKey
@@ -16,7 +17,9 @@ internal fun LocalSnackbarHostStateScreen(
     val backStack = rememberNavBackStack(FirstNavKey)
     NavDisplay(
         backStack = backStack,
-        // TODO: Transition
+        transitionSpec = ShowcaseAnimations.transitionSpec(),
+        popTransitionSpec = ShowcaseAnimations.popTransitionSpec(),
+        // TODO: predictivePopTransitionSpec,
         entryProvider = entryProvider {
             first(
                 onNavigateUpClick = onNavigateUpClick,
