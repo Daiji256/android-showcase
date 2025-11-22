@@ -1,19 +1,18 @@
 package io.github.daiji256.showcase.feature.customtabs
 
-import androidx.navigation.NavController
-import androidx.navigation.NavGraphBuilder
-import androidx.navigation.compose.composable
+import androidx.navigation3.runtime.EntryProviderScope
+import androidx.navigation3.runtime.NavKey
 import kotlinx.serialization.Serializable
 
 @Serializable
-internal data object CustomTabsScreenRoute
+data object CustomTabsNavKey : NavKey
 
-fun NavGraphBuilder.customTabsScreen(navController: NavController) {
-    composable<CustomTabsScreenRoute> {
+fun EntryProviderScope<NavKey>.customTabs(
+    onNavigateUpClick: () -> Unit,
+) {
+    entry<CustomTabsNavKey> {
         CustomTabsScreen(
-            onNavigateUpClick = navController::navigateUp,
+            onNavigateUpClick = onNavigateUpClick,
         )
     }
 }
-
-fun NavController.navigateToCustomTabsScreen() = navigate(route = CustomTabsScreenRoute)

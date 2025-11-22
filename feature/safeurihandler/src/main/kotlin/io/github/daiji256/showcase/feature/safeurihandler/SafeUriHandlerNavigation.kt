@@ -1,19 +1,18 @@
 package io.github.daiji256.showcase.feature.safeurihandler
 
-import androidx.navigation.NavController
-import androidx.navigation.NavGraphBuilder
-import androidx.navigation.compose.composable
+import androidx.navigation3.runtime.EntryProviderScope
+import androidx.navigation3.runtime.NavKey
 import kotlinx.serialization.Serializable
 
 @Serializable
-internal data object SafeUriHandlerScreenRoute
+data object SafeUriHandlerNavKey : NavKey
 
-fun NavGraphBuilder.safeUriHandlerScreen(navController: NavController) {
-    composable<SafeUriHandlerScreenRoute> {
+fun EntryProviderScope<NavKey>.safeUriHandler(
+    onNavigateUpClick: () -> Unit,
+) {
+    entry<SafeUriHandlerNavKey> {
         SafeUriHandlerScreen(
-            onNavigateUpClick = navController::navigateUp,
+            onNavigateUpClick = onNavigateUpClick,
         )
     }
 }
-
-fun NavController.navigateToSafeUriHandlerScreen() = navigate(route = SafeUriHandlerScreenRoute)

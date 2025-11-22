@@ -1,19 +1,20 @@
 package io.github.daiji256.showcase.feature.localsnackbarhoststate.first
 
-import androidx.navigation.NavController
-import androidx.navigation.NavGraphBuilder
-import androidx.navigation.compose.composable
-import io.github.daiji256.showcase.feature.localsnackbarhoststate.second.navigateToSecondScreen
+import androidx.navigation3.runtime.EntryProviderScope
+import androidx.navigation3.runtime.NavKey
 import kotlinx.serialization.Serializable
 
 @Serializable
-internal data object FirstScreenRoute
+internal data object FirstNavKey : NavKey
 
-internal fun NavGraphBuilder.firstScreen(navController: NavController) {
-    composable<FirstScreenRoute> {
+internal fun EntryProviderScope<NavKey>.first(
+    onNavigateUpClick: () -> Unit,
+    onNavigateToSecondClick: () -> Unit,
+) {
+    entry<FirstNavKey> {
         FirstScreen(
-            onNavigateUpClick = navController::navigateUp,
-            onNavigateToSecondScreenClick = navController::navigateToSecondScreen,
+            onNavigateUpClick = onNavigateUpClick,
+            onNavigateToSecondClick = onNavigateToSecondClick,
         )
     }
 }

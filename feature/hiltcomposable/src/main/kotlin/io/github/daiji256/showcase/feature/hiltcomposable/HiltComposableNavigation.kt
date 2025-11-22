@@ -1,19 +1,18 @@
 package io.github.daiji256.showcase.feature.hiltcomposable
 
-import androidx.navigation.NavController
-import androidx.navigation.NavGraphBuilder
-import androidx.navigation.compose.composable
+import androidx.navigation3.runtime.EntryProviderScope
+import androidx.navigation3.runtime.NavKey
 import kotlinx.serialization.Serializable
 
 @Serializable
-internal data object HiltComposableScreenRoute
+data object HiltComposableNavKey : NavKey
 
-fun NavGraphBuilder.hiltComposableScreen(navController: NavController) {
-    composable<HiltComposableScreenRoute> {
+fun EntryProviderScope<NavKey>.hiltComposable(
+    onNavigateUpClick: () -> Unit,
+) {
+    entry<HiltComposableNavKey> {
         HiltComposableScreen(
-            onNavigateUpClick = navController::navigateUp,
+            onNavigateUpClick = onNavigateUpClick,
         )
     }
 }
-
-fun NavController.navigateToHiltComposableScreen() = navigate(route = HiltComposableScreenRoute)

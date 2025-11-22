@@ -1,28 +1,18 @@
 package io.github.daiji256.showcase.feature.navigationarguments
 
-import androidx.navigation.NavController
-import androidx.navigation.NavGraphBuilder
-import androidx.navigation.compose.navigation
-import io.github.daiji256.showcase.feature.navigationarguments.argssender.ArgsSenderScreenRoute
-import io.github.daiji256.showcase.feature.navigationarguments.argssender.argsSenderScreen
-import io.github.daiji256.showcase.feature.navigationarguments.diargsreceiver.diArgsReceiverScreen
-import io.github.daiji256.showcase.feature.navigationarguments.directargsreceiver.directArgsReceiverScreen
-import io.github.daiji256.showcase.feature.navigationarguments.viewmodelargsreceiver.viewModelArgsReceiverScreen
+import androidx.navigation3.runtime.EntryProviderScope
+import androidx.navigation3.runtime.NavKey
 import kotlinx.serialization.Serializable
 
 @Serializable
-internal data object NavigationArgumentsNavGraphRoute
+data object NavigationArgumentsNavKey : NavKey
 
-fun NavGraphBuilder.navigationArgumentsNavGraph(navController: NavController) {
-    navigation<NavigationArgumentsNavGraphRoute>(
-        startDestination = ArgsSenderScreenRoute,
-    ) {
-        argsSenderScreen(navController = navController)
-        directArgsReceiverScreen(navController = navController)
-        viewModelArgsReceiverScreen(navController = navController)
-        diArgsReceiverScreen(navController = navController)
+fun EntryProviderScope<NavKey>.navigationArguments(
+    onNavigateUpClick: () -> Unit,
+) {
+    entry<NavigationArgumentsNavKey> {
+        NavigationArgumentsScreen(
+            onNavigateUpClick = onNavigateUpClick,
+        )
     }
 }
-
-fun NavController.navigateToNavigationArgumentsNavGraph() =
-    navigate(route = NavigationArgumentsNavGraphRoute)
