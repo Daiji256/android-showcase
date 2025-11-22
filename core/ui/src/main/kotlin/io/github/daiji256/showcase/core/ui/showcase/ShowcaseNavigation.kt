@@ -11,8 +11,12 @@ data object ShowcaseNavKey : NavKey
 
 fun EntryProviderScope<NavKey>.showcase(
     features: ImmutableList<FeatureSummary>,
+    onFeatureClick: (FeatureSummary) -> Unit,
 ) {
     entry<ShowcaseNavKey> {
-        ShowcaseScreen(features = features)
+        ShowcaseScreen(
+            features = features,
+            onFeatureClick = onFeatureClick,
+        )
     }
 }

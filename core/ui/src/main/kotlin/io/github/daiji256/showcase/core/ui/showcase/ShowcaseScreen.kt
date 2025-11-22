@@ -22,6 +22,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.dropUnlessResumed
+import androidx.navigation3.runtime.NavKey
 import io.github.daiji256.showcase.core.designsystem.theme.ShowcaseTheme
 import io.github.daiji256.showcase.core.ui.R
 import io.github.daiji256.showcase.core.ui.feature.FeatureSummary
@@ -32,6 +33,7 @@ import kotlinx.collections.immutable.toImmutableList
 @Composable
 internal fun ShowcaseScreen(
     features: ImmutableList<FeatureSummary>,
+    onFeatureClick: (FeatureSummary) -> Unit,
 ) {
     Scaffold(
         topBar = {
@@ -59,6 +61,7 @@ internal fun ShowcaseScreen(
             items(items = features) { feature ->
                 FeatureItem(
                     feature = feature,
+                    onFeatureClick = onFeatureClick,
                     modifier = Modifier.fillMaxWidth(),
                 )
                 HorizontalDivider()
@@ -70,12 +73,13 @@ internal fun ShowcaseScreen(
 @Composable
 private fun FeatureItem(
     feature: FeatureSummary,
+    onFeatureClick: (FeatureSummary) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Text(
         text = feature.title,
         modifier = modifier
-            .clickable(onClick = dropUnlessResumed { feature.navigate() })
+            .clickable(onClick = dropUnlessResumed { onFeatureClick(feature) })
             .padding(12.dp),
     )
 }
@@ -89,14 +93,15 @@ private fun ShowcaseScreenPreview() {
     ShowcaseTheme {
         val features = remember {
             List(20) {
-                object : FeatureSummary {
-                    override val title: String
-                        @Composable get() = "Feature$it"
-
-                    override fun navigate() {}
-                }
+                FeatureSummary(
+                    title = "Feature$it",
+                    navKey = object : NavKey {},
+                )
             }.toImmutableList()
         }
-        ShowcaseScreen(features = features)
+        ShowcaseScreen(
+            features = features,
+            onFeatureClick = {},
+        )
     }
 }
