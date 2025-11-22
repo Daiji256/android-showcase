@@ -7,7 +7,7 @@ class DiArgsReceiverViewModelTest {
     @Test
     fun test_dummy_arg() {
         val viewModel = DiArgsReceiverViewModel(
-            route = DiArgsReceiverScreenRoute(arg = "dummy"),
+            route = DiArgsReceiverRoute(arg = "dummy"),
         )
         assertEquals(viewModel.arg, "dummy")
     }

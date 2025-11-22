@@ -1,23 +1,21 @@
 package io.github.daiji256.showcase.feature.navigationarguments.directargsreceiver
 
-import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
 import kotlinx.serialization.Serializable
 
 @Serializable
-internal data class DirectArgsReceiverScreenRoute(val arg: String)
+internal data class DirectArgsReceiverRoute(val arg: String)
 
-internal fun NavGraphBuilder.directArgsReceiverScreen(navController: NavController) {
-    composable<DirectArgsReceiverScreenRoute> { entry ->
-        val route = entry.toRoute<DirectArgsReceiverScreenRoute>()
+internal fun NavGraphBuilder.directArgsReceiver(
+    onNavigateUpClick: () -> Unit,
+) {
+    composable<DirectArgsReceiverRoute> { entry ->
+        val route = entry.toRoute<DirectArgsReceiverRoute>()
         DirectArgsReceiverScreen(
             arg = route.arg,
-            onNavigateUpClick = navController::navigateUp,
+            onNavigateUpClick = onNavigateUpClick,
         )
     }
 }
-
-internal fun NavController.navigateToDirectArgsReceiverScreen(arg: String) =
-    navigate(route = DirectArgsReceiverScreenRoute(arg = arg))

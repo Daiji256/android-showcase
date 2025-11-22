@@ -1,7 +1,6 @@
 package io.github.daiji256.showcase.feature.navigationarguments.diargsreceiver
 
 import androidx.lifecycle.SavedStateHandle
-import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
@@ -12,25 +11,24 @@ import dagger.hilt.android.components.ViewModelComponent
 import kotlinx.serialization.Serializable
 
 @Serializable
-internal data class DiArgsReceiverScreenRoute(val arg: String)
+internal data class DiArgsReceiverRoute(val arg: String)
 
-internal fun NavGraphBuilder.diArgsReceiverScreen(navController: NavController) {
-    composable<DiArgsReceiverScreenRoute> {
+internal fun NavGraphBuilder.diArgsReceiver(
+    onNavigateUpClick: () -> Unit,
+) {
+    composable<DiArgsReceiverRoute> {
         DiArgsReceiverScreen(
-            onNavigateUpClick = navController::navigateUp,
+            onNavigateUpClick = onNavigateUpClick,
         )
     }
 }
 
-internal fun NavController.navigateToDiArgsReceiverScreen(arg: String) =
-    navigate(route = DiArgsReceiverScreenRoute(arg = arg))
-
 @Module
 @InstallIn(ViewModelComponent::class)
-internal object DiArgsReceiverScreenRouteModule {
+internal object DiArgsReceiverRouteModule {
     @Provides
-    fun providesDiArgsReceiverScreenRoute(
+    fun providesDiArgsReceiverRoute(
         savedStateHandle: SavedStateHandle,
-    ): DiArgsReceiverScreenRoute =
-        savedStateHandle.toRoute<DiArgsReceiverScreenRoute>()
+    ): DiArgsReceiverRoute =
+        savedStateHandle.toRoute<DiArgsReceiverRoute>()
 }

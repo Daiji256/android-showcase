@@ -1,23 +1,24 @@
 package io.github.daiji256.showcase.feature.navigationarguments.argssender
 
-import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import io.github.daiji256.showcase.feature.navigationarguments.diargsreceiver.navigateToDiArgsReceiverScreen
-import io.github.daiji256.showcase.feature.navigationarguments.directargsreceiver.navigateToDirectArgsReceiverScreen
-import io.github.daiji256.showcase.feature.navigationarguments.viewmodelargsreceiver.navigateToViewModelArgsReceiverScreen
 import kotlinx.serialization.Serializable
 
 @Serializable
-internal data object ArgsSenderScreenRoute
+internal data object ArgsSenderRoute
 
-internal fun NavGraphBuilder.argsSenderScreen(navController: NavController) {
-    composable<ArgsSenderScreenRoute> {
+internal fun NavGraphBuilder.argsSender(
+    onNavigateUpClick: () -> Unit,
+    onReceiveArgDirectlyClick: (arg: String) -> Unit,
+    onReceiveArgViaViewModelClick: (arg: String) -> Unit,
+    onReceiveArgViaDiClick: (arg: String) -> Unit,
+) {
+    composable<ArgsSenderRoute> {
         ArgsSenderScreen(
-            onNavigateUpClick = navController::navigateUp,
-            onReceiveArgDirectlyClick = navController::navigateToDirectArgsReceiverScreen,
-            onReceiveArgViaViewModelClick = navController::navigateToViewModelArgsReceiverScreen,
-            onReceiveArgViaDiClick = navController::navigateToDiArgsReceiverScreen,
+            onNavigateUpClick = onNavigateUpClick,
+            onReceiveArgDirectlyClick = onReceiveArgDirectlyClick,
+            onReceiveArgViaViewModelClick = onReceiveArgViaViewModelClick,
+            onReceiveArgViaDiClick = onReceiveArgViaDiClick,
         )
     }
 }

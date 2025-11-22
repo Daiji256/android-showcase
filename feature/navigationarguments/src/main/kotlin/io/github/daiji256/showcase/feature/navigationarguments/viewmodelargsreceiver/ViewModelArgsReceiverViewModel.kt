@@ -10,5 +10,5 @@ import javax.inject.Inject
 internal class ViewModelArgsReceiverViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
-    val arg: String = savedStateHandle.toRoute<ViewModelArgsReceiverScreenRoute>().arg
+    val arg: String = savedStateHandle.toRoute<ViewModelArgsReceiverRoute>().arg
 }
