@@ -2,8 +2,10 @@ package io.github.daiji256.showcase
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDecorator
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberNavBackStack
+import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
 import io.github.daiji256.showcase.core.ui.showcase.ShowcaseNavKey
 import io.github.daiji256.showcase.core.ui.showcase.showcase
@@ -44,6 +46,10 @@ internal fun MainNavDisplay(
     }
     NavDisplay(
         backStack = backStack,
+        entryDecorators = listOf(
+            rememberSaveableStateHolderNavEntryDecorator(),
+            rememberViewModelStoreNavEntryDecorator(),
+        ),
         // TODO: Transition
         modifier = modifier,
         entryProvider = entryProvider {
