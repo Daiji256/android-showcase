@@ -19,7 +19,7 @@ import kotlinx.coroutines.launch
 @Composable
 internal fun FirstScreen(
     onNavigateUpClick: () -> Unit,
-    onNavigateToSecondScreenClick: () -> Unit,
+    onNavigateToSecondClick: () -> Unit,
 ) {
     Document(
         title = stringResource(id = R.string.feature_lshs_first_title),
@@ -46,7 +46,7 @@ internal fun FirstScreen(
             )
         }
         Button(
-            onClick = dropUnlessResumed { onNavigateToSecondScreenClick() },
+            onClick = dropUnlessResumed { onNavigateToSecondClick() },
         ) {
             Text(
                 text = stringResource(
@@ -71,7 +71,7 @@ private fun FirstScreenPreview() {
     ShowcaseTheme {
         FirstScreen(
             onNavigateUpClick = {},
-            onNavigateToSecondScreenClick = {},
+            onNavigateToSecondClick = {},
         )
     }
 }

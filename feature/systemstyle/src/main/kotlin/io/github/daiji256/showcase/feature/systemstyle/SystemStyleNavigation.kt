@@ -1,19 +1,18 @@
 package io.github.daiji256.showcase.feature.systemstyle
 
-import androidx.navigation.NavController
-import androidx.navigation.NavGraphBuilder
-import androidx.navigation.compose.composable
+import androidx.navigation3.runtime.EntryProviderScope
+import androidx.navigation3.runtime.NavKey
 import kotlinx.serialization.Serializable
 
 @Serializable
-internal data object SystemStyleScreenRoute
+data object SystemStyleNavKey : NavKey
 
-fun NavGraphBuilder.systemStyleScreen(navController: NavController) {
-    composable<SystemStyleScreenRoute> {
+fun EntryProviderScope<NavKey>.systemStyle(
+    onNavigateUpClick: () -> Unit,
+) {
+    entry<SystemStyleNavKey> {
         SystemStyleScreen(
-            onNavigateUpClick = navController::navigateUp,
+            onNavigateUpClick = onNavigateUpClick,
         )
     }
 }
-
-fun NavController.navigateToSystemStyleScreen() = navigate(route = SystemStyleScreenRoute)

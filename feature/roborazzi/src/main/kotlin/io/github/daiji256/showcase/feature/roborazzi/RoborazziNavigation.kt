@@ -1,19 +1,18 @@
 package io.github.daiji256.showcase.feature.roborazzi
 
-import androidx.navigation.NavController
-import androidx.navigation.NavGraphBuilder
-import androidx.navigation.compose.composable
+import androidx.navigation3.runtime.EntryProviderScope
+import androidx.navigation3.runtime.NavKey
 import kotlinx.serialization.Serializable
 
 @Serializable
-internal data object RoborazziScreenRoute
+data object RoborazziNavKey : NavKey
 
-fun NavGraphBuilder.roborazziScreen(navController: NavController) {
-    composable<RoborazziScreenRoute> {
+fun EntryProviderScope<NavKey>.roborazzi(
+    onNavigateUpClick: () -> Unit,
+) {
+    entry<RoborazziNavKey> {
         RoborazziScreen(
-            onNavigateUpClick = navController::navigateUp,
+            onNavigateUpClick = onNavigateUpClick,
         )
     }
 }
-
-fun NavController.navigateToRoborazziScreen() = navigate(route = RoborazziScreenRoute)

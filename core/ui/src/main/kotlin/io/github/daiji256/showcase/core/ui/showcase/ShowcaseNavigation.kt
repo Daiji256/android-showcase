@@ -1,18 +1,18 @@
 package io.github.daiji256.showcase.core.ui.showcase
 
-import androidx.navigation.NavGraphBuilder
-import androidx.navigation.compose.composable
+import androidx.navigation3.runtime.EntryProviderScope
+import androidx.navigation3.runtime.NavKey
 import io.github.daiji256.showcase.core.ui.feature.FeatureSummary
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.serialization.Serializable
 
 @Serializable
-data object ShowcaseScreenRoute
+data object ShowcaseNavKey : NavKey
 
-fun NavGraphBuilder.showcaseScreen(
+fun EntryProviderScope<NavKey>.showcase(
     features: ImmutableList<FeatureSummary>,
 ) {
-    composable<ShowcaseScreenRoute> {
+    entry<ShowcaseNavKey> {
         ShowcaseScreen(features = features)
     }
 }

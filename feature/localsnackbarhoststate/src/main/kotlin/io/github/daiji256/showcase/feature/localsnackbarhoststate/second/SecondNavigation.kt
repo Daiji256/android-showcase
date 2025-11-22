@@ -1,19 +1,18 @@
 package io.github.daiji256.showcase.feature.localsnackbarhoststate.second
 
-import androidx.navigation.NavController
-import androidx.navigation.NavGraphBuilder
-import androidx.navigation.compose.composable
+import androidx.navigation3.runtime.EntryProviderScope
+import androidx.navigation3.runtime.NavKey
 import kotlinx.serialization.Serializable
 
 @Serializable
-internal data object SecondScreenRoute
+internal data object SecondNavKey : NavKey
 
-internal fun NavGraphBuilder.secondScreen(navController: NavController) {
-    composable<SecondScreenRoute> {
+internal fun EntryProviderScope<NavKey>.second(
+    onNavigateUpClick: () -> Unit,
+) {
+    entry<SecondNavKey> {
         SecondScreen(
-            onNavigateUpClick = navController::navigateUp,
+            onNavigateUpClick = onNavigateUpClick,
         )
     }
 }
-
-internal fun NavController.navigateToSecondScreen() = navigate(route = SecondScreenRoute)

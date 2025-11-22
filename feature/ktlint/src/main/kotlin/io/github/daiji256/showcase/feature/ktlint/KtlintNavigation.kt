@@ -1,19 +1,18 @@
 package io.github.daiji256.showcase.feature.ktlint
 
-import androidx.navigation.NavController
-import androidx.navigation.NavGraphBuilder
-import androidx.navigation.compose.composable
+import androidx.navigation3.runtime.EntryProviderScope
+import androidx.navigation3.runtime.NavKey
 import kotlinx.serialization.Serializable
 
 @Serializable
-internal data object KtlintScreenRoute
+data object KtlintNavKey : NavKey
 
-fun NavGraphBuilder.ktlintScreen(navController: NavController) {
-    composable<KtlintScreenRoute> {
+fun EntryProviderScope<NavKey>.ktlint(
+    onNavigateUpClick: () -> Unit,
+) {
+    entry<KtlintNavKey> {
         KtlintScreen(
-            onNavigateUpClick = navController::navigateUp,
+            onNavigateUpClick = onNavigateUpClick,
         )
     }
 }
-
-fun NavController.navigateToKtlintScreen() = navigate(route = KtlintScreenRoute)

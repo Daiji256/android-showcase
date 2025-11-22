@@ -1,6 +1,5 @@
 package io.github.daiji256.showcase.core.designsystem.theme
 
-import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.core.FastOutLinearInEasing
@@ -11,41 +10,12 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
-import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavBackStackEntry
 
 object ShowcaseAnimations {
-    val enterTransition:
-        AnimatedContentTransitionScope<NavBackStackEntry>.() -> EnterTransition
-        @Composable get() {
-            val density = LocalDensity.current
-            return { sharedIn(forward = true, density = density) }
-        }
-
-    val exitTransition:
-        AnimatedContentTransitionScope<NavBackStackEntry>.() -> ExitTransition
-        @Composable get() {
-            val density = LocalDensity.current
-            return { sharedOut(forward = true, density = density) }
-        }
-
-    val popEnterTransition:
-        AnimatedContentTransitionScope<NavBackStackEntry>.() -> EnterTransition
-        @Composable get() {
-            val density = LocalDensity.current
-            return { sharedIn(forward = false, density = density) }
-        }
-
-    val popExitTransition:
-        AnimatedContentTransitionScope<NavBackStackEntry>.() -> ExitTransition
-        @Composable get() {
-            val density = LocalDensity.current
-            return { sharedOut(forward = false, density = density) }
-        }
+    // TODO
 }
 
 @Stable

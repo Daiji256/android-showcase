@@ -46,7 +46,7 @@ dependencies {
     implementation(projects.feature.hiltcomposable)
     implementation(projects.feature.ktlint)
     implementation(projects.feature.localsnackbarhoststate)
-    implementation(projects.feature.navigationarguments)
+    implementation(projects.feature.navigation2arguments)
     implementation(projects.feature.roborazzi)
     implementation(projects.feature.safeurihandler)
     implementation(projects.feature.systemstyle)
