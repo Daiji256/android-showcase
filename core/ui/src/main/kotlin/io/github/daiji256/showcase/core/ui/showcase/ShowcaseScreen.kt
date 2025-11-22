@@ -24,14 +24,13 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.dropUnlessResumed
 import io.github.daiji256.showcase.core.designsystem.theme.ShowcaseTheme
 import io.github.daiji256.showcase.core.ui.R
-import io.github.daiji256.showcase.core.ui.feature.FeatureSummary
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun ShowcaseScreen(
-    features: ImmutableList<FeatureSummary>,
+    features: ImmutableList<Feature>,
 ) {
     Scaffold(
         topBar = {
@@ -69,13 +68,13 @@ internal fun ShowcaseScreen(
 
 @Composable
 private fun FeatureItem(
-    feature: FeatureSummary,
+    feature: Feature,
     modifier: Modifier = Modifier,
 ) {
     Text(
         text = feature.title,
         modifier = modifier
-            .clickable(onClick = dropUnlessResumed { feature.navigate() })
+            .clickable(onClick = dropUnlessResumed { feature.onNavigateClick() })
             .padding(12.dp),
     )
 }
@@ -89,12 +88,10 @@ private fun ShowcaseScreenPreview() {
     ShowcaseTheme {
         val features = remember {
             List(20) {
-                object : FeatureSummary {
-                    override val title: String
-                        @Composable get() = "Feature$it"
-
-                    override fun navigate() {}
-                }
+                Feature(
+                    title = "Feature$it",
+                    onNavigateClick = {},
+                )
             }.toImmutableList()
         }
         ShowcaseScreen(features = features)
