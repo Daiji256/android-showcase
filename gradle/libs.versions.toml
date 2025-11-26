@@ -30,7 +30,7 @@ robolectric = "4.16"
 roborazzi = "1.52.0"
 spotless = "8.1.0"
 turbine = "1.2.1"
-unstyled = "1.49.2"
+unstyled = "1.49.3"
 
 [libraries]
 activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activity-compose" }
