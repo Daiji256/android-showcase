@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.text.BasicText
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -22,11 +23,11 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
-import com.composeunstyled.Text
 import io.github.daiji256.showcase.feature.systemstyle.colorcontrast.ColorContrast
 import io.github.daiji256.showcase.feature.systemstyle.colorcontrast.currentColorContrast
 import io.github.daiji256.showcase.feature.systemstyle.systemcolor.primaryColor
@@ -46,39 +47,44 @@ internal fun SystemStyleValues(modifier: Modifier = Modifier) {
             stringResource(id = R.string.feature_system_style_label_value_separator)
 
         Row {
-            Text(
+            BasicText(
                 text = stringResource(id = R.string.feature_system_style_theme_label) +
                     labelValueSeparator,
+                style = TextStyle(color = Color.Black),
             )
-            Text(
+            BasicText(
                 text = when (isSystemInDarkTheme()) {
                     false -> stringResource(id = R.string.feature_system_style_theme_value_light)
                     true -> stringResource(id = R.string.feature_system_style_theme_value_dark)
                 },
+                style = TextStyle(color = Color.Black),
             )
         }
 
         Row {
             val density = LocalDensity.current
-            Text(
+            BasicText(
                 text = stringResource(id = R.string.feature_system_style_font_scale_label) +
                     labelValueSeparator,
+                style = TextStyle(color = Color.Black),
             )
-            Text(
+            BasicText(
                 text = stringResource(
                     id = R.string.feature_system_style_font_scale_value,
                     density.fontScale,
                 ),
+                style = TextStyle(color = Color.Black),
             )
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
             Row {
-                Text(
+                BasicText(
                     text = stringResource(id = R.string.feature_system_style_color_contrast_label) +
                         labelValueSeparator,
+                    style = TextStyle(color = Color.Black),
                 )
-                Text(
+                BasicText(
                     text = when (currentColorContrast()) {
                         ColorContrast.Default ->
                             stringResource(
@@ -95,6 +101,7 @@ internal fun SystemStyleValues(modifier: Modifier = Modifier) {
                                 id = R.string.feature_system_style_color_contrast_value_high,
                             )
                     },
+                    style = TextStyle(color = Color.Black),
                 )
             }
         }
@@ -118,7 +125,7 @@ internal fun SystemStyleValues(modifier: Modifier = Modifier) {
                     modifier = Modifier
                         .height(IntrinsicSize.Max),
                 ) {
-                    Text(
+                    BasicText(
                         text = buildAnnotatedString {
                             append(label + labelValueSeparator)
                             withStyle(SpanStyle(fontFamily = FontFamily.Monospace)) {
@@ -130,6 +137,7 @@ internal fun SystemStyleValues(modifier: Modifier = Modifier) {
                                 )
                             }
                         },
+                        style = TextStyle(color = Color.Black),
                     )
                     Spacer(modifier = Modifier.width(2.dp))
                     Box(
