@@ -5,7 +5,7 @@ compileSdk = "36"
 
 jdk = "21"
 
-activity-compose = "1.12.1"
+activity-compose = "1.12.2"
 agp = "8.13.2"
 androidxTestRules = "1.7.0"
 browser = "1.9.0"
