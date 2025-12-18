@@ -7,6 +7,6 @@ ij_kotlin_indent_before_arrow_on_new_line = true
 ktlint_code_style = android_studio
 ktlint_experimental = enabled
 ktlint_function_naming_ignore_when_annotated_with = Composable,Test
-ktlint_property_naming_constant_naming = pascal_case
 ktlint_standard_class-signature = disabled
 ktlint_standard_function-signature = disabled
+ktlint_standard_property-naming = disabled
