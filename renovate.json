@@ -3,15 +3,6 @@
   "extends": [
     "config:recommended"
   ],
-  "packageRules": [
-    {
-      "groupName": "Kotlin",
-      "matchPackageNames": [
-        "/^org.jetbrains.kotlin/",
-        "/^com.google.devtools.ksp/"
-      ]
-    }
-  ],
   "ignoreDeps": [
     "buildlogic.android.application",
     "buildlogic.android.library",
