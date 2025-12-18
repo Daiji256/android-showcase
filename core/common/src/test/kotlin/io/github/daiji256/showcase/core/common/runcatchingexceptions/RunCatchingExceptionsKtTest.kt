@@ -1,9 +1,9 @@
 package io.github.daiji256.showcase.core.common.runcatchingexceptions
 
+import kotlinx.coroutines.test.runTest
 import kotlin.coroutines.cancellation.CancellationException
 import kotlin.test.Test
 import kotlin.test.assertEquals
-import kotlinx.coroutines.test.runTest
 
 class RunCatchingExceptionsKtTest {
     private class Value
