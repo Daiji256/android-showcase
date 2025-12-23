@@ -8,7 +8,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.lifecycle.compose.dropUnlessResumed
 import io.github.daiji256.showcase.core.designsystem.theme.ShowcaseTheme
 import io.github.daiji256.showcase.core.ui.document.Document
 import io.github.daiji256.showcase.core.ui.localsnackbarhoststate.LocalSnackbarHostState
@@ -46,7 +45,7 @@ internal fun FirstScreen(
             )
         }
         Button(
-            onClick = dropUnlessResumed { onNavigateToSecondClick() },
+            onClick = onNavigateToSecondClick,
         ) {
             Text(
                 text = stringResource(
