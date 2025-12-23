@@ -45,7 +45,7 @@ internal fun FirstScreen(
             )
         }
         Button(
-            onClick = { onNavigateToSecondClick() },
+            onClick = onNavigateToSecondClick,
         ) {
             Text(
                 text = stringResource(
