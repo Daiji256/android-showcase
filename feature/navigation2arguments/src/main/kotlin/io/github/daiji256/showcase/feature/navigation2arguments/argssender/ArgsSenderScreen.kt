@@ -9,7 +9,6 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.lifecycle.compose.dropUnlessResumed
 import io.github.daiji256.showcase.core.designsystem.theme.ShowcaseTheme
 import io.github.daiji256.showcase.core.ui.document.Document
 import io.github.daiji256.showcase.core.ui.markdown.Markdown
@@ -42,7 +41,7 @@ internal fun ArgsSenderScreen(
             onValueChange = { arg = it },
         )
         Button(
-            onClick = dropUnlessResumed { onReceiveArgDirectlyClick(arg) },
+            onClick = { onReceiveArgDirectlyClick(arg) },
         ) {
             Markdown(
                 markdown = stringResource(
@@ -51,7 +50,7 @@ internal fun ArgsSenderScreen(
             )
         }
         Button(
-            onClick = dropUnlessResumed { onReceiveArgViaViewModelClick(arg) },
+            onClick = { onReceiveArgViaViewModelClick(arg) },
         ) {
             Markdown(
                 markdown = stringResource(
@@ -60,7 +59,7 @@ internal fun ArgsSenderScreen(
             )
         }
         Button(
-            onClick = dropUnlessResumed { onReceiveArgViaDiClick(arg) },
+            onClick = { onReceiveArgViaDiClick(arg) },
         ) {
             Markdown(
                 markdown = stringResource(

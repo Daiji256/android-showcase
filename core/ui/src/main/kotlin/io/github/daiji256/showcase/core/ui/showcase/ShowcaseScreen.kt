@@ -21,7 +21,6 @@ import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.compose.dropUnlessResumed
 import androidx.navigation3.runtime.NavKey
 import io.github.daiji256.showcase.core.designsystem.theme.ShowcaseTheme
 import io.github.daiji256.showcase.core.ui.R
@@ -79,7 +78,7 @@ private fun FeatureItem(
     Text(
         text = feature.title,
         modifier = modifier
-            .clickable(onClick = dropUnlessResumed { onFeatureClick(feature) })
+            .clickable(onClick = { onFeatureClick(feature) })
             .padding(12.dp),
     )
 }
