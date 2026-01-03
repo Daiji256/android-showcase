@@ -45,6 +45,7 @@ dependencies {
     implementation(projects.feature.customtabs)
     implementation(projects.feature.hiltcomposable)
     implementation(projects.feature.ktlint)
+    implementation(projects.feature.license)
     implementation(projects.feature.localsnackbarhoststate)
     implementation(projects.feature.navigation2arguments)
     implementation(projects.feature.roborazzi)
