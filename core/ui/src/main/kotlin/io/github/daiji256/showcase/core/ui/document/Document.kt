@@ -107,9 +107,9 @@ fun Document(
                         start = padding.calculateStartPadding(layoutDirection),
                         end = padding.calculateEndPadding(layoutDirection),
                     )
-                    .padding(horizontal = 16.dp)
                     .fillMaxWidth()
                     .verticalScroll(scrollState)
+                    .padding(horizontal = 16.dp)
                     .padding(bottom = padding.calculateBottomPadding() + 24.dp),
             ) {
                 content()
