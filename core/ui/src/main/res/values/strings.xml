@@ -1,3 +1,4 @@
 <resources>
     <string name="core_ui_showcase_title">Showcase</string>
+    <string name="navigate_up_description">Navigate up</string>
 </resources>
