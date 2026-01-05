@@ -76,7 +76,9 @@ fun Document(
         Scaffold(
             topBar = {
                 LargeTopAppBar(
-                    title = { Text(text = title) },
+                    title = {
+                        Text(text = title)
+                    },
                     navigationIcon = {
                         NavigateUpButton(onClick = onNavigateUpClick)
                     },
