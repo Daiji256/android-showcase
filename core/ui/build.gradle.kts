@@ -11,7 +11,6 @@ android {
 dependencies {
     implementation(projects.core.common)
     implementation(projects.core.designsystem)
-    implementation(libs.compose.material.icons.core)
     implementation(libs.markdown)
     testImplementation(projects.core.testing)
 }
