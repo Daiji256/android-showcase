@@ -1,11 +1,10 @@
 package io.github.daiji256.showcase.core.ui.component
 
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import io.github.daiji256.showcase.core.ui.R
@@ -20,7 +19,7 @@ fun NavigateUpButton(
         modifier = modifier,
     ) {
         Icon(
-            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+            painter = painterResource(id = R.drawable.ic_arrow_back),
             contentDescription = stringResource(id = R.string.navigate_up_description),
         )
     }
