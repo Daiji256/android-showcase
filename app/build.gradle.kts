@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.buildlogic.android.application)
     alias(libs.plugins.buildlogic.compose)
     alias(libs.plugins.buildlogic.hilt)
+    alias(libs.plugins.aboutlibraries)
 }
 
 android {
@@ -35,6 +36,13 @@ android {
     lint {
         sarifReport = true
         checkDependencies = true
+    }
+}
+
+aboutLibraries {
+    license {
+        strictMode = com.mikepenz.aboutlibraries.plugin.StrictMode.FAIL
+        allowedLicenses = setOf("Apache-2.0")
     }
 }
 

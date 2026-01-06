@@ -5,6 +5,7 @@ compileSdk = "36"
 
 jdk = "21"
 
+aboutlibraries = "13.1.0"
 activity-compose = "1.12.2"
 agp = "8.13.2"
 androidxTestRules = "1.7.0"
@@ -32,6 +33,7 @@ spotless = "8.1.0"
 turbine = "1.2.1"
 
 [libraries]
+aboutlibraries-ui = { module = "com.mikepenz:aboutlibraries-compose-m3", version.ref = "aboutlibraries" }
 activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activity-compose" }
 androidx-test-rules = { group = "androidx.test", name = "rules", version.ref = "androidxTestRules" }
 browser = { group = "androidx.browser", name = "browser", version.ref = "browser" }
@@ -73,6 +75,7 @@ ksp-gradlePlugin = { group = "com.google.devtools.ksp", name = "com.google.devto
 roborazzi-gradlePlugin = { group = "io.github.takahirom.roborazzi", name = "roborazzi-gradle-plugin", version.ref = "roborazzi" }
 
 [plugins]
+aboutlibraries = { id = "com.mikepenz.aboutlibraries.plugin.android", version.ref = "aboutlibraries" }
 android-application = { id = "com.android.application", version.ref = "agp" }
 android-library = { id = "com.android.library", version.ref = "agp" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
