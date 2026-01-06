@@ -16,6 +16,8 @@ import io.github.daiji256.showcase.feature.hiltcomposable.hiltComposable
 import io.github.daiji256.showcase.feature.hiltcomposable.hiltComposableSummary
 import io.github.daiji256.showcase.feature.ktlint.ktlint
 import io.github.daiji256.showcase.feature.ktlint.ktlintSummary
+import io.github.daiji256.showcase.feature.license.license
+import io.github.daiji256.showcase.feature.license.licenseSummary
 import io.github.daiji256.showcase.feature.localsnackbarhoststate.localSnackbarHostState
 import io.github.daiji256.showcase.feature.localsnackbarhoststate.localSnackbarHostStateSummary
 import io.github.daiji256.showcase.feature.navigation2arguments.navigation2Arguments
@@ -41,6 +43,7 @@ internal fun MainNavDisplay(
         customTabsSummary,
         hiltComposableSummary,
         ktlintSummary,
+        licenseSummary,
         localSnackbarHostStateSummary,
         navigation2ArgumentsSummary,
         roborazziSummary,
@@ -66,6 +69,7 @@ internal fun MainNavDisplay(
             customTabs(onNavigateUpClick = navigateUp)
             hiltComposable(onNavigateUpClick = navigateUp)
             ktlint(onNavigateUpClick = navigateUp)
+            license(onNavigateUpClick = navigateUp)
             localSnackbarHostState(onNavigateUpClick = navigateUp)
             navigation2Arguments(onNavigateUpClick = navigateUp)
             roborazzi(onNavigateUpClick = navigateUp)

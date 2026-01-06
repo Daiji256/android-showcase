@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.buildlogic.android.application)
     alias(libs.plugins.buildlogic.compose)
     alias(libs.plugins.buildlogic.hilt)
+    alias(libs.plugins.aboutlibraries)
 }
 
 android {
@@ -38,6 +39,13 @@ android {
     }
 }
 
+aboutLibraries {
+    license {
+        strictMode = com.mikepenz.aboutlibraries.plugin.StrictMode.FAIL
+        allowedLicenses = setOf("Apache-2.0")
+    }
+}
+
 dependencies {
     implementation(projects.core.common)
     implementation(projects.core.designsystem)
@@ -45,6 +53,7 @@ dependencies {
     implementation(projects.feature.customtabs)
     implementation(projects.feature.hiltcomposable)
     implementation(projects.feature.ktlint)
+    implementation(projects.feature.license)
     implementation(projects.feature.localsnackbarhoststate)
     implementation(projects.feature.navigation2arguments)
     implementation(projects.feature.roborazzi)
