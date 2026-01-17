@@ -34,6 +34,9 @@ jobs:
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@4d9f0ba0025fe599b4ebab900eb7f3a1d93ef4c2 # v5.0.0
 
+      - name: Copy GitHub Actions gradle.properties
+        run: mkdir -p ~/.gradle ; cp .github/gradle.properties ~/.gradle/gradle.properties
+
       - name: Download base screenshots
         uses: daiji256/download-from-orphan-branch@d1bdd0b00dbb1dd7145324d93631a5a3226d715d # v1.0.0
         with:
@@ -133,6 +136,10 @@ jobs:
       - name: Setup Gradle
         if: ${{ !cancelled() && success() && steps.check-base-screenshots-branch.outputs.exists == 'false' }}
         uses: gradle/actions/setup-gradle@4d9f0ba0025fe599b4ebab900eb7f3a1d93ef4c2 # v5.0.0
+
+      - name: Copy GitHub Actions gradle.properties
+        if: ${{ !cancelled() && success() && steps.check-base-screenshots-branch.outputs.exists == 'false' }}
+        run: mkdir -p ~/.gradle ; cp .github/gradle.properties ~/.gradle/gradle.properties
 
       - name: Record base screenshots
         if: ${{ !cancelled() && success() && steps.check-base-screenshots-branch.outputs.exists == 'false' }}
