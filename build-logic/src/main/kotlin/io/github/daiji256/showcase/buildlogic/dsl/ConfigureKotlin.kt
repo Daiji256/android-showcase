@@ -9,7 +9,7 @@ internal fun Project.configureKotlin() {
     extensions.configure<KotlinAndroidProjectExtension> {
         jvmToolchain(libs.version("jdk").toInt())
         compilerOptions {
-            allWarningsAsErrors = providers.gradleProperty("all-warnings-as-errors")
+            allWarningsAsErrors = providers.gradleProperty("allWarningsAsErrors")
                 .map { it.toBoolean() }.orElse(false)
             freeCompilerArgs.add("-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi")
         }
