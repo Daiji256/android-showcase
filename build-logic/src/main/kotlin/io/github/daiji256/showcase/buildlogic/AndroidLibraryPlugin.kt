@@ -25,8 +25,10 @@ class AndroidLibraryPlugin : Plugin<Project> {
                 compileSdk {
                     version = release(libs.version("compileSdk").toInt())
                 }
-                defaultConfig.minSdk {
-                    version = release(libs.version("minSdk").toInt())
+                defaultConfig {
+                    minSdk {
+                        version = release(libs.version("minSdk").toInt())
+                    }
                 }
             }
         }
