@@ -35,7 +35,7 @@ class RoborazziPlugin : Plugin<Project> {
                 generateComposePreviewRobolectricTests {
                     enable = true
                     packages = provider {
-                        listOf(extensions.getByType(CommonExtension::class).namespace!!)
+                        listOf(extensions.getByType<CommonExtension>().namespace!!)
                     }
                     robolectricConfig = mapOf(
                         "qualifiers" to "RobolectricDeviceQualifiers.MediumPhone",
