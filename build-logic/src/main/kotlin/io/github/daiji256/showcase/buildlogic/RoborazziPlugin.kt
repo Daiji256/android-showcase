@@ -1,6 +1,7 @@
 package io.github.daiji256.showcase.buildlogic
 
-import com.android.build.gradle.BaseExtension
+import com.android.build.api.dsl.CommonExtension
+import io.github.daiji256.showcase.buildlogic.dsl.implementation
 import io.github.daiji256.showcase.buildlogic.dsl.library
 import io.github.daiji256.showcase.buildlogic.dsl.libs
 import io.github.daiji256.showcase.buildlogic.dsl.plugin
@@ -23,12 +24,10 @@ class RoborazziPlugin : Plugin<Project> {
                 apply(libs.plugin("roborazzi").pluginId)
             }
 
-            extensions.configure<BaseExtension> {
-                testOptions {
-                    unitTests {
-                        all {
-                            it.systemProperties["robolectric.pixelCopyRenderMode"] = "hardware"
-                        }
+            extensions.configure<CommonExtension> {
+                testOptions.unitTests {
+                    all {
+                        it.systemProperties["robolectric.pixelCopyRenderMode"] = "hardware"
                     }
                 }
             }
@@ -37,7 +36,7 @@ class RoborazziPlugin : Plugin<Project> {
                 generateComposePreviewRobolectricTests {
                     enable = true
                     packages = provider {
-                        listOf(extensions.getByType<BaseExtension>().namespace!!)
+                        listOf(extensions.getByType<CommonExtension>().namespace!!)
                     }
                     robolectricConfig = mapOf(
                         "qualifiers" to "RobolectricDeviceQualifiers.MediumPhone",
@@ -50,6 +49,8 @@ class RoborazziPlugin : Plugin<Project> {
             }
 
             dependencies {
+                implementation(platform(libs.library("compose.bom")))
+                testImplementation(libs.library("compose.ui.test.junit4"))
                 testImplementation(libs.library("preview.scanner"))
                 testImplementation(libs.library("roborazzi"))
                 testImplementation(libs.library("roborazzi.compose.preview.scanner.support"))

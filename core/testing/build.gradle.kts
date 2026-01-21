@@ -8,12 +8,12 @@ android {
 }
 
 dependencies {
-    api(libs.compose.ui.test.junit4)
     api(libs.kotlin.test.junit)
     api(libs.kotlinx.coroutines.test)
     api(libs.robolectric)
     api(libs.turbine)
     implementation(libs.androidx.test.rules)
+    implementation(libs.compose.ui.test.junit4)
     implementation(libs.preview.scanner)
     implementation(libs.roborazzi)
     implementation(libs.roborazzi.compose.preview.scanner.support)

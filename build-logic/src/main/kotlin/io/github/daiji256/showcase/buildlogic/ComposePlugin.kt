@@ -1,6 +1,6 @@
 package io.github.daiji256.showcase.buildlogic
 
-import com.android.build.gradle.BaseExtension
+import com.android.build.api.dsl.CommonExtension
 import io.github.daiji256.showcase.buildlogic.dsl.debugImplementation
 import io.github.daiji256.showcase.buildlogic.dsl.implementation
 import io.github.daiji256.showcase.buildlogic.dsl.library
@@ -19,7 +19,7 @@ class ComposePlugin : Plugin<Project> {
                 apply(libs.plugin("kotlin.compose").pluginId)
             }
 
-            extensions.configure<BaseExtension> {
+            extensions.configure<CommonExtension> {
                 buildFeatures.compose = true
             }
 

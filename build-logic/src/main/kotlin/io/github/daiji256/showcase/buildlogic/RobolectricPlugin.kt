@@ -1,6 +1,6 @@
 package io.github.daiji256.showcase.buildlogic
 
-import com.android.build.gradle.BaseExtension
+import com.android.build.api.dsl.CommonExtension
 import io.github.daiji256.showcase.buildlogic.dsl.library
 import io.github.daiji256.showcase.buildlogic.dsl.libs
 import io.github.daiji256.showcase.buildlogic.dsl.plugin
@@ -18,11 +18,9 @@ class RobolectricPlugin : Plugin<Project> {
                 apply(libs.plugin("roborazzi").pluginId)
             }
 
-            extensions.configure<BaseExtension> {
-                testOptions {
-                    unitTests {
-                        isIncludeAndroidResources = true
-                    }
+            extensions.configure<CommonExtension> {
+                testOptions.unitTests {
+                    isIncludeAndroidResources = true
                 }
             }
 
