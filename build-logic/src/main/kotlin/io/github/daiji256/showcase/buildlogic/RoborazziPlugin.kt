@@ -1,6 +1,6 @@
 package io.github.daiji256.showcase.buildlogic
 
-import com.android.build.gradle.BaseExtension
+import com.android.build.api.dsl.CommonExtension
 import io.github.daiji256.showcase.buildlogic.dsl.library
 import io.github.daiji256.showcase.buildlogic.dsl.libs
 import io.github.daiji256.showcase.buildlogic.dsl.plugin
@@ -23,12 +23,10 @@ class RoborazziPlugin : Plugin<Project> {
                 apply(libs.plugin("roborazzi").pluginId)
             }
 
-            extensions.configure<BaseExtension> {
-                testOptions {
-                    unitTests {
-                        all {
-                            it.systemProperties["robolectric.pixelCopyRenderMode"] = "hardware"
-                        }
+            extensions.getByType(CommonExtension::class).run {
+                testOptions.unitTests {
+                    all {
+                        it.systemProperties["robolectric.pixelCopyRenderMode"] = "hardware"
                     }
                 }
             }
@@ -37,7 +35,7 @@ class RoborazziPlugin : Plugin<Project> {
                 generateComposePreviewRobolectricTests {
                     enable = true
                     packages = provider {
-                        listOf(extensions.getByType<BaseExtension>().namespace!!)
+                        listOf(extensions.getByType(CommonExtension::class).namespace!!)
                     }
                     robolectricConfig = mapOf(
                         "qualifiers" to "RobolectricDeviceQualifiers.MediumPhone",

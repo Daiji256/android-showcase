@@ -1,6 +1,6 @@
 package io.github.daiji256.showcase.buildlogic
 
-import com.android.build.gradle.LibraryExtension
+import com.android.build.api.dsl.LibraryExtension
 import io.github.daiji256.showcase.buildlogic.dsl.configureKotlin
 import io.github.daiji256.showcase.buildlogic.dsl.libs
 import io.github.daiji256.showcase.buildlogic.dsl.plugin
@@ -15,7 +15,6 @@ class AndroidLibraryPlugin : Plugin<Project> {
         with(target) {
             with(pluginManager) {
                 apply(libs.plugin("android.library").pluginId)
-                apply(libs.plugin("kotlin.android").pluginId)
                 apply(libs.plugin("kotlin.serialization").pluginId)
             }
 
