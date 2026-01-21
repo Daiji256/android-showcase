@@ -8,8 +8,8 @@ import io.github.daiji256.showcase.buildlogic.dsl.libs
 import io.github.daiji256.showcase.buildlogic.dsl.plugin
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.dependencies
-import org.gradle.kotlin.dsl.getByType
 
 @Suppress("unused")
 class ComposePlugin : Plugin<Project> {
@@ -19,7 +19,7 @@ class ComposePlugin : Plugin<Project> {
                 apply(libs.plugin("kotlin.compose").pluginId)
             }
 
-            extensions.getByType(CommonExtension::class).run {
+            extensions.configure<CommonExtension> {
                 buildFeatures.compose = true
             }
 

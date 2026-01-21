@@ -7,8 +7,8 @@ import io.github.daiji256.showcase.buildlogic.dsl.plugin
 import io.github.daiji256.showcase.buildlogic.dsl.testImplementation
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.dependencies
-import org.gradle.kotlin.dsl.getByType
 
 @Suppress("unused")
 class RobolectricPlugin : Plugin<Project> {
@@ -18,7 +18,7 @@ class RobolectricPlugin : Plugin<Project> {
                 apply(libs.plugin("roborazzi").pluginId)
             }
 
-            extensions.getByType(CommonExtension::class).run {
+            extensions.configure<CommonExtension> {
                 testOptions.unitTests {
                     isIncludeAndroidResources = true
                 }

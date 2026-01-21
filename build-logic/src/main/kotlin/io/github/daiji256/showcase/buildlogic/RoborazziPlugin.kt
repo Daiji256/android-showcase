@@ -23,7 +23,7 @@ class RoborazziPlugin : Plugin<Project> {
                 apply(libs.plugin("roborazzi").pluginId)
             }
 
-            extensions.getByType(CommonExtension::class).run {
+            extensions.configure<CommonExtension> {
                 testOptions.unitTests {
                     all {
                         it.systemProperties["robolectric.pixelCopyRenderMode"] = "hardware"
