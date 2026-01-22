@@ -1,7 +1,6 @@
 package io.github.daiji256.showcase.buildlogic
 
 import com.android.build.api.dsl.CommonExtension
-import io.github.daiji256.showcase.buildlogic.dsl.implementation
 import io.github.daiji256.showcase.buildlogic.dsl.library
 import io.github.daiji256.showcase.buildlogic.dsl.libs
 import io.github.daiji256.showcase.buildlogic.dsl.plugin
@@ -49,7 +48,7 @@ class RoborazziPlugin : Plugin<Project> {
             }
 
             dependencies {
-                implementation(platform(libs.library("compose.bom")))
+                testImplementation(platform(libs.library("compose.bom")))
                 testImplementation(libs.library("compose.ui.test.junit4"))
                 testImplementation(libs.library("preview.scanner"))
                 testImplementation(libs.library("roborazzi"))
