@@ -30,4 +30,4 @@ jobs:
         run: mkdir -p ~/.gradle ; cp .github/gradle.properties ~/.gradle/gradle.properties
 
       - name: Check spotless
-        run: ./gradlew spotlessCheck
+        run: ./gradlew spotlessCheck --init-script gradle/spotless-init.gradle.kts
