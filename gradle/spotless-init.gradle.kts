@@ -14,7 +14,7 @@ initscript {
 rootProject {
     allprojects {
         // renovate: datasource=maven depName=com.pinterest.ktlint:ktlint-cli
-        val ktlintVersion = "1.7.1"
+        val ktlintVersion = "1.8.0"
 
         // renovate: datasource=maven depName=io.nlopez.compose.rules:ktlint
         val ktlintComposeRulesVersion = "0.4.26"
