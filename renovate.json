@@ -7,7 +7,7 @@
     {
       "customType": "regex",
       "managerFilePatterns": [
-        "/^gradle/spotless-init\\.gradle\\.kts$/"
+        "/(^|/)gradle/spotless-init\\.gradle\\.kts$/"
       ],
       "matchStrings": [
         "// renovate: datasource=(?<datasource>.+?) depName=(?<depName>.+?)\n\\s*val ([a-zA-Z0-9_]*)Version = \"(?<currentValue>.+?)\"\n"
