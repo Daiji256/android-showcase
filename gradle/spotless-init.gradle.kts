@@ -12,7 +12,7 @@ initscript {
 }
 
 rootProject {
-    subprojects {
+    allprojects {
         // renovate: datasource=maven depName=com.pinterest.ktlint:ktlint-cli
         val ktlintVersion = "1.7.1"
 
