@@ -1,5 +1,5 @@
 initscript {
-    // renovate: datasource=maven depName=com.diffplug.spotless:spotless-plugin-gradle currentValue=1.8.0
+    // renovate: datasource=maven depName=com.diffplug.spotless:spotless-plugin-gradle
     val spotlessVersion = "8.2.0"
 
     repositories {
