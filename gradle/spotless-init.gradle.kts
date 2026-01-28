@@ -17,7 +17,7 @@ rootProject {
         val ktlintVersion = "1.8.0"
 
         // renovate: datasource=maven depName=io.nlopez.compose.rules:ktlint
-        val ktlintComposeRulesVersion = "0.4.26"
+        val ktlintComposeRulesVersion = "0.5.6"
 
         apply<com.diffplug.gradle.spotless.SpotlessPlugin>()
         extensions.configure<com.diffplug.gradle.spotless.SpotlessExtension> {
