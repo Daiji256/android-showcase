@@ -3,7 +3,7 @@ minSdk = "28"
 targetSdk = "36"
 compileSdk = "36"
 
-jdk = "21"
+jdk = "25"
 
 aboutlibraries = "14.0.0-b02"
 activity-compose = "1.12.3"
