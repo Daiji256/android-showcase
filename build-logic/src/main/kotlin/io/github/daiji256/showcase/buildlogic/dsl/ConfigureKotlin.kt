@@ -11,9 +11,9 @@ internal fun Project.configureKotlin() {
         compilerOptions {
             allWarningsAsErrors = providers.gradleProperty("allWarningsAsErrors")
                 .map { it.toBoolean() }.orElse(false)
-            freeCompilerArgs.addAll(
-                "-opt-in=androidx.compose.material3.ExperimentalMaterial3Api",
-                "-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi",
+            optIn.addAll(
+                "androidx.compose.material3.ExperimentalMaterial3Api",
+                "kotlinx.coroutines.ExperimentalCoroutinesApi",
             )
         }
     }
