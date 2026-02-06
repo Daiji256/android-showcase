@@ -27,8 +27,6 @@ class AndroidApplicationPlugin : Plugin<Project> {
                     minSdk {
                         version = release(libs.version("minSdk").toInt())
                     }
-                }
-                defaultConfig {
                     targetSdk {
                         version = release(libs.version("targetSdk").toInt())
                     }
