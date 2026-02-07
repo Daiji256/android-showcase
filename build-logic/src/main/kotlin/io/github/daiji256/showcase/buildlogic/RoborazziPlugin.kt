@@ -1,10 +1,10 @@
 package io.github.daiji256.showcase.buildlogic
 
 import com.android.build.api.dsl.CommonExtension
-import io.github.daiji256.showcase.buildlogic.dsl.library
-import io.github.daiji256.showcase.buildlogic.dsl.libs
-import io.github.daiji256.showcase.buildlogic.dsl.plugin
-import io.github.daiji256.showcase.buildlogic.dsl.testImplementation
+import io.github.daiji256.showcase.buildlogic.util.library
+import io.github.daiji256.showcase.buildlogic.util.libs
+import io.github.daiji256.showcase.buildlogic.util.plugin
+import io.github.daiji256.showcase.buildlogic.util.testImplementation
 import io.github.takahirom.roborazzi.RoborazziExtension
 import org.gradle.api.Plugin
 import org.gradle.api.Project

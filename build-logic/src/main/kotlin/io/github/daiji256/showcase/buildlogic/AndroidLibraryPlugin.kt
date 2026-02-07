@@ -1,10 +1,10 @@
 package io.github.daiji256.showcase.buildlogic
 
 import com.android.build.api.dsl.LibraryExtension
-import io.github.daiji256.showcase.buildlogic.dsl.getAllWarningsAsErrors
-import io.github.daiji256.showcase.buildlogic.dsl.libs
-import io.github.daiji256.showcase.buildlogic.dsl.plugin
-import io.github.daiji256.showcase.buildlogic.dsl.version
+import io.github.daiji256.showcase.buildlogic.util.getAllWarningsAsErrors
+import io.github.daiji256.showcase.buildlogic.util.libs
+import io.github.daiji256.showcase.buildlogic.util.plugin
+import io.github.daiji256.showcase.buildlogic.util.version
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.assign

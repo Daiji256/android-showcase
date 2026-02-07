@@ -1,11 +1,11 @@
 package io.github.daiji256.showcase.buildlogic
 
 import com.android.build.api.dsl.CommonExtension
-import io.github.daiji256.showcase.buildlogic.dsl.debugImplementation
-import io.github.daiji256.showcase.buildlogic.dsl.implementation
-import io.github.daiji256.showcase.buildlogic.dsl.library
-import io.github.daiji256.showcase.buildlogic.dsl.libs
-import io.github.daiji256.showcase.buildlogic.dsl.plugin
+import io.github.daiji256.showcase.buildlogic.util.debugImplementation
+import io.github.daiji256.showcase.buildlogic.util.implementation
+import io.github.daiji256.showcase.buildlogic.util.library
+import io.github.daiji256.showcase.buildlogic.util.libs
+import io.github.daiji256.showcase.buildlogic.util.plugin
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure

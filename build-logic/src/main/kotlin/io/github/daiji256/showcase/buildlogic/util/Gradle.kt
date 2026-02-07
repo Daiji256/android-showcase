@@ -1,4 +1,4 @@
-package io.github.daiji256.showcase.buildlogic.dsl
+package io.github.daiji256.showcase.buildlogic.util
 
 import org.gradle.api.artifacts.Dependency
 import org.gradle.kotlin.dsl.DependencyHandlerScope
