@@ -4,7 +4,6 @@ import com.android.build.api.dsl.CommonExtension
 import io.github.daiji256.showcase.buildlogic.util.library
 import io.github.daiji256.showcase.buildlogic.util.libs
 import io.github.daiji256.showcase.buildlogic.util.plugin
-import io.github.daiji256.showcase.buildlogic.util.testImplementation
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
@@ -25,8 +24,8 @@ class RobolectricPlugin : Plugin<Project> {
             }
 
             dependencies {
-                testImplementation(libs.library("junit"))
-                testImplementation(libs.library("robolectric"))
+                "testImplementation"(libs.library("junit"))
+                "testImplementation"(libs.library("robolectric"))
             }
         }
     }

@@ -4,7 +4,6 @@ import com.android.build.api.dsl.CommonExtension
 import io.github.daiji256.showcase.buildlogic.util.library
 import io.github.daiji256.showcase.buildlogic.util.libs
 import io.github.daiji256.showcase.buildlogic.util.plugin
-import io.github.daiji256.showcase.buildlogic.util.testImplementation
 import io.github.takahirom.roborazzi.RoborazziExtension
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -48,11 +47,11 @@ class RoborazziPlugin : Plugin<Project> {
             }
 
             dependencies {
-                testImplementation(platform(libs.library("compose.bom")))
-                testImplementation(libs.library("compose.ui.test.junit4"))
-                testImplementation(libs.library("preview.scanner"))
-                testImplementation(libs.library("roborazzi"))
-                testImplementation(libs.library("roborazzi.compose.preview.scanner.support"))
+                "testImplementation"(platform(libs.library("compose.bom")))
+                "testImplementation"(libs.library("compose.ui.test.junit4"))
+                "testImplementation"(libs.library("preview.scanner"))
+                "testImplementation"(libs.library("roborazzi"))
+                "testImplementation"(libs.library("roborazzi.compose.preview.scanner.support"))
             }
         }
     }

@@ -1,7 +1,5 @@
 package io.github.daiji256.showcase.buildlogic
 
-import io.github.daiji256.showcase.buildlogic.util.implementation
-import io.github.daiji256.showcase.buildlogic.util.ksp
 import io.github.daiji256.showcase.buildlogic.util.library
 import io.github.daiji256.showcase.buildlogic.util.libs
 import io.github.daiji256.showcase.buildlogic.util.plugin
@@ -19,8 +17,8 @@ class HiltPlugin : Plugin<Project> {
             }
 
             dependencies {
-                implementation(libs.library("hilt.android"))
-                ksp(libs.library("hilt.compiler"))
+                "implementation"(libs.library("hilt.android"))
+                "ksp"(libs.library("hilt.compiler"))
             }
         }
     }
