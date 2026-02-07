@@ -10,6 +10,7 @@ import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.dependencies
+import org.jetbrains.kotlin.gradle.dsl.KotlinAndroidProjectExtension
 
 @Suppress("unused")
 class ComposePlugin : Plugin<Project> {
@@ -21,6 +22,12 @@ class ComposePlugin : Plugin<Project> {
 
             extensions.configure<CommonExtension> {
                 buildFeatures.compose = true
+            }
+
+            extensions.configure<KotlinAndroidProjectExtension> {
+                compilerOptions {
+                    optIn.add("androidx.compose.material3.ExperimentalMaterial3Api")
+                }
             }
 
             dependencies {
