@@ -1,13 +1,15 @@
 package io.github.daiji256.showcase.buildlogic
 
 import com.android.build.api.dsl.ApplicationExtension
-import io.github.daiji256.showcase.buildlogic.dsl.configureKotlin
+import io.github.daiji256.showcase.buildlogic.dsl.getAllWarningsAsErrors
 import io.github.daiji256.showcase.buildlogic.dsl.libs
 import io.github.daiji256.showcase.buildlogic.dsl.plugin
 import io.github.daiji256.showcase.buildlogic.dsl.version
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.kotlin.dsl.assign
 import org.gradle.kotlin.dsl.configure
+import org.jetbrains.kotlin.gradle.dsl.KotlinAndroidProjectExtension
 
 @Suppress("unused")
 class AndroidApplicationPlugin : Plugin<Project> {
@@ -17,7 +19,12 @@ class AndroidApplicationPlugin : Plugin<Project> {
                 apply(libs.plugin("android.application").pluginId)
             }
 
-            configureKotlin()
+            extensions.configure<KotlinAndroidProjectExtension> {
+                jvmToolchain(libs.version("jdk").toInt())
+                compilerOptions {
+                    allWarningsAsErrors = getAllWarningsAsErrors()
+                }
+            }
 
             extensions.configure<ApplicationExtension> {
                 compileSdk {
