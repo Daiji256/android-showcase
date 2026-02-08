@@ -56,6 +56,7 @@ dependencies {
     implementation(projects.feature.license)
     implementation(projects.feature.localsnackbarhoststate)
     implementation(projects.feature.navigation2arguments)
+    implementation(projects.feature.navnode)
     implementation(projects.feature.roborazzi)
     implementation(projects.feature.safeurihandler)
     implementation(projects.feature.systemstyle)

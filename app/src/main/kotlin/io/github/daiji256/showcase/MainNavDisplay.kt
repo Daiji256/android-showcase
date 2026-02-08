@@ -22,6 +22,8 @@ import io.github.daiji256.showcase.feature.localsnackbarhoststate.localSnackbarH
 import io.github.daiji256.showcase.feature.localsnackbarhoststate.localSnackbarHostStateSummary
 import io.github.daiji256.showcase.feature.navigation2arguments.navigation2Arguments
 import io.github.daiji256.showcase.feature.navigation2arguments.navigation2ArgumentsSummary
+import io.github.daiji256.showcase.feature.navnode.navNode
+import io.github.daiji256.showcase.feature.navnode.navNodeSummary
 import io.github.daiji256.showcase.feature.roborazzi.roborazzi
 import io.github.daiji256.showcase.feature.roborazzi.roborazziSummary
 import io.github.daiji256.showcase.feature.safeurihandler.safeUriHandler
@@ -46,6 +48,7 @@ internal fun MainNavDisplay(
         licenseSummary,
         localSnackbarHostStateSummary,
         navigation2ArgumentsSummary,
+        navNodeSummary,
         roborazziSummary,
         safeUriHandlerSummary,
         systemStyleSummary,
@@ -72,6 +75,7 @@ internal fun MainNavDisplay(
             license(onNavigateUpClick = navigateUp)
             localSnackbarHostState(onNavigateUpClick = navigateUp)
             navigation2Arguments(onNavigateUpClick = navigateUp)
+            navNode(onNavigateUpClick = navigateUp)
             roborazzi(onNavigateUpClick = navigateUp)
             safeUriHandler(onNavigateUpClick = navigateUp)
             systemStyle(onNavigateUpClick = navigateUp)
