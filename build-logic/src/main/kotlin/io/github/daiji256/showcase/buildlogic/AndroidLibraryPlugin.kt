@@ -1,13 +1,15 @@
 package io.github.daiji256.showcase.buildlogic
 
 import com.android.build.api.dsl.LibraryExtension
-import io.github.daiji256.showcase.buildlogic.dsl.configureKotlin
-import io.github.daiji256.showcase.buildlogic.dsl.libs
-import io.github.daiji256.showcase.buildlogic.dsl.plugin
-import io.github.daiji256.showcase.buildlogic.dsl.version
+import io.github.daiji256.showcase.buildlogic.util.getAllWarningsAsErrors
+import io.github.daiji256.showcase.buildlogic.util.libs
+import io.github.daiji256.showcase.buildlogic.util.plugin
+import io.github.daiji256.showcase.buildlogic.util.version
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.kotlin.dsl.assign
 import org.gradle.kotlin.dsl.configure
+import org.jetbrains.kotlin.gradle.dsl.KotlinAndroidProjectExtension
 
 @Suppress("unused")
 class AndroidLibraryPlugin : Plugin<Project> {
@@ -18,7 +20,13 @@ class AndroidLibraryPlugin : Plugin<Project> {
                 apply(libs.plugin("kotlin.serialization").pluginId)
             }
 
-            configureKotlin()
+            extensions.configure<KotlinAndroidProjectExtension> {
+                jvmToolchain(libs.version("jdk").toInt())
+                compilerOptions {
+                    allWarningsAsErrors = getAllWarningsAsErrors()
+                    optIn.add("kotlinx.coroutines.ExperimentalCoroutinesApi")
+                }
+            }
 
             extensions.configure<LibraryExtension> {
                 compileSdk {
