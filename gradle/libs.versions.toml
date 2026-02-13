@@ -7,7 +7,7 @@ jdk = "25"
 
 aboutlibraries = "14.0.0-b02"
 activity-compose = "1.12.4"
-agp = "9.0.0"
+agp = "9.0.1"
 androidxTestRules = "1.7.0"
 browser = "1.9.0"
 compose-bom = "2026.02.00"
