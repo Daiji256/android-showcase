@@ -10,6 +10,6 @@ plugins {
 }
 
 tasks.named<UpdateDaemonJvm>("updateDaemonJvm") {
-    languageVersion = JavaLanguageVersion.of(libs.versions.jdk.get().toInt())
+    languageVersion = JavaLanguageVersion.of(libs.versions.jdk.get())
     vendor = JvmVendorSpec.ADOPTIUM
 }
