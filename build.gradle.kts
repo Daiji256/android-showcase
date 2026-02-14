@@ -8,3 +8,8 @@ plugins {
     alias(libs.plugins.ksp) apply false
     alias(libs.plugins.roborazzi) apply false
 }
+
+tasks.named<UpdateDaemonJvm>("updateDaemonJvm") {
+    languageVersion = JavaLanguageVersion.of(libs.versions.jdk.get())
+    vendor = JvmVendorSpec.ADOPTIUM
+}
