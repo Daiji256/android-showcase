@@ -1,9 +1,9 @@
 package io.github.daiji256.showcase.core.ui.navigation
 
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.toMutableStateList
 import androidx.navigation3.runtime.NavKey
 
 /**
@@ -46,9 +46,9 @@ sealed interface NavNode<T : NavKey> {
      * @param children the initial list of child nodes
      */
     class Stack<T : NavKey>(
-        vararg children: NavNode<T>,
+        children: List<NavNode<T>>,
     ) : NavNode<T> {
-        private val _children = mutableStateListOf(*children)
+        private val _children = children.toMutableStateList()
 
         /**
          * The list of child nodes.
@@ -73,13 +73,25 @@ sealed interface NavNode<T : NavKey> {
     /**
      * Select node that manages a selection of child stacks.
      *
-     * @param selected the initially selected key
-     * @param children the list of available keys
+     * @param selected the initial selected key
+     * @param children the initial map of child stacks
      */
     class Select<T : NavKey>(
         selected: T,
-        vararg children: T,
+        children: Map<T, Stack<T>>,
     ) : NavNode<T> {
+        /**
+         * @param selected the initial selected key
+         * @param children the set of available keys
+         */
+        constructor(
+            selected: T,
+            children: Set<T>,
+        ) : this(
+            selected = selected,
+            children = children.associateWith { Stack(children = listOf(Key(navKey = it))) },
+        )
+
         /**
          * The selected child key.
          */
@@ -87,9 +99,9 @@ sealed interface NavNode<T : NavKey> {
             private set
 
         /**
-         * The list of child stacks.
+         * The map of child stacks.
          */
-        val children = children.associateWith { Stack(Key(navKey = it)) }
+        val children = children
 
         /**
          * The selected child stack.

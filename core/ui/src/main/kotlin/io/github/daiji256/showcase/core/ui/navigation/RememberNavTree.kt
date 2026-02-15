@@ -17,5 +17,5 @@ fun <T : NavKey> rememberNavTree(
 ): NavNode.Stack<T> =
     // TODO: Saveable
     remember {
-        NavNode.Stack(*initial)
+        NavNode.Stack(children = initial.toList())
     }
