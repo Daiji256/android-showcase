@@ -15,7 +15,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 sealed interface NavNode<T : NavKey> {
     /**
-     * Attempts to navigate to the [route].
+     * navigate to the [route]
      *
      * @param route the destination [NavNode]
      * @return `true` if navigation was handled, `false` otherwise
@@ -23,7 +23,7 @@ sealed interface NavNode<T : NavKey> {
     fun navigate(route: NavNode<T>): Boolean
 
     /**
-     * Attempts to navigate back.
+     * navigate back
      *
      * @return `true` if back navigation was handled, `false` otherwise
      */
