@@ -13,4 +13,5 @@ dependencies {
     implementation(projects.core.designsystem)
     implementation(libs.markdown)
     testImplementation(projects.core.testing)
+    testImplementation(libs.kotlinx.serialization.json)
 }
