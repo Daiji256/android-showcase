@@ -18,21 +18,21 @@ sealed interface NavNode<T : NavKey> {
      * Attempts to navigate to the [route].
      *
      * @param route the destination [NavNode]
-     * @return `true` if navigation was handled, `false` otherwise.
+     * @return `true` if navigation was handled, `false` otherwise
      */
     fun navigate(route: NavNode<T>): Boolean
 
     /**
      * Attempts to navigate back.
      *
-     * @return `true` if back navigation was handled, `false` otherwise.
+     * @return `true` if back navigation was handled, `false` otherwise
      */
     fun back(): Boolean
 
     /**
      * Leaf node that represent navigation keys.
      *
-     * @property navKey The associated [NavKey].
+     * @property navKey the associated [NavKey]
      */
     @Serializable(with = NavNodeKeySerializer::class)
     class Key<T : NavKey>(
@@ -46,7 +46,7 @@ sealed interface NavNode<T : NavKey> {
     /**
      * Stack node that manages a list of child nodes.
      *
-     * @param children the initial list of child nodes
+     * @param children the list of child nodes
      */
     @Serializable(with = NavNodeStackSerializer::class)
     class Stack<T : NavKey>(
@@ -55,7 +55,7 @@ sealed interface NavNode<T : NavKey> {
         private val _children = children.toMutableStateList()
 
         /**
-         * The list of child nodes.
+         * the list of child nodes
          */
         val children: List<NavNode<T>>
             get() = _children
@@ -77,17 +77,17 @@ sealed interface NavNode<T : NavKey> {
     /**
      * Select node that manages a selection of child stacks.
      *
-     * @param selected the initial selected key
-     * @param children the initial map of child stacks
+     * @param selected the selected key
+     * @property children the map of child stacks
      */
     @Serializable(with = NavNodeSelectSerializer::class)
     class Select<T : NavKey>(
         selected: T,
-        children: Map<T, Stack<T>>,
+        val children: Map<T, Stack<T>>,
     ) : NavNode<T> {
         /**
-         * @param selected the initial selected key
-         * @param children the set of available keys
+         * @param selected the selected key
+         * @param children the set of child stack keys
          */
         constructor(
             selected: T,
@@ -98,18 +98,13 @@ sealed interface NavNode<T : NavKey> {
         )
 
         /**
-         * The selected child key.
+         * the selected key
          */
         var selected by mutableStateOf(selected)
             private set
 
         /**
-         * The map of child stacks.
-         */
-        val children = children
-
-        /**
-         * The selected child stack.
+         * the selected child stack
          */
         val selectedChild
             get() = children[this@Select.selected] ?: error("No child for ${this@Select.selected}")
