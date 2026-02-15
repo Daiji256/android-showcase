@@ -29,7 +29,7 @@ fun <T : NavKey> rememberNavTreeEntries(
     tree: NavNode.Stack<T>,
     entryDecoratorsProvider: @Composable (
         NavNode.Stack<T>,
-    ) -> List<@JvmSuppressWildcards NavEntryDecorator<T>> = { listOf() },
+    ) -> List<NavEntryDecorator<T>> = { listOf() },
     entryProvider: (T) -> NavEntry<T>,
 ): List<NavEntry<T>> {
     val stacks: Set<NavNode.Stack<T>> by rememberUpdatedState(tree.getStacks())
