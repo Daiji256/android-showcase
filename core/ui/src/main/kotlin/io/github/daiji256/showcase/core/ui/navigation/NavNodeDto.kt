@@ -3,6 +3,7 @@ package io.github.daiji256.showcase.core.ui.navigation
 import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.runtime.serialization.NavKeySerializer
 import kotlinx.serialization.Serializable
+import kotlin.uuid.Uuid
 
 @Serializable
 internal sealed interface NavNodeDto<T : NavKey> {
@@ -21,6 +22,7 @@ internal sealed interface NavNodeDto<T : NavKey> {
                 T,
                 >,
             >,
+        val id: Uuid,
     ) : NavNodeDto<T>
 
     @Serializable

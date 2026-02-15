@@ -46,7 +46,7 @@ fun <T : NavKey> rememberNavTreeEntries(
     }
 
     val allEntries = allStacks.associateWith { stack ->
-        key(stack) {
+        key(stack.id) {
             // treat stacks not in current set as empty to trigger pops
             val backStack = if (stack in stacks) {
                 stack.children.mapNotNull { (it as? NavNode.Key)?.navKey }
