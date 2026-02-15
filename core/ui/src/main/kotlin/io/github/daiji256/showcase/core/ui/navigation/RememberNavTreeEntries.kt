@@ -16,19 +16,19 @@ import androidx.navigation3.runtime.rememberDecoratedNavEntries
 import kotlin.uuid.Uuid
 
 /**
- * Remembers a list of [NavEntry] decorated with the list of [entryDecoratorsProvider],
+ * Remembers a list of [NavEntry] decorated with the list of [entryDecorators],
  * and returns a list of decorated active [NavEntry].
  *
  * @param T the type of the tree
  * @param tree the root navigation stack
- * @param entryDecoratorsProvider a provider of the [NavEntryDecorator]s
+ * @param entryDecorators the [NavEntryDecorator]s that are providing data to the content
  * @param entryProvider a function that returns the [NavEntry] for a given key
  * @return a list of decorated active [NavEntry]
  */
 @Composable
 fun <T : NavKey> rememberNavTreeEntries(
     tree: NavNode.Stack<T>,
-    entryDecoratorsProvider: @Composable () -> List<NavEntryDecorator<T>> = { listOf() },
+    entryDecorators: List<@JvmSuppressWildcards NavEntryDecorator<T>> = listOf(),
     entryProvider: (T) -> NavEntry<T>,
 ): List<NavEntry<T>> {
     val stacks: Map<Uuid, NavNode.Stack<T>> by rememberUpdatedState(tree.getStacks())
@@ -49,7 +49,7 @@ fun <T : NavKey> rememberNavTreeEntries(
             val entries = rememberDecoratedNavEntries(
                 // if not in the current stack, treated as empty and triggers a pop
                 backStack = stacks[id]?.getBackStack() ?: emptyList(),
-                entryDecorators = entryDecoratorsProvider(),
+                entryDecorators = entryDecorators,
                 entryProvider = entryProvider,
             )
 
