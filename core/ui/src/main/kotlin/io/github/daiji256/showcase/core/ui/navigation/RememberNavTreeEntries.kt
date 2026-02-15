@@ -13,6 +13,7 @@ import androidx.navigation3.runtime.NavEntry
 import androidx.navigation3.runtime.NavEntryDecorator
 import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.runtime.rememberDecoratedNavEntries
+import kotlin.uuid.Uuid
 
 /**
  * Remembers a list of [NavEntry] decorated with the list of [entryDecoratorsProvider],
@@ -27,43 +28,35 @@ import androidx.navigation3.runtime.rememberDecoratedNavEntries
 @Composable
 fun <T : NavKey> rememberNavTreeEntries(
     tree: NavNode.Stack<T>,
-    entryDecoratorsProvider: @Composable (
-        NavNode.Stack<T>,
-    ) -> List<NavEntryDecorator<T>> = { listOf() },
+    entryDecoratorsProvider: @Composable () -> List<NavEntryDecorator<T>> = { listOf() },
     entryProvider: (T) -> NavEntry<T>,
 ): List<NavEntry<T>> {
-    val stacks: Set<NavNode.Stack<T>> by rememberUpdatedState(tree.getStacks())
+    val stacks: Map<Uuid, NavNode.Stack<T>> by rememberUpdatedState(tree.getStacks())
 
-    // cache past stacks to allow empty lists for rememberDecoratedNavEntries
-    val stacksCache: SnapshotStateSet<NavNode.Stack<T>> = remember(tree) { mutableStateSetOf() }
+    // cache past stack IDs to allow empty lists for rememberDecoratedNavEntries
+    val stackIdsCache: SnapshotStateSet<Uuid> = remember(tree) { mutableStateSetOf() }
 
-    // combine cached stacks with current stacks
-    val allStacks: Set<NavNode.Stack<T>> by remember(tree) {
+    // combine cached stack IDs with current stack IDs
+    val allStackIds: Set<Uuid> by remember(tree) {
         derivedStateOf {
-            stacksCache.addAll(stacks)
-            stacksCache
+            stackIdsCache.addAll(stacks.keys)
+            stackIdsCache
         }
     }
 
-    val allEntries = allStacks.associateWith { stack ->
-        key(stack.id) {
-            // treat stacks not in current set as empty to trigger pops
-            val backStack = if (stack in stacks) {
-                stack.children.mapNotNull { (it as? NavNode.Key)?.navKey }
-            } else {
-                emptyList()
-            }
-
+    val allEntries = allStackIds.associateWith { id ->
+        key(id) {
             val entries = rememberDecoratedNavEntries(
-                backStack = backStack,
-                entryDecorators = entryDecoratorsProvider(stack),
+                // if not in the current stack, treated as empty and triggers a pop
+                backStack = stacks[id]?.getBackStack() ?: emptyList(),
+                entryDecorators = entryDecoratorsProvider(),
                 entryProvider = entryProvider,
             )
 
-            // remove cached stack after pop processing completes
-            DisposableEffect(stack, entries.isEmpty()) {
+            // remove cached stack id after pop processing completes
+            DisposableEffect(id, entries.isEmpty()) {
                 if (entries.isEmpty()) {
-                    stacksCache.remove(stack)
+                    stackIdsCache.remove(id)
                 }
                 onDispose {}
             }
@@ -73,50 +66,47 @@ fun <T : NavKey> rememberNavTreeEntries(
     }
 
     // returns the active entries
-    return tree.getActiveStacks()
-        .flatMap { allEntries[it] ?: emptyList() }
+    return tree.getActiveStackIds()
+        .flatMap { id -> allEntries[id] ?: emptyList() }
 }
 
-/**
- * Get all [NavNode.Stack] nodes in the [NavNode].
- */
-private fun <T : NavKey> NavNode<T>.getStacks(): Set<NavNode.Stack<T>> =
+private fun <T : NavKey> NavNode<T>.getStacks(): Map<Uuid, NavNode.Stack<T>> =
     when (this) {
         is NavNode.Key ->
-            emptySet()
+            emptyMap()
 
         is NavNode.Stack ->
-            buildSet {
-                add(this@getStacks)
+            buildMap {
+                put(this@getStacks.id, this@getStacks)
                 children.forEach {
-                    addAll(it.getStacks())
+                    putAll(it.getStacks())
                 }
             }
 
         is NavNode.Select ->
-            buildSet {
+            buildMap {
                 children.values.forEach {
-                    addAll(it.getStacks())
+                    putAll(it.getStacks())
                 }
             }
     }
 
-/**
- * Get active [NavNode.Stack] nodes in the [NavNode].
- */
-private fun <T : NavKey> NavNode<T>.getActiveStacks(): List<NavNode.Stack<T>> =
+private fun <T : NavKey> NavNode<T>.getActiveStackIds(): List<Uuid> =
     when (this) {
         is NavNode.Key ->
             emptyList()
 
         is NavNode.Stack ->
             buildList {
-                add(this@getActiveStacks)
+                add(this@getActiveStackIds.id)
                 children.forEach {
-                    addAll(it.getActiveStacks())
+                    addAll(it.getActiveStackIds())
                 }
             }
 
         is NavNode.Select ->
-            selectedChild.getActiveStacks()
+            selectedChild.getActiveStackIds()
     }
+
+private fun <T : NavKey> NavNode.Stack<T>.getBackStack(): List<T> =
+    this.children.mapNotNull { (it as? NavNode.Key)?.navKey }
