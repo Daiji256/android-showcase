@@ -8,12 +8,10 @@ import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateSetOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
-import androidx.compose.runtime.snapshots.SnapshotStateSet
 import androidx.navigation3.runtime.NavEntry
 import androidx.navigation3.runtime.NavEntryDecorator
 import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.runtime.rememberDecoratedNavEntries
-import kotlin.uuid.Uuid
 
 /**
  * Remembers a list of [NavEntry] decorated with the list of [entryDecorators],
@@ -31,13 +29,13 @@ fun <T : NavKey> rememberNavTreeEntries(
     entryDecorators: List<@JvmSuppressWildcards NavEntryDecorator<T>> = listOf(),
     entryProvider: (T) -> NavEntry<T>,
 ): List<NavEntry<T>> {
-    val stacks: Map<Uuid, NavNode.Stack<T>> by rememberUpdatedState(tree.getStacks())
+    val stacks by rememberUpdatedState(tree.getStacks())
 
     // cache past stack IDs to allow empty lists for rememberDecoratedNavEntries
-    val stackIdsCache: SnapshotStateSet<Uuid> = remember(tree) { mutableStateSetOf() }
+    val stackIdsCache = remember(tree) { mutableStateSetOf<NavNode.Stack.Id>() }
 
     // combine cached stack IDs with current stack IDs
-    val allStackIds: Set<Uuid> by remember(tree) {
+    val allStackIds: Set<NavNode.Stack.Id> by remember(tree) {
         derivedStateOf {
             stackIdsCache.addAll(stacks.keys)
             stackIdsCache
@@ -70,7 +68,7 @@ fun <T : NavKey> rememberNavTreeEntries(
         .flatMap { id -> allEntries[id] ?: emptyList() }
 }
 
-private fun <T : NavKey> NavNode<T>.getStacks(): Map<Uuid, NavNode.Stack<T>> =
+private fun <T : NavKey> NavNode<T>.getStacks(): Map<NavNode.Stack.Id, NavNode.Stack<T>> =
     when (this) {
         is NavNode.Key ->
             emptyMap()
@@ -91,7 +89,7 @@ private fun <T : NavKey> NavNode<T>.getStacks(): Map<Uuid, NavNode.Stack<T>> =
             }
     }
 
-private fun <T : NavKey> NavNode<T>.getActiveStackIds(): List<Uuid> =
+private fun <T : NavKey> NavNode<T>.getActiveStackIds(): List<NavNode.Stack.Id> =
     when (this) {
         is NavNode.Key ->
             emptyList()

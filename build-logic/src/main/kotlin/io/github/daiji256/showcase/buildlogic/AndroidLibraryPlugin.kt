@@ -24,10 +24,7 @@ class AndroidLibraryPlugin : Plugin<Project> {
                 jvmToolchain(libs.version("jdk").toInt())
                 compilerOptions {
                     allWarningsAsErrors = getAllWarningsAsErrors()
-                    optIn.addAll(
-                        "kotlin.uuid.ExperimentalUuidApi",
-                        "kotlinx.coroutines.ExperimentalCoroutinesApi",
-                    )
+                    optIn.add("kotlinx.coroutines.ExperimentalCoroutinesApi")
                 }
             }
 

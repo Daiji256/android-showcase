@@ -6,6 +6,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.toMutableStateList
 import androidx.navigation3.runtime.NavKey
 import kotlinx.serialization.Serializable
+import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
 
 /**
@@ -48,13 +49,24 @@ sealed interface NavNode<T : NavKey> {
      * Stack node that manages a list of child nodes.
      *
      * @param children the list of child nodes
-     * @property id the unique identifier of the stack
+     * @property id the ID of the stack
      */
     @Serializable(with = NavNodeStackSerializer::class)
     class Stack<T : NavKey>(
         children: List<NavNode<T>>,
-        val id: Uuid = Uuid.random(),
+        val id: Id = Id.random(),
     ) : NavNode<T> {
+        /**
+         * ID of the stack
+         */
+        data class Id(val value: String) {
+            companion object {
+                fun random(): Id =
+                    @OptIn(ExperimentalUuidApi::class)
+                    Id(value = Uuid.random().toHexDashString())
+            }
+        }
+
         private val _children = children.toMutableStateList()
 
         /**

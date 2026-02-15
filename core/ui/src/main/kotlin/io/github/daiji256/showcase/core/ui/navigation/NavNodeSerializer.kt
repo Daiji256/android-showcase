@@ -62,7 +62,7 @@ private fun <T : NavKey> NavNode<T>.toNavNodeDto(): NavNodeDto<T> =
         is NavNode.Stack ->
             NavNodeDto.Stack(
                 children = children.map { it.toNavNodeDto() },
-                id = id,
+                id = id.value,
             )
 
         is NavNode.Select ->
@@ -82,7 +82,7 @@ private fun <T : NavKey> NavNodeDto<T>.toNavNode(): NavNode<T> =
         is NavNodeDto.Stack ->
             NavNode.Stack(
                 children = children.map { it.toNavNode() },
-                id = id,
+                id = NavNode.Stack.Id(value = id),
             )
 
         is NavNodeDto.Select ->
