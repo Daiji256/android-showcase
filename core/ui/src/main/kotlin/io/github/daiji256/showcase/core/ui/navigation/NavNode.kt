@@ -5,12 +5,14 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.toMutableStateList
 import androidx.navigation3.runtime.NavKey
+import kotlinx.serialization.Serializable
 
 /**
  * Represents a node in a navigation tree.
  *
  * @param T the type of the tree
  */
+@Serializable
 sealed interface NavNode<T : NavKey> {
     /**
      * Attempts to navigate to the [route].
@@ -32,6 +34,7 @@ sealed interface NavNode<T : NavKey> {
      *
      * @property navKey The associated [NavKey].
      */
+    @Serializable(with = NavNodeKeySerializer::class)
     class Key<T : NavKey>(
         val navKey: T,
     ) : NavNode<T> {
@@ -45,6 +48,7 @@ sealed interface NavNode<T : NavKey> {
      *
      * @param children the initial list of child nodes
      */
+    @Serializable(with = NavNodeStackSerializer::class)
     class Stack<T : NavKey>(
         children: List<NavNode<T>>,
     ) : NavNode<T> {
@@ -76,6 +80,7 @@ sealed interface NavNode<T : NavKey> {
      * @param selected the initial selected key
      * @param children the initial map of child stacks
      */
+    @Serializable(with = NavNodeSelectSerializer::class)
     class Select<T : NavKey>(
         selected: T,
         children: Map<T, Stack<T>>,

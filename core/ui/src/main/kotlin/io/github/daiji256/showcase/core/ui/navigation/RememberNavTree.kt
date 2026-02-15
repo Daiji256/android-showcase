@@ -1,8 +1,9 @@
 package io.github.daiji256.showcase.core.ui.navigation
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSerializable
 import androidx.navigation3.runtime.NavKey
+import androidx.navigation3.runtime.serialization.NavKeySerializer
 
 /**
  * Remembers a navigation tree ([NavNode.Stack]) for Compose.
@@ -15,7 +16,8 @@ import androidx.navigation3.runtime.NavKey
 fun <T : NavKey> rememberNavTree(
     vararg initial: NavNode<T>,
 ): NavNode.Stack<T> =
-    // TODO: Saveable
-    remember {
+    rememberSerializable(
+        serializer = NavNode.Stack.serializer(NavKeySerializer()),
+    ) {
         NavNode.Stack(children = initial.toList())
     }
