@@ -77,7 +77,7 @@ private fun <T : NavKey> NavNode<T>.getStacks(): Map<Uuid, NavNode.Stack<T>> =
 
         is NavNode.Stack ->
             buildMap {
-                put(this@getStacks.id, this@getStacks)
+                put(id, this@getStacks)
                 children.forEach {
                     putAll(it.getStacks())
                 }
@@ -98,7 +98,7 @@ private fun <T : NavKey> NavNode<T>.getActiveStackIds(): List<Uuid> =
 
         is NavNode.Stack ->
             buildList {
-                add(this@getActiveStackIds.id)
+                add(id)
                 children.forEach {
                     addAll(it.getActiveStackIds())
                 }
