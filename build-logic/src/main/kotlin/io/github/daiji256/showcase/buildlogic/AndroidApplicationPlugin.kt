@@ -23,6 +23,9 @@ class AndroidApplicationPlugin : Plugin<Project> {
                 jvmToolchain(libs.version("jdk").toInt())
                 compilerOptions {
                     allWarningsAsErrors = getAllWarningsAsErrors()
+                    optIn.addAll(
+                        "kotlin.uuid.ExperimentalUuidApi",
+                    )
                 }
             }
 
