@@ -82,8 +82,8 @@ sealed interface NavNode<T : NavKey> {
             currentChild.navigate(route) || _children.add(route)
 
         override fun back(): Boolean {
-            if (children.size <= 1) return false
             if (currentChild.back()) return true
+            if (children.size <= 1) return false
             _children.removeAt(children.lastIndex)
             return true
         }
