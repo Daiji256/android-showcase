@@ -5,13 +5,12 @@ plugins {
 }
 
 android {
-    namespace = "io.github.daiji256.showcase.core.ui"
+    namespace = "io.github.daiji256.showcase.feature.navnode"
 }
 
 dependencies {
     implementation(projects.core.common)
     implementation(projects.core.designsystem)
-    implementation(libs.markdown)
+    implementation(projects.core.ui)
     testImplementation(projects.core.testing)
-    testImplementation(libs.kotlinx.serialization.json)
 }
