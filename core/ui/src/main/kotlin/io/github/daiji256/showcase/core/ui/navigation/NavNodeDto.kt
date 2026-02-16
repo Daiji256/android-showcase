@@ -21,7 +21,6 @@ internal sealed interface NavNodeDto<T : NavKey> {
                 T,
                 >,
             >,
-        val id: String,
     ) : NavNodeDto<T>
 
     @Serializable
