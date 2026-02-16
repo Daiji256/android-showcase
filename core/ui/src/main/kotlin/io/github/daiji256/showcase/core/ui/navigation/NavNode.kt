@@ -52,6 +52,12 @@ sealed interface NavNode<T : NavKey> {
     class Stack<T : NavKey>(
         children: List<NavNode<T>>,
     ) : NavNode<T> {
+        init {
+            require(children.isNotEmpty()) {
+                "Stack must have at least one child"
+            }
+        }
+
         private val _children = children.toMutableStateList()
 
         /**
@@ -96,6 +102,12 @@ sealed interface NavNode<T : NavKey> {
             selected = selected,
             children = children.associateWith { Stack(children = listOf(Key(navKey = it))) },
         )
+
+        init {
+            require(selected in children) {
+                "Selected key must be in children"
+            }
+        }
 
         /**
          * the selected key
