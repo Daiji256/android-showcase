@@ -13,11 +13,9 @@ import androidx.navigation3.runtime.serialization.NavKeySerializer
  * @return a remembered [NavNode.Stack]
  */
 @Composable
-fun <T : NavKey> rememberNavTree(
-    vararg initial: NavNode<T>,
-): NavNode.Stack<T> =
+fun <T : NavKey> rememberNavTree(initial: NavNode<T>): NavNode.Stack<T> =
     rememberSerializable(
         serializer = NavNode.Stack.serializer(NavKeySerializer()),
     ) {
-        NavNode.Stack(children = initial.toList())
+        NavNode.Stack(children = listOf(initial))
     }
