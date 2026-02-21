@@ -7,7 +7,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 internal sealed interface NavNodeDto<T : NavKey> {
     @Serializable
-    data class Key<T : NavKey>(
+    data class Leaf<T : NavKey>(
         val key:
         @Serializable(with = NavKeySerializer::class)
         T,

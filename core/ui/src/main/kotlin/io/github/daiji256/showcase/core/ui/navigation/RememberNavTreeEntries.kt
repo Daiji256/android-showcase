@@ -66,7 +66,7 @@ private fun <T : NavKey> rememberNavTreeKeys(
             while (pending.isNotEmpty()) {
                 val (isActive, node) = pending.removeLast()
                 when (node) {
-                    is NavNode.Key ->
+                    is NavNode.Leaf ->
                         if (isActive) {
                             active.add(node.key)
                         } else {

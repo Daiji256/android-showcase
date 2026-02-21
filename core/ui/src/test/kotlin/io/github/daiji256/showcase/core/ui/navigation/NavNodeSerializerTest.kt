@@ -12,7 +12,7 @@ class NavNodeSerializerTest {
     fun serialize_and_deserialize() {
         val original: NavNode<RootNavKey> = NavNode.Stack(
             children = listOf(
-                NavNode.Key(key = FirstNavKey),
+                NavNode.Leaf(key = FirstNavKey),
                 NavNode.Select(
                     selected = Tab1NavKey,
                     children = mapOf(
@@ -20,9 +20,9 @@ class NavNodeSerializerTest {
                             Tab1NavKey,
                             NavNode.Stack(
                                 children = listOf(
-                                    NavNode.Key(key = Tab1NavKey),
-                                    NavNode.Key(key = OuterNavKey(value = "a")),
-                                    NavNode.Key(key = OuterNavKey(value = "b")),
+                                    NavNode.Leaf(key = Tab1NavKey),
+                                    NavNode.Leaf(key = OuterNavKey(value = "a")),
+                                    NavNode.Leaf(key = OuterNavKey(value = "b")),
                                 ),
                             ),
                         ),
@@ -30,7 +30,7 @@ class NavNodeSerializerTest {
                             Tab2NavKey,
                             NavNode.Stack(
                                 children = listOf(
-                                    NavNode.Key(key = Tab2NavKey),
+                                    NavNode.Leaf(key = Tab2NavKey),
                                     NavNode.Select(
                                         selected = Tab2SwitchBNavKey,
                                         children = mapOf(
@@ -38,7 +38,7 @@ class NavNodeSerializerTest {
                                                 Tab2SwitchANavKey,
                                                 NavNode.Stack(
                                                     children = listOf(
-                                                        NavNode.Key(key = Tab2SwitchANavKey),
+                                                        NavNode.Leaf(key = Tab2SwitchANavKey),
                                                     ),
                                                 ),
                                             ),
@@ -46,7 +46,7 @@ class NavNodeSerializerTest {
                                                 Tab2SwitchBNavKey,
                                                 NavNode.Stack(
                                                     children = listOf(
-                                                        NavNode.Key(key = Tab2SwitchBNavKey),
+                                                        NavNode.Leaf(key = Tab2SwitchBNavKey),
                                                     ),
                                                 ),
                                             ),

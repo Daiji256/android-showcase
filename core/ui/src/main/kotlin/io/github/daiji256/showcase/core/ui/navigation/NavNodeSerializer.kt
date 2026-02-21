@@ -6,20 +6,20 @@ import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
-internal class NavNodeKeySerializer<T : NavKey>(
+internal class NavNodeLeafSerializer<T : NavKey>(
     navKeySerializer: KSerializer<T>,
-) : KSerializer<NavNode.Key<T>> {
-    private val dtoSerializer: KSerializer<NavNodeDto.Key<T>> =
-        NavNodeDto.Key.serializer(navKeySerializer)
+) : KSerializer<NavNode.Leaf<T>> {
+    private val dtoSerializer: KSerializer<NavNodeDto.Leaf<T>> =
+        NavNodeDto.Leaf.serializer(navKeySerializer)
 
     override val descriptor: SerialDescriptor =
         dtoSerializer.descriptor
 
-    override fun serialize(encoder: Encoder, value: NavNode.Key<T>) =
-        dtoSerializer.serialize(encoder, value.toNavNodeDto() as NavNodeDto.Key<T>)
+    override fun serialize(encoder: Encoder, value: NavNode.Leaf<T>) =
+        dtoSerializer.serialize(encoder, value.toNavNodeDto() as NavNodeDto.Leaf<T>)
 
-    override fun deserialize(decoder: Decoder): NavNode.Key<T> =
-        dtoSerializer.deserialize(decoder).toNavNode() as NavNode.Key<T>
+    override fun deserialize(decoder: Decoder): NavNode.Leaf<T> =
+        dtoSerializer.deserialize(decoder).toNavNode() as NavNode.Leaf<T>
 }
 
 internal class NavNodeStackSerializer<T : NavKey>(
@@ -56,8 +56,8 @@ internal class NavNodeSelectSerializer<T : NavKey>(
 
 private fun <T : NavKey> NavNode<T>.toNavNodeDto(): NavNodeDto<T> =
     when (this) {
-        is NavNode.Key ->
-            NavNodeDto.Key(key = key)
+        is NavNode.Leaf ->
+            NavNodeDto.Leaf(key = key)
 
         is NavNode.Stack ->
             NavNodeDto.Stack(
@@ -75,8 +75,8 @@ private fun <T : NavKey> NavNode<T>.toNavNodeDto(): NavNodeDto<T> =
 
 private fun <T : NavKey> NavNodeDto<T>.toNavNode(): NavNode<T> =
     when (this) {
-        is NavNodeDto.Key ->
-            NavNode.Key(key = key)
+        is NavNodeDto.Leaf ->
+            NavNode.Leaf(key = key)
 
         is NavNodeDto.Stack ->
             NavNode.Stack(
