@@ -49,7 +49,7 @@ class NavNodeSerializerTest {
                 NavNode.Leaf(key = FirstNavKey),
                 NavNode.Select(
                     key = TabSelectNavKey,
-                    selected = Tab1NavKey,
+                    selected = Tab1StackNavKey,
                     children = setOf(
                         NavNode.Stack(
                             key = Tab1StackNavKey,
