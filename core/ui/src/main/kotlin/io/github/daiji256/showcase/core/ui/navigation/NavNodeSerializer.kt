@@ -57,7 +57,7 @@ internal class NavNodeSelectSerializer<T : NavKey>(
 private fun <T : NavKey> NavNode<T>.toNavNodeDto(): NavNodeDto<T> =
     when (this) {
         is NavNode.Key ->
-            NavNodeDto.Key(navKey = navKey)
+            NavNodeDto.Key(key = key)
 
         is NavNode.Stack ->
             NavNodeDto.Stack(
@@ -67,8 +67,8 @@ private fun <T : NavKey> NavNode<T>.toNavNodeDto(): NavNodeDto<T> =
         is NavNode.Select ->
             NavNodeDto.Select(
                 selected = selected,
-                children = children.map { (navKey, stack) ->
-                    NavNodeDto.Select.Child(navKey, stack.toNavNodeDto() as NavNodeDto.Stack<T>)
+                children = children.map { (key, stack) ->
+                    NavNodeDto.Select.Child(key, stack.toNavNodeDto() as NavNodeDto.Stack<T>)
                 },
             )
     }
@@ -76,7 +76,7 @@ private fun <T : NavKey> NavNode<T>.toNavNodeDto(): NavNodeDto<T> =
 private fun <T : NavKey> NavNodeDto<T>.toNavNode(): NavNode<T> =
     when (this) {
         is NavNodeDto.Key ->
-            NavNode.Key(navKey = navKey)
+            NavNode.Key(key = key)
 
         is NavNodeDto.Stack ->
             NavNode.Stack(
@@ -86,8 +86,8 @@ private fun <T : NavKey> NavNodeDto<T>.toNavNode(): NavNode<T> =
         is NavNodeDto.Select ->
             NavNode.Select(
                 selected = selected,
-                children = children.associate { (navKey, stack) ->
-                    navKey to stack.toNavNode() as NavNode.Stack<T>
+                children = children.associate { (key, stack) ->
+                    key to stack.toNavNode() as NavNode.Stack<T>
                 },
             )
     }

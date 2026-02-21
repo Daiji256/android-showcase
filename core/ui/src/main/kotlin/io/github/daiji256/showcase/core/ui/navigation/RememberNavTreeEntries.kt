@@ -68,9 +68,9 @@ private fun <T : NavKey> rememberNavTreeKeys(
                 when (node) {
                     is NavNode.Key ->
                         if (isActive) {
-                            active.add(node.navKey)
+                            active.add(node.key)
                         } else {
-                            inactive.add(node.navKey)
+                            inactive.add(node.key)
                         }
 
                     is NavNode.Stack ->
@@ -79,9 +79,9 @@ private fun <T : NavKey> rememberNavTreeKeys(
                         }
 
                     is NavNode.Select ->
-                        node.children.forEach { (navKey, stack) ->
+                        node.children.forEach { (key, stack) ->
                             // a node is active only if it is selected and on an active path
-                            val isChildActive = isActive && node.selected == navKey
+                            val isChildActive = isActive && node.selected == key
                             pending.addLast(isChildActive to stack)
                         }
                 }

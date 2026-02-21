@@ -32,11 +32,11 @@ sealed interface NavNode<T : NavKey> {
     /**
      * Leaf node that represent navigation keys.
      *
-     * @property navKey the associated [NavKey]
+     * @property key the associated [NavKey]
      */
     @Serializable(with = NavNodeKeySerializer::class)
     class Key<T : NavKey>(
-        val navKey: T,
+        val key: T,
     ) : NavNode<T> {
         override fun navigate(route: NavNode<T>) = false
 
@@ -100,7 +100,7 @@ sealed interface NavNode<T : NavKey> {
             children: Set<T>,
         ) : this(
             selected = selected,
-            children = children.associateWith { Stack(children = listOf(Key(navKey = it))) },
+            children = children.associateWith { Stack(children = listOf(Key(key = it))) },
         )
 
         init {
@@ -122,8 +122,8 @@ sealed interface NavNode<T : NavKey> {
             get() = children[this@Select.selected] ?: error("No child for ${this@Select.selected}")
 
         override fun navigate(route: NavNode<T>): Boolean {
-            if (route is Key && route.navKey in children.keys) {
-                selected = route.navKey
+            if (route is Key && route.key in children.keys) {
+                selected = route.key
                 return true
             }
             return selectedChild.navigate(route)

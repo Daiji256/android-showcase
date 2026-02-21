@@ -8,7 +8,7 @@ import kotlinx.serialization.Serializable
 internal sealed interface NavNodeDto<T : NavKey> {
     @Serializable
     data class Key<T : NavKey>(
-        val navKey:
+        val key:
         @Serializable(with = NavKeySerializer::class)
         T,
     ) : NavNodeDto<T>
@@ -37,7 +37,7 @@ internal sealed interface NavNodeDto<T : NavKey> {
     ) : NavNodeDto<T> {
         @Serializable
         data class Child<T : NavKey>(
-            val navKey:
+            val key:
             @Serializable(with = NavKeySerializer::class)
             T,
             val stack: Stack<
