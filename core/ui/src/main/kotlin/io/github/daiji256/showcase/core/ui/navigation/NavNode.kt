@@ -115,7 +115,7 @@ sealed interface NavNode<T : NavKey> {
             get() = children[this@Select.selected] ?: error("No child for ${this@Select.selected}")
 
         override fun navigate(route: NavNode<T>): Boolean {
-            if (route is Leaf && route.key in children.keys) {
+            if (route.key in children.keys) {
                 selected = route.key
                 return true
             }
