@@ -15,7 +15,10 @@ class NavNodeTest {
     fun stack_navigate_add_route() {
         val a = TestNavKey(value = "a")
         val b = TestNavKey(value = "b")
-        val tree = NavNode.Stack(children = listOf(NavNode.Leaf(key = a)))
+        val tree = NavNode.Stack(
+            key = TestNavKey(value = "stack"),
+            children = listOf(NavNode.Leaf(key = a)),
+        )
 
         assertTrue(tree.navigate(route = NavNode.Leaf(key = b)))
         assertEquals(2, tree.children.size)
@@ -25,7 +28,10 @@ class NavNodeTest {
     @Test
     fun stack_back_single() {
         val a = TestNavKey(value = "a")
-        val tree = NavNode.Stack(children = listOf(NavNode.Leaf(key = a)))
+        val tree = NavNode.Stack(
+            key = TestNavKey(value = "stack"),
+            children = listOf(NavNode.Leaf(key = a)),
+        )
 
         assertFalse(tree.back())
         assertEquals(1, tree.children.size)
@@ -37,6 +43,7 @@ class NavNodeTest {
         val a = TestNavKey(value = "a")
         val b = TestNavKey(value = "b")
         val tree = NavNode.Stack(
+            key = TestNavKey(value = "stack"),
             children = listOf(NavNode.Leaf(key = a), NavNode.Leaf(key = b)),
         )
 
@@ -52,6 +59,7 @@ class NavNodeTest {
         val x = TestNavKey(value = "x")
         val y = TestNavKey(value = "y")
         val tree = NavNode.Select(
+            key = TestNavKey(value = "select"),
             selected = a,
             children = mapOf(a to NavNode.Leaf(key = x), b to NavNode.Leaf(key = y)),
         )
@@ -69,10 +77,11 @@ class NavNodeTest {
         val x = TestNavKey(value = "x")
         val y = TestNavKey(value = "y")
         val tree = NavNode.Select(
+            key = TestNavKey(value = "select"),
             selected = a,
             children = mapOf(
-                a to NavNode.Stack(children = listOf(NavNode.Leaf(key = x))),
-                b to NavNode.Stack(children = listOf(NavNode.Leaf(key = y))),
+                a to NavNode.Stack(key = a, children = listOf(NavNode.Leaf(key = x))),
+                b to NavNode.Stack(key = b, children = listOf(NavNode.Leaf(key = y))),
             ),
         )
 

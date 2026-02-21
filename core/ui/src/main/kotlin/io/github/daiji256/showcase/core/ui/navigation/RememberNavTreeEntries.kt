@@ -15,14 +15,14 @@ import androidx.navigation3.runtime.rememberDecoratedNavEntries
  * and returns a list of decorated active [NavEntry].
  *
  * @param T the type of the tree
- * @param tree the root navigation stack
+ * @param tree the root navigation tree
  * @param entryDecorators the [NavEntryDecorator]s that are providing data to the content
  * @param entryProvider a function that returns the [NavEntry] for a given key
  * @return a list of decorated active [NavEntry]
  */
 @Composable
 fun <T : NavKey> rememberNavTreeEntries(
-    tree: NavNode.Stack<T>,
+    tree: NavNode<T>,
     entryDecorators: List<@JvmSuppressWildcards NavEntryDecorator<T>> = listOf(),
     entryProvider: (T) -> NavEntry<T>,
 ): List<NavEntry<T>> {
@@ -52,7 +52,7 @@ private data class NavTreeKeys<T : NavKey>(
 
 @Composable
 private fun <T : NavKey> rememberNavTreeKeys(
-    tree: NavNode.Stack<T>,
+    tree: NavNode<T>,
 ): State<NavTreeKeys<T>> =
     remember(tree) {
         derivedStateOf {

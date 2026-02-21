@@ -15,6 +15,11 @@ import kotlinx.serialization.Serializable
 @Serializable
 sealed interface NavNode<T : NavKey> {
     /**
+     * the associated [NavKey]
+     */
+    val key: T
+
+    /**
      * navigate to the [route]
      *
      * @param route the destination [NavNode]
@@ -31,12 +36,10 @@ sealed interface NavNode<T : NavKey> {
 
     /**
      * Leaf node that represent navigation key.
-     *
-     * @property key the associated [NavKey]
      */
     @Serializable(with = NavNodeLeafSerializer::class)
     class Leaf<T : NavKey>(
-        val key: T,
+        override val key: T,
     ) : NavNode<T> {
         override fun navigate(route: NavNode<T>) = false
 
@@ -50,6 +53,7 @@ sealed interface NavNode<T : NavKey> {
      */
     @Serializable(with = NavNodeStackSerializer::class)
     class Stack<T : NavKey>(
+        override val key: T,
         children: List<NavNode<T>>,
     ) : NavNode<T> {
         init {
@@ -88,6 +92,7 @@ sealed interface NavNode<T : NavKey> {
      */
     @Serializable(with = NavNodeSelectSerializer::class)
     class Select<T : NavKey>(
+        override val key: T,
         selected: T,
         val children: Map<T, NavNode<T>>,
     ) : NavNode<T> {

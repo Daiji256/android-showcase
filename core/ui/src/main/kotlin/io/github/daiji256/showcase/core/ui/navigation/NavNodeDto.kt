@@ -15,6 +15,9 @@ internal sealed interface NavNodeDto<T : NavKey> {
 
     @Serializable
     data class Stack<T : NavKey>(
+        val key:
+        @Serializable(with = NavKeySerializer::class)
+        T,
         val children: List<
             NavNodeDto<
                 @Serializable(with = NavKeySerializer::class)
@@ -25,6 +28,9 @@ internal sealed interface NavNodeDto<T : NavKey> {
 
     @Serializable
     data class Select<T : NavKey>(
+        val key:
+        @Serializable(with = NavKeySerializer::class)
+        T,
         val selected:
         @Serializable(with = NavKeySerializer::class)
         T,
