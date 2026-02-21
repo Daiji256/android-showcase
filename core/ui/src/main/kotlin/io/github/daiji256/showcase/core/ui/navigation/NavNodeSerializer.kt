@@ -69,9 +69,7 @@ private fun <T : NavKey> NavNode<T>.toNavNodeDto(): NavNodeDto<T> =
             NavNodeDto.Select(
                 key = key,
                 selected = selected,
-                children = children.map { (key, node) ->
-                    NavNodeDto.Select.Child(key, node.toNavNodeDto())
-                },
+                children = children.map { it.toNavNodeDto() },
             )
     }
 
@@ -90,8 +88,6 @@ private fun <T : NavKey> NavNodeDto<T>.toNavNode(): NavNode<T> =
             NavNode.Select(
                 key = key,
                 selected = selected,
-                children = children.associate { (key, node) ->
-                    key to node.toNavNode()
-                },
+                children = children.map { it.toNavNode() }.toSet(),
             )
     }

@@ -88,17 +88,23 @@ sealed interface NavNode<T : NavKey> {
      * Select node that manages a selected child node.
      *
      * @param selected the selected key
-     * @property children the map of child node
+     * @property children the set of child nodes
      */
     @Serializable(with = NavNodeSelectSerializer::class)
     class Select<T : NavKey>(
         override val key: T,
         selected: T,
-        val children: Map<T, NavNode<T>>,
+        val children: Set<NavNode<T>>,
     ) : NavNode<T> {
         init {
-            require(selected in children) {
+            require(children.isNotEmpty()) {
+                "Select must have at least one child"
+            }
+            require(children.any { it.key == selected }) {
                 "Selected key must be in children"
+            }
+            require(children.size == children.distinctBy { it.key }.size) {
+                "Children must have unique keys"
             }
         }
 
@@ -108,14 +114,12 @@ sealed interface NavNode<T : NavKey> {
         var selected by mutableStateOf(selected)
             private set
 
-        /**
-         * the selected child node
-         */
-        val selectedChild
-            get() = children[this@Select.selected] ?: error("No child for ${this@Select.selected}")
+        private val selectedChild
+            get() = children.firstOrNull { it.key == selected }
+                ?: error("No child for ${this@Select.selected}")
 
         override fun navigate(route: NavNode<T>): Boolean {
-            if (route.key in children.keys) {
+            if (children.any { it.key == route.key }) {
                 selected = route.key
                 return true
             }

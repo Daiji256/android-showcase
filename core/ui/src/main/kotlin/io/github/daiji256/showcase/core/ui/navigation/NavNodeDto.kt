@@ -35,21 +35,10 @@ internal sealed interface NavNodeDto<T : NavKey> {
         @Serializable(with = NavKeySerializer::class)
         T,
         val children: List<
-            Child<
+            NavNodeDto<
                 @Serializable(with = NavKeySerializer::class)
                 T,
                 >,
             >,
-    ) : NavNodeDto<T> {
-        @Serializable
-        data class Child<T : NavKey>(
-            val key:
-            @Serializable(with = NavKeySerializer::class)
-            T,
-            val node: NavNodeDto<
-                @Serializable(with = NavKeySerializer::class)
-                T,
-                >,
-        )
-    }
+    ) : NavNodeDto<T>
 }

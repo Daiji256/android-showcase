@@ -50,37 +50,25 @@ class NavNodeSerializerTest {
                 NavNode.Select(
                     key = TabSelectNavKey,
                     selected = Tab1NavKey,
-                    children = mapOf(
-                        Pair(
-                            Tab1NavKey,
-                            NavNode.Stack(
-                                key = Tab1StackNavKey,
-                                children = listOf(
-                                    NavNode.Leaf(key = Tab1NavKey),
-                                    NavNode.Leaf(key = OuterNavKey(value = "a")),
-                                    NavNode.Leaf(key = OuterNavKey(value = "b")),
-                                ),
+                    children = setOf(
+                        NavNode.Stack(
+                            key = Tab1StackNavKey,
+                            children = listOf(
+                                NavNode.Leaf(key = Tab1NavKey),
+                                NavNode.Leaf(key = OuterNavKey(value = "a")),
+                                NavNode.Leaf(key = OuterNavKey(value = "b")),
                             ),
                         ),
-                        Pair(
-                            Tab2NavKey,
-                            NavNode.Stack(
-                                key = Tab2StackNavKey,
-                                children = listOf(
-                                    NavNode.Leaf(key = Tab2NavKey),
-                                    NavNode.Select(
-                                        key = Tab2SwitchNavKey,
-                                        selected = Tab2SwitchBNavKey,
-                                        children = mapOf(
-                                            Pair(
-                                                Tab2SwitchANavKey,
-                                                NavNode.Leaf(key = Tab2SwitchANavKey),
-                                            ),
-                                            Pair(
-                                                Tab2SwitchBNavKey,
-                                                NavNode.Leaf(key = Tab2SwitchBNavKey),
-                                            ),
-                                        ),
+                        NavNode.Stack(
+                            key = Tab2StackNavKey,
+                            children = listOf(
+                                NavNode.Leaf(key = Tab2NavKey),
+                                NavNode.Select(
+                                    key = Tab2SwitchNavKey,
+                                    selected = Tab2SwitchBNavKey,
+                                    children = setOf(
+                                        NavNode.Leaf(key = Tab2SwitchANavKey),
+                                        NavNode.Leaf(key = Tab2SwitchBNavKey),
                                     ),
                                 ),
                             ),

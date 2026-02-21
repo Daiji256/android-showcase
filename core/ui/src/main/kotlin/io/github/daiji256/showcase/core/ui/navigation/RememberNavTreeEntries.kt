@@ -82,7 +82,7 @@ private fun <T : NavKey> rememberNavTreeKeys(
                         node.children.forEach {
                             // a node is active only if it is selected and on an active path
                             val isChildActive = isActive && node.selected == it.key
-                            pending.addLast(isChildActive to it.value)
+                            pending.addLast(isChildActive to it)
                         }
                 }
             }
