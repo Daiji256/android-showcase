@@ -7,14 +7,17 @@ import kotlinx.serialization.Serializable
 @Serializable
 internal sealed interface NavNodeDto<T : NavKey> {
     @Serializable
-    data class Key<T : NavKey>(
-        val navKey:
+    data class Leaf<T : NavKey>(
+        val key:
         @Serializable(with = NavKeySerializer::class)
         T,
     ) : NavNodeDto<T>
 
     @Serializable
     data class Stack<T : NavKey>(
+        val key:
+        @Serializable(with = NavKeySerializer::class)
+        T,
         val children: List<
             NavNodeDto<
                 @Serializable(with = NavKeySerializer::class)
@@ -25,25 +28,17 @@ internal sealed interface NavNodeDto<T : NavKey> {
 
     @Serializable
     data class Select<T : NavKey>(
+        val key:
+        @Serializable(with = NavKeySerializer::class)
+        T,
         val selected:
         @Serializable(with = NavKeySerializer::class)
         T,
         val children: List<
-            Child<
+            NavNodeDto<
                 @Serializable(with = NavKeySerializer::class)
                 T,
                 >,
             >,
-    ) : NavNodeDto<T> {
-        @Serializable
-        data class Child<T : NavKey>(
-            val navKey:
-            @Serializable(with = NavKeySerializer::class)
-            T,
-            val stack: Stack<
-                @Serializable(with = NavKeySerializer::class)
-                T,
-                >,
-        )
-    }
+    ) : NavNodeDto<T>
 }

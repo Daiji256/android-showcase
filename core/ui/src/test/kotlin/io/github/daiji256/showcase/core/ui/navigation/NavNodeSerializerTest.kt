@@ -8,49 +8,67 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class NavNodeSerializerTest {
+    @Serializable
+    data object RootNavKey : NavKey
+
+    @Serializable
+    data object FirstNavKey : NavKey
+
+    @Serializable
+    data object TabSelectNavKey : NavKey
+
+    @Serializable
+    data object Tab1StackNavKey : NavKey
+
+    @Serializable
+    data object Tab1NavKey : NavKey
+
+    @Serializable
+    data object Tab2StackNavKey : NavKey
+
+    @Serializable
+    data object Tab2NavKey : NavKey
+
+    @Serializable
+    data object Tab2SwitchNavKey : NavKey
+
+    @Serializable
+    data object Tab2SwitchANavKey : NavKey
+
+    @Serializable
+    data object Tab2SwitchBNavKey : NavKey
+
+    @Serializable
+    data class OuterNavKey(val value: String) : NavKey
+
     @Test
     fun serialize_and_deserialize() {
-        val original: NavNode<RootNavKey> = NavNode.Stack(
+        val original: NavNode<NavKey> = NavNode.Stack(
+            key = RootNavKey,
             children = listOf(
-                NavNode.Key(navKey = FirstNavKey),
+                NavNode.Leaf(key = FirstNavKey),
                 NavNode.Select(
-                    selected = Tab1NavKey,
-                    children = mapOf(
-                        Pair(
-                            Tab1NavKey,
-                            NavNode.Stack(
-                                children = listOf(
-                                    NavNode.Key(navKey = Tab1NavKey),
-                                    NavNode.Key(navKey = OuterNavKey(value = "a")),
-                                    NavNode.Key(navKey = OuterNavKey(value = "b")),
-                                ),
+                    key = TabSelectNavKey,
+                    selected = Tab1StackNavKey,
+                    children = setOf(
+                        NavNode.Stack(
+                            key = Tab1StackNavKey,
+                            children = listOf(
+                                NavNode.Leaf(key = Tab1NavKey),
+                                NavNode.Leaf(key = OuterNavKey(value = "a")),
+                                NavNode.Leaf(key = OuterNavKey(value = "b")),
                             ),
                         ),
-                        Pair(
-                            Tab2NavKey,
-                            NavNode.Stack(
-                                children = listOf(
-                                    NavNode.Key(navKey = Tab2NavKey),
-                                    NavNode.Select(
-                                        selected = Tab2SwitchBNavKey,
-                                        children = mapOf(
-                                            Pair(
-                                                Tab2SwitchANavKey,
-                                                NavNode.Stack(
-                                                    children = listOf(
-                                                        NavNode.Key(navKey = Tab2SwitchANavKey),
-                                                    ),
-                                                ),
-                                            ),
-                                            Pair(
-                                                Tab2SwitchBNavKey,
-                                                NavNode.Stack(
-                                                    children = listOf(
-                                                        NavNode.Key(navKey = Tab2SwitchBNavKey),
-                                                    ),
-                                                ),
-                                            ),
-                                        ),
+                        NavNode.Stack(
+                            key = Tab2StackNavKey,
+                            children = listOf(
+                                NavNode.Leaf(key = Tab2NavKey),
+                                NavNode.Select(
+                                    key = Tab2SwitchNavKey,
+                                    selected = Tab2SwitchBNavKey,
+                                    children = setOf(
+                                        NavNode.Leaf(key = Tab2SwitchANavKey),
+                                        NavNode.Leaf(key = Tab2SwitchBNavKey),
                                     ),
                                 ),
                             ),
@@ -60,7 +78,7 @@ class NavNodeSerializerTest {
             ),
         )
 
-        val serializer = NavNode.serializer(NavKeySerializer<RootNavKey>())
+        val serializer = NavNode.serializer(NavKeySerializer())
         val encoded = Json.encodeToJsonElement(serializer, original)
         val decoded = Json.decodeFromJsonElement(serializer, encoded)
         assertEquals(
@@ -68,28 +86,4 @@ class NavNodeSerializerTest {
             Json.encodeToJsonElement(serializer, decoded),
         )
     }
-
-    interface RootNavKey : NavKey
-
-    @Serializable
-    data object FirstNavKey : RootNavKey
-
-    interface TabNavKey : RootNavKey
-
-    @Serializable
-    data object Tab1NavKey : TabNavKey
-
-    @Serializable
-    data object Tab2NavKey : TabNavKey
-
-    interface Tab2SwitchNavKey : TabNavKey
-
-    @Serializable
-    data object Tab2SwitchANavKey : Tab2SwitchNavKey
-
-    @Serializable
-    data object Tab2SwitchBNavKey : Tab2SwitchNavKey
-
-    @Serializable
-    data class OuterNavKey(val value: String) : RootNavKey
 }

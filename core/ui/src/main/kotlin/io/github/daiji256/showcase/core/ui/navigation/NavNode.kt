@@ -15,6 +15,11 @@ import kotlinx.serialization.Serializable
 @Serializable
 sealed interface NavNode<T : NavKey> {
     /**
+     * the associated [NavKey]
+     */
+    val key: T
+
+    /**
      * navigate to the [route]
      *
      * @param route the destination [NavNode]
@@ -30,15 +35,13 @@ sealed interface NavNode<T : NavKey> {
     fun back(): Boolean
 
     /**
-     * Leaf node that represent navigation keys.
-     *
-     * @property navKey the associated [NavKey]
+     * Leaf node that represent navigation key.
      */
-    @Serializable(with = NavNodeKeySerializer::class)
-    class Key<T : NavKey>(
-        val navKey: T,
+    @Serializable(with = NavNodeLeafSerializer::class)
+    class Leaf<T : NavKey>(
+        override val key: T,
     ) : NavNode<T> {
-        override fun navigate(route: NavNode<T>) = false
+        override fun navigate(route: NavNode<T>): Boolean = key == route.key
 
         override fun back(): Boolean = false
     }
@@ -50,6 +53,7 @@ sealed interface NavNode<T : NavKey> {
      */
     @Serializable(with = NavNodeStackSerializer::class)
     class Stack<T : NavKey>(
+        override val key: T,
         children: List<NavNode<T>>,
     ) : NavNode<T> {
         init {
@@ -69,8 +73,11 @@ sealed interface NavNode<T : NavKey> {
         private val currentChild
             get() = children.lastOrNull() ?: error("No children")
 
-        override fun navigate(route: NavNode<T>): Boolean =
-            currentChild.navigate(route) || _children.add(route)
+        override fun navigate(route: NavNode<T>): Boolean {
+            if (currentChild.key == route.key) return true
+            if (currentChild.navigate(route)) return true
+            return _children.add(route)
+        }
 
         override fun back(): Boolean {
             if (currentChild.back()) return true
@@ -81,31 +88,26 @@ sealed interface NavNode<T : NavKey> {
     }
 
     /**
-     * Select node that manages a selection of child stacks.
+     * Select node that manages a selected child node.
      *
      * @param selected the selected key
-     * @property children the map of child stacks
+     * @property children the set of child nodes
      */
     @Serializable(with = NavNodeSelectSerializer::class)
     class Select<T : NavKey>(
+        override val key: T,
         selected: T,
-        val children: Map<T, Stack<T>>,
+        val children: Set<NavNode<T>>,
     ) : NavNode<T> {
-        /**
-         * @param selected the selected key
-         * @param children the set of child stack keys
-         */
-        constructor(
-            selected: T,
-            children: Set<T>,
-        ) : this(
-            selected = selected,
-            children = children.associateWith { Stack(children = listOf(Key(navKey = it))) },
-        )
-
         init {
-            require(selected in children) {
+            require(children.isNotEmpty()) {
+                "Select must have at least one child"
+            }
+            require(children.any { it.key == selected }) {
                 "Selected key must be in children"
+            }
+            require(children.size == children.distinctBy { it.key }.size) {
+                "Children must have unique keys"
             }
         }
 
@@ -115,15 +117,14 @@ sealed interface NavNode<T : NavKey> {
         var selected by mutableStateOf(selected)
             private set
 
-        /**
-         * the selected child stack
-         */
-        val selectedChild
-            get() = children[this@Select.selected] ?: error("No child for ${this@Select.selected}")
+        private val selectedChild
+            get() = children.firstOrNull { it.key == selected }
+                ?: error("No child for ${this@Select.selected}")
 
         override fun navigate(route: NavNode<T>): Boolean {
-            if (route is Key && route.navKey in children.keys) {
-                selected = route.navKey
+            if (selected == route.key) return true
+            if (children.any { it.key == route.key }) {
+                selected = route.key
                 return true
             }
             return selectedChild.navigate(route)
