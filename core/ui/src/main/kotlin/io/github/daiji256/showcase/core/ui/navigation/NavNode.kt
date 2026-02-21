@@ -81,28 +81,16 @@ sealed interface NavNode<T : NavKey> {
     }
 
     /**
-     * Select node that manages a selection of child stacks.
+     * Select node that manages a selected child node.
      *
      * @param selected the selected key
-     * @property children the map of child stacks
+     * @property children the map of child node
      */
     @Serializable(with = NavNodeSelectSerializer::class)
     class Select<T : NavKey>(
         selected: T,
-        val children: Map<T, Stack<T>>,
+        val children: Map<T, NavNode<T>>,
     ) : NavNode<T> {
-        /**
-         * @param selected the selected key
-         * @param children the set of child stack keys
-         */
-        constructor(
-            selected: T,
-            children: Set<T>,
-        ) : this(
-            selected = selected,
-            children = children.associateWith { Stack(children = listOf(Leaf(key = it))) },
-        )
-
         init {
             require(selected in children) {
                 "Selected key must be in children"
@@ -116,7 +104,7 @@ sealed interface NavNode<T : NavKey> {
             private set
 
         /**
-         * the selected child stack
+         * the selected child node
          */
         val selectedChild
             get() = children[this@Select.selected] ?: error("No child for ${this@Select.selected}")

@@ -49,12 +49,16 @@ class NavNodeTest {
     fun select_navigate_switch() {
         val a = TestNavKey(value = "a")
         val b = TestNavKey(value = "b")
-        val tree = NavNode.Select(selected = a, children = setOf(a, b))
+        val x = TestNavKey(value = "x")
+        val y = TestNavKey(value = "y")
+        val tree = NavNode.Select(
+            selected = a,
+            children = mapOf(a to NavNode.Leaf(key = x), b to NavNode.Leaf(key = y)),
+        )
 
         assertTrue(tree.navigate(route = NavNode.Leaf(key = b)))
         assertEquals(b, tree.selected)
-        assertEquals(1, tree.selectedChild.children.size)
-        assertEquals(b, (tree.selectedChild.children.last() as NavNode.Leaf).key)
+        assertEquals(y, (tree.selectedChild as NavNode.Leaf).key)
     }
 
     @Test
@@ -62,16 +66,24 @@ class NavNodeTest {
         val a = TestNavKey(value = "a")
         val b = TestNavKey(value = "b")
         val c = TestNavKey(value = "c")
-        val tree = NavNode.Select(selected = a, children = setOf(a, b))
+        val x = TestNavKey(value = "x")
+        val y = TestNavKey(value = "y")
+        val tree = NavNode.Select(
+            selected = a,
+            children = mapOf(
+                a to NavNode.Stack(children = listOf(NavNode.Leaf(key = x))),
+                b to NavNode.Stack(children = listOf(NavNode.Leaf(key = y))),
+            ),
+        )
 
         assertTrue(tree.navigate(route = NavNode.Leaf(key = c)))
         assertEquals(a, tree.selected)
-        assertEquals(2, tree.selectedChild.children.size)
-        assertEquals(c, (tree.selectedChild.children.last() as NavNode.Leaf).key)
-        assertEquals(1, tree.children.getValue(b).children.size)
+        assertEquals(2, (tree.selectedChild as NavNode.Stack).children.size)
+        assertEquals(c, ((tree.selectedChild as NavNode.Stack).children.last() as NavNode.Leaf).key)
+        assertEquals(1, (tree.children.getValue(b) as NavNode.Stack).children.size)
         assertTrue(tree.back())
         assertEquals(a, tree.selected)
-        assertEquals(1, tree.selectedChild.children.size)
+        assertEquals(1, (tree.selectedChild as NavNode.Stack).children.size)
         assertFalse(tree.back())
     }
 }

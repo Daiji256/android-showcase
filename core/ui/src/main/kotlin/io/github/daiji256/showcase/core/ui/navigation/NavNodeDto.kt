@@ -40,7 +40,7 @@ internal sealed interface NavNodeDto<T : NavKey> {
             val key:
             @Serializable(with = NavKeySerializer::class)
             T,
-            val stack: Stack<
+            val node: NavNodeDto<
                 @Serializable(with = NavKeySerializer::class)
                 T,
                 >,
