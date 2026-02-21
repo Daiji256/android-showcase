@@ -41,7 +41,7 @@ sealed interface NavNode<T : NavKey> {
     class Leaf<T : NavKey>(
         override val key: T,
     ) : NavNode<T> {
-        override fun navigate(route: NavNode<T>) = false
+        override fun navigate(route: NavNode<T>): Boolean = key == route.key
 
         override fun back(): Boolean = false
     }
@@ -73,8 +73,11 @@ sealed interface NavNode<T : NavKey> {
         private val currentChild
             get() = children.lastOrNull() ?: error("No children")
 
-        override fun navigate(route: NavNode<T>): Boolean =
-            currentChild.navigate(route) || _children.add(route)
+        override fun navigate(route: NavNode<T>): Boolean {
+            if (currentChild.key == route.key) return true
+            if (currentChild.navigate(route)) return true
+            return _children.add(route)
+        }
 
         override fun back(): Boolean {
             if (currentChild.back()) return true
@@ -119,6 +122,7 @@ sealed interface NavNode<T : NavKey> {
                 ?: error("No child for ${this@Select.selected}")
 
         override fun navigate(route: NavNode<T>): Boolean {
+            if (selected == route.key) return true
             if (children.any { it.key == route.key }) {
                 selected = route.key
                 return true
