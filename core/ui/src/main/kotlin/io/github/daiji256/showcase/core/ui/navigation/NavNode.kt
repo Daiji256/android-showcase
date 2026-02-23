@@ -70,9 +70,6 @@ sealed interface NavNode<T : NavKey> {
         val children: List<NavNode<T>>
             get() = _children
 
-        private val currentChild
-            get() = children.lastOrNull() ?: error("No children")
-
         override fun navigate(route: NavNode<T>): Boolean {
             if (currentChild.key == route.key) return true
             if (currentChild.navigate(route)) return true
@@ -116,10 +113,6 @@ sealed interface NavNode<T : NavKey> {
          */
         var selected by mutableStateOf(selected)
             private set
-
-        private val selectedChild
-            get() = children.firstOrNull { it.key == selected }
-                ?: error("No child for ${this@Select.selected}")
 
         override fun navigate(route: NavNode<T>): Boolean {
             if (selected == route.key) return true
