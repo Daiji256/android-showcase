@@ -3,6 +3,7 @@ package io.github.daiji256.showcase.core.ui.navigation
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.runtime.toMutableStateList
 import androidx.navigation3.runtime.NavKey
 import kotlinx.serialization.Serializable
@@ -99,7 +100,7 @@ sealed interface NavNode<T : NavKey> {
         /**
          * the list of child nodes
          */
-        val children = children.toMutableStateList()
+        val children: SnapshotStateList<NavNode<T>> = children.toMutableStateList()
 
         override fun navigate(route: NavNode<T>): Boolean {
             if (children.lastOrNull()?.key == route.key) return true
