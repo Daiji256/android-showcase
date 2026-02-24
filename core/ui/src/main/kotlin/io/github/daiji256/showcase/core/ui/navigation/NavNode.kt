@@ -35,6 +35,15 @@ sealed interface NavNode<T : NavKey> {
     fun back(): Boolean
 
     /**
+     * pop the back to the [route]
+     *
+     * @param route the destination [NavNode]
+     * @param inclusive whether the [route] should be popped
+     * @return `true` if back navigation was handled, `false` otherwise
+     */
+    fun pop(route: T, inclusive: Boolean): Boolean
+
+    /**
      * Leaf node that represent navigation key.
      */
     @Serializable(with = NavNodeLeafSerializer::class)
@@ -44,6 +53,8 @@ sealed interface NavNode<T : NavKey> {
         override fun navigate(route: NavNode<T>): Boolean = key == route.key
 
         override fun back(): Boolean = false
+
+        override fun pop(route: T, inclusive: Boolean): Boolean = false
     }
 
     /**
@@ -80,6 +91,15 @@ sealed interface NavNode<T : NavKey> {
             if (currentChild.back()) return true
             if (children.size <= 1) return false
             _children.removeAt(children.lastIndex)
+            return true
+        }
+
+        override fun pop(route: T, inclusive: Boolean): Boolean {
+            if (currentChild.pop(route, inclusive)) return true
+            if (children.size <= 1) return false
+            val index = children.indexOfLast { it.key == route }
+            if (index == -1) return false
+            _children.removeRange(index + if (inclusive) 0 else 1, children.size)
             return true
         }
     }
@@ -124,5 +144,8 @@ sealed interface NavNode<T : NavKey> {
         }
 
         override fun back(): Boolean = selectedChild.back()
+
+        override fun pop(route: T, inclusive: Boolean): Boolean =
+            selectedChild.pop(route, inclusive)
     }
 }
