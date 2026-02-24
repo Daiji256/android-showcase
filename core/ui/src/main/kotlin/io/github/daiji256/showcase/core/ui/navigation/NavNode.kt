@@ -28,11 +28,11 @@ sealed interface NavNode<T : NavKey> {
     fun navigate(route: NavNode<T>): Boolean
 
     /**
-     * navigate back
+     * pop the back
      *
      * @return `true` if back navigation was handled, `false` otherwise
      */
-    fun back(): Boolean
+    fun pop(): Boolean
 
     /**
      * pop the back to the [route]
@@ -52,7 +52,7 @@ sealed interface NavNode<T : NavKey> {
     ) : NavNode<T> {
         override fun navigate(route: NavNode<T>): Boolean = key == route.key
 
-        override fun back(): Boolean = false
+        override fun pop(): Boolean = false
 
         override fun pop(route: T, inclusive: Boolean): Boolean = false
     }
@@ -87,8 +87,8 @@ sealed interface NavNode<T : NavKey> {
             return _children.add(route)
         }
 
-        override fun back(): Boolean {
-            if (currentChild.back()) return true
+        override fun pop(): Boolean {
+            if (currentChild.pop()) return true
             if (children.size <= 1) return false
             _children.removeAt(children.lastIndex)
             return true
@@ -143,7 +143,7 @@ sealed interface NavNode<T : NavKey> {
             return selectedChild.navigate(route)
         }
 
-        override fun back(): Boolean = selectedChild.back()
+        override fun pop(): Boolean = selectedChild.pop()
 
         override fun pop(route: T, inclusive: Boolean): Boolean =
             selectedChild.pop(route, inclusive)
