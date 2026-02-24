@@ -59,6 +59,9 @@ sealed interface NavNode<T : NavKey> {
 
     /**
      * Leaf node that represent navigation key.
+     *
+     * @param key the associated [NavKey]
+     * @param up the parent [NavNode]
      */
     @Serializable(with = NavNodeLeafSerializer::class)
     class Leaf<T : NavKey>(
@@ -77,7 +80,9 @@ sealed interface NavNode<T : NavKey> {
     /**
      * Stack node that manages a list of child nodes.
      *
+     * @param key the associated [NavKey]
      * @param children the list of child nodes
+     * @param up the parent [NavNode]
      */
     @Serializable(with = NavNodeStackSerializer::class)
     class Stack<T : NavKey>(
@@ -91,24 +96,21 @@ sealed interface NavNode<T : NavKey> {
             }
         }
 
-        private val _children = children.toMutableStateList()
-
         /**
          * the list of child nodes
          */
-        val children: List<NavNode<T>>
-            get() = _children
+        val children = children.toMutableStateList()
 
         override fun navigate(route: NavNode<T>): Boolean {
             if (children.lastOrNull()?.key == route.key) return true
             if (children.lastOrNull()?.navigate(route) == true) return true
-            return _children.add(route)
+            return children.add(route)
         }
 
         override fun navigateUp(): Boolean {
             if (currentChild.navigateUp()) return true
             currentChild.up?.let { up ->
-                _children.removeAt(children.lastIndex)
+                children.removeAt(children.lastIndex)
                 return navigate(route = up)
             }
             return pop()
@@ -117,7 +119,7 @@ sealed interface NavNode<T : NavKey> {
         override fun pop(): Boolean {
             if (currentChild.pop()) return true
             if (children.size <= 1) return false
-            _children.removeAt(children.lastIndex)
+            children.removeAt(children.lastIndex)
             return true
         }
 
@@ -126,7 +128,7 @@ sealed interface NavNode<T : NavKey> {
             if (children.size <= 1) return false
             val index = children.indexOfLast { it.key == route }
             if (index == -1) return false
-            _children.removeRange(index + if (inclusive) 0 else 1, children.size)
+            children.removeRange(index + if (inclusive) 0 else 1, children.size)
             return true
         }
     }
@@ -134,8 +136,10 @@ sealed interface NavNode<T : NavKey> {
     /**
      * Select node that manages a selected child node.
      *
+     * @param key the associated [NavKey]
      * @param selected the selected key
-     * @property children the set of child nodes
+     * @param children the set of child nodes
+     * @param up the parent [NavNode]
      */
     @Serializable(with = NavNodeSelectSerializer::class)
     class Select<T : NavKey>(
@@ -160,7 +164,6 @@ sealed interface NavNode<T : NavKey> {
          * the selected key
          */
         var selected by mutableStateOf(selected)
-            private set
 
         override fun navigate(route: NavNode<T>): Boolean {
             if (selected == route.key) return true
