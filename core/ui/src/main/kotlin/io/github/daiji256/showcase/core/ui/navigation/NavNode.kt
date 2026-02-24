@@ -80,9 +80,6 @@ sealed interface NavNode<T : NavKey> {
         override val up: NavNode<T>? = null,
     ) : NavNode<T> {
         init {
-            require(children.isNotEmpty()) {
-                "Select must have at least one child"
-            }
             require(children.any { it.key == selected }) {
                 "Selected key must be in children"
             }
