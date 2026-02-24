@@ -28,37 +28,6 @@ sealed interface NavNode<T : NavKey> {
     val up: NavNode<T>?
 
     /**
-     * navigate to the [route]
-     *
-     * @param route the destination [NavNode]
-     * @return `true` if navigation was handled, `false` otherwise
-     */
-    fun navigate(route: NavNode<T>): Boolean
-
-    /**
-     * navigate up
-     *
-     * @return `true` if navigation was handled, `false` otherwise
-     */
-    fun navigateUp(): Boolean
-
-    /**
-     * pop the back
-     *
-     * @return `true` if back navigation was handled, `false` otherwise
-     */
-    fun pop(): Boolean
-
-    /**
-     * pop the back to the [route]
-     *
-     * @param route the destination [NavNode]
-     * @param inclusive whether the [route] should be popped
-     * @return `true` if back navigation was handled, `false` otherwise
-     */
-    fun pop(route: T, inclusive: Boolean): Boolean
-
-    /**
      * Leaf node that represent navigation key.
      *
      * @param key the associated [NavKey]
@@ -68,15 +37,7 @@ sealed interface NavNode<T : NavKey> {
     class Leaf<T : NavKey>(
         override val key: T,
         override val up: NavNode<T>? = null,
-    ) : NavNode<T> {
-        override fun navigate(route: NavNode<T>): Boolean = key == route.key
-
-        override fun navigateUp(): Boolean = false
-
-        override fun pop(): Boolean = false
-
-        override fun pop(route: T, inclusive: Boolean): Boolean = false
-    }
+    ) : NavNode<T>
 
     /**
      * Stack node that manages a list of child nodes.
@@ -101,37 +62,6 @@ sealed interface NavNode<T : NavKey> {
          * the list of child nodes
          */
         val children: SnapshotStateList<NavNode<T>> = children.toMutableStateList()
-
-        override fun navigate(route: NavNode<T>): Boolean {
-            if (children.lastOrNull()?.key == route.key) return true
-            if (children.lastOrNull()?.navigate(route) == true) return true
-            return children.add(route)
-        }
-
-        override fun navigateUp(): Boolean {
-            if (currentChild.navigateUp()) return true
-            currentChild.up?.let { up ->
-                children.removeAt(children.lastIndex)
-                return navigate(route = up)
-            }
-            return pop()
-        }
-
-        override fun pop(): Boolean {
-            if (currentChild.pop()) return true
-            if (children.size <= 1) return false
-            children.removeAt(children.lastIndex)
-            return true
-        }
-
-        override fun pop(route: T, inclusive: Boolean): Boolean {
-            if (currentChild.pop(route, inclusive)) return true
-            if (children.size <= 1) return false
-            val index = children.indexOfLast { it.key == route }
-            if (index == -1) return false
-            children.removeRange(index + if (inclusive) 0 else 1, children.size)
-            return true
-        }
     }
 
     /**
@@ -165,21 +95,5 @@ sealed interface NavNode<T : NavKey> {
          * the selected key
          */
         var selected: T by mutableStateOf(selected)
-
-        override fun navigate(route: NavNode<T>): Boolean {
-            if (selected == route.key) return true
-            if (children.any { it.key == route.key }) {
-                selected = route.key
-                return true
-            }
-            return selectedChild.navigate(route)
-        }
-
-        override fun navigateUp(): Boolean = selectedChild.navigateUp()
-
-        override fun pop(): Boolean = selectedChild.pop()
-
-        override fun pop(route: T, inclusive: Boolean): Boolean =
-            selectedChild.pop(route, inclusive)
     }
 }
