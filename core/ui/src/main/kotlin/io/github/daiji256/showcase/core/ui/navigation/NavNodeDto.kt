@@ -11,6 +11,10 @@ internal sealed interface NavNodeDto<T : NavKey> {
         val key:
         @Serializable(with = NavKeySerializer::class)
         T,
+        val up: NavNodeDto<
+            @Serializable(with = NavKeySerializer::class)
+            T,
+            >?,
     ) : NavNodeDto<T>
 
     @Serializable
@@ -24,6 +28,10 @@ internal sealed interface NavNodeDto<T : NavKey> {
                 T,
                 >,
             >,
+        val up: NavNodeDto<
+            @Serializable(with = NavKeySerializer::class)
+            T,
+            >?,
     ) : NavNodeDto<T>
 
     @Serializable
@@ -40,5 +48,9 @@ internal sealed interface NavNodeDto<T : NavKey> {
                 T,
                 >,
             >,
+        val up: NavNodeDto<
+            @Serializable(with = NavKeySerializer::class)
+            T,
+            >?,
     ) : NavNodeDto<T>
 }

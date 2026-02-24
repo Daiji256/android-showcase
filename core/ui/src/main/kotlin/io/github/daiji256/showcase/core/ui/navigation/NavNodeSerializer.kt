@@ -57,12 +57,16 @@ internal class NavNodeSelectSerializer<T : NavKey>(
 private fun <T : NavKey> NavNode<T>.toNavNodeDto(): NavNodeDto<T> =
     when (this) {
         is NavNode.Leaf ->
-            NavNodeDto.Leaf(key = key)
+            NavNodeDto.Leaf(
+                key = key,
+                up = up?.toNavNodeDto(),
+            )
 
         is NavNode.Stack ->
             NavNodeDto.Stack(
                 key = key,
                 children = children.map { it.toNavNodeDto() },
+                up = up?.toNavNodeDto(),
             )
 
         is NavNode.Select ->
@@ -70,18 +74,23 @@ private fun <T : NavKey> NavNode<T>.toNavNodeDto(): NavNodeDto<T> =
                 key = key,
                 selected = selected,
                 children = children.map { it.toNavNodeDto() },
+                up = up?.toNavNodeDto(),
             )
     }
 
 private fun <T : NavKey> NavNodeDto<T>.toNavNode(): NavNode<T> =
     when (this) {
         is NavNodeDto.Leaf ->
-            NavNode.Leaf(key = key)
+            NavNode.Leaf(
+                key = key,
+                up = up?.toNavNode(),
+            )
 
         is NavNodeDto.Stack ->
             NavNode.Stack(
                 key = key,
                 children = children.map { it.toNavNode() },
+                up = up?.toNavNode(),
             )
 
         is NavNodeDto.Select ->
@@ -89,5 +98,6 @@ private fun <T : NavKey> NavNodeDto<T>.toNavNode(): NavNode<T> =
                 key = key,
                 selected = selected,
                 children = children.map { it.toNavNode() }.toSet(),
+                up = up?.toNavNode(),
             )
     }
