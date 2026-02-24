@@ -163,7 +163,7 @@ sealed interface NavNode<T : NavKey> {
         /**
          * the selected key
          */
-        var selected by mutableStateOf(selected)
+        var selected: T by mutableStateOf(selected)
 
         override fun navigate(route: NavNode<T>): Boolean {
             if (selected == route.key) return true
