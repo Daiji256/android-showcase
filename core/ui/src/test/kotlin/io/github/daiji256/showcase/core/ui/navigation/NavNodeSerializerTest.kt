@@ -15,6 +15,9 @@ class NavNodeSerializerTest {
     data object FirstNavKey : NavKey
 
     @Serializable
+    data object SecondNavKey : NavKey
+
+    @Serializable
     data object TabSelectNavKey : NavKey
 
     @Serializable
@@ -46,7 +49,10 @@ class NavNodeSerializerTest {
         val original: NavNode<NavKey> = NavNode.Stack(
             key = RootNavKey,
             children = listOf(
-                NavNode.Leaf(key = FirstNavKey),
+                NavNode.Leaf(
+                    key = SecondNavKey,
+                    up = NavNode.Leaf(key = FirstNavKey),
+                ),
                 NavNode.Select(
                     key = TabSelectNavKey,
                     selected = Tab1StackNavKey,

@@ -20,12 +20,26 @@ sealed interface NavNode<T : NavKey> {
     val key: T
 
     /**
+     * the parent [NavNode]
+     *
+     * @see NavNode.navigateUp
+     */
+    val up: NavNode<T>?
+
+    /**
      * navigate to the [route]
      *
      * @param route the destination [NavNode]
      * @return `true` if navigation was handled, `false` otherwise
      */
     fun navigate(route: NavNode<T>): Boolean
+
+    /**
+     * navigate up
+     *
+     * @return `true` if navigation was handled, `false` otherwise
+     */
+    fun navigateUp(): Boolean
 
     /**
      * pop the back
@@ -49,8 +63,11 @@ sealed interface NavNode<T : NavKey> {
     @Serializable(with = NavNodeLeafSerializer::class)
     class Leaf<T : NavKey>(
         override val key: T,
+        override val up: NavNode<T>? = null,
     ) : NavNode<T> {
         override fun navigate(route: NavNode<T>): Boolean = key == route.key
+
+        override fun navigateUp(): Boolean = false
 
         override fun pop(): Boolean = false
 
@@ -66,6 +83,7 @@ sealed interface NavNode<T : NavKey> {
     class Stack<T : NavKey>(
         override val key: T,
         children: List<NavNode<T>>,
+        override val up: NavNode<T>? = null,
     ) : NavNode<T> {
         init {
             require(children.isNotEmpty()) {
@@ -82,9 +100,18 @@ sealed interface NavNode<T : NavKey> {
             get() = _children
 
         override fun navigate(route: NavNode<T>): Boolean {
-            if (currentChild.key == route.key) return true
-            if (currentChild.navigate(route)) return true
+            if (children.lastOrNull()?.key == route.key) return true
+            if (children.lastOrNull()?.navigate(route) == true) return true
             return _children.add(route)
+        }
+
+        override fun navigateUp(): Boolean {
+            if (currentChild.navigateUp()) return true
+            currentChild.up?.let { up ->
+                _children.removeAt(children.lastIndex)
+                return navigate(route = up)
+            }
+            return pop()
         }
 
         override fun pop(): Boolean {
@@ -115,6 +142,7 @@ sealed interface NavNode<T : NavKey> {
         override val key: T,
         selected: T,
         val children: Set<NavNode<T>>,
+        override val up: NavNode<T>? = null,
     ) : NavNode<T> {
         init {
             require(children.isNotEmpty()) {
@@ -142,6 +170,8 @@ sealed interface NavNode<T : NavKey> {
             }
             return selectedChild.navigate(route)
         }
+
+        override fun navigateUp(): Boolean = selectedChild.navigateUp()
 
         override fun pop(): Boolean = selectedChild.pop()
 
