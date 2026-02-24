@@ -28,11 +28,20 @@ sealed interface NavNode<T : NavKey> {
     fun navigate(route: NavNode<T>): Boolean
 
     /**
-     * navigate back
+     * pop the back
      *
      * @return `true` if back navigation was handled, `false` otherwise
      */
-    fun back(): Boolean
+    fun pop(): Boolean
+
+    /**
+     * pop the back to the [route]
+     *
+     * @param route the destination [NavNode]
+     * @param inclusive whether the [route] should be popped
+     * @return `true` if back navigation was handled, `false` otherwise
+     */
+    fun pop(route: T, inclusive: Boolean): Boolean
 
     /**
      * Leaf node that represent navigation key.
@@ -43,7 +52,9 @@ sealed interface NavNode<T : NavKey> {
     ) : NavNode<T> {
         override fun navigate(route: NavNode<T>): Boolean = key == route.key
 
-        override fun back(): Boolean = false
+        override fun pop(): Boolean = false
+
+        override fun pop(route: T, inclusive: Boolean): Boolean = false
     }
 
     /**
@@ -70,19 +81,25 @@ sealed interface NavNode<T : NavKey> {
         val children: List<NavNode<T>>
             get() = _children
 
-        private val currentChild
-            get() = children.lastOrNull() ?: error("No children")
-
         override fun navigate(route: NavNode<T>): Boolean {
             if (currentChild.key == route.key) return true
             if (currentChild.navigate(route)) return true
             return _children.add(route)
         }
 
-        override fun back(): Boolean {
-            if (currentChild.back()) return true
+        override fun pop(): Boolean {
+            if (currentChild.pop()) return true
             if (children.size <= 1) return false
             _children.removeAt(children.lastIndex)
+            return true
+        }
+
+        override fun pop(route: T, inclusive: Boolean): Boolean {
+            if (currentChild.pop(route, inclusive)) return true
+            if (children.size <= 1) return false
+            val index = children.indexOfLast { it.key == route }
+            if (index == -1) return false
+            _children.removeRange(index + if (inclusive) 0 else 1, children.size)
             return true
         }
     }
@@ -117,10 +134,6 @@ sealed interface NavNode<T : NavKey> {
         var selected by mutableStateOf(selected)
             private set
 
-        private val selectedChild
-            get() = children.firstOrNull { it.key == selected }
-                ?: error("No child for ${this@Select.selected}")
-
         override fun navigate(route: NavNode<T>): Boolean {
             if (selected == route.key) return true
             if (children.any { it.key == route.key }) {
@@ -130,6 +143,9 @@ sealed interface NavNode<T : NavKey> {
             return selectedChild.navigate(route)
         }
 
-        override fun back(): Boolean = selectedChild.back()
+        override fun pop(): Boolean = selectedChild.pop()
+
+        override fun pop(route: T, inclusive: Boolean): Boolean =
+            selectedChild.pop(route, inclusive)
     }
 }

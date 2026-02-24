@@ -26,20 +26,20 @@ class NavNodeTest {
     }
 
     @Test
-    fun stack_back_single() {
+    fun stack_pop_single() {
         val a = TestNavKey(value = "a")
         val tree = NavNode.Stack(
             key = TestNavKey(value = "stack"),
             children = listOf(NavNode.Leaf(key = a)),
         )
 
-        assertFalse(tree.back())
+        assertFalse(tree.pop())
         assertEquals(1, tree.children.size)
         assertEquals(a, (tree.children.last() as NavNode.Leaf).key)
     }
 
     @Test
-    fun stack_back_multiple() {
+    fun stack_pop_multiple() {
         val a = TestNavKey(value = "a")
         val b = TestNavKey(value = "b")
         val tree = NavNode.Stack(
@@ -47,7 +47,7 @@ class NavNodeTest {
             children = listOf(NavNode.Leaf(key = a), NavNode.Leaf(key = b)),
         )
 
-        assertTrue(tree.back())
+        assertTrue(tree.pop())
         assertEquals(1, tree.children.size)
         assertEquals(a, (tree.children.last() as NavNode.Leaf).key)
     }
@@ -91,9 +91,9 @@ class NavNodeTest {
         assertEquals(2, tree.getChild(tree.selected).children.size)
         assertEquals(c, (tree.getChild(tree.selected).children.last() as NavNode.Leaf).key)
         assertEquals(1, tree.getChild(b).children.size)
-        assertTrue(tree.back())
+        assertTrue(tree.pop())
         assertEquals(a, tree.selected)
         assertEquals(1, tree.getChild(tree.selected).children.size)
-        assertFalse(tree.back())
+        assertFalse(tree.pop())
     }
 }
