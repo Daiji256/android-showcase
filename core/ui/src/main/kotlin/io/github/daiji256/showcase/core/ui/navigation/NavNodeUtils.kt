@@ -46,7 +46,8 @@ fun <T : NavKey> NavNode<T>.navigateUp(): Boolean {
             if (currentChild.navigateUp()) return true
             currentChild.up?.let { up ->
                 children.removeAt(children.lastIndex)
-                return navigate(route = up)
+                if (children.lastOrNull()?.navigate(route = up) == true) return true
+                return children.add(up)
             }
             return pop()
         }
