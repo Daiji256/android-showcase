@@ -9,14 +9,14 @@ import androidx.navigation3.runtime.NavKey
  * @return `true` if navigation was handled, `false` otherwise
  */
 fun <T : NavKey> NavNode<T>.navigate(route: NavNode<T>): Boolean {
+    if (key == route.key) return true
     when (this) {
         is NavNode.Leaf -> {
-            return key == route.key
+            return false
         }
 
         is NavNode.Stack -> {
-            if (children.lastOrNull()?.key == route.key) return true
-            if (children.lastOrNull()?.navigate(route = route) == true) return true
+            if (currentChild.navigate(route = route)) return true
             return children.add(route)
         }
 
@@ -27,6 +27,52 @@ fun <T : NavKey> NavNode<T>.navigate(route: NavNode<T>): Boolean {
                 return true
             }
             return selectedChild.navigate(route = route)
+        }
+    }
+}
+
+/**
+ * navigate to the [route]
+ *
+ * @param route the destination [NavNode]
+ * @param popUpTo the destination to pop up to
+ * @param inclusive whether the [popUpTo] destination should be popped
+ * @return `true` if navigation was handled, `false` otherwise
+ */
+fun <T : NavKey> NavNode<T>.navigate(
+    route: NavNode<T>,
+    popUpTo: T,
+    inclusive: Boolean = false,
+): Boolean {
+    if (key == route.key) return true
+    when (this) {
+        is NavNode.Leaf -> {
+            return false
+        }
+
+        is NavNode.Stack -> {
+            if (currentChild.key == route.key) {
+                val index = children.indexOfLast { it.key == popUpTo }
+                if (index != -1) {
+                    children.removeRange(index + if (inclusive) 0 else 1, children.size - 1)
+                }
+                return true
+            }
+            if (currentChild.navigate(route, popUpTo, inclusive)) return true
+            val index = children.indexOfLast { it.key == popUpTo }
+            if (index != -1) {
+                children.removeRange(index + if (inclusive) 0 else 1, children.size)
+            }
+            return children.add(route)
+        }
+
+        is NavNode.Select -> {
+            if (selected == route.key) return true
+            if (children.any { it.key == route.key }) {
+                selected = route.key
+                return true
+            }
+            return selectedChild.navigate(route, popUpTo, inclusive)
         }
     }
 }
@@ -46,9 +92,12 @@ fun <T : NavKey> NavNode<T>.navigateUp(): Boolean {
             if (currentChild.navigateUp()) return true
             currentChild.up?.let { up ->
                 children.removeAt(children.lastIndex)
-                return navigate(route = up)
+                if (children.lastOrNull()?.navigate(route = up) == true) return true
+                return children.add(up)
             }
-            return pop()
+            if (children.size <= 1) return false
+            children.removeAt(children.lastIndex)
+            return true
         }
 
         is NavNode.Select -> {
