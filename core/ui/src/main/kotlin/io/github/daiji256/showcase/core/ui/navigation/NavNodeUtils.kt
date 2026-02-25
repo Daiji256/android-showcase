@@ -12,7 +12,7 @@ fun <T : NavKey> NavNode<T>.navigate(route: NavNode<T>): Boolean {
     if (key == route.key) return true
     when (this) {
         is NavNode.Leaf -> {
-            return key == route.key
+            return false
         }
 
         is NavNode.Stack -> {
