@@ -148,6 +148,7 @@ fun <T : NavKey> NavNode<T>.pop(route: T, inclusive: Boolean): Boolean {
             if (children.size <= 1) return false
             val index = children.indexOfLast { it.key == route }
             if (index == -1) return false
+            if (index == 0 && inclusive) return false
             children.removeRange(index + if (inclusive) 0 else 1, children.size)
             return true
         }
