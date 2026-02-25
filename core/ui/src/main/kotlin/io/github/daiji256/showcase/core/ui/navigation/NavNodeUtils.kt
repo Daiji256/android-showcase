@@ -19,8 +19,8 @@ fun <T : NavKey> NavNode<T>.navigate(route: NavNode<T>): Boolean {
         }
 
         is NavNode.Stack -> {
-            // delegate navigation to current child
-            if (currentChild.navigate(route = route)) return true
+            // delegate navigation to last child
+            if (lastChild.navigate(route = route)) return true
 
             // push route
             return children.add(route)
@@ -66,7 +66,7 @@ fun <T : NavKey> NavNode<T>.navigate(
 
         is NavNode.Stack -> {
             // if same key, pop and treat as success (single top)
-            if (currentChild.key == route.key) {
+            if (lastChild.key == route.key) {
                 val index = children.indexOfLast { it.key == popUpTo }
                 if (index != -1) {
                     children.removeRange(index + if (inclusive) 0 else 1, children.size - 1)
@@ -74,8 +74,8 @@ fun <T : NavKey> NavNode<T>.navigate(
                 return true
             }
 
-            // delegate navigation to current child
-            if (currentChild.navigate(route, popUpTo, inclusive)) return true
+            // delegate navigation to last child
+            if (lastChild.navigate(route, popUpTo, inclusive)) return true
 
             // pop and then push route
             val index = children.indexOfLast { it.key == popUpTo }
@@ -114,11 +114,11 @@ fun <T : NavKey> NavNode<T>.navigateUp(): Boolean {
         }
 
         is NavNode.Stack -> {
-            // delegate navigation to current child
-            if (currentChild.navigateUp()) return true
+            // delegate navigation to last child
+            if (lastChild.navigateUp()) return true
 
             // pop and navigate up
-            val up = currentChild.up
+            val up = lastChild.up
             if (up != null) {
                 children.removeAt(children.lastIndex)
 
@@ -132,7 +132,7 @@ fun <T : NavKey> NavNode<T>.navigateUp(): Boolean {
             // if it will be empty, don't pop
             if (children.size <= 1) return false
 
-            // pop the current child
+            // pop the last child
             children.removeAt(children.lastIndex)
             return true
         }
@@ -157,13 +157,13 @@ fun <T : NavKey> NavNode<T>.pop(): Boolean {
         }
 
         is NavNode.Stack -> {
-            // delegate pop to current child
-            if (currentChild.pop()) return true
+            // delegate pop to last child
+            if (lastChild.pop()) return true
 
             // if it will be empty, don't pop
             if (children.size <= 1) return false
 
-            // pop the current child
+            // pop the last child
             children.removeAt(children.lastIndex)
             return true
         }
@@ -190,8 +190,8 @@ fun <T : NavKey> NavNode<T>.pop(route: T, inclusive: Boolean): Boolean {
         }
 
         is NavNode.Stack -> {
-            // delegate pop to current child
-            if (currentChild.pop(route = route, inclusive = inclusive)) return true
+            // delegate pop to last child
+            if (lastChild.pop(route = route, inclusive = inclusive)) return true
 
             // find index of the route
             val index = children.indexOfLast { it.key == route }
@@ -214,7 +214,7 @@ fun <T : NavKey> NavNode<T>.pop(route: T, inclusive: Boolean): Boolean {
     }
 }
 
-internal val <T : NavKey> NavNode.Stack<T>.currentChild: NavNode<T>
+internal val <T : NavKey> NavNode.Stack<T>.lastChild: NavNode<T>
     get() = children.lastOrNull() ?: error("No children")
 
 internal val <T : NavKey> NavNode.Select<T>.selectedChild
