@@ -32,6 +32,52 @@ fun <T : NavKey> NavNode<T>.navigate(route: NavNode<T>): Boolean {
 }
 
 /**
+ * navigate to the [route]
+ *
+ * @param route the destination [NavNode]
+ * @param popUpTo the destination to pop up to
+ * @param inclusive whether the [popUpTo] destination should be popped
+ * @return `true` if navigation was handled, `false` otherwise
+ */
+fun <T : NavKey> NavNode<T>.navigate(
+    route: NavNode<T>,
+    popUpTo: T,
+    inclusive: Boolean = false,
+): Boolean {
+    if (key == route.key) return true
+    when (this) {
+        is NavNode.Leaf -> {
+            return false
+        }
+
+        is NavNode.Stack -> {
+            if (currentChild.key == route.key) {
+                val index = children.indexOfLast { it.key == popUpTo }
+                if (index != -1) {
+                    children.removeRange(index + if (inclusive) 0 else 1, children.size - 1)
+                }
+                return true
+            }
+            if (currentChild.navigate(route, popUpTo, inclusive)) return true
+            val index = children.indexOfLast { it.key == popUpTo }
+            if (index != -1) {
+                children.removeRange(index + if (inclusive) 0 else 1, children.size)
+            }
+            return children.add(route)
+        }
+
+        is NavNode.Select -> {
+            if (selected == route.key) return true
+            if (children.any { it.key == route.key }) {
+                selected = route.key
+                return true
+            }
+            return selectedChild.navigate(route, popUpTo, inclusive)
+        }
+    }
+}
+
+/**
  * navigate up
  *
  * @return `true` if navigation was handled, `false` otherwise
