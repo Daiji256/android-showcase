@@ -49,7 +49,9 @@ fun <T : NavKey> NavNode<T>.navigateUp(): Boolean {
                 if (children.lastOrNull()?.navigate(route = up) == true) return true
                 return children.add(up)
             }
-            return pop()
+            if (children.size <= 1) return false
+            children.removeAt(children.lastIndex)
+            return true
         }
 
         is NavNode.Select -> {
