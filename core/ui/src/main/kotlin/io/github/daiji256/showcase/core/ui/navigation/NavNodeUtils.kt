@@ -9,14 +9,14 @@ import androidx.navigation3.runtime.NavKey
  * @return `true` if navigation was handled, `false` otherwise
  */
 fun <T : NavKey> NavNode<T>.navigate(route: NavNode<T>): Boolean {
+    if (key == route.key) return true
     when (this) {
         is NavNode.Leaf -> {
             return key == route.key
         }
 
         is NavNode.Stack -> {
-            if (children.lastOrNull()?.key == route.key) return true
-            if (children.lastOrNull()?.navigate(route = route) == true) return true
+            if (currentChild.navigate(route = route)) return true
             return children.add(route)
         }
 
