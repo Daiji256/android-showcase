@@ -64,7 +64,7 @@ class Navigator<T : NavKey>(private val tree: NavNode<T>) {
     /**
      * pop the back to the [route]
      *
-     * @param route the destination [NavNode]
+     * @param route the destination [NavKey]
      * @param inclusive whether the [route] should be popped
      * @return `true` if back navigation was handled, `false` otherwise
      */
