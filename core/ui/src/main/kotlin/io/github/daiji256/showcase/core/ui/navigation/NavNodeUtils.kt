@@ -2,13 +2,7 @@ package io.github.daiji256.showcase.core.ui.navigation
 
 import androidx.navigation3.runtime.NavKey
 
-/**
- * navigate to the [route]
- *
- * @param route the destination [NavNode]
- * @return `true` if navigation was handled, `false` otherwise
- */
-fun <T : NavKey> NavNode<T>.navigate(route: NavNode<T>): Boolean {
+internal fun <T : NavKey> NavNode<T>.navigate(route: NavNode<T>): Boolean {
     // if same key, treat as success (single top)
     if (key == route.key) return true
 
@@ -42,15 +36,7 @@ fun <T : NavKey> NavNode<T>.navigate(route: NavNode<T>): Boolean {
     }
 }
 
-/**
- * navigate to the [route]
- *
- * @param route the destination [NavNode]
- * @param popUpTo the destination to pop up to
- * @param inclusive whether the [popUpTo] destination should be popped
- * @return `true` if navigation was handled, `false` otherwise
- */
-fun <T : NavKey> NavNode<T>.navigate(
+internal fun <T : NavKey> NavNode<T>.navigate(
     route: NavNode<T>,
     popUpTo: T,
     inclusive: Boolean = false,
@@ -101,12 +87,7 @@ fun <T : NavKey> NavNode<T>.navigate(
     }
 }
 
-/**
- * navigate up
- *
- * @return `true` if navigation was handled, `false` otherwise
- */
-fun <T : NavKey> NavNode<T>.navigateUp(): Boolean {
+internal fun <T : NavKey> NavNode<T>.navigateUp(): Boolean {
     when (this) {
         is NavNode.Leaf -> {
             // cannot navigate from leaf node
@@ -144,12 +125,7 @@ fun <T : NavKey> NavNode<T>.navigateUp(): Boolean {
     }
 }
 
-/**
- * pop the back
- *
- * @return `true` if back navigation was handled, `false` otherwise
- */
-fun <T : NavKey> NavNode<T>.pop(): Boolean {
+internal fun <T : NavKey> NavNode<T>.pop(): Boolean {
     when (this) {
         is NavNode.Leaf -> {
             // cannot pop from leaf node
@@ -175,14 +151,7 @@ fun <T : NavKey> NavNode<T>.pop(): Boolean {
     }
 }
 
-/**
- * pop the back to the [route]
- *
- * @param route the destination [NavNode]
- * @param inclusive whether the [route] should be popped
- * @return `true` if back navigation was handled, `false` otherwise
- */
-fun <T : NavKey> NavNode<T>.pop(route: T, inclusive: Boolean): Boolean {
+internal fun <T : NavKey> NavNode<T>.pop(route: T, inclusive: Boolean): Boolean {
     when (this) {
         is NavNode.Leaf -> {
             // cannot pop from leaf node
