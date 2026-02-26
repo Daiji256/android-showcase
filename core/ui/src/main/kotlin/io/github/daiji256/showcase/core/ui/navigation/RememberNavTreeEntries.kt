@@ -59,7 +59,7 @@ private fun <T : NavKey> rememberNavTreeKeys(
             val active = mutableListOf<T>()
             val inactive = mutableListOf<T>()
 
-            // Stack of (isActive, node)
+            // stack of (isActive, node)
             val pending = ArrayDeque<Pair<Boolean, NavNode<T>>>()
             pending.addLast(true to tree)
 
