@@ -45,7 +45,7 @@ class NavNodeSerializerTest {
     data class OuterNavKey(val value: String) : NavKey
 
     @Test
-    fun serialize_and_deserialize() {
+    fun serializeAndDeserialize() {
         val original: NavNode<NavKey> = NavNode.Stack(
             key = RootNavKey,
             children = listOf(
