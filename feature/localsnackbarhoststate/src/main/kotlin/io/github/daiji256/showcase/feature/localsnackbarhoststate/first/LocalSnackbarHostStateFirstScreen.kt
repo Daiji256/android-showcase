@@ -12,11 +12,24 @@ import io.github.daiji256.showcase.core.designsystem.theme.ShowcaseTheme
 import io.github.daiji256.showcase.core.ui.document.Document
 import io.github.daiji256.showcase.core.ui.localsnackbarhoststate.LocalSnackbarHostState
 import io.github.daiji256.showcase.core.ui.markdown.Markdown
+import io.github.daiji256.showcase.core.ui.navigation.LocalNavigator
 import io.github.daiji256.showcase.feature.localsnackbarhoststate.R
+import io.github.daiji256.showcase.feature.localsnackbarhoststate.second.LocalSnackbarHostStateSecondNavKey
 import kotlinx.coroutines.launch
 
 @Composable
-internal fun FirstScreen(
+internal fun LocalSnackbarHostStateFirstScreen() {
+    val navigator = LocalNavigator.current
+    LocalSnackbarHostStateFirstScreen(
+        onNavigateUpClick = navigator::navigateUp,
+        onNavigateToSecondClick = {
+            navigator.navigate(route = LocalSnackbarHostStateSecondNavKey)
+        },
+    )
+}
+
+@Composable
+private fun LocalSnackbarHostStateFirstScreen(
     onNavigateUpClick: () -> Unit,
     onNavigateToSecondClick: () -> Unit,
 ) {
@@ -66,9 +79,9 @@ internal fun FirstScreen(
 
 @Preview(showSystemUi = true)
 @Composable
-private fun FirstScreenPreview() {
+private fun LocalSnackbarHostStateFirstScreenPreview() {
     ShowcaseTheme {
-        FirstScreen(
+        LocalSnackbarHostStateFirstScreen(
             onNavigateUpClick = {},
             onNavigateToSecondClick = {},
         )

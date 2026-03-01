@@ -5,17 +5,17 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import io.github.daiji256.showcase.core.designsystem.theme.ShowcaseTheme
 import io.github.daiji256.showcase.core.ui.document.Document
+import io.github.daiji256.showcase.core.ui.navigation.LocalNavigator
 import io.github.daiji256.showcase.feature.hiltcomposable.bar.Bar
 import io.github.daiji256.showcase.feature.hiltcomposable.bar.rememberBar
 import io.github.daiji256.showcase.feature.hiltcomposable.foo.Foo
 import io.github.daiji256.showcase.feature.hiltcomposable.foo.rememberFoo
 
 @Composable
-internal fun HiltComposableScreen(
-    onNavigateUpClick: () -> Unit,
-) {
+internal fun HiltComposableScreen() {
+    val navigator = LocalNavigator.current
     HiltComposableScreen(
-        onNavigateUpClick = onNavigateUpClick,
+        onNavigateUpClick = navigator::navigateUp,
         foo = rememberFoo(),
         bar = rememberBar(),
     )

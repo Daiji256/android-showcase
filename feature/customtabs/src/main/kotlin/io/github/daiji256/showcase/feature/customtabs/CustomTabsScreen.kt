@@ -10,15 +10,16 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import io.github.daiji256.showcase.core.designsystem.theme.ShowcaseTheme
 import io.github.daiji256.showcase.core.ui.document.Document
 import io.github.daiji256.showcase.core.ui.markdown.Markdown
+import io.github.daiji256.showcase.core.ui.navigation.LocalNavigator
 
 @Composable
 internal fun CustomTabsScreen(
-    onNavigateUpClick: () -> Unit,
     viewModel: CustomTabsViewModel = hiltViewModel(),
 ) {
+    val navigator = LocalNavigator.current
     val customTabsLauncher = rememberCustomTabsLauncher()
     CustomTabsScreen(
-        onNavigateUpClick = onNavigateUpClick,
+        onNavigateUpClick = navigator::navigateUp,
         launchCustomTabFromActivityContext = { uri ->
             customTabsLauncher.launch(uri = uri.toUri())
         },

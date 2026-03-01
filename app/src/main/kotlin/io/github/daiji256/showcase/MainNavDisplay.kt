@@ -3,12 +3,14 @@ package io.github.daiji256.showcase
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDecorator
+import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.runtime.entryProvider
-import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
 import io.github.daiji256.showcase.core.designsystem.theme.ShowcaseAnimations
-import io.github.daiji256.showcase.core.ui.showcase.ShowcaseNavKey
+import io.github.daiji256.showcase.core.ui.navigation.LocalNavigator
+import io.github.daiji256.showcase.core.ui.navigation.NavNode
+import io.github.daiji256.showcase.core.ui.navigation.rememberNavTreeEntries
 import io.github.daiji256.showcase.core.ui.showcase.showcase
 import io.github.daiji256.showcase.feature.customtabs.customTabs
 import io.github.daiji256.showcase.feature.customtabs.customTabsSummary
@@ -34,13 +36,10 @@ import kotlinx.collections.immutable.persistentListOf
 
 @Composable
 internal fun MainNavDisplay(
+    tree: NavNode<NavKey>,
     modifier: Modifier = Modifier,
 ) {
-    val backStack = rememberNavBackStack(ShowcaseNavKey)
-    val navigateUp: () -> Unit = {
-        backStack.removeLastOrNull()
-        // TODO: Deep links support
-    }
+    val navigator = LocalNavigator.current
     val features = persistentListOf(
         customTabsSummary,
         hiltComposableSummary,
@@ -53,32 +52,33 @@ internal fun MainNavDisplay(
         safeUriHandlerSummary,
         systemStyleSummary,
     )
-
-    NavDisplay(
-        backStack = backStack,
+    val entries = rememberNavTreeEntries(
+        tree = tree,
         entryDecorators = listOf(
             rememberSaveableStateHolderNavEntryDecorator(),
             rememberViewModelStoreNavEntryDecorator(),
         ),
+        entryProvider = entryProvider {
+            showcase(features = features)
+            customTabs()
+            hiltComposable()
+            ktlint()
+            license()
+            localSnackbarHostState()
+            navigation2Arguments()
+            navNode()
+            roborazzi()
+            safeUriHandler()
+            systemStyle()
+        },
+    )
+
+    NavDisplay(
+        entries = entries,
+        onBack = navigator::pop,
         transitionSpec = ShowcaseAnimations.transitionSpec(),
         popTransitionSpec = ShowcaseAnimations.popTransitionSpec(),
         // TODO: predictivePopTransitionSpec,
         modifier = modifier,
-        entryProvider = entryProvider {
-            showcase(
-                features = features,
-                onFeatureClick = { backStack.add(it.navKey) },
-            )
-            customTabs(onNavigateUpClick = navigateUp)
-            hiltComposable(onNavigateUpClick = navigateUp)
-            ktlint(onNavigateUpClick = navigateUp)
-            license(onNavigateUpClick = navigateUp)
-            localSnackbarHostState(onNavigateUpClick = navigateUp)
-            navigation2Arguments(onNavigateUpClick = navigateUp)
-            navNode(onNavigateUpClick = navigateUp)
-            roborazzi(onNavigateUpClick = navigateUp)
-            safeUriHandler(onNavigateUpClick = navigateUp)
-            systemStyle(onNavigateUpClick = navigateUp)
-        },
     )
 }

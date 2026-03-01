@@ -14,9 +14,7 @@ import io.github.daiji256.showcase.feature.navigation2arguments.viewmodelargsrec
 import io.github.daiji256.showcase.feature.navigation2arguments.viewmodelargsreceiver.viewModelArgsReceiver
 
 @Composable
-internal fun Navigation2ArgumentsScreen(
-    onNavigateUpClick: () -> Unit,
-) {
+internal fun Navigation2ArgumentsScreen() {
     val navController = rememberNavController()
     NavHost(
         startDestination = ArgsSenderRoute,
@@ -27,7 +25,6 @@ internal fun Navigation2ArgumentsScreen(
         popExitTransition = ShowcaseAnimations.popExitTransition(),
     ) {
         argsSender(
-            onNavigateUpClick = onNavigateUpClick,
             onReceiveArgDirectlyClick = { arg ->
                 navController.navigate(route = DirectArgsReceiverRoute(arg = arg))
             },

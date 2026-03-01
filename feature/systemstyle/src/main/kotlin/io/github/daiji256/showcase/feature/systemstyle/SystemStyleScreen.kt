@@ -7,9 +7,18 @@ import androidx.compose.ui.tooling.preview.Preview
 import io.github.daiji256.showcase.core.designsystem.theme.ShowcaseTheme
 import io.github.daiji256.showcase.core.ui.document.Document
 import io.github.daiji256.showcase.core.ui.markdown.Markdown
+import io.github.daiji256.showcase.core.ui.navigation.LocalNavigator
 
 @Composable
-internal fun SystemStyleScreen(
+internal fun SystemStyleScreen() {
+    val navigator = LocalNavigator.current
+    SystemStyleScreen(
+        onNavigateUpClick = navigator::navigateUp,
+    )
+}
+
+@Composable
+private fun SystemStyleScreen(
     onNavigateUpClick: () -> Unit,
 ) {
     Document(
