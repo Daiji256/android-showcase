@@ -1,6 +1,5 @@
 package io.github.daiji256.showcase
 
-import androidx.compose.runtime.Composable
 import io.github.daiji256.showcase.core.ui.feature.FeatureSummary
 import io.github.daiji256.showcase.feature.customtabs.CustomTabsSummary
 import io.github.daiji256.showcase.feature.hiltcomposable.HiltComposableSummary
@@ -15,8 +14,8 @@ import io.github.daiji256.showcase.feature.systemstyle.SystemStyleSummary
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 
-internal val Features: ImmutableList<FeatureSummary>
-    @Composable get() = persistentListOf(
+internal val Features: ImmutableList<FeatureSummary> =
+    persistentListOf(
         CustomTabsSummary,
         HiltComposableSummary,
         KtlintSummary,
