@@ -12,26 +12,26 @@ import io.github.daiji256.showcase.core.ui.navigation.LocalNavigator
 import io.github.daiji256.showcase.core.ui.navigation.NavNode
 import io.github.daiji256.showcase.core.ui.navigation.rememberNavTreeEntries
 import io.github.daiji256.showcase.core.ui.showcase.showcase
+import io.github.daiji256.showcase.feature.customtabs.CustomTabsSummary
 import io.github.daiji256.showcase.feature.customtabs.customTabs
-import io.github.daiji256.showcase.feature.customtabs.customTabsSummary
+import io.github.daiji256.showcase.feature.hiltcomposable.HiltComposableSummary
 import io.github.daiji256.showcase.feature.hiltcomposable.hiltComposable
-import io.github.daiji256.showcase.feature.hiltcomposable.hiltComposableSummary
+import io.github.daiji256.showcase.feature.ktlint.KtlintSummary
 import io.github.daiji256.showcase.feature.ktlint.ktlint
-import io.github.daiji256.showcase.feature.ktlint.ktlintSummary
+import io.github.daiji256.showcase.feature.license.LicenseSummary
 import io.github.daiji256.showcase.feature.license.license
-import io.github.daiji256.showcase.feature.license.licenseSummary
+import io.github.daiji256.showcase.feature.localsnackbarhoststate.LocalSnackbarHostStateSummary
 import io.github.daiji256.showcase.feature.localsnackbarhoststate.localSnackbarHostState
-import io.github.daiji256.showcase.feature.localsnackbarhoststate.localSnackbarHostStateSummary
+import io.github.daiji256.showcase.feature.navigation2arguments.Navigation2ArgumentsSummary
 import io.github.daiji256.showcase.feature.navigation2arguments.navigation2Arguments
-import io.github.daiji256.showcase.feature.navigation2arguments.navigation2ArgumentsSummary
+import io.github.daiji256.showcase.feature.navnode.NavNodeSummary
 import io.github.daiji256.showcase.feature.navnode.navNode
-import io.github.daiji256.showcase.feature.navnode.navNodeSummary
+import io.github.daiji256.showcase.feature.roborazzi.RoborazziSummary
 import io.github.daiji256.showcase.feature.roborazzi.roborazzi
-import io.github.daiji256.showcase.feature.roborazzi.roborazziSummary
+import io.github.daiji256.showcase.feature.safeurihandler.SafeUriHandlerSummary
 import io.github.daiji256.showcase.feature.safeurihandler.safeUriHandler
-import io.github.daiji256.showcase.feature.safeurihandler.safeUriHandlerSummary
+import io.github.daiji256.showcase.feature.systemstyle.SystemStyleSummary
 import io.github.daiji256.showcase.feature.systemstyle.systemStyle
-import io.github.daiji256.showcase.feature.systemstyle.systemStyleSummary
 import kotlinx.collections.immutable.persistentListOf
 
 @Composable
@@ -41,16 +41,16 @@ internal fun MainNavDisplay(
 ) {
     val navigator = LocalNavigator.current
     val features = persistentListOf(
-        customTabsSummary,
-        hiltComposableSummary,
-        ktlintSummary,
-        licenseSummary,
-        localSnackbarHostStateSummary,
-        navigation2ArgumentsSummary,
-        navNodeSummary,
-        roborazziSummary,
-        safeUriHandlerSummary,
-        systemStyleSummary,
+        CustomTabsSummary,
+        HiltComposableSummary,
+        KtlintSummary,
+        LicenseSummary,
+        LocalSnackbarHostStateSummary,
+        Navigation2ArgumentsSummary,
+        NavNodeSummary,
+        RoborazziSummary,
+        SafeUriHandlerSummary,
+        SystemStyleSummary,
     )
     val entries = rememberNavTreeEntries(
         tree = tree,

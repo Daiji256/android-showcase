@@ -2,10 +2,14 @@ package io.github.daiji256.showcase.feature.navnode
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
+import androidx.navigation3.runtime.NavKey
 import io.github.daiji256.showcase.core.ui.feature.FeatureSummary
+import io.github.daiji256.showcase.core.ui.navigation.Navigator
 
-val navNodeSummary
-    @Composable get() = FeatureSummary(
-        title = stringResource(id = R.string.feature_nav_node_title),
-        navKey = NavNodeNavKey,
-    )
+val NavNodeSummary = object : FeatureSummary {
+    override val title: String
+        @Composable get() = stringResource(id = R.string.feature_nav_node_title)
+
+    override fun Navigator<NavKey>.navigate(): Boolean =
+        navigate(route = NavNodeNavKey)
+}
