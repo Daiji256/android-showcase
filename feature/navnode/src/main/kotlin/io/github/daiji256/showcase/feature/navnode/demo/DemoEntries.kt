@@ -23,6 +23,8 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.dropUnlessResumed
 import androidx.navigation3.runtime.EntryProviderScope
 import androidx.navigation3.runtime.NavKey
+import androidx.navigation3.ui.NavDisplay
+import io.github.daiji256.showcase.core.designsystem.theme.ShowcaseAnimations
 import io.github.daiji256.showcase.core.ui.component.NavigateUpButton
 import io.github.daiji256.showcase.core.ui.navigation.LocalNavigator
 import io.github.daiji256.showcase.core.ui.navigation.NavNode
@@ -199,7 +201,16 @@ internal data object NavigationBarCRootNavKey : NavKey
 internal data object NavigationBarCNavKey : NavKey
 
 internal fun EntryProviderScope<NavKey>.navigationBarC() {
-    entry<NavigationBarCNavKey> { key ->
+    entry<NavigationBarCNavKey>(
+        metadata = NavDisplay.transitionSpec {
+            val initialContentKey = this.initialState.entries.last().contentKey
+            if (initialContentKey == Outer1NavKey.contentKey) {
+                ShowcaseAnimations.popTransitionSpec.invoke(this)
+            } else {
+                ShowcaseAnimations.transitionSpec.invoke(this)
+            }
+        },
+    ) { key ->
         val navigator = LocalNavigator.current
         DemoScaffold(
             key = key,
@@ -218,10 +229,22 @@ internal fun EntryProviderScope<NavKey>.navigationBarC() {
 }
 
 @Serializable
-internal data object Outer1NavKey : NavKey
+internal data object Outer1NavKey : NavKey {
+    val contentKey: String get() = this.toString()
+}
 
 internal fun EntryProviderScope<NavKey>.outer1() {
-    entry<Outer1NavKey> { key ->
+    entry<Outer1NavKey>(
+        clazzContentKey = { it.contentKey },
+        metadata = NavDisplay.transitionSpec {
+            val initialContentKey = this.initialState.entries.last().contentKey
+            if (initialContentKey == Outer2NavKey.contentKey) {
+                ShowcaseAnimations.popTransitionSpec.invoke(this)
+            } else {
+                ShowcaseAnimations.transitionSpec.invoke(this)
+            }
+        },
+    ) { key ->
         val navigator = LocalNavigator.current
         DemoScaffold(
             key = key,
@@ -240,10 +263,14 @@ internal fun EntryProviderScope<NavKey>.outer1() {
 }
 
 @Serializable
-internal data object Outer2NavKey : NavKey
+internal data object Outer2NavKey : NavKey {
+    val contentKey: String get() = this.toString()
+}
 
 internal fun EntryProviderScope<NavKey>.outer2() {
-    entry<Outer2NavKey> { key ->
+    entry<Outer2NavKey>(
+        clazzContentKey = { it.contentKey },
+    ) { key ->
         DemoScaffold(key = key)
     }
 }
