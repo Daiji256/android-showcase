@@ -83,10 +83,34 @@ internal data object NavigationBarRootNavKey : NavKey
 internal data object NavigationBarARootNavKey : NavKey
 
 @Serializable
-internal data object NavigationBarANavKey : NavKey
+internal data object NavigationBarANavKey : NavKey {
+    val contentKey: String get() = this.toString()
+}
 
 internal fun EntryProviderScope<NavKey>.navigationBarA() {
-    entry<NavigationBarANavKey> { key ->
+    entry<NavigationBarANavKey>(
+        clazzContentKey = { it.contentKey },
+        metadata = NavDisplay.transitionSpec {
+            val initialContentKey = this.initialState.entries.last().contentKey
+            when (initialContentKey) {
+                in NavigationBarContentKeys ->
+                    ShowcaseAnimations.topLevelTransitionSpec.invoke(this)
+
+                else ->
+                    ShowcaseAnimations.transitionSpec.invoke(this)
+            }
+        } +
+            NavDisplay.popTransitionSpec {
+                val initialContentKey = this.initialState.entries.last().contentKey
+                when (initialContentKey) {
+                    in NavigationBarContentKeys ->
+                        ShowcaseAnimations.topLevelTransitionSpec.invoke(this)
+
+                    else ->
+                        ShowcaseAnimations.popTransitionSpec.invoke(this)
+                }
+            },
+    ) { key ->
         val navigator = LocalNavigator.current
         DemoScaffold(
             key = key,
@@ -105,10 +129,34 @@ internal fun EntryProviderScope<NavKey>.navigationBarA() {
 }
 
 @Serializable
-internal data object NavigationBarA1NavKey : NavKey
+internal data object NavigationBarA1NavKey : NavKey {
+    val contentKey: String get() = this.toString()
+}
 
 internal fun EntryProviderScope<NavKey>.navigationBarA1() {
-    entry<NavigationBarA1NavKey> { key ->
+    entry<NavigationBarA1NavKey>(
+        clazzContentKey = { it.contentKey },
+        metadata = NavDisplay.transitionSpec {
+            val initialContentKey = this.initialState.entries.last().contentKey
+            when (initialContentKey) {
+                in NavigationBarContentKeys ->
+                    ShowcaseAnimations.topLevelTransitionSpec.invoke(this)
+
+                else ->
+                    ShowcaseAnimations.transitionSpec.invoke(this)
+            }
+        } +
+            NavDisplay.popTransitionSpec {
+                val initialContentKey = this.initialState.entries.last().contentKey
+                when (initialContentKey) {
+                    in NavigationBarContentKeys ->
+                        ShowcaseAnimations.topLevelTransitionSpec.invoke(this)
+
+                    else ->
+                        ShowcaseAnimations.popTransitionSpec.invoke(this)
+                }
+            },
+    ) { key ->
         DemoScaffold(key = key)
     }
 }
@@ -117,10 +165,34 @@ internal fun EntryProviderScope<NavKey>.navigationBarA1() {
 internal data object NavigationBarBRootNavKey : NavKey
 
 @Serializable
-internal data object NavigationBarBNavKey : NavKey
+internal data object NavigationBarBNavKey : NavKey {
+    val contentKey: String get() = this.toString()
+}
 
 internal fun EntryProviderScope<NavKey>.navigationBarB() {
-    entry<NavigationBarBNavKey> { key ->
+    entry<NavigationBarBNavKey>(
+        clazzContentKey = { it.contentKey },
+        metadata = NavDisplay.transitionSpec {
+            val initialContentKey = this.initialState.entries.last().contentKey
+            when (initialContentKey) {
+                in NavigationBarContentKeys ->
+                    ShowcaseAnimations.topLevelTransitionSpec.invoke(this)
+
+                else ->
+                    ShowcaseAnimations.transitionSpec.invoke(this)
+            }
+        } +
+            NavDisplay.popTransitionSpec {
+                val initialContentKey = this.initialState.entries.last().contentKey
+                when (initialContentKey) {
+                    in NavigationBarContentKeys ->
+                        ShowcaseAnimations.topLevelTransitionSpec.invoke(this)
+
+                    else ->
+                        ShowcaseAnimations.popTransitionSpec.invoke(this)
+                }
+            },
+    ) { key ->
         val navigator = LocalNavigator.current
         DemoScaffold(
             key = key,
@@ -151,10 +223,34 @@ internal fun EntryProviderScope<NavKey>.navigationBarB() {
 internal data object NavigationBarBSwitchRootNavKey : NavKey
 
 @Serializable
-internal data object NavigationBarBSwitchXNavKey : NavKey
+internal data object NavigationBarBSwitchXNavKey : NavKey {
+    val contentKey: String get() = this.toString()
+}
 
 internal fun EntryProviderScope<NavKey>.navigationBarBSwitchX() {
-    entry<NavigationBarBSwitchXNavKey> { key ->
+    entry<NavigationBarBSwitchXNavKey>(
+        clazzContentKey = { it.contentKey },
+        metadata = NavDisplay.transitionSpec {
+            val initialContentKey = this.initialState.entries.last().contentKey
+            when (initialContentKey) {
+                in NavigationBarContentKeys ->
+                    ShowcaseAnimations.topLevelTransitionSpec.invoke(this)
+
+                else ->
+                    ShowcaseAnimations.transitionSpec.invoke(this)
+            }
+        } +
+            NavDisplay.popTransitionSpec {
+                val initialContentKey = this.initialState.entries.last().contentKey
+                when (initialContentKey) {
+                    in NavigationBarContentKeys ->
+                        ShowcaseAnimations.topLevelTransitionSpec.invoke(this)
+
+                    else ->
+                        ShowcaseAnimations.popTransitionSpec.invoke(this)
+                }
+            },
+    ) { key ->
         val navigator = LocalNavigator.current
         DemoScaffold(
             key = key,
@@ -173,10 +269,34 @@ internal fun EntryProviderScope<NavKey>.navigationBarBSwitchX() {
 }
 
 @Serializable
-internal data object NavigationBarBSwitchYNavKey : NavKey
+internal data object NavigationBarBSwitchYNavKey : NavKey {
+    val contentKey: String get() = this.toString()
+}
 
 internal fun EntryProviderScope<NavKey>.navigationBarBSwitchY() {
-    entry<NavigationBarBSwitchYNavKey> { key ->
+    entry<NavigationBarBSwitchYNavKey>(
+        clazzContentKey = { it.contentKey },
+        metadata = NavDisplay.transitionSpec {
+            val initialContentKey = this.initialState.entries.last().contentKey
+            when (initialContentKey) {
+                in NavigationBarContentKeys ->
+                    ShowcaseAnimations.topLevelTransitionSpec.invoke(this)
+
+                else ->
+                    ShowcaseAnimations.transitionSpec.invoke(this)
+            }
+        } +
+            NavDisplay.popTransitionSpec {
+                val initialContentKey = this.initialState.entries.last().contentKey
+                when (initialContentKey) {
+                    in NavigationBarContentKeys ->
+                        ShowcaseAnimations.topLevelTransitionSpec.invoke(this)
+
+                    else ->
+                        ShowcaseAnimations.popTransitionSpec.invoke(this)
+                }
+            },
+    ) { key ->
         val navigator = LocalNavigator.current
         DemoScaffold(
             key = key,
@@ -198,18 +318,36 @@ internal fun EntryProviderScope<NavKey>.navigationBarBSwitchY() {
 internal data object NavigationBarCRootNavKey : NavKey
 
 @Serializable
-internal data object NavigationBarCNavKey : NavKey
+internal data object NavigationBarCNavKey : NavKey {
+    val contentKey: String get() = this.toString()
+}
 
 internal fun EntryProviderScope<NavKey>.navigationBarC() {
     entry<NavigationBarCNavKey>(
+        clazzContentKey = { it.contentKey },
         metadata = NavDisplay.transitionSpec {
             val initialContentKey = this.initialState.entries.last().contentKey
-            if (initialContentKey == Outer1NavKey.contentKey) {
-                ShowcaseAnimations.popTransitionSpec.invoke(this)
-            } else {
-                ShowcaseAnimations.transitionSpec.invoke(this)
+            when (initialContentKey) {
+                in NavigationBarContentKeys ->
+                    ShowcaseAnimations.topLevelTransitionSpec.invoke(this)
+
+                Outer1NavKey.contentKey ->
+                    ShowcaseAnimations.popTransitionSpec.invoke(this)
+
+                else ->
+                    ShowcaseAnimations.transitionSpec.invoke(this)
             }
-        },
+        } +
+            NavDisplay.popTransitionSpec {
+                val initialContentKey = this.initialState.entries.last().contentKey
+                when (initialContentKey) {
+                    in NavigationBarContentKeys ->
+                        ShowcaseAnimations.topLevelTransitionSpec.invoke(this)
+
+                    else ->
+                        ShowcaseAnimations.popTransitionSpec.invoke(this)
+                }
+            },
     ) { key ->
         val navigator = LocalNavigator.current
         DemoScaffold(
@@ -238,10 +376,12 @@ internal fun EntryProviderScope<NavKey>.outer1() {
         clazzContentKey = { it.contentKey },
         metadata = NavDisplay.transitionSpec {
             val initialContentKey = this.initialState.entries.last().contentKey
-            if (initialContentKey == Outer2NavKey.contentKey) {
-                ShowcaseAnimations.popTransitionSpec.invoke(this)
-            } else {
-                ShowcaseAnimations.transitionSpec.invoke(this)
+            when (initialContentKey) {
+                Outer2NavKey.contentKey ->
+                    ShowcaseAnimations.popTransitionSpec.invoke(this)
+
+                else ->
+                    ShowcaseAnimations.transitionSpec.invoke(this)
             }
         },
     ) { key ->
@@ -274,6 +414,15 @@ internal fun EntryProviderScope<NavKey>.outer2() {
         DemoScaffold(key = key)
     }
 }
+
+private val NavigationBarContentKeys = setOf(
+    NavigationBarANavKey.contentKey,
+    NavigationBarA1NavKey.contentKey,
+    NavigationBarBNavKey.contentKey,
+    NavigationBarBSwitchXNavKey.contentKey,
+    NavigationBarBSwitchYNavKey.contentKey,
+    NavigationBarCNavKey.contentKey,
+)
 
 @Composable
 private fun DemoScaffold(
