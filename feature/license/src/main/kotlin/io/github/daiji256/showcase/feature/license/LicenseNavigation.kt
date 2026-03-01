@@ -7,12 +7,8 @@ import kotlinx.serialization.Serializable
 @Serializable
 data object LicenseNavKey : NavKey
 
-fun EntryProviderScope<NavKey>.license(
-    onNavigateUpClick: () -> Unit,
-) {
+fun EntryProviderScope<NavKey>.license() {
     entry<LicenseNavKey> {
-        LicenseScreen(
-            onNavigateUpClick = onNavigateUpClick,
-        )
+        LicenseScreen()
     }
 }

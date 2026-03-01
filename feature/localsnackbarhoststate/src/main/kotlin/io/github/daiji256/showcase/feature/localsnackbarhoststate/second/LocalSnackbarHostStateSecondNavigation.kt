@@ -5,14 +5,10 @@ import androidx.navigation3.runtime.NavKey
 import kotlinx.serialization.Serializable
 
 @Serializable
-internal data object SecondNavKey : NavKey
+data object LocalSnackbarHostStateSecondNavKey : NavKey
 
-internal fun EntryProviderScope<NavKey>.second(
-    onNavigateUpClick: () -> Unit,
-) {
-    entry<SecondNavKey> {
-        SecondScreen(
-            onNavigateUpClick = onNavigateUpClick,
-        )
+internal fun EntryProviderScope<NavKey>.localSnackbarHostStateSecond() {
+    entry<LocalSnackbarHostStateSecondNavKey> {
+        LocalSnackbarHostStateSecondScreen()
     }
 }

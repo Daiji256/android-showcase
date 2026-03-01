@@ -10,16 +10,16 @@ import androidx.compose.ui.tooling.preview.Preview
 import io.github.daiji256.showcase.core.designsystem.theme.ShowcaseTheme
 import io.github.daiji256.showcase.core.ui.document.Document
 import io.github.daiji256.showcase.core.ui.markdown.Markdown
+import io.github.daiji256.showcase.core.ui.navigation.LocalNavigator
 import io.github.daiji256.showcase.core.ui.urihandler.SafeUriHandler
 
 @Composable
-internal fun SafeUriHandlerScreen(
-    onNavigateUpClick: () -> Unit,
-) {
+internal fun SafeUriHandlerScreen() {
+    val navigator = LocalNavigator.current
     val context = LocalContext.current
     val safeUriHandler = remember(context) { SafeUriHandler(context) }
     SafeUriHandlerScreen(
-        onNavigateUpClick = onNavigateUpClick,
+        onNavigateUpClick = navigator::navigateUp,
         openUri = safeUriHandler::openUri,
     )
 }

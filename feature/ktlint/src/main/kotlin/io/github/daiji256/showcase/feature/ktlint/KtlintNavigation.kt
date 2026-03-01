@@ -7,12 +7,8 @@ import kotlinx.serialization.Serializable
 @Serializable
 data object KtlintNavKey : NavKey
 
-fun EntryProviderScope<NavKey>.ktlint(
-    onNavigateUpClick: () -> Unit,
-) {
+fun EntryProviderScope<NavKey>.ktlint() {
     entry<KtlintNavKey> {
-        KtlintScreen(
-            onNavigateUpClick = onNavigateUpClick,
-        )
+        KtlintScreen()
     }
 }

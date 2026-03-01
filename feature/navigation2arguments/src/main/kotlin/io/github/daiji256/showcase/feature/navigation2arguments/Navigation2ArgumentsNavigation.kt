@@ -7,12 +7,8 @@ import kotlinx.serialization.Serializable
 @Serializable
 data object Navigation2ArgumentsNavKey : NavKey
 
-fun EntryProviderScope<NavKey>.navigation2Arguments(
-    onNavigateUpClick: () -> Unit,
-) {
+fun EntryProviderScope<NavKey>.navigation2Arguments() {
     entry<Navigation2ArgumentsNavKey> {
-        Navigation2ArgumentsScreen(
-            onNavigateUpClick = onNavigateUpClick,
-        )
+        Navigation2ArgumentsScreen()
     }
 }

@@ -12,10 +12,26 @@ import androidx.compose.ui.tooling.preview.Preview
 import io.github.daiji256.showcase.core.designsystem.theme.ShowcaseTheme
 import io.github.daiji256.showcase.core.ui.document.Document
 import io.github.daiji256.showcase.core.ui.markdown.Markdown
+import io.github.daiji256.showcase.core.ui.navigation.LocalNavigator
 import io.github.daiji256.showcase.feature.navigation2arguments.R
 
 @Composable
 internal fun ArgsSenderScreen(
+    onReceiveArgDirectlyClick: (arg: String) -> Unit,
+    onReceiveArgViaViewModelClick: (arg: String) -> Unit,
+    onReceiveArgViaDiClick: (arg: String) -> Unit,
+) {
+    val navigator = LocalNavigator.current
+    ArgsSenderScreen(
+        onNavigateUpClick = navigator::navigateUp,
+        onReceiveArgDirectlyClick = onReceiveArgDirectlyClick,
+        onReceiveArgViaViewModelClick = onReceiveArgViaViewModelClick,
+        onReceiveArgViaDiClick = onReceiveArgViaDiClick,
+    )
+}
+
+@Composable
+private fun ArgsSenderScreen(
     onNavigateUpClick: () -> Unit,
     onReceiveArgDirectlyClick: (arg: String) -> Unit,
     onReceiveArgViaViewModelClick: (arg: String) -> Unit,

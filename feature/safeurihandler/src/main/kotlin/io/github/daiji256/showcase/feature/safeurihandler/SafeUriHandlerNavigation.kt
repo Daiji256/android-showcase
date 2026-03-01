@@ -7,12 +7,8 @@ import kotlinx.serialization.Serializable
 @Serializable
 data object SafeUriHandlerNavKey : NavKey
 
-fun EntryProviderScope<NavKey>.safeUriHandler(
-    onNavigateUpClick: () -> Unit,
-) {
+fun EntryProviderScope<NavKey>.safeUriHandler() {
     entry<SafeUriHandlerNavKey> {
-        SafeUriHandlerScreen(
-            onNavigateUpClick = onNavigateUpClick,
-        )
+        SafeUriHandlerScreen()
     }
 }

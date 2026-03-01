@@ -7,12 +7,8 @@ import kotlinx.serialization.Serializable
 @Serializable
 data object SystemStyleNavKey : NavKey
 
-fun EntryProviderScope<NavKey>.systemStyle(
-    onNavigateUpClick: () -> Unit,
-) {
+fun EntryProviderScope<NavKey>.systemStyle() {
     entry<SystemStyleNavKey> {
-        SystemStyleScreen(
-            onNavigateUpClick = onNavigateUpClick,
-        )
+        SystemStyleScreen()
     }
 }

@@ -7,12 +7,8 @@ import kotlinx.serialization.Serializable
 @Serializable
 data object HiltComposableNavKey : NavKey
 
-fun EntryProviderScope<NavKey>.hiltComposable(
-    onNavigateUpClick: () -> Unit,
-) {
+fun EntryProviderScope<NavKey>.hiltComposable() {
     entry<HiltComposableNavKey> {
-        HiltComposableScreen(
-            onNavigateUpClick = onNavigateUpClick,
-        )
+        HiltComposableScreen()
     }
 }

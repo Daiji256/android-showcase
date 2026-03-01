@@ -24,11 +24,23 @@ import androidx.navigation3.runtime.NavKey
 import io.github.daiji256.showcase.core.designsystem.theme.ShowcaseTheme
 import io.github.daiji256.showcase.core.ui.R
 import io.github.daiji256.showcase.core.ui.feature.FeatureSummary
+import io.github.daiji256.showcase.core.ui.navigation.LocalNavigator
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 
 @Composable
 internal fun ShowcaseScreen(
+    features: ImmutableList<FeatureSummary>,
+) {
+    val navigator = LocalNavigator.current
+    ShowcaseScreen(
+        features = features,
+        onFeatureClick = { navigator.navigate(route = it.navKey) },
+    )
+}
+
+@Composable
+private fun ShowcaseScreen(
     features: ImmutableList<FeatureSummary>,
     onFeatureClick: (FeatureSummary) -> Unit,
 ) {

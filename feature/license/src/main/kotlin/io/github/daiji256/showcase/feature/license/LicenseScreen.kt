@@ -24,15 +24,15 @@ import com.mikepenz.aboutlibraries.ui.compose.android.produceLibraries
 import com.mikepenz.aboutlibraries.ui.compose.m3.LibrariesContainer
 import io.github.daiji256.showcase.core.designsystem.theme.ShowcaseTheme
 import io.github.daiji256.showcase.core.ui.component.NavigateUpButton
+import io.github.daiji256.showcase.core.ui.navigation.LocalNavigator
 
 @Composable
-internal fun LicenseScreen(
-    onNavigateUpClick: () -> Unit,
-) {
+internal fun LicenseScreen() {
+    val navigator = LocalNavigator.current
     val libraries by produceLibraries()
     LicenseScreen(
         libraries = libraries,
-        onNavigateUpClick = onNavigateUpClick,
+        onNavigateUpClick = navigator::navigateUp,
     )
 }
 

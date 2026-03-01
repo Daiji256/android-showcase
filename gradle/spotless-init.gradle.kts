@@ -25,7 +25,7 @@ rootProject {
         "ktlint_standard_class-signature" to "disabled",
         "ktlint_standard_function-signature" to "disabled",
         "ktlint_standard_property-naming" to "disabled",
-        "compose_allowed_composition_locals" to "LocalSnackbarHostState",
+        "compose_allowed_composition_locals" to "LocalNavigator,LocalSnackbarHostState",
     )
 
     apply<com.diffplug.gradle.spotless.SpotlessPlugin>()

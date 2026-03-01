@@ -7,12 +7,8 @@ import kotlinx.serialization.Serializable
 @Serializable
 data object RoborazziNavKey : NavKey
 
-fun EntryProviderScope<NavKey>.roborazzi(
-    onNavigateUpClick: () -> Unit,
-) {
+fun EntryProviderScope<NavKey>.roborazzi() {
     entry<RoborazziNavKey> {
-        RoborazziScreen(
-            onNavigateUpClick = onNavigateUpClick,
-        )
+        RoborazziScreen()
     }
 }

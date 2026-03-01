@@ -5,9 +5,18 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import io.github.daiji256.showcase.core.designsystem.theme.ShowcaseTheme
 import io.github.daiji256.showcase.core.ui.document.Document
+import io.github.daiji256.showcase.core.ui.navigation.LocalNavigator
 
 @Composable
-internal fun RoborazziScreen(
+internal fun RoborazziScreen() {
+    val navigator = LocalNavigator.current
+    RoborazziScreen(
+        onNavigateUpClick = navigator::navigateUp,
+    )
+}
+
+@Composable
+private fun RoborazziScreen(
     onNavigateUpClick: () -> Unit,
 ) {
     Document(

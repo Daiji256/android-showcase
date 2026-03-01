@@ -7,12 +7,8 @@ import kotlinx.serialization.Serializable
 @Serializable
 data object CustomTabsNavKey : NavKey
 
-fun EntryProviderScope<NavKey>.customTabs(
-    onNavigateUpClick: () -> Unit,
-) {
+fun EntryProviderScope<NavKey>.customTabs() {
     entry<CustomTabsNavKey> {
-        CustomTabsScreen(
-            onNavigateUpClick = onNavigateUpClick,
-        )
+        CustomTabsScreen()
     }
 }
