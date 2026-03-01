@@ -29,6 +29,13 @@ object ShowcaseAnimations {
         )
     }
 
+    val topLevelTransitionSpec: AnimatedContentTransitionScope<*>.() -> ContentTransform = {
+        ContentTransform(
+            targetContentEnter = EnterTransition.None,
+            initialContentExit = ExitTransition.None,
+        )
+    }
+
     val enterTransition: AnimatedContentTransitionScope<*>.() -> EnterTransition = {
         sharedIn(forward = true)
     }
