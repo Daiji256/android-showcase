@@ -19,6 +19,7 @@ import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
+import io.github.daiji256.showcase.core.designsystem.theme.ShowcaseAnimations
 import io.github.daiji256.showcase.core.designsystem.theme.ShowcaseTheme
 import io.github.daiji256.showcase.core.ui.document.Document
 import io.github.daiji256.showcase.core.ui.navigation.LocalNavigator
@@ -161,6 +162,9 @@ private fun NavNodeDemoScreen(
             NavDisplay(
                 entries = entries,
                 onBack = navigator::pop,
+                transitionSpec = ShowcaseAnimations.transitionSpec,
+                popTransitionSpec = ShowcaseAnimations.popTransitionSpec,
+                // TODO: predictivePopTransitionSpec,
                 modifier = Modifier
                     .padding(horizontal = 8.dp)
                     .aspectRatio(3f / 4f)
