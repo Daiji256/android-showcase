@@ -25,6 +25,7 @@ import io.github.daiji256.showcase.core.designsystem.theme.ShowcaseTheme
 import io.github.daiji256.showcase.core.ui.R
 import io.github.daiji256.showcase.core.ui.feature.FeatureSummary
 import io.github.daiji256.showcase.core.ui.navigation.LocalNavigator
+import io.github.daiji256.showcase.core.ui.navigation.Navigator
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 
@@ -35,14 +36,14 @@ internal fun ShowcaseScreen(
     val navigator = LocalNavigator.current
     ShowcaseScreen(
         features = features,
-        onFeatureClick = { navigator.navigate(route = it.navKey) },
+        onFeatureClick = { navigator.navigate() },
     )
 }
 
 @Composable
 private fun ShowcaseScreen(
     features: ImmutableList<FeatureSummary>,
-    onFeatureClick: (FeatureSummary) -> Unit,
+    onFeatureClick: FeatureSummary.() -> Unit,
 ) {
     Scaffold(
         topBar = {
@@ -70,7 +71,7 @@ private fun ShowcaseScreen(
             items(items = features) { feature ->
                 FeatureItem(
                     feature = feature,
-                    onFeatureClick = onFeatureClick,
+                    onClick = { onFeatureClick(feature) },
                     modifier = Modifier.fillMaxWidth(),
                 )
                 HorizontalDivider()
@@ -82,13 +83,13 @@ private fun ShowcaseScreen(
 @Composable
 private fun FeatureItem(
     feature: FeatureSummary,
-    onFeatureClick: (FeatureSummary) -> Unit,
+    onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Text(
         text = feature.title,
         modifier = modifier
-            .clickable(onClick = { onFeatureClick(feature) })
+            .clickable(onClick = onClick)
             .padding(12.dp),
     )
 }
@@ -102,10 +103,12 @@ private fun ShowcaseScreenPreview() {
     ShowcaseTheme {
         val features = remember {
             List(20) {
-                FeatureSummary(
-                    title = "Feature$it",
-                    navKey = object : NavKey {},
-                )
+                object : FeatureSummary {
+                    override val title
+                        @Composable get() = "Feature$it"
+
+                    override fun Navigator<NavKey>.navigate(): Boolean = true
+                }
             }.toImmutableList()
         }
         ShowcaseScreen(
