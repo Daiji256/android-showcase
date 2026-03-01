@@ -18,28 +18,28 @@ class NavNodeSerializerTest {
     data object SecondNavKey : NavKey
 
     @Serializable
-    data object TabSelectNavKey : NavKey
+    data object NavigationBarRootNavKey : NavKey
 
     @Serializable
-    data object Tab1StackNavKey : NavKey
+    data object NavigationBarARootNavKey : NavKey
 
     @Serializable
-    data object Tab1NavKey : NavKey
+    data object NavigationBarANavKey : NavKey
 
     @Serializable
-    data object Tab2StackNavKey : NavKey
+    data object NavigationBarBRootNavKey : NavKey
 
     @Serializable
-    data object Tab2NavKey : NavKey
+    data object NavigationBarBNavKey : NavKey
 
     @Serializable
-    data object Tab2SwitchNavKey : NavKey
+    data object NavigationBarBSwitchRootNavKey : NavKey
 
     @Serializable
-    data object Tab2SwitchANavKey : NavKey
+    data object NavigationBarBSwitchXNavKey : NavKey
 
     @Serializable
-    data object Tab2SwitchBNavKey : NavKey
+    data object NavigationBarBSwitchYNavKey : NavKey
 
     @Serializable
     data class OuterNavKey(val value: String) : NavKey
@@ -54,27 +54,27 @@ class NavNodeSerializerTest {
                     up = NavNode.Leaf(key = FirstNavKey),
                 ),
                 NavNode.Select(
-                    key = TabSelectNavKey,
-                    selected = Tab1StackNavKey,
+                    key = NavigationBarRootNavKey,
+                    selected = NavigationBarARootNavKey,
                     children = setOf(
                         NavNode.Stack(
-                            key = Tab1StackNavKey,
+                            key = NavigationBarARootNavKey,
                             children = listOf(
-                                NavNode.Leaf(key = Tab1NavKey),
+                                NavNode.Leaf(key = NavigationBarANavKey),
                                 NavNode.Leaf(key = OuterNavKey(value = "a")),
                                 NavNode.Leaf(key = OuterNavKey(value = "b")),
                             ),
                         ),
                         NavNode.Stack(
-                            key = Tab2StackNavKey,
+                            key = NavigationBarBRootNavKey,
                             children = listOf(
-                                NavNode.Leaf(key = Tab2NavKey),
+                                NavNode.Leaf(key = NavigationBarBNavKey),
                                 NavNode.Select(
-                                    key = Tab2SwitchNavKey,
-                                    selected = Tab2SwitchBNavKey,
+                                    key = NavigationBarBSwitchRootNavKey,
+                                    selected = NavigationBarBSwitchYNavKey,
                                     children = setOf(
-                                        NavNode.Leaf(key = Tab2SwitchANavKey),
-                                        NavNode.Leaf(key = Tab2SwitchBNavKey),
+                                        NavNode.Leaf(key = NavigationBarBSwitchXNavKey),
+                                        NavNode.Leaf(key = NavigationBarBSwitchYNavKey),
                                     ),
                                 ),
                             ),
