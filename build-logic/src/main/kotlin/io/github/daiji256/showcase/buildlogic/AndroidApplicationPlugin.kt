@@ -17,6 +17,7 @@ class AndroidApplicationPlugin : Plugin<Project> {
         with(target) {
             with(pluginManager) {
                 apply(libs.plugin("android.application").pluginId)
+                apply(libs.plugin("kotlin.serialization").pluginId)
             }
 
             extensions.configure<KotlinAndroidProjectExtension> {
