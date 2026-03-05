@@ -19,10 +19,10 @@ internal fun Navigation2ArgumentsScreen() {
     NavHost(
         startDestination = ArgsSenderRoute,
         navController = navController,
-        enterTransition = ShowcaseAnimations.enterTransition(),
-        exitTransition = ShowcaseAnimations.exitTransition(),
-        popEnterTransition = ShowcaseAnimations.popEnterTransition(),
-        popExitTransition = ShowcaseAnimations.popExitTransition(),
+        enterTransition = ShowcaseAnimations.enterTransition,
+        exitTransition = ShowcaseAnimations.exitTransition,
+        popEnterTransition = ShowcaseAnimations.popEnterTransition,
+        popExitTransition = ShowcaseAnimations.popExitTransition,
     ) {
         argsSender(
             onReceiveArgDirectlyClick = { arg ->

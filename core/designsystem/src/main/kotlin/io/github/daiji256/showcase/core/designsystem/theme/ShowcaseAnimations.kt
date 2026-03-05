@@ -12,70 +12,56 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
-import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
-import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.unit.Density
-import androidx.compose.ui.unit.dp
 
 object ShowcaseAnimations {
-    @Composable
-    fun <T : Any> transitionSpec(): AnimatedContentTransitionScope<T>.() -> ContentTransform {
-        val density = LocalDensity.current
-        return {
-            ContentTransform(
-                targetContentEnter = sharedIn(forward = true, density = density),
-                initialContentExit = sharedOut(forward = true, density = density),
-            )
-        }
+    val transitionSpec: AnimatedContentTransitionScope<*>.() -> ContentTransform = {
+        ContentTransform(
+            targetContentEnter = sharedIn(forward = true),
+            initialContentExit = sharedOut(forward = true),
+        )
     }
 
-    @Composable
-    fun <T : Any> popTransitionSpec(): AnimatedContentTransitionScope<T>.() -> ContentTransform {
-        val density = LocalDensity.current
-        return {
-            ContentTransform(
-                targetContentEnter = sharedIn(forward = false, density = density),
-                initialContentExit = sharedOut(forward = false, density = density),
-            )
-        }
+    val popTransitionSpec: AnimatedContentTransitionScope<*>.() -> ContentTransform = {
+        ContentTransform(
+            targetContentEnter = sharedIn(forward = false),
+            initialContentExit = sharedOut(forward = false),
+        )
     }
 
-    @Composable
-    fun <T : Any> enterTransition(): AnimatedContentTransitionScope<T>.() -> EnterTransition {
-        val density = LocalDensity.current
-        return { sharedIn(forward = true, density = density) }
+    val topLevelTransitionSpec: AnimatedContentTransitionScope<*>.() -> ContentTransform = {
+        ContentTransform(
+            targetContentEnter = EnterTransition.None,
+            initialContentExit = ExitTransition.None,
+        )
     }
 
-    @Composable
-    fun <T : Any> exitTransition(): AnimatedContentTransitionScope<T>.() -> ExitTransition {
-        val density = LocalDensity.current
-        return { sharedOut(forward = true, density = density) }
+    val enterTransition: AnimatedContentTransitionScope<*>.() -> EnterTransition = {
+        sharedIn(forward = true)
     }
 
-    @Composable
-    fun <T : Any> popEnterTransition(): AnimatedContentTransitionScope<T>.() -> EnterTransition {
-        val density = LocalDensity.current
-        return { sharedIn(forward = false, density = density) }
+    val exitTransition: AnimatedContentTransitionScope<*>.() -> ExitTransition = {
+        sharedOut(forward = true)
     }
 
-    @Composable
-    fun <T : Any> popExitTransition(): AnimatedContentTransitionScope<T>.() -> ExitTransition {
-        val density = LocalDensity.current
-        return { sharedOut(forward = false, density = density) }
+    val popEnterTransition: AnimatedContentTransitionScope<*>.() -> EnterTransition = {
+        sharedIn(forward = false)
+    }
+
+    val popExitTransition: AnimatedContentTransitionScope<*>.() -> ExitTransition = {
+        sharedOut(forward = false)
     }
 }
 
 @Stable
-private fun sharedIn(forward: Boolean, density: Density): EnterTransition =
+private fun sharedIn(forward: Boolean): EnterTransition =
     slideInHorizontally(
         animationSpec = tween(
             durationMillis = DurationMillis,
             easing = FastOutSlowInEasing,
         ),
-        initialOffsetX = {
-            val slideDistance = with(density) { SlideDistanceDp.roundToPx() }
-            if (forward) slideDistance else -slideDistance
+        initialOffsetX = { fullWidth ->
+            slideDistance(fullWidth) * if (forward) 1 else -1
         },
     ) +
         fadeIn(
@@ -87,15 +73,14 @@ private fun sharedIn(forward: Boolean, density: Density): EnterTransition =
         )
 
 @Stable
-private fun sharedOut(forward: Boolean, density: Density): ExitTransition =
+private fun sharedOut(forward: Boolean): ExitTransition =
     slideOutHorizontally(
         animationSpec = tween(
             durationMillis = DurationMillis,
             easing = FastOutSlowInEasing,
         ),
-        targetOffsetX = {
-            val slideDistance = with(density) { SlideDistanceDp.roundToPx() }
-            if (forward) -slideDistance else slideDistance
+        targetOffsetX = { fullWidth ->
+            slideDistance(fullWidth) * if (forward) -1 else 1
         },
     ) +
         fadeOut(
@@ -106,7 +91,7 @@ private fun sharedOut(forward: Boolean, density: Density): ExitTransition =
             ),
         )
 
-private val SlideDistanceDp = 30.dp
+private fun slideDistance(fullWidth: Int): Int = fullWidth / 8
 private const val ProgressThreshold = 0.35f
 private const val DurationMillis = 300
 private const val OutgoingDurationMillis = (DurationMillis * ProgressThreshold).toInt()

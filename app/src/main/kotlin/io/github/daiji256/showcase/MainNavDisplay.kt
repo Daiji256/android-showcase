@@ -53,8 +53,8 @@ internal fun MainNavDisplay(
     NavDisplay(
         entries = entries,
         onBack = navigator::pop,
-        transitionSpec = ShowcaseAnimations.transitionSpec(),
-        popTransitionSpec = ShowcaseAnimations.popTransitionSpec(),
+        transitionSpec = ShowcaseAnimations.transitionSpec,
+        popTransitionSpec = ShowcaseAnimations.popTransitionSpec,
         // TODO: predictivePopTransitionSpec,
         modifier = modifier,
     )
