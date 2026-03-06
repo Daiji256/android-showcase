@@ -91,23 +91,15 @@ internal fun EntryProviderScope<NavKey>.navigationBarA() {
     entry<NavigationBarANavKey>(
         clazzContentKey = { it.contentKey },
         metadata = NavDisplay.transitionSpec {
-            val initialContentKey = this.initialState.entries.last().contentKey
-            when (initialContentKey) {
-                in NavigationBarContentKeys ->
-                    ShowcaseAnimations.topLevelTransitionSpec.invoke(this)
-
-                else ->
-                    ShowcaseAnimations.transitionSpec.invoke(this)
+            when (this.initialState.entries.last().contentKey) {
+                in NavigationBarContentKeys -> ShowcaseAnimations.topLevelTransitionSpec(this)
+                else -> ShowcaseAnimations.transitionSpec(this)
             }
         } +
             NavDisplay.popTransitionSpec {
-                val initialContentKey = this.initialState.entries.last().contentKey
-                when (initialContentKey) {
-                    in NavigationBarContentKeys ->
-                        ShowcaseAnimations.topLevelTransitionSpec.invoke(this)
-
-                    else ->
-                        ShowcaseAnimations.popTransitionSpec.invoke(this)
+                when (this.initialState.entries.last().contentKey) {
+                    in NavigationBarContentKeys -> ShowcaseAnimations.topLevelTransitionSpec(this)
+                    else -> ShowcaseAnimations.popTransitionSpec(this)
                 }
             },
     ) { key ->
@@ -137,23 +129,15 @@ internal fun EntryProviderScope<NavKey>.navigationBarA1() {
     entry<NavigationBarA1NavKey>(
         clazzContentKey = { it.contentKey },
         metadata = NavDisplay.transitionSpec {
-            val initialContentKey = this.initialState.entries.last().contentKey
-            when (initialContentKey) {
-                in NavigationBarContentKeys ->
-                    ShowcaseAnimations.topLevelTransitionSpec.invoke(this)
-
-                else ->
-                    ShowcaseAnimations.transitionSpec.invoke(this)
+            when (this.initialState.entries.last().contentKey) {
+                in NavigationBarContentKeys -> ShowcaseAnimations.topLevelTransitionSpec(this)
+                else -> ShowcaseAnimations.transitionSpec(this)
             }
         } +
             NavDisplay.popTransitionSpec {
-                val initialContentKey = this.initialState.entries.last().contentKey
-                when (initialContentKey) {
-                    in NavigationBarContentKeys ->
-                        ShowcaseAnimations.topLevelTransitionSpec.invoke(this)
-
-                    else ->
-                        ShowcaseAnimations.popTransitionSpec.invoke(this)
+                when (this.initialState.entries.last().contentKey) {
+                    in NavigationBarContentKeys -> ShowcaseAnimations.topLevelTransitionSpec(this)
+                    else -> ShowcaseAnimations.popTransitionSpec(this)
                 }
             },
     ) { key ->
@@ -173,23 +157,15 @@ internal fun EntryProviderScope<NavKey>.navigationBarB() {
     entry<NavigationBarBNavKey>(
         clazzContentKey = { it.contentKey },
         metadata = NavDisplay.transitionSpec {
-            val initialContentKey = this.initialState.entries.last().contentKey
-            when (initialContentKey) {
-                in NavigationBarContentKeys ->
-                    ShowcaseAnimations.topLevelTransitionSpec.invoke(this)
-
-                else ->
-                    ShowcaseAnimations.transitionSpec.invoke(this)
+            when (this.initialState.entries.last().contentKey) {
+                in NavigationBarContentKeys -> ShowcaseAnimations.topLevelTransitionSpec(this)
+                else -> ShowcaseAnimations.transitionSpec(this)
             }
         } +
             NavDisplay.popTransitionSpec {
-                val initialContentKey = this.initialState.entries.last().contentKey
-                when (initialContentKey) {
-                    in NavigationBarContentKeys ->
-                        ShowcaseAnimations.topLevelTransitionSpec.invoke(this)
-
-                    else ->
-                        ShowcaseAnimations.popTransitionSpec.invoke(this)
+                when (this.initialState.entries.last().contentKey) {
+                    in NavigationBarContentKeys -> ShowcaseAnimations.topLevelTransitionSpec(this)
+                    else -> ShowcaseAnimations.popTransitionSpec(this)
                 }
             },
     ) { key ->
@@ -231,23 +207,15 @@ internal fun EntryProviderScope<NavKey>.navigationBarBSwitchX() {
     entry<NavigationBarBSwitchXNavKey>(
         clazzContentKey = { it.contentKey },
         metadata = NavDisplay.transitionSpec {
-            val initialContentKey = this.initialState.entries.last().contentKey
-            when (initialContentKey) {
-                in NavigationBarContentKeys ->
-                    ShowcaseAnimations.topLevelTransitionSpec.invoke(this)
-
-                else ->
-                    ShowcaseAnimations.transitionSpec.invoke(this)
+            when (this.initialState.entries.last().contentKey) {
+                in NavigationBarContentKeys -> ShowcaseAnimations.topLevelTransitionSpec(this)
+                else -> ShowcaseAnimations.transitionSpec(this)
             }
         } +
             NavDisplay.popTransitionSpec {
-                val initialContentKey = this.initialState.entries.last().contentKey
-                when (initialContentKey) {
-                    in NavigationBarContentKeys ->
-                        ShowcaseAnimations.topLevelTransitionSpec.invoke(this)
-
-                    else ->
-                        ShowcaseAnimations.popTransitionSpec.invoke(this)
+                when (this.initialState.entries.last().contentKey) {
+                    in NavigationBarContentKeys -> ShowcaseAnimations.topLevelTransitionSpec(this)
+                    else -> ShowcaseAnimations.popTransitionSpec(this)
                 }
             },
     ) { key ->
@@ -277,23 +245,15 @@ internal fun EntryProviderScope<NavKey>.navigationBarBSwitchY() {
     entry<NavigationBarBSwitchYNavKey>(
         clazzContentKey = { it.contentKey },
         metadata = NavDisplay.transitionSpec {
-            val initialContentKey = this.initialState.entries.last().contentKey
-            when (initialContentKey) {
-                in NavigationBarContentKeys ->
-                    ShowcaseAnimations.topLevelTransitionSpec.invoke(this)
-
-                else ->
-                    ShowcaseAnimations.transitionSpec.invoke(this)
+            when (this.initialState.entries.last().contentKey) {
+                in NavigationBarContentKeys -> ShowcaseAnimations.topLevelTransitionSpec(this)
+                else -> ShowcaseAnimations.transitionSpec(this)
             }
         } +
             NavDisplay.popTransitionSpec {
-                val initialContentKey = this.initialState.entries.last().contentKey
-                when (initialContentKey) {
-                    in NavigationBarContentKeys ->
-                        ShowcaseAnimations.topLevelTransitionSpec.invoke(this)
-
-                    else ->
-                        ShowcaseAnimations.popTransitionSpec.invoke(this)
+                when (this.initialState.entries.last().contentKey) {
+                    in NavigationBarContentKeys -> ShowcaseAnimations.topLevelTransitionSpec(this)
+                    else -> ShowcaseAnimations.popTransitionSpec(this)
                 }
             },
     ) { key ->
@@ -326,26 +286,16 @@ internal fun EntryProviderScope<NavKey>.navigationBarC() {
     entry<NavigationBarCNavKey>(
         clazzContentKey = { it.contentKey },
         metadata = NavDisplay.transitionSpec {
-            val initialContentKey = this.initialState.entries.last().contentKey
-            when (initialContentKey) {
-                in NavigationBarContentKeys ->
-                    ShowcaseAnimations.topLevelTransitionSpec.invoke(this)
-
-                Outer1NavKey.contentKey ->
-                    ShowcaseAnimations.popTransitionSpec.invoke(this)
-
-                else ->
-                    ShowcaseAnimations.transitionSpec.invoke(this)
+            when (this.initialState.entries.last().contentKey) {
+                in NavigationBarContentKeys -> ShowcaseAnimations.topLevelTransitionSpec(this)
+                Outer1NavKey.contentKey -> ShowcaseAnimations.popTransitionSpec(this)
+                else -> ShowcaseAnimations.transitionSpec(this)
             }
         } +
             NavDisplay.popTransitionSpec {
-                val initialContentKey = this.initialState.entries.last().contentKey
-                when (initialContentKey) {
-                    in NavigationBarContentKeys ->
-                        ShowcaseAnimations.topLevelTransitionSpec.invoke(this)
-
-                    else ->
-                        ShowcaseAnimations.popTransitionSpec.invoke(this)
+                when (this.initialState.entries.last().contentKey) {
+                    in NavigationBarContentKeys -> ShowcaseAnimations.topLevelTransitionSpec(this)
+                    else -> ShowcaseAnimations.popTransitionSpec(this)
                 }
             },
     ) { key ->
@@ -375,13 +325,9 @@ internal fun EntryProviderScope<NavKey>.outer1() {
     entry<Outer1NavKey>(
         clazzContentKey = { it.contentKey },
         metadata = NavDisplay.transitionSpec {
-            val initialContentKey = this.initialState.entries.last().contentKey
-            when (initialContentKey) {
-                Outer2NavKey.contentKey ->
-                    ShowcaseAnimations.popTransitionSpec.invoke(this)
-
-                else ->
-                    ShowcaseAnimations.transitionSpec.invoke(this)
+            when (this.initialState.entries.last().contentKey) {
+                Outer2NavKey.contentKey -> ShowcaseAnimations.popTransitionSpec(this)
+                else -> ShowcaseAnimations.transitionSpec(this)
             }
         },
     ) { key ->
