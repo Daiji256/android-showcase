@@ -112,7 +112,7 @@ jobs:
       - name: Checkout base (fetch all)
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
-          ref: ${{ github.event.pull_request.base.ref }}
+          ref: ${{ github.event.pull_request.base.sha }}
           fetch-depth: 0
 
       - name: Check if base screenshots branch exists
@@ -165,7 +165,7 @@ jobs:
       - name: Checkout base
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
-          ref: ${{ github.event.pull_request.base.ref }}
+          ref: ${{ github.event.pull_request.base.sha }}
 
       - name: Get base files hash
         id: base
@@ -176,7 +176,7 @@ jobs:
       - name: Checkout head
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
-          ref: ${{ github.event.pull_request.head.ref }}
+          ref: ${{ github.event.pull_request.head.sha }}
 
       - name: Get head files hash
         id: head
