@@ -208,7 +208,7 @@ jobs:
           fetch-depth: 0
 
       - name: Delete outdated orphan branches
-        uses: daiji256/delete-orphan-branch@4ec7df3983a4a54cd46cfed7af767308629e8805 # v1.0.0
+        uses: daiji256/delete-orphan-branch@4369ee37e443cb638898ac6ad471eb84be4a0da9 # v1.1.0
         with:
           branch-regex: ^(_screenshots_|_companion_screenshots_).*
           older-than-seconds: 1209600 # 14 days
