@@ -1,6 +1,6 @@
 initscript {
     // renovate: datasource=maven depName=com.diffplug.spotless:spotless-plugin-gradle
-    val spotlessVersion = "8.3.0"
+    val spotlessVersion = "8.4.0"
 
     repositories {
         mavenCentral()
