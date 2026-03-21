@@ -62,7 +62,7 @@ private fun NavNodeDemoScreen(
             DemoInitial.Outer2 -> mutableListOf(NavigationBarCNavKey, Outer1NavKey)
         },
     )
-    val navigator = remember { Navigator(state = navState) }
+    val navigator = remember(navState) { Navigator(state = navState) }
     val entries = navState.toDecoratedNavEntries(
         entryDecorators = listOf(rememberSaveableStateHolderNavEntryDecorator()),
         entryProvider = entryProvider {

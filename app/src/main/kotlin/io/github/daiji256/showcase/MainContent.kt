@@ -19,7 +19,7 @@ internal fun MainContent(modifier: Modifier = Modifier) {
     val uriHandler = remember(context) { SafeUriHandler(context) }
 
     val navState = rememberNavState(start = ShowcaseNavKey)
-    val navigator = remember { Navigator(state = navState) }
+    val navigator = remember(navState) { Navigator(state = navState) }
 
     CompositionLocalProvider(
         LocalUriHandler provides uriHandler,
