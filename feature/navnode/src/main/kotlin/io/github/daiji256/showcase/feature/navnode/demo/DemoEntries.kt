@@ -351,6 +351,22 @@ private val NavigationBarContentKeys = setOf(
     NavigationBarCNavKey.contentKey,
 )
 
+private enum class NavigationBarItem {
+    A,
+    B,
+    C,
+    ;
+
+    companion object {
+        fun fromNavKey(key: NavKey): NavigationBarItem? = when (key) {
+            NavigationBarANavKey, NavigationBarA1NavKey -> A
+            NavigationBarBNavKey, NavigationBarBSwitchXNavKey, NavigationBarBSwitchYNavKey -> B
+            NavigationBarCNavKey -> C
+            else -> null
+        }
+    }
+}
+
 @Composable
 private fun DemoScaffold(
     key: NavKey,
@@ -440,22 +456,6 @@ private fun DemoScaffold(
             }
 
             buttons()
-        }
-    }
-}
-
-private enum class NavigationBarItem {
-    A,
-    B,
-    C,
-    ;
-
-    companion object {
-        fun fromNavKey(key: NavKey): NavigationBarItem? = when (key) {
-            NavigationBarANavKey, NavigationBarA1NavKey -> A
-            NavigationBarBNavKey, NavigationBarBSwitchXNavKey, NavigationBarBSwitchYNavKey -> B
-            NavigationBarCNavKey -> C
-            else -> null
         }
     }
 }
