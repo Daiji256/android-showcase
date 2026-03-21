@@ -27,11 +27,7 @@ import androidx.navigation3.ui.NavDisplay
 import io.github.daiji256.showcase.core.designsystem.theme.ShowcaseAnimations
 import io.github.daiji256.showcase.core.ui.component.NavigateUpButton
 import io.github.daiji256.showcase.core.ui.navigation.LocalNavigator
-import io.github.daiji256.showcase.core.ui.navigation.NavNode
 import kotlinx.serialization.Serializable
-
-@Serializable
-internal data object RootNavKey : NavKey
 
 @Serializable
 internal data object OnboardingNavKey : NavKey
@@ -44,28 +40,7 @@ internal fun EntryProviderScope<NavKey>.onboarding() {
             buttons = {
                 Button(
                     onClick = dropUnlessResumed {
-                        navigator.navigate(
-                            route = NavNode.Select(
-                                key = NavigationBarRootNavKey,
-                                selected = NavigationBarARootNavKey,
-                                children = setOf(
-                                    NavNode.Stack(
-                                        key = NavigationBarARootNavKey,
-                                        children = listOf(NavNode.Leaf(key = NavigationBarANavKey)),
-                                    ),
-                                    NavNode.Stack(
-                                        key = NavigationBarBRootNavKey,
-                                        children = listOf(NavNode.Leaf(key = NavigationBarBNavKey)),
-                                    ),
-                                    NavNode.Stack(
-                                        key = NavigationBarCRootNavKey,
-                                        children = listOf(NavNode.Leaf(key = NavigationBarCNavKey)),
-                                    ),
-                                ),
-                            ),
-                            popUpTo = OnboardingNavKey,
-                            inclusive = true,
-                        )
+                        navigator.restart(start = NavigationBarANavKey)
                     },
                 ) {
                     // TODO
@@ -75,12 +50,6 @@ internal fun EntryProviderScope<NavKey>.onboarding() {
         )
     }
 }
-
-@Serializable
-internal data object NavigationBarRootNavKey : NavKey
-
-@Serializable
-internal data object NavigationBarARootNavKey : NavKey
 
 @Serializable
 internal data object NavigationBarANavKey : NavKey {
@@ -109,7 +78,7 @@ internal fun EntryProviderScope<NavKey>.navigationBarA() {
             buttons = {
                 Button(
                     onClick = dropUnlessResumed {
-                        navigator.navigate(route = NavigationBarA1NavKey)
+                        navigator.push(key = NavigationBarA1NavKey)
                     },
                 ) {
                     // TODO
@@ -146,9 +115,6 @@ internal fun EntryProviderScope<NavKey>.navigationBarA1() {
 }
 
 @Serializable
-internal data object NavigationBarBRootNavKey : NavKey
-
-@Serializable
 internal data object NavigationBarBNavKey : NavKey {
     val contentKey: String get() = this.toString()
 }
@@ -175,16 +141,7 @@ internal fun EntryProviderScope<NavKey>.navigationBarB() {
             buttons = {
                 Button(
                     onClick = dropUnlessResumed {
-                        navigator.navigate(
-                            route = NavNode.Select(
-                                key = NavigationBarBSwitchRootNavKey,
-                                selected = NavigationBarBSwitchXNavKey,
-                                children = setOf(
-                                    NavNode.Leaf(key = NavigationBarBSwitchXNavKey),
-                                    NavNode.Leaf(key = NavigationBarBSwitchYNavKey),
-                                ),
-                            ),
-                        )
+                        navigator.push(key = NavigationBarBSwitchXNavKey)
                     },
                 ) {
                     // TODO
@@ -194,9 +151,6 @@ internal fun EntryProviderScope<NavKey>.navigationBarB() {
         )
     }
 }
-
-@Serializable
-internal data object NavigationBarBSwitchRootNavKey : NavKey
 
 @Serializable
 internal data object NavigationBarBSwitchXNavKey : NavKey {
@@ -225,7 +179,10 @@ internal fun EntryProviderScope<NavKey>.navigationBarBSwitchX() {
             buttons = {
                 Button(
                     onClick = dropUnlessResumed {
-                        navigator.navigate(route = NavigationBarBSwitchYNavKey)
+                        navigator.switch(
+                            from = NavigationBarBSwitchXNavKey,
+                            to = NavigationBarBSwitchYNavKey,
+                        )
                     },
                 ) {
                     // TODO
@@ -263,7 +220,10 @@ internal fun EntryProviderScope<NavKey>.navigationBarBSwitchY() {
             buttons = {
                 Button(
                     onClick = dropUnlessResumed {
-                        navigator.navigate(route = NavigationBarBSwitchXNavKey)
+                        navigator.switch(
+                            from = NavigationBarBSwitchYNavKey,
+                            to = NavigationBarBSwitchXNavKey,
+                        )
                     },
                 ) {
                     // TODO
@@ -273,9 +233,6 @@ internal fun EntryProviderScope<NavKey>.navigationBarBSwitchY() {
         )
     }
 }
-
-@Serializable
-internal data object NavigationBarCRootNavKey : NavKey
 
 @Serializable
 internal data object NavigationBarCNavKey : NavKey {
@@ -305,7 +262,7 @@ internal fun EntryProviderScope<NavKey>.navigationBarC() {
             buttons = {
                 Button(
                     onClick = dropUnlessResumed {
-                        navigator.navigate(route = Outer1NavKey)
+                        navigator.push(key = Outer1NavKey)
                     },
                 ) {
                     // TODO
@@ -337,7 +294,7 @@ internal fun EntryProviderScope<NavKey>.outer1() {
             buttons = {
                 Button(
                     onClick = dropUnlessResumed {
-                        navigator.navigate(route = Outer2NavKey)
+                        navigator.push(key = Outer2NavKey)
                     },
                 ) {
                     // TODO
@@ -360,6 +317,15 @@ internal fun EntryProviderScope<NavKey>.outer2() {
         DemoScaffold(key = key)
     }
 }
+
+private val NavigationBarKeys = setOf(
+    NavigationBarANavKey,
+    NavigationBarA1NavKey,
+    NavigationBarBNavKey,
+    NavigationBarBSwitchXNavKey,
+    NavigationBarBSwitchYNavKey,
+    NavigationBarCNavKey,
+)
 
 private val NavigationBarContentKeys = setOf(
     NavigationBarANavKey.contentKey,
@@ -402,43 +368,42 @@ private fun DemoScaffold(
             )
         },
         bottomBar = {
-            val selected = when (key) {
-                is NavigationBarANavKey,
-                is NavigationBarA1NavKey,
-                    -> NavigationBarARootNavKey
-
-                is NavigationBarBNavKey,
-                is NavigationBarBSwitchXNavKey,
-                is NavigationBarBSwitchYNavKey,
-                    -> NavigationBarBRootNavKey
-
-                is NavigationBarCNavKey,
-                    -> NavigationBarCRootNavKey
-
-                else -> null
-            }
+            val selected = NavigationBarItem.fromNavKey(key)
             if (selected != null) {
                 NavigationBar(
                     windowInsets = WindowInsets(0, 0, 0, 0),
                 ) {
                     NavigationBarItem(
-                        selected = selected == NavigationBarARootNavKey,
+                        selected = selected == NavigationBarItem.A,
                         onClick = dropUnlessResumed {
-                            navigator.navigate(route = NavigationBarARootNavKey)
+                            navigator.switch(
+                                from = NavigationBarKeys,
+                                to = listOf(NavigationBarANavKey, NavigationBarA1NavKey),
+                            )
                         },
                         icon = { Text("A") }, // TODO
                     )
                     NavigationBarItem(
-                        selected = selected == NavigationBarBRootNavKey,
+                        selected = selected == NavigationBarItem.B,
                         onClick = dropUnlessResumed {
-                            navigator.navigate(route = NavigationBarBRootNavKey)
+                            navigator.switch(
+                                from = NavigationBarKeys,
+                                to = listOf(
+                                    NavigationBarBNavKey,
+                                    NavigationBarBSwitchXNavKey,
+                                    NavigationBarBSwitchYNavKey,
+                                ),
+                            )
                         },
                         icon = { Text("B") }, // TODO
                     )
                     NavigationBarItem(
-                        selected = selected == NavigationBarCRootNavKey,
+                        selected = selected == NavigationBarItem.C,
                         onClick = dropUnlessResumed {
-                            navigator.navigate(route = NavigationBarCRootNavKey)
+                            navigator.switch(
+                                from = NavigationBarKeys,
+                                to = NavigationBarCNavKey,
+                            )
                         },
                         icon = { Text("C") }, // TODO
                     )
@@ -460,6 +425,22 @@ private fun DemoScaffold(
             }
 
             buttons()
+        }
+    }
+}
+
+private enum class NavigationBarItem {
+    A,
+    B,
+    C,
+    ;
+
+    companion object {
+        fun fromNavKey(key: NavKey): NavigationBarItem? = when (key) {
+            NavigationBarANavKey, NavigationBarA1NavKey -> A
+            NavigationBarBNavKey, NavigationBarBSwitchXNavKey, NavigationBarBSwitchYNavKey -> B
+            NavigationBarCNavKey -> C
+            else -> null
         }
     }
 }
