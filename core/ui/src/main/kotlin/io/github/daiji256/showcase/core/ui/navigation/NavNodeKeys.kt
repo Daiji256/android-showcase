@@ -16,7 +16,7 @@ internal data class NavNodeKeys(
             val active = mutableListOf<NavKey>()
             val inactive = mutableListOf<NavKey>()
 
-            // stack of (isActive, node)
+            // queue of (isActive, node)
             val pending = ArrayDeque<Pair<Boolean, NavNode>>()
             pending.addLast(true to root)
 
