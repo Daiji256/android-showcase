@@ -23,7 +23,7 @@ internal fun LocalSnackbarHostStateFirstScreen() {
     LocalSnackbarHostStateFirstScreen(
         onNavigateUpClick = navigator::navigateUp,
         onNavigateToSecondClick = {
-            navigator.navigate(route = LocalSnackbarHostStateSecondNavKey)
+            navigator.push(key = LocalSnackbarHostStateSecondNavKey)
         },
     )
 }

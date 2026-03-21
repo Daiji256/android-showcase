@@ -25,9 +25,9 @@ import io.github.daiji256.showcase.core.designsystem.theme.ShowcaseTheme
 import io.github.daiji256.showcase.core.ui.R
 import io.github.daiji256.showcase.core.ui.feature.FeatureSummary
 import io.github.daiji256.showcase.core.ui.navigation.LocalNavigator
-import io.github.daiji256.showcase.core.ui.navigation.Navigator
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
+import kotlinx.serialization.Serializable
 
 @Composable
 internal fun ShowcaseScreen(
@@ -36,7 +36,7 @@ internal fun ShowcaseScreen(
     val navigator = LocalNavigator.current
     ShowcaseScreen(
         features = features,
-        onFeatureClick = { navigator.navigate() },
+        onFeatureClick = { navigator.push(key = navKey) },
     )
 }
 
@@ -104,10 +104,10 @@ private fun ShowcaseScreenPreview() {
         val features = remember {
             List(20) {
                 object : FeatureSummary {
-                    override val title
-                        @Composable get() = "Feature$it"
+                    override val navKey: NavKey = PreviewFeatureNavKey
 
-                    override fun Navigator<NavKey>.navigate(): Boolean = true
+                    override val title: String
+                        @Composable get() = "Feature$it"
                 }
             }.toImmutableList()
         }
@@ -117,3 +117,6 @@ private fun ShowcaseScreenPreview() {
         )
     }
 }
+
+@Serializable
+private data object PreviewFeatureNavKey : NavKey

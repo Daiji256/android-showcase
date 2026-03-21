@@ -2,9 +2,12 @@ package io.github.daiji256.showcase.feature.navnode.demo
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -15,18 +18,18 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
 import io.github.daiji256.showcase.core.designsystem.theme.ShowcaseAnimations
 import io.github.daiji256.showcase.core.designsystem.theme.ShowcaseTheme
 import io.github.daiji256.showcase.core.ui.document.Document
+import io.github.daiji256.showcase.core.ui.markdown.Markdown
 import io.github.daiji256.showcase.core.ui.navigation.LocalNavigator
 import io.github.daiji256.showcase.core.ui.navigation.NavNode
 import io.github.daiji256.showcase.core.ui.navigation.Navigator
-import io.github.daiji256.showcase.core.ui.navigation.rememberNavTree
-import io.github.daiji256.showcase.core.ui.navigation.rememberNavTreeEntries
+import io.github.daiji256.showcase.core.ui.navigation.rememberNavState
+import io.github.daiji256.showcase.core.ui.navigation.toDecoratedNavEntries
 import io.github.daiji256.showcase.feature.navnode.R
 
 @Composable
@@ -45,97 +48,22 @@ private fun NavNodeDemoScreen(
     initial: DemoInitial,
     onNavigateUpClick: () -> Unit,
 ) {
-    val tree = rememberNavTree {
-        NavNode.Stack(
-            key = RootNavKey,
-            children = listOf(
-                when (initial) {
-                    DemoInitial.Onboarding ->
-                        NavNode.Leaf(key = OnboardingNavKey)
-
-                    DemoInitial.NavigationBarA ->
-                        NavNode.Select(
-                            key = NavigationBarRootNavKey,
-                            selected = NavigationBarARootNavKey,
-                            children = setOf(
-                                NavNode.Stack(
-                                    key = NavigationBarARootNavKey,
-                                    children = listOf(NavNode.Leaf(key = NavigationBarANavKey)),
-                                ),
-                                NavNode.Stack(
-                                    key = NavigationBarBRootNavKey,
-                                    children = listOf(NavNode.Leaf(key = NavigationBarBNavKey)),
-                                ),
-                                NavNode.Stack(
-                                    key = NavigationBarCRootNavKey,
-                                    children = listOf(NavNode.Leaf(key = NavigationBarCNavKey)),
-                                ),
-                            ),
-                        )
-
-                    DemoInitial.NavigationBarA1 ->
-                        NavNode.Select(
-                            key = NavigationBarRootNavKey,
-                            selected = NavigationBarARootNavKey,
-                            children = setOf(
-                                NavNode.Stack(
-                                    key = NavigationBarARootNavKey,
-                                    children = listOf(
-                                        NavNode.Leaf(
-                                            up = NavNode.Leaf(key = NavigationBarANavKey),
-                                            key = NavigationBarA1NavKey,
-                                        ),
-                                    ),
-                                ),
-                                NavNode.Stack(
-                                    key = NavigationBarBRootNavKey,
-                                    children = listOf(NavNode.Leaf(key = NavigationBarBNavKey)),
-                                ),
-                                NavNode.Stack(
-                                    key = NavigationBarCRootNavKey,
-                                    children = listOf(NavNode.Leaf(key = NavigationBarCNavKey)),
-                                ),
-                            ),
-                        )
-
-                    DemoInitial.Outer2 ->
-                        NavNode.Leaf(
-                            up = NavNode.Leaf(
-                                up = NavNode.Select(
-                                    key = NavigationBarRootNavKey,
-                                    selected = NavigationBarCRootNavKey,
-                                    children = setOf(
-                                        NavNode.Stack(
-                                            key = NavigationBarARootNavKey,
-                                            children = listOf(
-                                                NavNode.Leaf(key = NavigationBarANavKey),
-                                            ),
-                                        ),
-                                        NavNode.Stack(
-                                            key = NavigationBarBRootNavKey,
-                                            children = listOf(
-                                                NavNode.Leaf(key = NavigationBarBNavKey),
-                                            ),
-                                        ),
-                                        NavNode.Stack(
-                                            key = NavigationBarCRootNavKey,
-                                            children = listOf(
-                                                NavNode.Leaf(key = NavigationBarCNavKey),
-                                            ),
-                                        ),
-                                    ),
-                                ),
-                                key = Outer1NavKey,
-                            ),
-                            key = Outer2NavKey,
-                        )
-                },
-            ),
-        )
-    }
-    val navigator = remember(tree) { Navigator(tree = tree) }
-    val entries = rememberNavTreeEntries(
-        tree = tree,
+    val navState = rememberNavState(
+        start = when (initial) {
+            DemoInitial.Onboarding -> OnboardingNavKey
+            DemoInitial.NavigationBarA -> NavigationBarANavKey
+            DemoInitial.NavigationBarA1 -> NavigationBarA1NavKey
+            DemoInitial.Outer2 -> Outer2NavKey
+        },
+        pending = when (initial) {
+            DemoInitial.Onboarding -> mutableListOf()
+            DemoInitial.NavigationBarA -> mutableListOf()
+            DemoInitial.NavigationBarA1 -> mutableListOf(NavigationBarANavKey)
+            DemoInitial.Outer2 -> mutableListOf(NavigationBarCNavKey, Outer1NavKey)
+        },
+    )
+    val navigator = remember { Navigator(state = navState) }
+    val entries = navState.toDecoratedNavEntries(
         entryDecorators = listOf(rememberSaveableStateHolderNavEntryDecorator()),
         entryProvider = entryProvider {
             onboarding()
@@ -155,7 +83,7 @@ private fun NavNodeDemoScreen(
         onNavigateUpClick = onNavigateUpClick,
     ) {
         // TODO
-        Text(text = "NavDisplay:")
+        Markdown(markdown = "## NavDisplay")
         CompositionLocalProvider(
             LocalNavigator provides navigator,
         ) {
@@ -166,7 +94,7 @@ private fun NavNodeDemoScreen(
                 popTransitionSpec = ShowcaseAnimations.popTransitionSpec,
                 // TODO: predictivePopTransitionSpec,
                 modifier = Modifier
-                    .padding(horizontal = 8.dp)
+                    .padding(horizontal = 32.dp)
                     .aspectRatio(3f / 4f)
                     .fillMaxWidth()
                     .border(width = 1.dp, color = Color.LightGray), // TODO
@@ -174,61 +102,47 @@ private fun NavNodeDemoScreen(
         }
 
         // TODO
-        Text(text = "NavNode:")
-        NavNodeView(
-            node = tree,
-            modifier = Modifier.padding(start = 8.dp),
-        )
+        Markdown(markdown = "## NavState")
+        Column {
+            Text(text = "root:", fontWeight = FontWeight.Bold)
+            NavNodeView(node = navState.root)
+
+            Spacer(modifier = Modifier.height(2.dp))
+
+            Text(text = "pending:", fontWeight = FontWeight.Bold)
+            if (navState.pending.isEmpty()) {
+                Text(text = "empty")
+            } else {
+                Text(text = navState.pending.toList().toString())
+            }
+        }
     }
 }
 
 @Composable
 private fun NavNodeView(
-    node: NavNode<NavKey>,
+    node: NavNode,
     modifier: Modifier = Modifier,
-    current: Boolean = true,
+    isActive: Boolean = true,
 ) {
-    Column(
-        modifier = modifier
-            .border(
-                width = if (current) 2.dp else 1.dp,
-                // TODO
-                color = when (node) {
-                    is NavNode.Leaf -> Color.Unspecified
-                    is NavNode.Stack -> Color.Red
-                    is NavNode.Select -> Color.Blue
-                },
-            )
-            .padding(
-                all = when (node) {
-                    is NavNode.Leaf -> 0.dp
-                    is NavNode.Stack, is NavNode.Select -> 8.dp
-                },
-            ),
-    ) {
-        when (node) {
-            is NavNode.Leaf -> {
-                // TODO
-                Text(
-                    text = node.key.toString(),
-                    fontWeight = if (current) FontWeight.Bold else null,
-                )
-            }
-
-            is NavNode.Stack -> {
-                node.children.forEachIndexed { index, child ->
-                    NavNodeView(
-                        node = child,
-                        current = current && index == node.children.lastIndex,
+    Column(modifier = modifier) {
+        Text(
+            text = node.key.toString(),
+            fontWeight = if (isActive) FontWeight.Bold else null,
+        )
+        if (node.children.isNotEmpty()) {
+            Column(
+                modifier = Modifier
+                    .border(
+                        width = if (isActive) 2.dp else 1.dp,
+                        color = MaterialTheme.colorScheme.outline,
                     )
-                }
-            }
-
-            is NavNode.Select -> {
+                    .padding(8.dp),
+            ) {
                 node.children.forEach {
                     NavNodeView(
                         node = it,
-                        current = current && it.key == node.selected,
+                        isActive = isActive && it == node.currentChild,
                     )
                 }
             }

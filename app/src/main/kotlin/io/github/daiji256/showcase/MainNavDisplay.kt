@@ -3,14 +3,13 @@ package io.github.daiji256.showcase
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDecorator
-import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
 import io.github.daiji256.showcase.core.designsystem.theme.ShowcaseAnimations
 import io.github.daiji256.showcase.core.ui.navigation.LocalNavigator
-import io.github.daiji256.showcase.core.ui.navigation.NavNode
-import io.github.daiji256.showcase.core.ui.navigation.rememberNavTreeEntries
+import io.github.daiji256.showcase.core.ui.navigation.NavState
+import io.github.daiji256.showcase.core.ui.navigation.toDecoratedNavEntries
 import io.github.daiji256.showcase.core.ui.showcase.showcase
 import io.github.daiji256.showcase.feature.customtabs.customTabs
 import io.github.daiji256.showcase.feature.hiltcomposable.hiltComposable
@@ -25,12 +24,11 @@ import io.github.daiji256.showcase.feature.systemstyle.systemStyle
 
 @Composable
 internal fun MainNavDisplay(
-    tree: NavNode<NavKey>,
+    navState: NavState,
     modifier: Modifier = Modifier,
 ) {
     val navigator = LocalNavigator.current
-    val entries = rememberNavTreeEntries(
-        tree = tree,
+    val entries = navState.toDecoratedNavEntries(
         entryDecorators = listOf(
             rememberSaveableStateHolderNavEntryDecorator(),
             rememberViewModelStoreNavEntryDecorator(),

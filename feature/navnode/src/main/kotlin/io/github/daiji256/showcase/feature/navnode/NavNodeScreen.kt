@@ -16,7 +16,7 @@ internal fun NavNodeScreen() {
     val navigator = LocalNavigator.current
     NavNodeScreen(
         onNavigateUpClick = navigator::navigateUp,
-        onNavigateToDemo = { navigator.navigate(route = NavNodeDemoNavKey(initial = it)) },
+        onNavigateToDemo = { navigator.push(key = NavNodeDemoNavKey(initial = it)) },
     )
 }
 

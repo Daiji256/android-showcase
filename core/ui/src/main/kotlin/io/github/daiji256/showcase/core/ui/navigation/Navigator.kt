@@ -3,71 +3,97 @@ package io.github.daiji256.showcase.core.ui.navigation
 import androidx.navigation3.runtime.NavKey
 
 /**
- * Navigator for the [tree].
+ * Navigator for [NavState].
  *
- * @param T the type of the tree
- * @param tree the root navigation tree
+ * @param state the [NavState]
  */
-class Navigator<T : NavKey>(private val tree: NavNode<T>) {
+class Navigator(private val state: NavState) {
     /**
-     * navigate to the [route]
+     * push the [key]
      *
-     * @param route the destination [NavKey]
-     * @return `true` if navigation was handled, `false` otherwise
+     * @param key the key to push
+     * @return `true` if the key was pushed, `false` otherwise
      */
-    fun navigate(route: T): Boolean = navigate(route = NavNode.Leaf(key = route))
+    fun push(key: NavKey): Boolean = state.root.push(key)
 
     /**
-     * navigate to the [route]
+     * pop the back
      *
-     * @param route the destination [NavNode]
-     * @return `true` if navigation was handled, `false` otherwise
+     * @return `true` if backed, `false` otherwise
      */
-    fun navigate(route: NavNode<T>): Boolean = tree.navigate(route = route)
+    fun pop(): Boolean = state.root.pop()
 
     /**
-     * navigate to the [route]
+     * switch to the [to] key from the [from] key
      *
-     * @param route the destination [NavKey]
-     * @param popUpTo the destination to pop up to
-     * @param inclusive whether the [popUpTo] destination should be popped
-     * @return `true` if navigation was handled, `false` otherwise
+     * if not found [to], create a new [NavNode] and switch to it
+     *
+     * @param from the key to switch from
+     * @param to the key to switch to
+     * @return `true` if the keys were switched, `false` otherwise
      */
-    fun navigate(route: T, popUpTo: T, inclusive: Boolean = false): Boolean =
-        navigate(route = NavNode.Leaf(key = route), popUpTo = popUpTo, inclusive = inclusive)
+    fun switch(from: NavKey, to: NavKey): Boolean = this.switch(setOf(from), listOf(to))
 
     /**
-     * navigate to the [route]
+     * switch to the [to] keys from the [from] key
      *
-     * @param route the destination [NavNode]
-     * @param popUpTo the destination to pop up to
-     * @param inclusive whether the [popUpTo] destination should be popped
-     * @return `true` if navigation was handled, `false` otherwise
+     * if not found [to], create a new [NavNode] and switch to it
+     *
+     * @param from the key to switch from
+     * @param to the keys to switch to
+     * @return `true` if the keys were switched, `false` otherwise
      */
-    fun navigate(route: NavNode<T>, popUpTo: T, inclusive: Boolean = false): Boolean =
-        tree.navigate(route = route, popUpTo = popUpTo, inclusive = inclusive)
+    fun switch(from: NavKey, to: List<NavKey>): Boolean = this.switch(setOf(from), to)
+
+    /**
+     * switch to the [to] key from the [from] keys
+     *
+     * if not found [to], create a new [NavNode] and switch to it
+     *
+     * @param from the keys to switch from
+     * @param to the key to switch to
+     * @return `true` if the keys were switched, `false` otherwise
+     */
+    fun switch(from: Set<NavKey>, to: NavKey): Boolean = this.switch(from, listOf(to))
+
+    /**
+     * switch to the [to] keys from the [from] keys
+     *
+     * if not found [to], create a new [NavNode] and switch to it
+     *
+     * @param from the keys to switch from
+     * @param to the keys to switch to
+     * @return `true` if the keys were switched, `false` otherwise
+     */
+    fun switch(from: Set<NavKey>, to: List<NavKey>): Boolean = state.root.switch(from, to)
 
     /**
      * navigate up
      *
      * @return `true` if navigation was handled, `false` otherwise
      */
-    fun navigateUp(): Boolean = tree.navigateUp()
+    fun navigateUp(): Boolean {
+        if (this.pop()) return true
+        val pending = state.pending.removeLastOrNull() ?: return false
+        val pendingChild = state.root.children.find { it.key == pending } ?: NavNode(key = pending)
+        state.root.children.removeAll { it == state.root.currentChild }
+        state.root.currentChild = pendingChild
+        state.root.children += pendingChild
+        return true
+    }
 
     /**
-     * pop the back
+     * restart
      *
-     * @return `true` if back navigation was handled, `false` otherwise
+     * @param start the start [NavKey]
+     * @param pending the pending keys to navigate up
      */
-    fun pop(): Boolean = tree.pop()
-
-    /**
-     * pop the back to the [route]
-     *
-     * @param route the destination [NavKey]
-     * @param inclusive whether the [route] should be popped
-     * @return `true` if back navigation was handled, `false` otherwise
-     */
-    fun pop(route: T, inclusive: Boolean): Boolean =
-        tree.pop(route = route, inclusive = inclusive)
+    fun restart(start: NavKey, pending: List<NavKey> = listOf()) {
+        val child = NavNode(key = start)
+        state.root.currentChild = child
+        state.root.children.clear()
+        state.root.children += child
+        state.pending.clear()
+        state.pending += pending
+    }
 }
