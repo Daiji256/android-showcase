@@ -1,5 +1,6 @@
 package io.github.daiji256.showcase.feature.navnode.demo
 
+import androidx.compose.animation.core.Transition
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
@@ -24,6 +25,7 @@ import androidx.lifecycle.compose.dropUnlessResumed
 import androidx.navigation3.runtime.EntryProviderScope
 import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.runtime.metadata
+import androidx.navigation3.scene.Scene
 import androidx.navigation3.ui.NavDisplay
 import io.github.daiji256.showcase.core.designsystem.theme.ShowcaseAnimations
 import io.github.daiji256.showcase.core.ui.component.NavigateUpButton
@@ -62,14 +64,14 @@ internal fun EntryProviderScope<NavKey>.navigationBarA() {
         clazzContentKey = { it.contentKey },
         metadata = metadata {
             put(NavDisplay.TransitionKey) {
-                when (this.initialState.entries.last().contentKey) {
-                    in NavigationBarContentKeys -> ShowcaseAnimations.topLevelTransitionSpec(this)
+                when {
+                    isNavigationBarSwitch() -> ShowcaseAnimations.topLevelTransitionSpec(this)
                     else -> ShowcaseAnimations.transitionSpec(this)
                 }
             }
             put(NavDisplay.PopTransitionKey) {
-                when (this.initialState.entries.last().contentKey) {
-                    in NavigationBarContentKeys -> ShowcaseAnimations.topLevelTransitionSpec(this)
+                when {
+                    isNavigationBarSwitch() -> ShowcaseAnimations.topLevelTransitionSpec(this)
                     else -> ShowcaseAnimations.popTransitionSpec(this)
                 }
             }
@@ -102,14 +104,14 @@ internal fun EntryProviderScope<NavKey>.navigationBarA1() {
         clazzContentKey = { it.contentKey },
         metadata = metadata {
             put(NavDisplay.TransitionKey) {
-                when (this.initialState.entries.last().contentKey) {
-                    in NavigationBarContentKeys -> ShowcaseAnimations.topLevelTransitionSpec(this)
+                when {
+                    isNavigationBarSwitch() -> ShowcaseAnimations.topLevelTransitionSpec(this)
                     else -> ShowcaseAnimations.transitionSpec(this)
                 }
             }
             put(NavDisplay.PopTransitionKey) {
-                when (this.initialState.entries.last().contentKey) {
-                    in NavigationBarContentKeys -> ShowcaseAnimations.topLevelTransitionSpec(this)
+                when {
+                    isNavigationBarSwitch() -> ShowcaseAnimations.topLevelTransitionSpec(this)
                     else -> ShowcaseAnimations.popTransitionSpec(this)
                 }
             }
@@ -129,14 +131,14 @@ internal fun EntryProviderScope<NavKey>.navigationBarB() {
         clazzContentKey = { it.contentKey },
         metadata = metadata {
             put(NavDisplay.TransitionKey) {
-                when (this.initialState.entries.last().contentKey) {
-                    in NavigationBarContentKeys -> ShowcaseAnimations.topLevelTransitionSpec(this)
+                when {
+                    isNavigationBarSwitch() -> ShowcaseAnimations.topLevelTransitionSpec(this)
                     else -> ShowcaseAnimations.transitionSpec(this)
                 }
             }
             put(NavDisplay.PopTransitionKey) {
-                when (this.initialState.entries.last().contentKey) {
-                    in NavigationBarContentKeys -> ShowcaseAnimations.topLevelTransitionSpec(this)
+                when {
+                    isNavigationBarSwitch() -> ShowcaseAnimations.topLevelTransitionSpec(this)
                     else -> ShowcaseAnimations.popTransitionSpec(this)
                 }
             }
@@ -169,14 +171,14 @@ internal fun EntryProviderScope<NavKey>.navigationBarBSwitchX() {
         clazzContentKey = { it.contentKey },
         metadata = metadata {
             put(NavDisplay.TransitionKey) {
-                when (this.initialState.entries.last().contentKey) {
-                    in NavigationBarContentKeys -> ShowcaseAnimations.topLevelTransitionSpec(this)
+                when {
+                    isNavigationBarSwitch() -> ShowcaseAnimations.topLevelTransitionSpec(this)
                     else -> ShowcaseAnimations.transitionSpec(this)
                 }
             }
             put(NavDisplay.PopTransitionKey) {
-                when (this.initialState.entries.last().contentKey) {
-                    in NavigationBarContentKeys -> ShowcaseAnimations.topLevelTransitionSpec(this)
+                when {
+                    isNavigationBarSwitch() -> ShowcaseAnimations.topLevelTransitionSpec(this)
                     else -> ShowcaseAnimations.popTransitionSpec(this)
                 }
             }
@@ -212,14 +214,14 @@ internal fun EntryProviderScope<NavKey>.navigationBarBSwitchY() {
         clazzContentKey = { it.contentKey },
         metadata = metadata {
             put(NavDisplay.TransitionKey) {
-                when (this.initialState.entries.last().contentKey) {
-                    in NavigationBarContentKeys -> ShowcaseAnimations.topLevelTransitionSpec(this)
+                when {
+                    isNavigationBarSwitch() -> ShowcaseAnimations.topLevelTransitionSpec(this)
                     else -> ShowcaseAnimations.transitionSpec(this)
                 }
             }
             put(NavDisplay.PopTransitionKey) {
-                when (this.initialState.entries.last().contentKey) {
-                    in NavigationBarContentKeys -> ShowcaseAnimations.topLevelTransitionSpec(this)
+                when {
+                    isNavigationBarSwitch() -> ShowcaseAnimations.topLevelTransitionSpec(this)
                     else -> ShowcaseAnimations.popTransitionSpec(this)
                 }
             }
@@ -255,15 +257,17 @@ internal fun EntryProviderScope<NavKey>.navigationBarC() {
         clazzContentKey = { it.contentKey },
         metadata = metadata {
             put(NavDisplay.TransitionKey) {
-                when (this.initialState.entries.last().contentKey) {
-                    in NavigationBarContentKeys -> ShowcaseAnimations.topLevelTransitionSpec(this)
-                    Outer1NavKey.contentKey -> ShowcaseAnimations.popTransitionSpec(this)
+                val initialContentKey = this.initialState.entries.last().contentKey
+                val isInitialOuter1 = initialContentKey == Outer1NavKey.contentKey
+                when {
+                    isNavigationBarSwitch() -> ShowcaseAnimations.topLevelTransitionSpec(this)
+                    isInitialOuter1 -> ShowcaseAnimations.popTransitionSpec(this)
                     else -> ShowcaseAnimations.transitionSpec(this)
                 }
             }
             put(NavDisplay.PopTransitionKey) {
-                when (this.initialState.entries.last().contentKey) {
-                    in NavigationBarContentKeys -> ShowcaseAnimations.topLevelTransitionSpec(this)
+                when {
+                    isNavigationBarSwitch() -> ShowcaseAnimations.topLevelTransitionSpec(this)
                     else -> ShowcaseAnimations.popTransitionSpec(this)
                 }
             }
@@ -296,8 +300,10 @@ internal fun EntryProviderScope<NavKey>.outer1() {
         clazzContentKey = { it.contentKey },
         metadata = metadata {
             put(NavDisplay.TransitionKey) {
-                when (this.initialState.entries.last().contentKey) {
-                    Outer2NavKey.contentKey -> ShowcaseAnimations.popTransitionSpec(this)
+                val initialContentKey = this.initialState.entries.last().contentKey
+                val isInitialOuter2 = initialContentKey == Outer2NavKey.contentKey
+                when {
+                    isInitialOuter2 -> ShowcaseAnimations.popTransitionSpec(this)
                     else -> ShowcaseAnimations.transitionSpec(this)
                 }
             }
@@ -342,15 +348,6 @@ private val NavigationBarKeys = setOf(
     NavigationBarCNavKey,
 )
 
-private val NavigationBarContentKeys = setOf(
-    NavigationBarANavKey.contentKey,
-    NavigationBarA1NavKey.contentKey,
-    NavigationBarBNavKey.contentKey,
-    NavigationBarBSwitchXNavKey.contentKey,
-    NavigationBarBSwitchYNavKey.contentKey,
-    NavigationBarCNavKey.contentKey,
-)
-
 private enum class NavigationBarItem {
     A,
     B,
@@ -364,7 +361,31 @@ private enum class NavigationBarItem {
             NavigationBarCNavKey -> C
             else -> null
         }
+
+        fun fromContentKey(key: String): NavigationBarItem? = when (key) {
+            NavigationBarANavKey.contentKey,
+            NavigationBarA1NavKey.contentKey,
+                -> A
+
+            NavigationBarBNavKey.contentKey,
+            NavigationBarBSwitchXNavKey.contentKey,
+            NavigationBarBSwitchYNavKey.contentKey,
+                -> B
+
+            NavigationBarCNavKey.contentKey,
+                -> C
+
+            else -> null
+        }
     }
+}
+
+private fun Transition.Segment<Scene<*>>.isNavigationBarSwitch(): Boolean {
+    val initialContentKey = this.initialState.entries.last().contentKey as? String ?: return false
+    val targetContentKey = this.targetState.entries.last().contentKey as? String ?: return false
+    val initialItem = NavigationBarItem.fromContentKey(initialContentKey) ?: return false
+    val targetItem = NavigationBarItem.fromContentKey(targetContentKey) ?: return false
+    return initialItem != targetItem
 }
 
 @Composable
