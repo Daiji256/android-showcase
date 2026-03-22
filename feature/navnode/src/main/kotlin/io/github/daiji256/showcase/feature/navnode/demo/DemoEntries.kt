@@ -1,5 +1,6 @@
 package io.github.daiji256.showcase.feature.navnode.demo
 
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.animation.core.Transition
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -26,6 +27,7 @@ import androidx.navigation3.runtime.EntryProviderScope
 import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.runtime.metadata
 import androidx.navigation3.scene.Scene
+import androidx.navigation3.ui.LocalNavAnimatedContentScope
 import androidx.navigation3.ui.NavDisplay
 import io.github.daiji256.showcase.core.designsystem.theme.ShowcaseAnimations
 import io.github.daiji256.showcase.core.ui.component.NavigateUpButton
@@ -35,10 +37,11 @@ import kotlinx.serialization.Serializable
 @Serializable
 internal data object OnboardingNavKey : NavKey
 
+context(sharedTransitionScope: SharedTransitionScope)
 internal fun EntryProviderScope<NavKey>.onboarding() {
     entry<OnboardingNavKey> { key ->
         val navigator = LocalNavigator.current
-        DemoScaffold(
+        sharedTransitionScope.DemoScaffold(
             key = key,
             buttons = {
                 Button(
@@ -59,6 +62,7 @@ internal data object NavigationBarANavKey : NavKey {
     val contentKey: String get() = this.toString()
 }
 
+context(sharedTransitionScope: SharedTransitionScope)
 internal fun EntryProviderScope<NavKey>.navigationBarA() {
     entry<NavigationBarANavKey>(
         clazzContentKey = { it.contentKey },
@@ -78,7 +82,7 @@ internal fun EntryProviderScope<NavKey>.navigationBarA() {
         },
     ) { key ->
         val navigator = LocalNavigator.current
-        DemoScaffold(
+        sharedTransitionScope.DemoScaffold(
             key = key,
             buttons = {
                 Button(
@@ -99,6 +103,7 @@ internal data object NavigationBarA1NavKey : NavKey {
     val contentKey: String get() = this.toString()
 }
 
+context(sharedTransitionScope: SharedTransitionScope)
 internal fun EntryProviderScope<NavKey>.navigationBarA1() {
     entry<NavigationBarA1NavKey>(
         clazzContentKey = { it.contentKey },
@@ -117,7 +122,7 @@ internal fun EntryProviderScope<NavKey>.navigationBarA1() {
             }
         },
     ) { key ->
-        DemoScaffold(key = key)
+        sharedTransitionScope.DemoScaffold(key = key)
     }
 }
 
@@ -126,6 +131,7 @@ internal data object NavigationBarBNavKey : NavKey {
     val contentKey: String get() = this.toString()
 }
 
+context(sharedTransitionScope: SharedTransitionScope)
 internal fun EntryProviderScope<NavKey>.navigationBarB() {
     entry<NavigationBarBNavKey>(
         clazzContentKey = { it.contentKey },
@@ -145,7 +151,7 @@ internal fun EntryProviderScope<NavKey>.navigationBarB() {
         },
     ) { key ->
         val navigator = LocalNavigator.current
-        DemoScaffold(
+        sharedTransitionScope.DemoScaffold(
             key = key,
             buttons = {
                 Button(
@@ -166,6 +172,7 @@ internal data object NavigationBarBSwitchXNavKey : NavKey {
     val contentKey: String get() = this.toString()
 }
 
+context(sharedTransitionScope: SharedTransitionScope)
 internal fun EntryProviderScope<NavKey>.navigationBarBSwitchX() {
     entry<NavigationBarBSwitchXNavKey>(
         clazzContentKey = { it.contentKey },
@@ -185,7 +192,7 @@ internal fun EntryProviderScope<NavKey>.navigationBarBSwitchX() {
         },
     ) { key ->
         val navigator = LocalNavigator.current
-        DemoScaffold(
+        sharedTransitionScope.DemoScaffold(
             key = key,
             buttons = {
                 Button(
@@ -209,6 +216,7 @@ internal data object NavigationBarBSwitchYNavKey : NavKey {
     val contentKey: String get() = this.toString()
 }
 
+context(sharedTransitionScope: SharedTransitionScope)
 internal fun EntryProviderScope<NavKey>.navigationBarBSwitchY() {
     entry<NavigationBarBSwitchYNavKey>(
         clazzContentKey = { it.contentKey },
@@ -228,7 +236,7 @@ internal fun EntryProviderScope<NavKey>.navigationBarBSwitchY() {
         },
     ) { key ->
         val navigator = LocalNavigator.current
-        DemoScaffold(
+        sharedTransitionScope.DemoScaffold(
             key = key,
             buttons = {
                 Button(
@@ -252,6 +260,7 @@ internal data object NavigationBarCNavKey : NavKey {
     val contentKey: String get() = this.toString()
 }
 
+context(sharedTransitionScope: SharedTransitionScope)
 internal fun EntryProviderScope<NavKey>.navigationBarC() {
     entry<NavigationBarCNavKey>(
         clazzContentKey = { it.contentKey },
@@ -274,7 +283,7 @@ internal fun EntryProviderScope<NavKey>.navigationBarC() {
         },
     ) { key ->
         val navigator = LocalNavigator.current
-        DemoScaffold(
+        sharedTransitionScope.DemoScaffold(
             key = key,
             buttons = {
                 Button(
@@ -295,6 +304,7 @@ internal data object Outer1NavKey : NavKey {
     val contentKey: String get() = this.toString()
 }
 
+context(sharedTransitionScope: SharedTransitionScope)
 internal fun EntryProviderScope<NavKey>.outer1() {
     entry<Outer1NavKey>(
         clazzContentKey = { it.contentKey },
@@ -310,7 +320,7 @@ internal fun EntryProviderScope<NavKey>.outer1() {
         },
     ) { key ->
         val navigator = LocalNavigator.current
-        DemoScaffold(
+        sharedTransitionScope.DemoScaffold(
             key = key,
             buttons = {
                 Button(
@@ -331,11 +341,12 @@ internal data object Outer2NavKey : NavKey {
     val contentKey: String get() = this.toString()
 }
 
+context(sharedTransitionScope: SharedTransitionScope)
 internal fun EntryProviderScope<NavKey>.outer2() {
     entry<Outer2NavKey>(
         clazzContentKey = { it.contentKey },
     ) { key ->
-        DemoScaffold(key = key)
+        sharedTransitionScope.DemoScaffold(key = key)
     }
 }
 
@@ -389,7 +400,7 @@ private fun Transition.Segment<Scene<*>>.isNavigationBarSwitch(): Boolean {
 }
 
 @Composable
-private fun DemoScaffold(
+private fun SharedTransitionScope.DemoScaffold(
     key: NavKey,
     buttons: @Composable ColumnScope.() -> Unit = {},
 ) {
@@ -424,6 +435,13 @@ private fun DemoScaffold(
             if (selected != null) {
                 NavigationBar(
                     windowInsets = WindowInsets(0, 0, 0, 0),
+                    modifier = Modifier
+                        .sharedElement(
+                            sharedContentState = rememberSharedContentState(
+                                key = "NavNode-Demo-NavigationBar",
+                            ),
+                            animatedVisibilityScope = LocalNavAnimatedContentScope.current,
+                        ),
                 ) {
                     NavigationBarItem(
                         selected = selected == NavigationBarItem.A,
@@ -434,6 +452,13 @@ private fun DemoScaffold(
                             )
                         },
                         icon = { Text("A") }, // TODO
+                        modifier = Modifier
+                            .sharedElement(
+                                sharedContentState = rememberSharedContentState(
+                                    key = "NavNode-Demo-NavigationBarItem-A",
+                                ),
+                                animatedVisibilityScope = LocalNavAnimatedContentScope.current,
+                            ),
                     )
                     NavigationBarItem(
                         selected = selected == NavigationBarItem.B,
@@ -448,6 +473,13 @@ private fun DemoScaffold(
                             )
                         },
                         icon = { Text("B") }, // TODO
+                        modifier = Modifier
+                            .sharedElement(
+                                sharedContentState = rememberSharedContentState(
+                                    key = "NavNode-Demo-NavigationBarItem-B",
+                                ),
+                                animatedVisibilityScope = LocalNavAnimatedContentScope.current,
+                            ),
                     )
                     NavigationBarItem(
                         selected = selected == NavigationBarItem.C,
@@ -458,6 +490,13 @@ private fun DemoScaffold(
                             )
                         },
                         icon = { Text("C") }, // TODO
+                        modifier = Modifier
+                            .sharedElement(
+                                sharedContentState = rememberSharedContentState(
+                                    key = "NavNode-Demo-NavigationBarItem-C",
+                                ),
+                                animatedVisibilityScope = LocalNavAnimatedContentScope.current,
+                            ),
                     )
                 }
             }
