@@ -1,5 +1,7 @@
 package io.github.daiji256.showcase.feature.navnode.demo
 
+import androidx.compose.animation.SharedTransitionLayout
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
@@ -40,13 +42,16 @@ internal fun NavNodeDemoScreen(
     initial: DemoInitial,
 ) {
     val navigator = LocalNavigator.current
-    NavNodeDemoScreen(
-        initial = initial,
-        onNavigateUpClick = navigator::navigateUp,
-    )
+    SharedTransitionLayout {
+        NavNodeDemoScreen(
+            initial = initial,
+            onNavigateUpClick = navigator::navigateUp,
+        )
+    }
 }
 
 @Composable
+context(_: SharedTransitionScope)
 private fun NavNodeDemoScreen(
     initial: DemoInitial,
     onNavigateUpClick: () -> Unit,
