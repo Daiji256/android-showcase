@@ -1,5 +1,6 @@
 package io.github.daiji256.showcase.feature.navnode.demo
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -13,7 +14,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.draw.dropShadow
+import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.graphics.shadow.Shadow
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -97,7 +100,8 @@ private fun NavNodeDemoScreen(
                     .padding(horizontal = 32.dp)
                     .aspectRatio(3f / 4f)
                     .fillMaxWidth()
-                    .border(width = 1.dp, color = Color.LightGray), // TODO
+                    .dropShadow(shape = RectangleShape, shadow = Shadow(radius = 1.dp))
+                    .background(color = MaterialTheme.colorScheme.surface),
             )
         }
 
