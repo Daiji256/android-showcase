@@ -1,13 +1,10 @@
 initscript {
-    // renovate: datasource=maven depName=com.diffplug.spotless:spotless-plugin-gradle
-    val spotlessVersion = "8.4.0"
-
     repositories {
         mavenCentral()
     }
 
     dependencies {
-        classpath("com.diffplug.spotless:spotless-plugin-gradle:$spotlessVersion")
+        classpath("com.diffplug.spotless:spotless-plugin-gradle:8.3.0")
     }
 }
 
