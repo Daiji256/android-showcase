@@ -32,7 +32,7 @@ jobs:
           java-version: 25
 
       - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@39e147cb9de83bb9910b8ef8bd7fff0ee20fcd6f # v6.0.1
+        uses: gradle/actions/setup-gradle@50e97c2cd7a37755bbfafc9c5b7cafaece252f6e # v6.1.0
 
       - name: Copy GitHub Actions gradle.properties
         run: mkdir -p ~/.gradle ; cp .github/gradle.properties ~/.gradle/gradle.properties
@@ -135,7 +135,7 @@ jobs:
 
       - name: Setup Gradle
         if: ${{ !cancelled() && success() && steps.check-base-screenshots-branch.outputs.exists == 'false' }}
-        uses: gradle/actions/setup-gradle@39e147cb9de83bb9910b8ef8bd7fff0ee20fcd6f # v6.0.1
+        uses: gradle/actions/setup-gradle@50e97c2cd7a37755bbfafc9c5b7cafaece252f6e # v6.1.0
 
       - name: Copy GitHub Actions gradle.properties
         if: ${{ !cancelled() && success() && steps.check-base-screenshots-branch.outputs.exists == 'false' }}
