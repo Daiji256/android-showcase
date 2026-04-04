@@ -132,12 +132,6 @@ class PreviewTester :
                 )
                 Spacer(modifier = Modifier.width(4.dp))
                 Icon(
-                    painter = painterResource(id = R.drawable.ic_wifi),
-                    contentDescription = null,
-                    tint = Color.Gray,
-                )
-                Spacer(modifier = Modifier.width(4.dp))
-                Icon(
                     painter = painterResource(id = R.drawable.ic_battery),
                     contentDescription = null,
                     tint = Color.Gray,
