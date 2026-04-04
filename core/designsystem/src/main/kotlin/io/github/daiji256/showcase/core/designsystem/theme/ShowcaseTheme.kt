@@ -16,8 +16,8 @@ fun ShowcaseTheme(
 ) {
     val colorScheme = when {
         Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> when {
-            isSystemInDarkTheme() -> dynamicDarkColorScheme(LocalContext.current)
-            else -> dynamicLightColorScheme(LocalContext.current)
+            isSystemInDarkTheme() -> dynamicDarkColorScheme(context = LocalContext.current)
+            else -> dynamicLightColorScheme(context = LocalContext.current)
         }
 
         else -> when {
