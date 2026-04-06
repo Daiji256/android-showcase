@@ -29,7 +29,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import io.github.daiji256.showcase.feature.systemstyle.colorcontrast.ColorContrast
-import io.github.daiji256.showcase.feature.systemstyle.colorcontrast.currentColorContrast
+import io.github.daiji256.showcase.feature.systemstyle.colorcontrast.LocalColorContrast
 import io.github.daiji256.showcase.feature.systemstyle.systemcolor.primaryColor
 import io.github.daiji256.showcase.feature.systemstyle.systemcolor.secondaryColor
 import io.github.daiji256.showcase.feature.systemstyle.systemcolor.tertiaryColor
@@ -85,7 +85,7 @@ internal fun SystemStyleValues(modifier: Modifier = Modifier) {
                     style = TextStyle(color = Color.Black),
                 )
                 BasicText(
-                    text = when (currentColorContrast()) {
+                    text = when (LocalColorContrast.current) {
                         ColorContrast.Default ->
                             stringResource(
                                 id = R.string.feature_system_style_color_contrast_value_default,
