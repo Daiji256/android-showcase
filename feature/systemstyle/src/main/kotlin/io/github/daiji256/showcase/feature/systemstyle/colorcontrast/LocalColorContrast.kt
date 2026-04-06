@@ -6,7 +6,7 @@ import android.os.Build
 import androidx.compose.runtime.compositionLocalWithComputedDefaultOf
 import androidx.compose.ui.platform.LocalContext
 
-val LocalColorContrast = compositionLocalWithComputedDefaultOf {
+internal val LocalColorContrast = compositionLocalWithComputedDefaultOf {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
         val context = LocalContext.currentValue
         val uiModeManager = context.getSystemService(Context.UI_MODE_SERVICE) as UiModeManager
