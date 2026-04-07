@@ -5,7 +5,7 @@ compileSdk = "36"
 
 jdk = "25"
 
-aboutlibraries = "14.0.0-b03"
+aboutlibraries = "14.0.0"
 activity-compose = "1.13.0"
 agp = "9.1.0"
 androidxTestRules = "1.7.0"

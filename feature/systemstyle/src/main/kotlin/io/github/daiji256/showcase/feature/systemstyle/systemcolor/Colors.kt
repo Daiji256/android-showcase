@@ -9,7 +9,7 @@ import androidx.compose.ui.res.colorResource
 
 @RequiresApi(Build.VERSION_CODES.S)
 @Composable
-fun primaryColor(): Color =
+internal fun primaryColor(): Color =
     when {
         Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE ->
             when (isSystemInDarkTheme()) {
@@ -26,7 +26,7 @@ fun primaryColor(): Color =
 
 @RequiresApi(Build.VERSION_CODES.S)
 @Composable
-fun secondaryColor(): Color =
+internal fun secondaryColor(): Color =
     when {
         Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE ->
             when (isSystemInDarkTheme()) {
@@ -43,7 +43,7 @@ fun secondaryColor(): Color =
 
 @RequiresApi(Build.VERSION_CODES.S)
 @Composable
-fun tertiaryColor(): Color =
+internal fun tertiaryColor(): Color =
     when {
         Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE ->
             when (isSystemInDarkTheme()) {
