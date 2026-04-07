@@ -1,5 +1,6 @@
 package io.github.daiji256.showcase.feature.pastel
 
+import android.content.res.Configuration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -302,6 +303,7 @@ private fun ColorPaletteEmptyItem(
 }
 
 @Preview(showSystemUi = true)
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES, showSystemUi = true)
 @Composable
 private fun PastelScreenPreview() {
     ShowcaseTheme {
