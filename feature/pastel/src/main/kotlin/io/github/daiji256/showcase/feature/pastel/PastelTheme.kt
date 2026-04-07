@@ -162,8 +162,8 @@ private fun dynamicDarkPastelColorScheme(context: Context): ColorScheme {
 }
 
 @Stable
-private fun Color(hue: Float, chroma: Float, tone: Float, alpha: Float = 1f): Color =
-    Color(ColorUtils.M3HCTToColor(hue, chroma, tone)).copy(alpha = alpha)
+private fun Color(hue: Float, chroma: Float, tone: Float): Color =
+    Color(ColorUtils.M3HCTToColor(hue, chroma, tone))
 
 @Stable
 private fun Color.m3Hue(): Float {
