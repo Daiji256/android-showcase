@@ -4,4 +4,5 @@
     <string name="feature_pastel_textfield">Text Field</string>
     <string name="feature_pastel_snackbar">Snackbar</string>
     <string name="feature_pastel_snackbar_action">Action</string>
+    <string name="feature_pastel_color_palette_item_text">Text</string>
 </resources>
