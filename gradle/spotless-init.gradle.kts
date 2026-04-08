@@ -13,7 +13,7 @@ rootProject {
     val ktlintVersion = "1.8.0"
 
     // renovate: datasource=maven depName=io.nlopez.compose.rules:ktlint
-    val ktlintComposeRulesVersion = "0.5.6"
+    val ktlintComposeRulesVersion = "0.5.7"
 
     val editorConfigOverride = mapOf(
         "ktlint_code_style" to "android_studio",
