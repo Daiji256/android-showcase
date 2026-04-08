@@ -13,7 +13,7 @@ rootProject {
     val ktlintVersion = "1.8.0"
 
     // renovate: datasource=maven depName=io.nlopez.compose.rules:ktlint
-    val ktlintComposeRulesVersion = "0.5.6"
+    val ktlintComposeRulesVersion = "0.5.7"
 
     val editorConfigOverride = mapOf(
         "ktlint_code_style" to "android_studio",
@@ -22,7 +22,8 @@ rootProject {
         "ktlint_standard_class-signature" to "disabled",
         "ktlint_standard_function-signature" to "disabled",
         "ktlint_standard_property-naming" to "disabled",
-        "compose_allowed_composition_locals" to "LocalNavigator,LocalSnackbarHostState",
+        "compose_allowed_composition_locals" to
+            "LocalNavigator,LocalSnackbarHostState,LocalColorContrast",
     )
 
     apply<com.diffplug.gradle.spotless.SpotlessPlugin>()
