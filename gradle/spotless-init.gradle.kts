@@ -30,11 +30,7 @@ rootProject {
             targetExclude("**/build/**/*.kt")
             ktlint(ktlintVersion)
                 .editorConfigOverride(editorConfigOverride)
-                .customRuleSets(
-                    listOf(
-                        "io.nlopez.compose.rules:ktlint:0.5.6",
-                    ),
-                )
+                .customRuleSets(listOf("io.nlopez.compose.rules:ktlint:0.5.6"))
         }
 
         kotlinGradle {
