@@ -12,9 +12,6 @@ rootProject {
     // renovate: datasource=maven depName=com.pinterest.ktlint:ktlint-cli
     val ktlintVersion = "1.8.0"
 
-    // renovate: datasource=maven depName=io.nlopez.compose.rules:ktlint
-    val ktlintComposeRulesVersion = "0.5.7"
-
     val editorConfigOverride = mapOf(
         "ktlint_code_style" to "android_studio",
         "ktlint_experimental" to "enabled",
@@ -33,11 +30,7 @@ rootProject {
             targetExclude("**/build/**/*.kt")
             ktlint(ktlintVersion)
                 .editorConfigOverride(editorConfigOverride)
-                .customRuleSets(
-                    listOf(
-                        "io.nlopez.compose.rules:ktlint:$ktlintComposeRulesVersion",
-                    ),
-                )
+                .customRuleSets(listOf("io.nlopez.compose.rules:ktlint:0.5.6"))
         }
 
         kotlinGradle {
