@@ -8,6 +8,7 @@ import io.github.daiji256.showcase.feature.license.LicenseSummary
 import io.github.daiji256.showcase.feature.localsnackbarhoststate.LocalSnackbarHostStateSummary
 import io.github.daiji256.showcase.feature.navigation2arguments.Navigation2ArgumentsSummary
 import io.github.daiji256.showcase.feature.navnode.NavNodeSummary
+import io.github.daiji256.showcase.feature.pastel.PastelSummary
 import io.github.daiji256.showcase.feature.roborazzi.RoborazziSummary
 import io.github.daiji256.showcase.feature.safeurihandler.SafeUriHandlerSummary
 import io.github.daiji256.showcase.feature.systemstyle.SystemStyleSummary
@@ -23,6 +24,7 @@ internal val Features: ImmutableList<FeatureSummary> =
         LocalSnackbarHostStateSummary,
         Navigation2ArgumentsSummary,
         NavNodeSummary,
+        PastelSummary,
         RoborazziSummary,
         SafeUriHandlerSummary,
         SystemStyleSummary,

@@ -18,6 +18,7 @@ import io.github.daiji256.showcase.feature.license.license
 import io.github.daiji256.showcase.feature.localsnackbarhoststate.localSnackbarHostState
 import io.github.daiji256.showcase.feature.navigation2arguments.navigation2Arguments
 import io.github.daiji256.showcase.feature.navnode.navNode
+import io.github.daiji256.showcase.feature.pastel.pastel
 import io.github.daiji256.showcase.feature.roborazzi.roborazzi
 import io.github.daiji256.showcase.feature.safeurihandler.safeUriHandler
 import io.github.daiji256.showcase.feature.systemstyle.systemStyle
@@ -42,6 +43,7 @@ internal fun MainNavDisplay(
             localSnackbarHostState()
             navigation2Arguments()
             navNode()
+            pastel()
             roborazzi()
             safeUriHandler()
             systemStyle()
