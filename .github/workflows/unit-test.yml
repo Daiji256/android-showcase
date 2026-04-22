@@ -43,6 +43,7 @@ jobs:
           branch: ${{ needs.orphan-branch-name.outputs.base-screenshots }}
 
       - name: Run unit test
+        id: run-unit-test
         run: |
           ./gradlew testDebugUnitTest \
             -Proborazzi.test.record=true \
@@ -50,7 +51,7 @@ jobs:
             -Proborazzi.cleanupOldScreenshots=true
 
       - name: Display unit test report
-        if: ${{ !cancelled() }}
+        if: ${{ !cancelled() && steps.run-unit-test.outcome != 'skipped' }}
         uses: dorny/test-reporter@a43b3a5f7366b97d083190328d2c652e1a8b6aa2 # v3.0.0
         with:
           name: unit-test-report
@@ -58,7 +59,7 @@ jobs:
           reporter: java-junit
 
       - name: Upload head screenshots
-        if: ${{ !cancelled() }}
+        if: ${{ !cancelled() && steps.run-unit-test.outcome == 'success' }}
         uses: daiji256/upload-to-orphan-branch@8d353234c31aaf2134dc6081b863fcd876fcb2d0 # v1.0.0
         with:
           branch: ${{ needs.orphan-branch-name.outputs.head-screenshots }}
@@ -69,7 +70,8 @@ jobs:
             !**/build/outputs/roborazzi/*_actual.png
 
       - name: Upload companion screenshots
-        if: ${{ !cancelled() }}
+        id: upload-companion-screenshots
+        if: ${{ !cancelled() && steps.run-unit-test.outcome == 'success' }}
         uses: daiji256/upload-to-orphan-branch@8d353234c31aaf2134dc6081b863fcd876fcb2d0 # v1.0.0
         with:
           branch: ${{ needs.orphan-branch-name.outputs.companion-screenshots }}
@@ -77,6 +79,7 @@ jobs:
           path: "**/build/outputs/roborazzi/*_compare.png"
 
       - name: Post report
+        if: ${{ !cancelled() && steps.upload-companion-screenshots.outcome == 'success' }}
         env:
           COMPANION_BRANCH: ${{ needs.orphan-branch-name.outputs.companion-screenshots }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
