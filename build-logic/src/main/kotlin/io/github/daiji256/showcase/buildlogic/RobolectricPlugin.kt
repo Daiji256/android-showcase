@@ -14,10 +14,6 @@ import org.gradle.kotlin.dsl.dependencies
 class RobolectricPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {
-            with(pluginManager) {
-                apply(libs.plugin("roborazzi").pluginId)
-            }
-
             extensions.configure<CommonExtension> {
                 testOptions.unitTests {
                     isIncludeAndroidResources = true
