@@ -16,6 +16,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -25,6 +26,7 @@ import io.github.daiji256.showcase.core.designsystem.theme.ShowcaseTheme
 import io.github.daiji256.showcase.core.ui.R
 import io.github.daiji256.showcase.core.ui.feature.FeatureSummary
 import io.github.daiji256.showcase.core.ui.navigation.LocalNavigator
+import io.github.daiji256.showcase.core.ui.window.LocalWindowShape
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.serialization.Serializable
@@ -55,6 +57,8 @@ private fun ShowcaseScreen(
                 },
             )
         },
+        modifier = Modifier
+            .clip(shape = LocalWindowShape.current),
     ) { padding ->
         val layoutDirection = LocalLayoutDirection.current
         LazyColumn(

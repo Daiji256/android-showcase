@@ -23,6 +23,7 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.tooling.preview.Preview
@@ -30,6 +31,7 @@ import androidx.compose.ui.unit.dp
 import io.github.daiji256.showcase.core.ui.component.NavigateUpButton
 import io.github.daiji256.showcase.core.ui.localsnackbarhoststate.LocalSnackbarHostState
 import io.github.daiji256.showcase.core.ui.markdown.Markdown
+import io.github.daiji256.showcase.core.ui.window.LocalWindowShape
 
 @Composable
 fun Document(
@@ -87,6 +89,7 @@ fun Document(
                 SnackbarHost(hostState = snackbarHostState)
             },
             modifier = modifier
+                .clip(shape = LocalWindowShape.current)
                 .nestedScroll(topAppBarScrollBehavior.nestedScrollConnection),
         ) { padding ->
             val layoutDirection = LocalLayoutDirection.current

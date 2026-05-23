@@ -14,6 +14,7 @@ import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.stringResource
@@ -25,6 +26,7 @@ import com.mikepenz.aboutlibraries.ui.compose.m3.LibrariesContainer
 import io.github.daiji256.showcase.core.designsystem.theme.ShowcaseTheme
 import io.github.daiji256.showcase.core.ui.component.NavigateUpButton
 import io.github.daiji256.showcase.core.ui.navigation.LocalNavigator
+import io.github.daiji256.showcase.core.ui.window.LocalWindowShape
 
 @Composable
 internal fun LicenseScreen() {
@@ -68,6 +70,7 @@ private fun LicenseScreen(
             )
         },
         modifier = Modifier
+            .clip(shape = LocalWindowShape.current)
             .nestedScroll(topAppBarScrollBehavior.nestedScrollConnection),
     ) { padding ->
         val layoutDirection = LocalLayoutDirection.current
