@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="feature_lshs_title">"LocalSnackbarHostState"</string>
     <string name="feature_lshs_first_title">"LocalSnackbarHostState (1)"</string>

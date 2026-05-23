@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="feature_nav2_args_title">"Navigation2 Arguments"</string>
     <string name="feature_nav2_args_sender_doc_summary_md">"Clicking any button navigates to a new screen and sends `arg` as an argument. The sending method is fixed, while the receiving method differs."</string>
