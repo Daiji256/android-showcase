@@ -1,19 +1,14 @@
 package io.github.daiji256.showcase.core.ui.window
 
-import android.os.Build
 import android.view.RoundedCorner
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.compositionLocalWithComputedDefaultOf
-import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.unit.LayoutDirection
 
-val LocalWindowShape = compositionLocalWithComputedDefaultOf {
-    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) {
-        return@compositionLocalWithComputedDefaultOf RectangleShape
-    }
-
+val LocalWindowShape = compositionLocalWithComputedDefaultOf<Shape> {
     val view = LocalView.currentValue
     val insets = view.rootWindowInsets
     val topLeft = insets?.getRoundedCorner(RoundedCorner.POSITION_TOP_LEFT)?.radius ?: 0

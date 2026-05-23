@@ -1,14 +1,11 @@
 package io.github.daiji256.showcase.feature.pastel
 
 import android.content.Context
-import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
-import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.ui.graphics.Color
@@ -33,11 +30,7 @@ internal fun PastelTheme(
 
 @Stable
 private fun dynamicLightPastelColorScheme(context: Context): ColorScheme {
-    val mdColorScheme = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-        dynamicLightColorScheme(context = context)
-    } else {
-        lightColorScheme()
-    }
+    val mdColorScheme = dynamicLightColorScheme(context = context)
     val primaryHue = mdColorScheme.primary.m3Hue()
     val secondaryHue = mdColorScheme.secondary.m3Hue()
     val tertiaryHue = mdColorScheme.tertiary.m3Hue()
@@ -98,11 +91,7 @@ private fun dynamicLightPastelColorScheme(context: Context): ColorScheme {
 
 @Stable
 private fun dynamicDarkPastelColorScheme(context: Context): ColorScheme {
-    val mdColorScheme = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-        dynamicDarkColorScheme(context = context)
-    } else {
-        darkColorScheme()
-    }
+    val mdColorScheme = dynamicDarkColorScheme(context = context)
     val primaryHue = mdColorScheme.primary.m3Hue()
     val secondaryHue = mdColorScheme.secondary.m3Hue()
     val tertiaryHue = mdColorScheme.tertiary.m3Hue()
