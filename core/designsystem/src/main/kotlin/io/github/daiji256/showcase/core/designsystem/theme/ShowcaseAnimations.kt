@@ -4,28 +4,32 @@ import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.ContentTransform
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
-import androidx.compose.animation.core.FastOutLinearInEasing
-import androidx.compose.animation.core.FastOutSlowInEasing
-import androidx.compose.animation.core.LinearOutSlowInEasing
+import androidx.compose.animation.core.CubicBezierEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
-import androidx.compose.animation.slideInHorizontally
-import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.runtime.Stable
 
 object ShowcaseAnimations {
     val transitionSpec: AnimatedContentTransitionScope<*>.() -> ContentTransform = {
         ContentTransform(
-            targetContentEnter = sharedIn(forward = true),
-            initialContentExit = sharedOut(forward = true),
+            targetContentEnter = sharedIn(
+                towards = AnimatedContentTransitionScope.SlideDirection.Start,
+            ),
+            initialContentExit = sharedOut(
+                towards = AnimatedContentTransitionScope.SlideDirection.Start,
+            ),
         )
     }
 
     val popTransitionSpec: AnimatedContentTransitionScope<*>.() -> ContentTransform = {
         ContentTransform(
-            targetContentEnter = sharedIn(forward = false),
-            initialContentExit = sharedOut(forward = false),
+            targetContentEnter = sharedIn(
+                towards = AnimatedContentTransitionScope.SlideDirection.End,
+            ),
+            initialContentExit = sharedOut(
+                towards = AnimatedContentTransitionScope.SlideDirection.End,
+            ),
         )
     }
 
@@ -37,62 +41,72 @@ object ShowcaseAnimations {
     }
 
     val enterTransition: AnimatedContentTransitionScope<*>.() -> EnterTransition = {
-        sharedIn(forward = true)
+        sharedIn(
+            towards = AnimatedContentTransitionScope.SlideDirection.Start,
+        )
     }
 
     val exitTransition: AnimatedContentTransitionScope<*>.() -> ExitTransition = {
-        sharedOut(forward = true)
+        sharedOut(
+            towards = AnimatedContentTransitionScope.SlideDirection.Start,
+        )
     }
 
     val popEnterTransition: AnimatedContentTransitionScope<*>.() -> EnterTransition = {
-        sharedIn(forward = false)
+        sharedIn(
+            towards = AnimatedContentTransitionScope.SlideDirection.End,
+        )
     }
 
     val popExitTransition: AnimatedContentTransitionScope<*>.() -> ExitTransition = {
-        sharedOut(forward = false)
+        sharedOut(
+            towards = AnimatedContentTransitionScope.SlideDirection.End,
+        )
     }
 }
 
 @Stable
-private fun sharedIn(forward: Boolean): EnterTransition =
-    slideInHorizontally(
+private fun AnimatedContentTransitionScope<*>.sharedIn(
+    towards: AnimatedContentTransitionScope.SlideDirection,
+): EnterTransition =
+    slideIntoContainer(
+        towards = towards,
+        initialOffset = ::transitionOffset,
         animationSpec = tween(
-            durationMillis = DurationMillis,
-            easing = FastOutSlowInEasing,
+            durationMillis = TransitionDuration,
+            easing = StandardDecelerateEasing,
         ),
-        initialOffsetX = { fullWidth ->
-            slideDistance(fullWidth) * if (forward) 1 else -1
-        },
     ) +
         fadeIn(
             animationSpec = tween(
-                durationMillis = IncomingDurationMillis,
-                delayMillis = OutgoingDurationMillis,
-                easing = LinearOutSlowInEasing,
+                durationMillis = TransitionDuration,
+                easing = StandardDecelerateEasing,
             ),
         )
 
 @Stable
-private fun sharedOut(forward: Boolean): ExitTransition =
-    slideOutHorizontally(
+private fun AnimatedContentTransitionScope<*>.sharedOut(
+    towards: AnimatedContentTransitionScope.SlideDirection,
+): ExitTransition =
+    slideOutOfContainer(
+        towards = towards,
+        targetOffset = ::transitionOffset,
         animationSpec = tween(
-            durationMillis = DurationMillis,
-            easing = FastOutSlowInEasing,
+            durationMillis = TransitionDuration,
+            easing = StandardDecelerateEasing,
         ),
-        targetOffsetX = { fullWidth ->
-            slideDistance(fullWidth) * if (forward) -1 else 1
-        },
     ) +
         fadeOut(
             animationSpec = tween(
-                durationMillis = OutgoingDurationMillis,
-                delayMillis = 0,
-                easing = FastOutLinearInEasing,
+                durationMillis = TransitionDuration,
+                easing = StandardDecelerateEasing,
             ),
         )
 
-private fun slideDistance(fullWidth: Int): Int = fullWidth / 8
-private const val ProgressThreshold = 0.35f
-private const val DurationMillis = 300
-private const val OutgoingDurationMillis = (DurationMillis * ProgressThreshold).toInt()
-private const val IncomingDurationMillis = DurationMillis - OutgoingDurationMillis
+private fun transitionOffset(offsetForFullSlide: Int): Int = offsetForFullSlide / 4
+private const val TransitionDuration = 300
+private const val PredictivePopTransitionDelay = TransitionDuration * 4 / 5
+private const val PredictivePopTransitionDelayedDuration =
+    TransitionDuration - PredictivePopTransitionDelay
+private val StandardDecelerateEasing = CubicBezierEasing(0f, 0f, 0f, 1f)
+private val StandardAccelerateEasing = CubicBezierEasing(0.3f, 0f, 1f, 1f)
