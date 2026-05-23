@@ -36,6 +36,7 @@ import io.github.daiji256.showcase.core.ui.navigation.NavNode
 import io.github.daiji256.showcase.core.ui.navigation.Navigator
 import io.github.daiji256.showcase.core.ui.navigation.rememberNavState
 import io.github.daiji256.showcase.core.ui.navigation.toDecoratedNavEntries
+import io.github.daiji256.showcase.core.ui.window.LocalWindowShape
 import io.github.daiji256.showcase.feature.navnode.R
 
 @Composable
@@ -96,21 +97,25 @@ private fun NavNodeDemoScreen(
         CompositionLocalProvider(
             LocalNavigator provides navigator,
         ) {
-            val shape = RectangleShape
-            NavDisplay(
-                entries = entries,
-                onBack = navigator::pop,
-                transitionSpec = ShowcaseAnimations.transitionSpec,
-                popTransitionSpec = ShowcaseAnimations.popTransitionSpec,
-                predictivePopTransitionSpec = ShowcaseAnimations.predictivePopTransitionSpec,
-                modifier = Modifier
-                    .padding(horizontal = 32.dp)
-                    .aspectRatio(3f / 4f)
-                    .fillMaxWidth()
-                    .dropShadow(shape = shape, shadow = Shadow(radius = 1.dp))
-                    .background(shape = shape, color = MaterialTheme.colorScheme.surface)
-                    .clip(shape = shape),
-            )
+            val shape = MaterialTheme.shapes.large
+            CompositionLocalProvider(
+                LocalWindowShape provides shape,
+            ) {
+                NavDisplay(
+                    entries = entries,
+                    onBack = navigator::pop,
+                    transitionSpec = ShowcaseAnimations.transitionSpec,
+                    popTransitionSpec = ShowcaseAnimations.popTransitionSpec,
+                    predictivePopTransitionSpec = ShowcaseAnimations.predictivePopTransitionSpec,
+                    modifier = Modifier
+                        .padding(horizontal = 32.dp)
+                        .aspectRatio(3f / 4f)
+                        .fillMaxWidth()
+                        .dropShadow(shape = shape, shadow = Shadow(radius = 1.dp))
+                        .background(shape = shape, color = MaterialTheme.colorScheme.surfaceVariant)
+                        .clip(shape = shape),
+                )
+            }
         }
 
         // TODO
