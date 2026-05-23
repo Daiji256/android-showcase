@@ -8,8 +8,6 @@ plugins {
 android {
     namespace = "io.github.daiji256.showcase"
 
-    ndkVersion = libs.versions.ndk.get()
-
     defaultConfig {
         applicationId = "io.github.daiji256.showcase"
         versionCode = 1
