@@ -55,7 +55,7 @@ internal fun MainNavDisplay(
         onBack = navigator::pop,
         transitionSpec = ShowcaseAnimations.transitionSpec,
         popTransitionSpec = ShowcaseAnimations.popTransitionSpec,
-        // TODO: predictivePopTransitionSpec,
+        predictivePopTransitionSpec = ShowcaseAnimations.predictivePopTransitionSpec,
         modifier = modifier,
     )
 }

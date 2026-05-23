@@ -16,6 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.dropShadow
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.shadow.Shadow
@@ -95,18 +96,20 @@ private fun NavNodeDemoScreen(
         CompositionLocalProvider(
             LocalNavigator provides navigator,
         ) {
+            val shape = RectangleShape
             NavDisplay(
                 entries = entries,
                 onBack = navigator::pop,
                 transitionSpec = ShowcaseAnimations.transitionSpec,
                 popTransitionSpec = ShowcaseAnimations.popTransitionSpec,
-                // TODO: predictivePopTransitionSpec,
+                predictivePopTransitionSpec = ShowcaseAnimations.predictivePopTransitionSpec,
                 modifier = Modifier
                     .padding(horizontal = 32.dp)
                     .aspectRatio(3f / 4f)
                     .fillMaxWidth()
-                    .dropShadow(shape = RectangleShape, shadow = Shadow(radius = 1.dp))
-                    .background(color = MaterialTheme.colorScheme.surface),
+                    .dropShadow(shape = shape, shadow = Shadow(radius = 1.dp))
+                    .background(shape = shape, color = MaterialTheme.colorScheme.surface)
+                    .clip(shape = shape),
             )
         }
 
