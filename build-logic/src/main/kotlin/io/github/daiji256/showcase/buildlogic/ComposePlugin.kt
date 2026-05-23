@@ -32,6 +32,7 @@ class ComposePlugin : Plugin<Project> {
 
             dependencies {
                 implementation(platform(libs.library("compose.bom")))
+                implementation(libs.library("compose.animation"))
                 implementation(libs.library("compose.ui"))
                 implementation(libs.library("compose.ui.tooling.preview"))
                 implementation(libs.library("compose.material3"))
