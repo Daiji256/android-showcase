@@ -33,6 +33,7 @@ import io.github.daiji256.showcase.feature.systemstyle.colorcontrast.LocalColorC
 
 @Composable
 internal fun SystemStyleValues(modifier: Modifier = Modifier) {
+    val isSystemInDarkTheme = isSystemInDarkTheme()
     Column(
         verticalArrangement = Arrangement.spacedBy(4.dp),
         modifier = modifier
@@ -50,7 +51,7 @@ internal fun SystemStyleValues(modifier: Modifier = Modifier) {
                 style = TextStyle(color = Color.Black),
             )
             BasicText(
-                text = when (isSystemInDarkTheme()) {
+                text = when (isSystemInDarkTheme) {
                     false -> stringResource(id = R.string.feature_system_style_theme_value_light)
                     true -> stringResource(id = R.string.feature_system_style_theme_value_dark)
                 },
@@ -104,15 +105,24 @@ internal fun SystemStyleValues(modifier: Modifier = Modifier) {
         listOf(
             Pair(
                 stringResource(id = R.string.feature_system_style_primary_color_label),
-                colorResource(id = android.R.color.system_primary_fixed),
+                when (isSystemInDarkTheme) {
+                    false -> colorResource(id = android.R.color.system_primary_light)
+                    true -> colorResource(id = android.R.color.system_primary_dark)
+                },
             ),
             Pair(
                 stringResource(id = R.string.feature_system_style_secondary_color_label),
-                colorResource(id = android.R.color.system_secondary_fixed),
+                when (isSystemInDarkTheme) {
+                    false -> colorResource(id = android.R.color.system_secondary_light)
+                    true -> colorResource(id = android.R.color.system_secondary_dark)
+                },
             ),
             Pair(
                 stringResource(id = R.string.feature_system_style_tertiary_color_label),
-                colorResource(id = android.R.color.system_tertiary_fixed),
+                when (isSystemInDarkTheme) {
+                    false -> colorResource(id = android.R.color.system_tertiary_light)
+                    true -> colorResource(id = android.R.color.system_tertiary_dark)
+                },
             ),
         ).forEach { (label, color) ->
             Row(
