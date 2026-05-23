@@ -178,14 +178,20 @@ internal fun EntryProviderScope<NavKey>.navigationBarBSwitchX() {
         clazzContentKey = { it.contentKey },
         metadata = metadata {
             put(NavDisplay.TransitionKey) {
+                val initialContentKey = this.initialState.entries.last().contentKey
+                val isInitialSwitchY = initialContentKey == NavigationBarBSwitchYNavKey.contentKey
                 when {
                     isNavigationBarSwitch() -> ShowcaseAnimations.topLevelTransitionSpec(this)
+                    isInitialSwitchY -> ShowcaseAnimations.topLevelTransitionSpec(this)
                     else -> ShowcaseAnimations.transitionSpec(this)
                 }
             }
             put(NavDisplay.PopTransitionKey) {
+                val targetContentKey = this.targetState.entries.last().contentKey
+                val isTargetSwitchY = targetContentKey == NavigationBarBSwitchYNavKey.contentKey
                 when {
                     isNavigationBarSwitch() -> ShowcaseAnimations.topLevelTransitionSpec(this)
+                    isTargetSwitchY -> ShowcaseAnimations.topLevelTransitionSpec(this)
                     else -> ShowcaseAnimations.popTransitionSpec(this)
                 }
             }
@@ -222,14 +228,20 @@ internal fun EntryProviderScope<NavKey>.navigationBarBSwitchY() {
         clazzContentKey = { it.contentKey },
         metadata = metadata {
             put(NavDisplay.TransitionKey) {
+                val initialContentKey = this.initialState.entries.last().contentKey
+                val isInitialSwitchX = initialContentKey == NavigationBarBSwitchXNavKey.contentKey
                 when {
                     isNavigationBarSwitch() -> ShowcaseAnimations.topLevelTransitionSpec(this)
+                    isInitialSwitchX -> ShowcaseAnimations.topLevelTransitionSpec(this)
                     else -> ShowcaseAnimations.transitionSpec(this)
                 }
             }
             put(NavDisplay.PopTransitionKey) {
+                val targetContentKey = this.targetState.entries.last().contentKey
+                val isTargetSwitchX = targetContentKey == NavigationBarBSwitchXNavKey.contentKey
                 when {
                     isNavigationBarSwitch() -> ShowcaseAnimations.topLevelTransitionSpec(this)
+                    isTargetSwitchX -> ShowcaseAnimations.topLevelTransitionSpec(this)
                     else -> ShowcaseAnimations.popTransitionSpec(this)
                 }
             }
