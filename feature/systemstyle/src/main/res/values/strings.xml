@@ -12,8 +12,8 @@
     <string name="feature_system_style_color_contrast_value_default">Default</string>
     <string name="feature_system_style_color_contrast_value_medium">Medium</string>
     <string name="feature_system_style_color_contrast_value_high">High</string>
-    <string name="feature_system_style_primary_color_label">Primary Color</string>
-    <string name="feature_system_style_secondary_color_label">Secondary Color</string>
-    <string name="feature_system_style_tertiary_color_label">Tertiary Color</string>
+    <string name="feature_system_style_primary_color_label">Primary Fixed Color</string>
+    <string name="feature_system_style_secondary_color_label">Secondary Fixed Color</string>
+    <string name="feature_system_style_tertiary_color_label">Tertiary Fixed Color</string>
     <string name="feature_system_style_color_value">#%06X</string>
 </resources>
