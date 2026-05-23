@@ -28,9 +28,12 @@ class AndroidApplicationPlugin : Plugin<Project> {
             }
 
             extensions.configure<ApplicationExtension> {
+                ndkVersion = libs.version("ndk")
+
                 compileSdk {
                     version = release(libs.version("compileSdk").toInt())
                 }
+
                 defaultConfig {
                     minSdk {
                         version = release(libs.version("minSdk").toInt())
