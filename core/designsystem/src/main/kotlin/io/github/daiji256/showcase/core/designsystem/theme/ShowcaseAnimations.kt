@@ -8,7 +8,11 @@ import androidx.compose.animation.core.CubicBezierEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.animation.scaleIn
+import androidx.compose.animation.scaleOut
 import androidx.compose.runtime.Stable
+import androidx.compose.ui.graphics.TransformOrigin
+import androidx.navigationevent.NavigationEvent
 
 object ShowcaseAnimations {
     val transitionSpec: AnimatedContentTransitionScope<*>.() -> ContentTransform = {
@@ -30,6 +34,47 @@ object ShowcaseAnimations {
             initialContentExit = sharedOut(
                 towards = AnimatedContentTransitionScope.SlideDirection.End,
             ),
+        )
+    }
+
+    val predictivePopTransitionSpec: AnimatedContentTransitionScope<*>.(
+        swipeEdge: @NavigationEvent.SwipeEdge Int,
+    ) -> ContentTransform = { swipeEdge ->
+        ContentTransform(
+            targetContentEnter = scaleIn(
+                initialScale = 0.875f,
+                transformOrigin = TransformOrigin(
+                    pivotFractionX = -0.5f,
+                    pivotFractionY = 0.5f,
+                ),
+                animationSpec = tween(
+                    durationMillis = PredictivePopTransitionDelayedDuration,
+                    delayMillis = PredictivePopTransitionDelay,
+                    easing = StandardDecelerateEasing,
+                ),
+            ),
+            initialContentExit = scaleOut(
+                targetScale = 0.75f,
+                transformOrigin = TransformOrigin(
+                    pivotFractionX = when (swipeEdge) {
+                        NavigationEvent.EDGE_LEFT -> 0.625f
+                        NavigationEvent.EDGE_RIGHT -> 0.375f
+                        else -> 0.5f
+                    },
+                    pivotFractionY = 0.5f,
+                ),
+                animationSpec = tween(
+                    durationMillis = TransitionDuration,
+                    easing = StandardAccelerateEasing,
+                ),
+            ) +
+                fadeOut(
+                    animationSpec = tween(
+                        durationMillis = PredictivePopTransitionDelayedDuration,
+                        delayMillis = PredictivePopTransitionDelay,
+                        easing = StandardAccelerateEasing,
+                    ),
+                ),
         )
     }
 
