@@ -112,7 +112,7 @@ internal fun SystemStyleValues(modifier: Modifier = Modifier) {
             ),
             Pair(
                 stringResource(id = R.string.feature_system_style_tertiary_color_label),
-                colorResource(id = android.R.color.system_tertiary_fixed)
+                colorResource(id = android.R.color.system_tertiary_fixed),
             ),
         ).forEach { (label, color) ->
             Row(
