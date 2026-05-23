@@ -21,6 +21,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.dropUnlessResumed
 import androidx.navigation3.runtime.EntryProviderScope
@@ -32,6 +33,7 @@ import androidx.navigation3.ui.NavDisplay
 import io.github.daiji256.showcase.core.designsystem.theme.ShowcaseAnimations
 import io.github.daiji256.showcase.core.ui.component.NavigateUpButton
 import io.github.daiji256.showcase.core.ui.navigation.LocalNavigator
+import io.github.daiji256.showcase.core.ui.window.LocalWindowShape
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -513,6 +515,8 @@ private fun SharedTransitionScope.DemoScaffold(
                 }
             }
         },
+        modifier = Modifier
+            .clip(shape = LocalWindowShape.current),
     ) { padding ->
         Column(
             verticalArrangement = Arrangement.spacedBy(8.dp),

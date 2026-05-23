@@ -1,5 +1,7 @@
 package io.github.daiji256.showcase
 
+import androidx.compose.foundation.background
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.remember
@@ -12,6 +14,7 @@ import io.github.daiji256.showcase.core.ui.navigation.Navigator
 import io.github.daiji256.showcase.core.ui.navigation.rememberNavState
 import io.github.daiji256.showcase.core.ui.showcase.ShowcaseNavKey
 import io.github.daiji256.showcase.core.ui.urihandler.SafeUriHandler
+import io.github.daiji256.showcase.core.ui.window.LocalWindowShape
 
 @Composable
 internal fun MainContent(modifier: Modifier = Modifier) {
@@ -28,7 +31,12 @@ internal fun MainContent(modifier: Modifier = Modifier) {
         ShowcaseTheme {
             MainNavDisplay(
                 navState = navState,
-                modifier = modifier,
+                modifier = modifier
+                    .background(color = MaterialTheme.colorScheme.surface)
+                    .background(
+                        color = MaterialTheme.colorScheme.surfaceVariant,
+                        shape = LocalWindowShape.current,
+                    ),
             )
         }
     }
