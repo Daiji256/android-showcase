@@ -14,6 +14,15 @@ android {
         versionName = "1.0"
     }
 
+    signingConfigs {
+        getByName("debug") {
+            storeFile = rootProject.file("signing/debug.keystore")
+            storePassword = "showcase"
+            keyAlias = "debug"
+            keyPassword = "showcase"
+        }
+    }
+
     buildTypes {
         debug {
             applicationIdSuffix = ".debug"
