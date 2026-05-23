@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="feature_system_style_title">System Style</string>
     <string name="feature_system_style_document_md">Retrieve the theme and other settings specified in the System. Retrieval does not require Material or Material 3.\n\nThese are the values configured in the System:</string>

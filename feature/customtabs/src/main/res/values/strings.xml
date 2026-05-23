@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="feature_custom_tabs_title">Custom Tabs</string>
     <string name="feature_custom_tabs_document_summary_md">This sample shows how to launch [Custom Tabs](https://developer.chrome.com/docs/android/custom-tabs/) using both an `Activity` `Context` and an `Application` `Context`.</string>
