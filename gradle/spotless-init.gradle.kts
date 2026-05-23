@@ -20,7 +20,7 @@ rootProject {
         "ktlint_standard_function-signature" to "disabled",
         "ktlint_standard_property-naming" to "disabled",
         "compose_allowed_composition_locals" to
-            "LocalNavigator,LocalSnackbarHostState,LocalColorContrast",
+            "LocalNavigator,LocalSnackbarHostState,LocalColorContrast,LocalWindowShape",
     )
 
     apply<com.diffplug.gradle.spotless.SpotlessPlugin>()
