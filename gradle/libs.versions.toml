@@ -5,7 +5,7 @@ targetSdk = "37"
 jdk = "25"
 ndk = "27.3.13750724"
 
-aboutlibraries = "14.2.0"
+aboutlibraries = "14.2.1"
 activity-compose = "1.13.0"
 agp = "9.2.1"
 androidxTestRules = "1.7.0"
