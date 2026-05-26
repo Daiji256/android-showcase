@@ -35,6 +35,10 @@ gradlePlugin {
             id = "buildlogic.compose"
             implementationClass = "io.github.daiji256.showcase.buildlogic.ComposePlugin"
         }
+        register("dependencies") {
+            id = "buildlogic.dependencies"
+            implementationClass = "io.github.daiji256.showcase.buildlogic.DependenciesPlugin"
+        }
         register("hilt") {
             id = "buildlogic.hilt"
             implementationClass = "io.github.daiji256.showcase.buildlogic.HiltPlugin"

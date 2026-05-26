@@ -1,0 +1,20 @@
+{
+  "androidx.compose:compose-bom": {
+    "author": "The Android Open Source Project"
+  },
+  "com.google.code.findbugs:jsr305": {
+    "author": "The FindBugs project"
+  },
+  "com.google.guava:listenablefuture": {
+    "author": "Kevin Bourrillion",
+    "uri": "https://github.com/google/guava",
+    "license_name": "The Apache Software License, Version 2.0",
+    "license_uri": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+  },
+  "javax.inject:javax.inject": {
+    "author": "The JSR-330 Expert Group"
+  },
+  "org.jspecify:jspecify": {
+    "uri": "https://jspecify.dev/"
+  }
+}
