@@ -65,14 +65,6 @@
             "license_uri": "http://www.apache.org/licenses/LICENSE-2.0.txt"
         },
         {
-            "id": "androidx.browser:browser",
-            "name": "Browser",
-            "uri": "https://developer.android.com/jetpack/androidx/releases/browser#1.10.0",
-            "author": "The Android Open Source Project",
-            "license_name": "The Apache Software License, Version 2.0",
-            "license_uri": "http://www.apache.org/licenses/LICENSE-2.0.txt"
-        },
-        {
             "id": "androidx.collection:collection",
             "name": "collections",
             "uri": "https://developer.android.com/jetpack/androidx/releases/collection#1.5.0",
@@ -497,30 +489,6 @@
             "license_uri": "http://www.apache.org/licenses/LICENSE-2.0.txt"
         },
         {
-            "id": "androidx.navigation:navigation-common",
-            "name": "Navigation Common",
-            "uri": "https://developer.android.com/jetpack/androidx/releases/navigation#2.9.8",
-            "author": "The Android Open Source Project",
-            "license_name": "The Apache Software License, Version 2.0",
-            "license_uri": "http://www.apache.org/licenses/LICENSE-2.0.txt"
-        },
-        {
-            "id": "androidx.navigation:navigation-compose",
-            "name": "Compose Navigation",
-            "uri": "https://developer.android.com/jetpack/androidx/releases/navigation#2.9.8",
-            "author": "The Android Open Source Project",
-            "license_name": "The Apache Software License, Version 2.0",
-            "license_uri": "http://www.apache.org/licenses/LICENSE-2.0.txt"
-        },
-        {
-            "id": "androidx.navigation:navigation-runtime",
-            "name": "Navigation Runtime",
-            "uri": "https://developer.android.com/jetpack/androidx/releases/navigation#2.9.8",
-            "author": "The Android Open Source Project",
-            "license_name": "The Apache Software License, Version 2.0",
-            "license_uri": "http://www.apache.org/licenses/LICENSE-2.0.txt"
-        },
-        {
             "id": "androidx.navigationevent:navigationevent",
             "name": "Navigation Event",
             "uri": "https://developer.android.com/jetpack/androidx/releases/navigationevent#1.0.2",
@@ -633,14 +601,6 @@
             "license_uri": "http://www.apache.org/licenses/LICENSE-2.0.txt"
         },
         {
-            "id": "com.github.skydoves:compose-stability-runtime",
-            "name": "Compose Stability Analyzer Runtime",
-            "uri": "https://github.com/skydoves/compose-stability-analyzer/",
-            "author": "Jaewoong Eum",
-            "license_name": "The Apache Software License, Version 2.0",
-            "license_uri": "http://www.apache.org/licenses/LICENSE-2.0.txt"
-        },
-        {
             "id": "com.google.code.findbugs:jsr305",
             "name": "FindBugs-jsr305",
             "uri": "http://findbugs.sourceforge.net/",
@@ -689,30 +649,6 @@
             "license_uri": "http://www.apache.org/licenses/LICENSE-2.0.txt"
         },
         {
-            "id": "com.mikepenz:aboutlibraries-compose-core",
-            "name": "AboutLibraries Compose UI Library",
-            "uri": "https://github.com/mikepenz/AboutLibraries",
-            "author": "Mike Penz",
-            "license_name": "Apache-2.0",
-            "license_uri": "https://www.apache.org/licenses/LICENSE-2.0.txt"
-        },
-        {
-            "id": "com.mikepenz:aboutlibraries-compose-m3",
-            "name": "AboutLibraries Compose Material 3 Library",
-            "uri": "https://github.com/mikepenz/AboutLibraries",
-            "author": "Mike Penz",
-            "license_name": "Apache-2.0",
-            "license_uri": "https://www.apache.org/licenses/LICENSE-2.0.txt"
-        },
-        {
-            "id": "com.mikepenz:aboutlibraries-core",
-            "name": "AboutLibraries Core Library",
-            "uri": "https://github.com/mikepenz/AboutLibraries",
-            "author": "Mike Penz",
-            "license_name": "Apache-2.0",
-            "license_uri": "https://www.apache.org/licenses/LICENSE-2.0.txt"
-        },
-        {
             "id": "io.github.aakira:napier",
             "name": "napier",
             "uri": "https://github.com/aakira/Napier",
@@ -735,206 +671,6 @@
             "author": "The JSR-330 Expert Group",
             "license_name": "The Apache Software License, Version 2.0",
             "license_uri": "http://www.apache.org/licenses/LICENSE-2.0.txt"
-        },
-        {
-            "id": "org.jetbrains.androidx.lifecycle:lifecycle-common",
-            "name": "Lifecycle-Common",
-            "uri": "https://github.com/JetBrains/compose-jb",
-            "author": "Compose Multiplatform Team",
-            "license_name": "The Apache Software License, Version 2.0",
-            "license_uri": "https://www.apache.org/licenses/LICENSE-2.0.txt"
-        },
-        {
-            "id": "org.jetbrains.androidx.lifecycle:lifecycle-runtime",
-            "name": "Lifecycle Runtime",
-            "uri": "https://github.com/JetBrains/compose-jb",
-            "author": "Compose Multiplatform Team",
-            "license_name": "The Apache Software License, Version 2.0",
-            "license_uri": "https://www.apache.org/licenses/LICENSE-2.0.txt"
-        },
-        {
-            "id": "org.jetbrains.androidx.lifecycle:lifecycle-runtime-compose",
-            "name": "Lifecycle Runtime Compose",
-            "uri": "https://github.com/JetBrains/compose-jb",
-            "author": "Compose Multiplatform Team",
-            "license_name": "The Apache Software License, Version 2.0",
-            "license_uri": "https://www.apache.org/licenses/LICENSE-2.0.txt"
-        },
-        {
-            "id": "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel",
-            "name": "Lifecycle ViewModel",
-            "uri": "https://github.com/JetBrains/compose-jb",
-            "author": "Compose Multiplatform Team",
-            "license_name": "The Apache Software License, Version 2.0",
-            "license_uri": "https://www.apache.org/licenses/LICENSE-2.0.txt"
-        },
-        {
-            "id": "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-savedstate",
-            "name": "Lifecycle ViewModel with SavedState",
-            "uri": "https://github.com/JetBrains/compose-jb",
-            "author": "Compose Multiplatform Team",
-            "license_name": "The Apache Software License, Version 2.0",
-            "license_uri": "https://www.apache.org/licenses/LICENSE-2.0.txt"
-        },
-        {
-            "id": "org.jetbrains.androidx.savedstate:savedstate",
-            "name": "Saved State",
-            "uri": "https://github.com/JetBrains/compose-jb",
-            "author": "Compose Multiplatform Team",
-            "license_name": "The Apache Software License, Version 2.0",
-            "license_uri": "https://www.apache.org/licenses/LICENSE-2.0.txt"
-        },
-        {
-            "id": "org.jetbrains.androidx.savedstate:savedstate-compose",
-            "name": "Saved State Compose",
-            "uri": "https://github.com/JetBrains/compose-jb",
-            "author": "Compose Multiplatform Team",
-            "license_name": "The Apache Software License, Version 2.0",
-            "license_uri": "https://www.apache.org/licenses/LICENSE-2.0.txt"
-        },
-        {
-            "id": "org.jetbrains.compose.animation:animation",
-            "name": "Compose Animation",
-            "uri": "https://github.com/JetBrains/compose-jb",
-            "author": "Compose Multiplatform Team",
-            "license_name": "The Apache Software License, Version 2.0",
-            "license_uri": "https://www.apache.org/licenses/LICENSE-2.0.txt"
-        },
-        {
-            "id": "org.jetbrains.compose.animation:animation-core",
-            "name": "Compose Animation Core",
-            "uri": "https://github.com/JetBrains/compose-jb",
-            "author": "Compose Multiplatform Team",
-            "license_name": "The Apache Software License, Version 2.0",
-            "license_uri": "https://www.apache.org/licenses/LICENSE-2.0.txt"
-        },
-        {
-            "id": "org.jetbrains.compose.annotation-internal:annotation",
-            "name": "Annotation",
-            "uri": "https://github.com/JetBrains/compose-jb",
-            "author": "Compose Multiplatform Team",
-            "license_name": "The Apache Software License, Version 2.0",
-            "license_uri": "https://www.apache.org/licenses/LICENSE-2.0.txt"
-        },
-        {
-            "id": "org.jetbrains.compose.collection-internal:collection",
-            "name": "collections",
-            "uri": "https://github.com/JetBrains/compose-jb",
-            "author": "Compose Multiplatform Team",
-            "license_name": "The Apache Software License, Version 2.0",
-            "license_uri": "https://www.apache.org/licenses/LICENSE-2.0.txt"
-        },
-        {
-            "id": "org.jetbrains.compose.foundation:foundation",
-            "name": "Compose Foundation",
-            "uri": "https://github.com/JetBrains/compose-jb",
-            "author": "Compose Multiplatform Team",
-            "license_name": "The Apache Software License, Version 2.0",
-            "license_uri": "https://www.apache.org/licenses/LICENSE-2.0.txt"
-        },
-        {
-            "id": "org.jetbrains.compose.foundation:foundation-layout",
-            "name": "Compose Layouts",
-            "uri": "https://github.com/JetBrains/compose-jb",
-            "author": "Compose Multiplatform Team",
-            "license_name": "The Apache Software License, Version 2.0",
-            "license_uri": "https://www.apache.org/licenses/LICENSE-2.0.txt"
-        },
-        {
-            "id": "org.jetbrains.compose.material3:material3",
-            "name": "Compose Material3 Components",
-            "uri": "https://github.com/JetBrains/compose-jb",
-            "author": "Compose Multiplatform Team",
-            "license_name": "The Apache Software License, Version 2.0",
-            "license_uri": "https://www.apache.org/licenses/LICENSE-2.0.txt"
-        },
-        {
-            "id": "org.jetbrains.compose.material:material-ripple",
-            "name": "Compose Material Ripple",
-            "uri": "https://github.com/JetBrains/compose-jb",
-            "author": "Compose Multiplatform Team",
-            "license_name": "The Apache Software License, Version 2.0",
-            "license_uri": "https://www.apache.org/licenses/LICENSE-2.0.txt"
-        },
-        {
-            "id": "org.jetbrains.compose.runtime:runtime",
-            "name": "Compose Runtime",
-            "uri": "https://github.com/JetBrains/compose-jb",
-            "author": "Compose Multiplatform Team",
-            "license_name": "The Apache Software License, Version 2.0",
-            "license_uri": "https://www.apache.org/licenses/LICENSE-2.0.txt"
-        },
-        {
-            "id": "org.jetbrains.compose.runtime:runtime-saveable",
-            "name": "Compose Saveable",
-            "uri": "https://github.com/JetBrains/compose-jb",
-            "author": "Compose Multiplatform Team",
-            "license_name": "The Apache Software License, Version 2.0",
-            "license_uri": "https://www.apache.org/licenses/LICENSE-2.0.txt"
-        },
-        {
-            "id": "org.jetbrains.compose.ui:ui",
-            "name": "Compose UI primitives",
-            "uri": "https://github.com/JetBrains/compose-jb",
-            "author": "Compose Multiplatform Team",
-            "license_name": "The Apache Software License, Version 2.0",
-            "license_uri": "https://www.apache.org/licenses/LICENSE-2.0.txt"
-        },
-        {
-            "id": "org.jetbrains.compose.ui:ui-backhandler",
-            "name": "Compose Multiplatform BackHandler",
-            "uri": "https://github.com/JetBrains/compose-jb",
-            "author": "Compose Multiplatform Team",
-            "license_name": "The Apache Software License, Version 2.0",
-            "license_uri": "https://www.apache.org/licenses/LICENSE-2.0.txt"
-        },
-        {
-            "id": "org.jetbrains.compose.ui:ui-geometry",
-            "name": "Compose Geometry",
-            "uri": "https://github.com/JetBrains/compose-jb",
-            "author": "Compose Multiplatform Team",
-            "license_name": "The Apache Software License, Version 2.0",
-            "license_uri": "https://www.apache.org/licenses/LICENSE-2.0.txt"
-        },
-        {
-            "id": "org.jetbrains.compose.ui:ui-graphics",
-            "name": "Compose Graphics",
-            "uri": "https://github.com/JetBrains/compose-jb",
-            "author": "Compose Multiplatform Team",
-            "license_name": "The Apache Software License, Version 2.0",
-            "license_uri": "https://www.apache.org/licenses/LICENSE-2.0.txt"
-        },
-        {
-            "id": "org.jetbrains.compose.ui:ui-text",
-            "name": "Compose UI Text",
-            "uri": "https://github.com/JetBrains/compose-jb",
-            "author": "Compose Multiplatform Team",
-            "license_name": "The Apache Software License, Version 2.0",
-            "license_uri": "https://www.apache.org/licenses/LICENSE-2.0.txt"
-        },
-        {
-            "id": "org.jetbrains.compose.ui:ui-tooling-preview",
-            "name": "Compose UI Preview Tooling",
-            "uri": "https://github.com/JetBrains/compose-jb",
-            "author": "Compose Multiplatform Team",
-            "license_name": "The Apache Software License, Version 2.0",
-            "license_uri": "https://www.apache.org/licenses/LICENSE-2.0.txt"
-        },
-        {
-            "id": "org.jetbrains.compose.ui:ui-unit",
-            "name": "Compose Unit",
-            "uri": "https://github.com/JetBrains/compose-jb",
-            "author": "Compose Multiplatform Team",
-            "license_name": "The Apache Software License, Version 2.0",
-            "license_uri": "https://www.apache.org/licenses/LICENSE-2.0.txt"
-        },
-        {
-            "id": "org.jetbrains.compose.ui:ui-util",
-            "name": "Compose Util",
-            "uri": "https://github.com/JetBrains/compose-jb",
-            "author": "Compose Multiplatform Team",
-            "license_name": "The Apache Software License, Version 2.0",
-            "license_uri": "https://www.apache.org/licenses/LICENSE-2.0.txt"
         },
         {
             "id": "org.jetbrains.kotlin:kotlin-stdlib",
@@ -995,14 +731,6 @@
         {
             "id": "org.jetbrains.kotlinx:kotlinx-serialization-core",
             "name": "kotlinx-serialization-core",
-            "uri": "https://github.com/Kotlin/kotlinx.serialization",
-            "author": "JetBrains Team",
-            "license_name": "Apache-2.0",
-            "license_uri": "https://www.apache.org/licenses/LICENSE-2.0.txt"
-        },
-        {
-            "id": "org.jetbrains.kotlinx:kotlinx-serialization-json",
-            "name": "kotlinx-serialization-json",
             "uri": "https://github.com/Kotlin/kotlinx.serialization",
             "author": "JetBrains Team",
             "license_name": "Apache-2.0",

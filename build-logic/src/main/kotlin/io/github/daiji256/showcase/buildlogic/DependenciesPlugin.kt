@@ -33,7 +33,7 @@ class DependenciesPlugin : Plugin<Project> {
             target.tasks.register("generateDependencies", GenerateDependenciesTask::class.java) {
                 pomFiles.from(pomFilesProvider)
                 dependencyOverridesFile.set(
-                    target.layout.projectDirectory
+                    target.rootProject.layout.projectDirectory
                         .file("dependencies-config/dependency-overrides.json"),
                 )
                 dependenciesOutputFile.set(
