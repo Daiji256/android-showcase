@@ -1,15 +1,16 @@
 package io.github.daiji256.showcase.feature.license
 
 import android.content.res.Resources
+import androidx.annotation.RawRes
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 
-suspend fun Resources.getDependencies(): List<Dependency> {
+suspend fun Resources.getDependencies(@RawRes resId: Int): List<Dependency> {
     val dependenciesJson = withContext(Dispatchers.IO) {
-        openRawResource(R.raw.dependencies).bufferedReader().use { it.readText() }
+        openRawResource(resId).bufferedReader().use { it.readText() }
     }
     val metadata = Json.decodeFromString<Metadata>(dependenciesJson)
     return metadata.dependencies.map { it.toDependency() }

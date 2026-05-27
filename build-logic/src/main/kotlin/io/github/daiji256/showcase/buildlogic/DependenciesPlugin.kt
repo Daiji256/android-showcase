@@ -34,13 +34,12 @@ class DependenciesPlugin : Plugin<Project> {
             target.tasks.register("generateDependencies", GenerateDependenciesTask::class.java) {
                 pomFiles.from(pomFilesProvider)
                 dependencyOverridesFile.set(
-                    target.rootProject.layout.projectDirectory
+                    target.layout.projectDirectory
                         .file("dependencies-config/dependency-overrides.json"),
                 )
                 dependenciesOutputFile.set(
-                    // TODO: DI, :app -> :feature:license
-                    target.rootProject.layout.projectDirectory
-                        .file("feature/license/src/main/res/raw/dependencies.json"),
+                    target.layout.projectDirectory
+                        .file("src/main/res/raw/dependencies.json"),
                 )
             }
         target.tasks.matching { it.name == "preBuild" }.configureEach {

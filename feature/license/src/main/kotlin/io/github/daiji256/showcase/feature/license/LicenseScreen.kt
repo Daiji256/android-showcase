@@ -1,5 +1,6 @@
 package io.github.daiji256.showcase.feature.license
 
+import androidx.annotation.RawRes
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -49,12 +50,12 @@ import io.github.daiji256.showcase.core.ui.navigation.LocalNavigator
 import io.github.daiji256.showcase.core.ui.window.LocalWindowShape
 
 @Composable
-internal fun LicenseScreen() {
+internal fun LicenseScreen(@RawRes dependenciesResId: Int) {
     val navigator = LocalNavigator.current
     val uriHandler = LocalUriHandler.current
     val resources = LocalResources.current
     val dependencies by produceState(initialValue = listOf(), key1 = resources) {
-        value = resources.getDependencies()
+        value = resources.getDependencies(resId = dependenciesResId)
     }
     LicenseScreen(
         dependencies = dependencies,
