@@ -737,6 +737,14 @@
             "license_uri": "https://www.apache.org/licenses/LICENSE-2.0.txt"
         },
         {
+            "id": "org.jetbrains.kotlinx:kotlinx-serialization-json",
+            "name": "kotlinx-serialization-json",
+            "uri": "https://github.com/Kotlin/kotlinx.serialization",
+            "author": "JetBrains Team",
+            "license_name": "Apache-2.0",
+            "license_uri": "https://www.apache.org/licenses/LICENSE-2.0.txt"
+        },
+        {
             "id": "org.jetbrains:annotations",
             "name": "JetBrains Java Annotations",
             "uri": "https://github.com/JetBrains/java-annotations",
