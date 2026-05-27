@@ -705,6 +705,14 @@
             "license_uri": "http://www.apache.org/licenses/LICENSE-2.0.txt"
         },
         {
+            "id": "material_symbols_and_icons",
+            "name": "Material Symbols and Icons",
+            "uri": "https://fonts.google.com/icons",
+            "author": "The Android Open Source Project",
+            "license_name": "The Apache Software License, Version 2.0",
+            "license_uri": "https://www.apache.org/licenses/LICENSE-2.0.txt"
+        },
+        {
             "id": "org.jetbrains.kotlin:kotlin-stdlib",
             "name": "Kotlin Stdlib",
             "uri": "https://kotlinlang.org/",
