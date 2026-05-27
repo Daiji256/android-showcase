@@ -38,8 +38,9 @@ class DependenciesPlugin : Plugin<Project> {
                         .file("dependencies-config/dependency-overrides.json"),
                 )
                 dependenciesOutputFile.set(
-                    target.layout.projectDirectory
-                        .file("src/main/res/raw/dependencies.json"),
+                    // TODO: DI, :app -> :feature:license
+                    target.rootProject.layout.projectDirectory
+                        .file("feature/license/src/main/res/raw/dependencies.json"),
                 )
             }
         target.tasks.matching { it.name == "preBuild" }.configureEach {

@@ -65,6 +65,14 @@
             "license_uri": "http://www.apache.org/licenses/LICENSE-2.0.txt"
         },
         {
+            "id": "androidx.browser:browser",
+            "name": "Browser",
+            "uri": "https://developer.android.com/jetpack/androidx/releases/browser#1.10.0",
+            "author": "The Android Open Source Project",
+            "license_name": "The Apache Software License, Version 2.0",
+            "license_uri": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+        },
+        {
             "id": "androidx.collection:collection",
             "name": "collections",
             "uri": "https://developer.android.com/jetpack/androidx/releases/collection#1.5.0",
@@ -484,6 +492,30 @@
             "id": "androidx.navigation3:navigation3-ui",
             "name": "Androidx Navigation 3 UI",
             "uri": "https://developer.android.com/jetpack/androidx/releases/navigation3#1.1.2",
+            "author": "The Android Open Source Project",
+            "license_name": "The Apache Software License, Version 2.0",
+            "license_uri": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+        },
+        {
+            "id": "androidx.navigation:navigation-common",
+            "name": "Navigation Common",
+            "uri": "https://developer.android.com/jetpack/androidx/releases/navigation#2.9.8",
+            "author": "The Android Open Source Project",
+            "license_name": "The Apache Software License, Version 2.0",
+            "license_uri": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+        },
+        {
+            "id": "androidx.navigation:navigation-compose",
+            "name": "Compose Navigation",
+            "uri": "https://developer.android.com/jetpack/androidx/releases/navigation#2.9.8",
+            "author": "The Android Open Source Project",
+            "license_name": "The Apache Software License, Version 2.0",
+            "license_uri": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+        },
+        {
+            "id": "androidx.navigation:navigation-runtime",
+            "name": "Navigation Runtime",
+            "uri": "https://developer.android.com/jetpack/androidx/releases/navigation#2.9.8",
             "author": "The Android Open Source Project",
             "license_name": "The Apache Software License, Version 2.0",
             "license_uri": "http://www.apache.org/licenses/LICENSE-2.0.txt"

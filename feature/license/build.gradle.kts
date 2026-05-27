@@ -1,7 +1,6 @@
 plugins {
     alias(libs.plugins.buildlogic.android.library)
     alias(libs.plugins.buildlogic.compose)
-    alias(libs.plugins.buildlogic.dependencies)
     alias(libs.plugins.buildlogic.roborazzi)
 }
 
