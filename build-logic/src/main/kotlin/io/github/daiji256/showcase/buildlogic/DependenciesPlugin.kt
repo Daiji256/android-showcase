@@ -1,7 +1,13 @@
 package io.github.daiji256.showcase.buildlogic
 
-import groovy.json.JsonOutput
-import groovy.json.JsonSlurper
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.buildJsonObject
+import kotlinx.serialization.json.contentOrNull
+import kotlinx.serialization.json.jsonObject
+import kotlinx.serialization.json.jsonPrimitive
+import kotlinx.serialization.json.put
+import kotlinx.serialization.json.putJsonArray
 import org.gradle.api.DefaultTask
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -74,8 +80,14 @@ abstract class GenerateDependenciesTask : DefaultTask() {
             .sortedBy { it.id }
             .distinctBy { it.copy(id = "dummy") }
 
-        val jsonObject = mapOf("dependencies" to dependencies.map { it.toJsonMap() })
-        val json = JsonOutput.prettyPrint(JsonOutput.toJson(jsonObject)) + "\n"
+        val jsonObject = buildJsonObject {
+            putJsonArray("dependencies") {
+                dependencies.forEach { dependency ->
+                    add(dependency.toJsonObject())
+                }
+            }
+        }
+        val json = prettyJson.encodeToString(JsonObject.serializer(), jsonObject) + "\n"
 
         val outputFile = dependenciesOutputFile.get().asFile
         outputFile.parentFile.mkdirs()
@@ -166,22 +178,22 @@ private fun readOverrides(
     val overrideFile = dependencyOverridesFile.get().asFile
     if (!overrideFile.exists()) return emptyMap()
 
-    @Suppress("UNCHECKED_CAST")
-    val overrides = JsonSlurper().parse(overrideFile) as Map<String, Map<String, Any?>>
+    val overrides = Json.parseToJsonElement(overrideFile.readText()).jsonObject
     return overrides.mapValues { (id, data) ->
+        val override = data.jsonObject
         NullableDependency(
             id = id,
-            name = data.getString("name"),
-            uri = data.getString("uri"),
-            author = data.getString("author"),
-            licenseName = data.getString("license_name"),
-            licenseUri = data.getString("license_uri"),
+            name = override.getString("name"),
+            uri = override.getString("uri"),
+            author = override.getString("author"),
+            licenseName = override.getString("license_name"),
+            licenseUri = override.getString("license_uri"),
         )
     }
 }
 
-private fun Map<String, Any?>.getString(key: String): String? =
-    (this[key] as String?)?.ifEmpty { null }
+private fun JsonObject.getString(key: String): String? =
+    this[key]?.jsonPrimitive?.contentOrNull?.ifEmpty { null }
 
 private data class NullableDependency(
     val id: String,
@@ -215,12 +227,16 @@ private data class Dependency(
             ?: error("${override?.id ?: default?.id ?: "unknown"}: missing license uri"),
     )
 
-    fun toJsonMap(): Map<String, Any> = mapOf<String, Any>(
-        "id" to id,
-        "name" to name,
-        "uri" to uri,
-        "author" to author,
-        "license_name" to licenseName,
-        "license_uri" to licenseUri,
-    )
+    fun toJsonObject(): JsonObject = buildJsonObject {
+        put("id", id)
+        put("name", name)
+        put("uri", uri)
+        put("author", author)
+        put("license_name", licenseName)
+        put("license_uri", licenseUri)
+    }
+}
+
+private val prettyJson = Json {
+    prettyPrint = true
 }

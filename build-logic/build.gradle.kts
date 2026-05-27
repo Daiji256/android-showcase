@@ -19,6 +19,7 @@ dependencies {
     compileOnly(libs.compose.gradlePlugin)
     compileOnly(libs.ksp.gradlePlugin)
     compileOnly(libs.roborazzi.gradlePlugin)
+    implementation(libs.kotlinx.serialization.json)
 }
 
 gradlePlugin {
