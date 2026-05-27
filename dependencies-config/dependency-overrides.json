@@ -11,6 +11,9 @@
     "license_name": "The Apache Software License, Version 2.0",
     "license_uri": "http://www.apache.org/licenses/LICENSE-2.0.txt"
   },
+  "jakarta.inject:jakarta.inject-api": {
+    "author": "Jakarta EE"
+  },
   "javax.inject:javax.inject": {
     "author": "The JSR-330 Expert Group"
   },

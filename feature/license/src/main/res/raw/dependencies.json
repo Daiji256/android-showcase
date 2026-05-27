@@ -660,7 +660,7 @@
             "id": "jakarta.inject:jakarta.inject-api",
             "name": "Jakarta Dependency Injection",
             "uri": "https://github.com/eclipse-ee4j/injection-api",
-            "author": "Antoine Sabot-Durand, Martin Kouba, Tomas Remes, Matej Novotny",
+            "author": "Jakarta EE",
             "license_name": "The Apache Software License, Version 2.0",
             "license_uri": "http://www.apache.org/licenses/LICENSE-2.0.txt"
         },
