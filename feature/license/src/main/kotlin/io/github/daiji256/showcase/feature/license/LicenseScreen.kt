@@ -135,7 +135,7 @@ private fun LicenseScreen(
                         isLast = index == deps.lastIndex,
                         dependency = dependency,
                         onClick = { onUriClick(dependency.uri) },
-                        onLicenseClick = { onUriClick(dependency.license.uri) },
+                        onLicenseClick = { onUriClick(dependency.licenseUri) },
                         modifier = Modifier
                             .padding(top = if (index == 0) 8.dp else 2.dp)
                             .fillMaxWidth(),
@@ -194,7 +194,7 @@ private fun DependencyItem(
                             .padding(horizontal = 12.dp, vertical = 6.dp),
                     ) {
                         Text(
-                            text = dependency.license.name,
+                            text = dependency.licenseName,
                             style = MaterialTheme.typography.labelLarge,
                         )
                     }
@@ -227,21 +227,24 @@ private fun LicenseScreenPreview() {
                     name = "Library B1",
                     uri = "https://example.com/",
                     author = "Author B",
-                    license = License(name = "License", uri = "https://example.com/"),
+                    licenseName = "License",
+                    licenseUri = "https://example.com/",
                 ),
                 Dependency(
                     id = "a2",
                     name = "Library A2",
                     uri = "https://example.com/",
                     author = "Author A",
-                    license = License(name = "License", uri = "https://example.com/"),
+                    licenseName = "License",
+                    licenseUri = "https://example.com/",
                 ),
                 Dependency(
                     id = "a1",
                     name = "Library A1",
                     uri = "https://example.com/",
                     author = "Author A",
-                    license = License(name = "License", uri = "https://example.com/"),
+                    licenseName = "License",
+                    licenseUri = "https://example.com/",
                 ),
             ),
             onNavigateUpClick = {},

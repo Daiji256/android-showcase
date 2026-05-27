@@ -5,10 +5,6 @@ data class Dependency(
     val name: String,
     val uri: String,
     val author: String,
-    val license: License,
-)
-
-data class License(
-    val name: String,
-    val uri: String,
+    val licenseName: String,
+    val licenseUri: String,
 )

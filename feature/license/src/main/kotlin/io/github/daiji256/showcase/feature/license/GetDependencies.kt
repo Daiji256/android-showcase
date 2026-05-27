@@ -18,10 +18,8 @@ suspend fun Resources.getDependencies(): List<Dependency> {
                 name = dependencyObj.getString("name"),
                 uri = dependencyObj.getString("uri"),
                 author = dependencyObj.getString("author"),
-                license = License(
-                    name = dependencyObj.getString("license_name"),
-                    uri = dependencyObj.getString("license_uri"),
-                ),
+                licenseName = dependencyObj.getString("license_name"),
+                licenseUri = dependencyObj.getString("license_uri"),
             )
             add(dependency)
         }
