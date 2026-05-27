@@ -54,7 +54,11 @@ internal fun LicenseScreen(@RawRes dependenciesResId: Int) {
     val navigator = LocalNavigator.current
     val uriHandler = LocalUriHandler.current
     val resources = LocalResources.current
-    val dependencies by produceState(initialValue = listOf(), key1 = resources) {
+    val dependencies by produceState(
+        initialValue = listOf(),
+        resources,
+        dependenciesResId,
+    ) {
         value = resources.getDependencies(resId = dependenciesResId)
     }
     LicenseScreen(
