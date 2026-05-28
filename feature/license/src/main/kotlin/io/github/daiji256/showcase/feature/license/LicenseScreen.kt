@@ -255,7 +255,7 @@ private fun LicenseScreenPreview() {
                         licenseName = "License",
                         licenseUri = "https://example.com/",
                     ),
-                )
+                ),
             ),
             onNavigateUpClick = {},
             onUriClick = {},

@@ -166,10 +166,10 @@ private fun readOverrides(
     if (!overrideFile.exists()) return emptyMap()
 
     val overrides = Json.decodeFromString<NullableDependenciesMetadata>(overrideFile.readText())
-    return  overrides.dependencies
+    return overrides.dependencies
         .associateBy { data -> data.id }
         .also { resolvedDependencies ->
-            check(resolvedDependencies.size ==  overrides.dependencies.size) {
+            check(resolvedDependencies.size == overrides.dependencies.size) {
                 "duplicate override id found in ${overrideFile.absolutePath}"
             }
         }
