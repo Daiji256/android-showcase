@@ -12,8 +12,7 @@ suspend fun Resources.getDependencies(@RawRes resId: Int): List<Dependency> {
     val dependenciesJson = withContext(Dispatchers.IO) {
         openRawResource(resId).bufferedReader().use { it.readText() }
     }
-    val metadata = Json.decodeFromString<Metadata>(dependenciesJson)
-    return metadata.dependencies.map { it.toDependency() }
+    return Json.decodeFromString<Metadata>(dependenciesJson).dependencies.map { it.toDependency() }
 }
 
 @Serializable
