@@ -1,14 +1,6 @@
 {
     "dependencies": [
         {
-            "id": "dummy",
-            "name": "dummy",
-            "uri": "https://example.com/",
-            "author": "dummy",
-            "license_name": "dummy",
-            "license_uri": "https://example.com/"
-        },
-        {
             "id": "androidx.activity:activity",
             "name": "Activity",
             "uri": "https://developer.android.com/jetpack/androidx/releases/activity#1.13.0",
