@@ -1,0 +1,43 @@
+name: generate-dependencies
+
+on: pull_request
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  generate-dependencies:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      pull-requests: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+
+      - name: Setup JDK
+        uses: actions/setup-java@be666c2fcd27ec809703dec50e508c2fdc7f6654 # v5.2.0
+        with:
+          distribution: temurin
+          java-version: 25
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@50e97c2cd7a37755bbfafc9c5b7cafaece252f6e # v6.1.0
+
+      - name: Copy GitHub Actions gradle.properties
+        run: mkdir -p ~/.gradle ; cp .github/gradle.properties ~/.gradle/gradle.properties
+
+      - name: Run generateDependencies
+        run: ./gradlew generateDependencies
+
+      - name: Suggest generated updates
+        uses: reviewdog/action-suggester@aa38384ceb608d00f84b4690cacc83a5aba307ff # v1.24.0
+        with:
+          tool_name: generateDependencies
+          level: error
+          filter_mode: nofilter
+
+

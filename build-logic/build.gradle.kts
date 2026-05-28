@@ -1,5 +1,6 @@
 plugins {
     `kotlin-dsl`
+    alias(libs.plugins.kotlin.serialization)
 }
 
 group = "io.github.daiji256.showcase.buildlogic"
@@ -19,6 +20,7 @@ dependencies {
     compileOnly(libs.compose.gradlePlugin)
     compileOnly(libs.ksp.gradlePlugin)
     compileOnly(libs.roborazzi.gradlePlugin)
+    implementation(libs.kotlinx.serialization.json)
 }
 
 gradlePlugin {
@@ -34,6 +36,10 @@ gradlePlugin {
         register("compose") {
             id = "buildlogic.compose"
             implementationClass = "io.github.daiji256.showcase.buildlogic.ComposePlugin"
+        }
+        register("dependencies") {
+            id = "buildlogic.dependencies"
+            implementationClass = "io.github.daiji256.showcase.buildlogic.DependenciesPlugin"
         }
         register("hilt") {
             id = "buildlogic.hilt"

@@ -1,0 +1,39 @@
+{
+  "dependencies": [
+    {
+      "id": "material_symbols_and_icons",
+      "name": "Material Symbols and Icons",
+      "uri": "https://fonts.google.com/icons",
+      "author": "The Android Open Source Project",
+      "license_name": "The Apache Software License, Version 2.0",
+      "license_uri": "https://www.apache.org/licenses/LICENSE-2.0.txt"
+    },
+    {
+      "id": "androidx.compose:compose-bom",
+      "author": "The Android Open Source Project"
+    },
+    {
+      "id": "com.google.code.findbugs:jsr305",
+      "author": "The FindBugs project"
+    },
+    {
+      "id": "com.google.guava:listenablefuture",
+      "author": "Kevin Bourrillion",
+      "uri": "https://github.com/google/guava",
+      "license_name": "The Apache Software License, Version 2.0",
+      "license_uri": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+    },
+    {
+      "id": "jakarta.inject:jakarta.inject-api",
+      "author": "Jakarta EE"
+    },
+    {
+      "id": "javax.inject:javax.inject",
+      "author": "The JSR-330 Expert Group"
+    },
+    {
+      "id": "org.jspecify:jspecify",
+      "uri": "https://jspecify.dev/"
+    }
+  ]
+}

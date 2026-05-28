@@ -5,7 +5,6 @@ targetSdk = "37"
 jdk = "25"
 ndk = "27.3.13750724"
 
-aboutlibraries = "14.2.0"
 activity-compose = "1.13.0"
 agp = "9.2.1"
 androidxTestRules = "1.7.0"
@@ -30,7 +29,6 @@ roborazzi = "1.63.0"
 turbine = "1.2.1"
 
 [libraries]
-aboutlibraries-ui = { module = "com.mikepenz:aboutlibraries-compose-m3", version.ref = "aboutlibraries" }
 activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activity-compose" }
 androidx-test-rules = { group = "androidx.test", name = "rules", version.ref = "androidxTestRules" }
 browser = { group = "androidx.browser", name = "browser", version.ref = "browser" }
@@ -70,7 +68,6 @@ ksp-gradlePlugin = { group = "com.google.devtools.ksp", name = "com.google.devto
 roborazzi-gradlePlugin = { group = "io.github.takahirom.roborazzi", name = "roborazzi-gradle-plugin", version.ref = "roborazzi" }
 
 [plugins]
-aboutlibraries = { id = "com.mikepenz.aboutlibraries.plugin.android", version.ref = "aboutlibraries" }
 android-application = { id = "com.android.application", version.ref = "agp" }
 android-library = { id = "com.android.library", version.ref = "agp" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
@@ -82,6 +79,7 @@ roborazzi = { id = "io.github.takahirom.roborazzi", version.ref = "roborazzi" }
 buildlogic-android-application = { id = "buildlogic.android.application", version = "unspecified" }
 buildlogic-android-library = { id = "buildlogic.android.library", version = "unspecified" }
 buildlogic-compose = { id = "buildlogic.compose", version = "unspecified" }
+buildlogic-dependencies = { id = "buildlogic.dependencies", version = "unspecified" }
 buildlogic-hilt = { id = "buildlogic.hilt", version = "unspecified" }
 buildlogic-robolectric = { id = "buildlogic.robolectric", version = "unspecified" }
 buildlogic-roborazzi = { id = "buildlogic.roborazzi", version = "unspecified" }

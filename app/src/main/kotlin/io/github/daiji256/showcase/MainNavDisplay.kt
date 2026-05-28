@@ -39,7 +39,7 @@ internal fun MainNavDisplay(
             customTabs()
             hiltComposable()
             ktlint()
-            license()
+            license(dependenciesResId = R.raw.dependencies)
             localSnackbarHostState()
             navigation2Arguments()
             navNode()
