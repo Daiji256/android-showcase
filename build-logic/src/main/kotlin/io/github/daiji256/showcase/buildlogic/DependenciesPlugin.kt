@@ -107,7 +107,10 @@ private fun collectResolvedDependencyPomFiles(project: Project): List<File> {
 }
 
 private fun parsePom(pomFile: File): NullableDependency {
-    val documentBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder()
+    val factory = DocumentBuilderFactory.newInstance().apply {
+        setFeature("http://apache.org/xml/features/disallow-doctype-decl", true)
+    }
+    val documentBuilder = factory.newDocumentBuilder()
     val root = documentBuilder.parse(pomFile).documentElement
     val groupId = root.text("groupId")
         ?: root.children("parent").firstOrNull()?.text("groupId")
