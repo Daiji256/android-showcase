@@ -1,30 +1,34 @@
 package io.github.daiji256.showcase.feature.customtabs
 
+import androidx.activity.compose.LocalActivity
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.net.toUri
-import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import io.github.daiji256.showcase.core.designsystem.theme.ShowcaseTheme
 import io.github.daiji256.showcase.core.ui.document.Document
 import io.github.daiji256.showcase.core.ui.markdown.Markdown
 import io.github.daiji256.showcase.core.ui.navigation.LocalNavigator
 
 @Composable
-internal fun CustomTabsScreen(
-    viewModel: CustomTabsViewModel = hiltViewModel(),
-) {
+internal fun CustomTabsScreen() {
     val navigator = LocalNavigator.current
-    val customTabsLauncher = rememberCustomTabsLauncher()
+    val activityCustomTabsLauncher = rememberCustomTabsLauncher(
+        context = checkNotNull(LocalActivity.current),
+    )
+    val applicationCustomTabsLauncher = rememberCustomTabsLauncher(
+        context = LocalContext.current.applicationContext,
+    )
     CustomTabsScreen(
         onNavigateUpClick = navigator::navigateUp,
         launchCustomTabFromActivityContext = { uri ->
-            customTabsLauncher.launch(uri = uri.toUri())
+            activityCustomTabsLauncher.launch(uri = uri.toUri())
         },
         launchCustomTabFromApplicationContext = { uri ->
-            viewModel.launchCustomTabFromApplicationContext(uri = uri.toUri())
+            applicationCustomTabsLauncher.launch(uri = uri.toUri())
         },
     )
 }

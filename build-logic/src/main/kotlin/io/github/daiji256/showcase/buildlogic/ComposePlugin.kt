@@ -36,7 +36,6 @@ class ComposePlugin : Plugin<Project> {
                 implementation(libs.library("compose.ui"))
                 implementation(libs.library("compose.ui.tooling.preview"))
                 implementation(libs.library("compose.material3"))
-                implementation(libs.library("hilt.lifecycle.viewmodel.compose"))
                 implementation(libs.library("lifecycle.viewmodel.navigation3"))
                 implementation(libs.library("navigation3.runtime"))
                 implementation(libs.library("navigation3.ui"))

@@ -12,11 +12,9 @@ import io.github.daiji256.showcase.core.ui.navigation.NavState
 import io.github.daiji256.showcase.core.ui.navigation.toDecoratedNavEntries
 import io.github.daiji256.showcase.core.ui.showcase.showcase
 import io.github.daiji256.showcase.feature.customtabs.customTabs
-import io.github.daiji256.showcase.feature.hiltcomposable.hiltComposable
 import io.github.daiji256.showcase.feature.ktlint.ktlint
 import io.github.daiji256.showcase.feature.license.license
 import io.github.daiji256.showcase.feature.localsnackbarhoststate.localSnackbarHostState
-import io.github.daiji256.showcase.feature.navigation2arguments.navigation2Arguments
 import io.github.daiji256.showcase.feature.navnode.navNode
 import io.github.daiji256.showcase.feature.pastel.pastel
 import io.github.daiji256.showcase.feature.roborazzi.roborazzi
@@ -37,11 +35,9 @@ internal fun MainNavDisplay(
         entryProvider = entryProvider {
             showcase(features = Features)
             customTabs()
-            hiltComposable()
             ktlint()
             license(dependenciesResId = R.raw.dependencies)
             localSnackbarHostState()
-            navigation2Arguments()
             navNode()
             pastel()
             roborazzi()
