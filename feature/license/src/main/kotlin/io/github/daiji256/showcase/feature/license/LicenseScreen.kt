@@ -48,6 +48,8 @@ import io.github.daiji256.showcase.core.designsystem.theme.ShowcaseTheme
 import io.github.daiji256.showcase.core.ui.component.NavigateUpButton
 import io.github.daiji256.showcase.core.ui.navigation.LocalNavigator
 import io.github.daiji256.showcase.core.ui.window.LocalWindowShape
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 @Composable
 internal fun LicenseScreen(@RawRes dependenciesResId: Int) {
@@ -59,7 +61,13 @@ internal fun LicenseScreen(@RawRes dependenciesResId: Int) {
         resources,
         dependenciesResId,
     ) {
-        value = resources.getDependencies(resId = dependenciesResId)
+        value = withContext(Dispatchers.Default) {
+            resources.getDependencies(resId = dependenciesResId)
+                .groupBy { it.author }
+                .mapValues { (_, deps) -> deps.sortedBy { it.name } }
+                .toList()
+                .sortedByDescending { it.second.size }
+        }
     }
     LicenseScreen(
         dependencies = dependencies,
@@ -70,7 +78,7 @@ internal fun LicenseScreen(@RawRes dependenciesResId: Int) {
 
 @Composable
 private fun LicenseScreen(
-    dependencies: List<Dependency>,
+    dependencies: List<Pair<String, List<Dependency>>>,
     onNavigateUpClick: () -> Unit,
     onUriClick: (String) -> Unit,
 ) {
@@ -95,13 +103,6 @@ private fun LicenseScreen(
             .clip(shape = LocalWindowShape.current)
             .nestedScroll(topAppBarScrollBehavior.nestedScrollConnection),
     ) { padding ->
-        val sortedDependencies by produceState(initialValue = listOf(), key1 = dependencies) {
-            value = dependencies
-                .groupBy { it.author }
-                .mapValues { (_, deps) -> deps.sortedBy { it.name } }
-                .toList()
-                .sortedByDescending { it.second.size }
-        }
         val paddingOnlyB = remember(padding) {
             object : PaddingValues {
                 override fun calculateLeftPadding(layoutDirection: LayoutDirection): Dp = 0.dp
@@ -117,7 +118,7 @@ private fun LicenseScreen(
                 .padding(paddingOnlyLtr)
                 .fillMaxSize(),
         ) {
-            sortedDependencies.forEach { (author, deps) ->
+            dependencies.forEach { (author, deps) ->
                 item(key = "author_$author") {
                     Box(
                         modifier = Modifier
@@ -227,30 +228,34 @@ private fun LicenseScreenPreview() {
     ShowcaseTheme {
         LicenseScreen(
             dependencies = listOf(
-                Dependency(
-                    id = "b1",
-                    name = "Library B1",
-                    uri = "https://example.com/",
-                    author = "Author B",
-                    licenseName = "License",
-                    licenseUri = "https://example.com/",
+                "Author A" to listOf(
+                    Dependency(
+                        id = "a1",
+                        name = "Library A1",
+                        uri = "https://example.com/",
+                        author = "Author A",
+                        licenseName = "License",
+                        licenseUri = "https://example.com/",
+                    ),
+                    Dependency(
+                        id = "a2",
+                        name = "Library A2",
+                        uri = "https://example.com/",
+                        author = "Author A",
+                        licenseName = "License",
+                        licenseUri = "https://example.com/",
+                    ),
                 ),
-                Dependency(
-                    id = "a2",
-                    name = "Library A2",
-                    uri = "https://example.com/",
-                    author = "Author A",
-                    licenseName = "License",
-                    licenseUri = "https://example.com/",
-                ),
-                Dependency(
-                    id = "a1",
-                    name = "Library A1",
-                    uri = "https://example.com/",
-                    author = "Author A",
-                    licenseName = "License",
-                    licenseUri = "https://example.com/",
-                ),
+                "Author B" to listOf(
+                    Dependency(
+                        id = "b1",
+                        name = "Library B1",
+                        uri = "https://example.com/",
+                        author = "Author B",
+                        licenseName = "License",
+                        licenseUri = "https://example.com/",
+                    ),
+                )
             ),
             onNavigateUpClick = {},
             onUriClick = {},
