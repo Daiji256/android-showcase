@@ -2,7 +2,6 @@ plugins {
     alias(libs.plugins.buildlogic.android.application)
     alias(libs.plugins.buildlogic.compose)
     alias(libs.plugins.buildlogic.dependencies)
-    alias(libs.plugins.buildlogic.hilt)
 }
 
 android {
@@ -70,11 +69,9 @@ dependencies {
     implementation(projects.core.designsystem)
     implementation(projects.core.ui)
     implementation(projects.feature.customtabs)
-    implementation(projects.feature.hiltcomposable)
     implementation(projects.feature.ktlint)
     implementation(projects.feature.license)
     implementation(projects.feature.localsnackbarhoststate)
-    implementation(projects.feature.navigation2arguments)
     implementation(projects.feature.navnode)
     implementation(projects.feature.pastel)
     implementation(projects.feature.roborazzi)

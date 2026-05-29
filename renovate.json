@@ -18,7 +18,6 @@
     "buildlogic.android.application",
     "buildlogic.android.library",
     "buildlogic.compose",
-    "buildlogic.hilt",
     "buildlogic.robolectric",
     "buildlogic.roborazzi"
   ]

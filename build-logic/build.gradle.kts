@@ -18,7 +18,6 @@ dependencies {
     compileOnly(libs.android.gradlePlugin)
     compileOnly(libs.kotlin.gradlePlugin)
     compileOnly(libs.compose.gradlePlugin)
-    compileOnly(libs.ksp.gradlePlugin)
     compileOnly(libs.roborazzi.gradlePlugin)
     implementation(libs.kotlinx.serialization.json)
 }
@@ -40,10 +39,6 @@ gradlePlugin {
         register("dependencies") {
             id = "buildlogic.dependencies"
             implementationClass = "io.github.daiji256.showcase.buildlogic.DependenciesPlugin"
-        }
-        register("hilt") {
-            id = "buildlogic.hilt"
-            implementationClass = "io.github.daiji256.showcase.buildlogic.HiltPlugin"
         }
         register("robolectric") {
             id = "buildlogic.robolectric"

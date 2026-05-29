@@ -11,6 +11,3 @@ internal fun DependencyHandlerScope.debugImplementation(artifact: Dependency) =
 
 internal fun DependencyHandlerScope.testImplementation(artifact: Dependency) =
     add("testImplementation", artifact)
-
-internal fun DependencyHandlerScope.ksp(artifact: Dependency) =
-    add("ksp", artifact)

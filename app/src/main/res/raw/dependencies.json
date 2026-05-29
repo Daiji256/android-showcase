@@ -265,14 +265,6 @@
             "license_uri": "http://www.apache.org/licenses/LICENSE-2.0.txt"
         },
         {
-            "id": "androidx.customview:customview",
-            "name": "Android Support Library Custom View",
-            "uri": "http://developer.android.com/tools/extras/support-library.html",
-            "author": "The Android Open Source Project",
-            "license_name": "The Apache Software License, Version 2.0",
-            "license_uri": "http://www.apache.org/licenses/LICENSE-2.0.txt"
-        },
-        {
             "id": "androidx.customview:customview-poolingcontainer",
             "name": "androidx.customview:poolingcontainer",
             "uri": "https://developer.android.com/jetpack/androidx/releases/customview#1.0.0",
@@ -305,33 +297,9 @@
             "license_uri": "http://www.apache.org/licenses/LICENSE-2.0.txt"
         },
         {
-            "id": "androidx.fragment:fragment",
-            "name": "Android Support Library fragment",
-            "uri": "https://developer.android.com/jetpack/androidx/releases/fragment#1.5.1",
-            "author": "The Android Open Source Project",
-            "license_name": "The Apache Software License, Version 2.0",
-            "license_uri": "http://www.apache.org/licenses/LICENSE-2.0.txt"
-        },
-        {
             "id": "androidx.graphics:graphics-path",
             "name": "Android Graphics Path",
             "uri": "https://developer.android.com/jetpack/androidx/releases/graphics#1.0.1",
-            "author": "The Android Open Source Project",
-            "license_name": "The Apache Software License, Version 2.0",
-            "license_uri": "http://www.apache.org/licenses/LICENSE-2.0.txt"
-        },
-        {
-            "id": "androidx.hilt:hilt-lifecycle-viewmodel",
-            "name": "ViewModel Hilt Extension",
-            "uri": "https://developer.android.com/jetpack/androidx/releases/hilt#1.3.0",
-            "author": "The Android Open Source Project",
-            "license_name": "The Apache Software License, Version 2.0",
-            "license_uri": "http://www.apache.org/licenses/LICENSE-2.0.txt"
-        },
-        {
-            "id": "androidx.hilt:hilt-lifecycle-viewmodel-compose",
-            "name": "ViewModel Compose Hilt Extension",
-            "uri": "https://developer.android.com/jetpack/androidx/releases/hilt#1.3.0",
             "author": "The Android Open Source Project",
             "license_name": "The Apache Software License, Version 2.0",
             "license_uri": "http://www.apache.org/licenses/LICENSE-2.0.txt"
@@ -497,30 +465,6 @@
             "license_uri": "http://www.apache.org/licenses/LICENSE-2.0.txt"
         },
         {
-            "id": "androidx.navigation:navigation-common",
-            "name": "Navigation Common",
-            "uri": "https://developer.android.com/jetpack/androidx/releases/navigation#2.9.8",
-            "author": "The Android Open Source Project",
-            "license_name": "The Apache Software License, Version 2.0",
-            "license_uri": "http://www.apache.org/licenses/LICENSE-2.0.txt"
-        },
-        {
-            "id": "androidx.navigation:navigation-compose",
-            "name": "Compose Navigation",
-            "uri": "https://developer.android.com/jetpack/androidx/releases/navigation#2.9.8",
-            "author": "The Android Open Source Project",
-            "license_name": "The Apache Software License, Version 2.0",
-            "license_uri": "http://www.apache.org/licenses/LICENSE-2.0.txt"
-        },
-        {
-            "id": "androidx.navigation:navigation-runtime",
-            "name": "Navigation Runtime",
-            "uri": "https://developer.android.com/jetpack/androidx/releases/navigation#2.9.8",
-            "author": "The Android Open Source Project",
-            "license_name": "The Apache Software License, Version 2.0",
-            "license_uri": "http://www.apache.org/licenses/LICENSE-2.0.txt"
-        },
-        {
             "id": "androidx.navigationevent:navigationevent",
             "name": "Navigation Event",
             "uri": "https://developer.android.com/jetpack/androidx/releases/navigationevent#1.0.2",
@@ -609,14 +553,6 @@
             "license_uri": "http://www.apache.org/licenses/LICENSE-2.0.txt"
         },
         {
-            "id": "androidx.viewpager:viewpager",
-            "name": "Android Support Library View Pager",
-            "uri": "http://developer.android.com/tools/extras/support-library.html",
-            "author": "The Android Open Source Project",
-            "license_name": "The Apache Software License, Version 2.0",
-            "license_uri": "http://www.apache.org/licenses/LICENSE-2.0.txt"
-        },
-        {
             "id": "androidx.window:window",
             "name": "WindowManager",
             "uri": "https://developer.android.com/jetpack/androidx/releases/window#1.5.0",
@@ -633,46 +569,6 @@
             "license_uri": "http://www.apache.org/licenses/LICENSE-2.0.txt"
         },
         {
-            "id": "com.google.code.findbugs:jsr305",
-            "name": "FindBugs-jsr305",
-            "uri": "http://findbugs.sourceforge.net/",
-            "author": "The FindBugs project",
-            "license_name": "The Apache Software License, Version 2.0",
-            "license_uri": "http://www.apache.org/licenses/LICENSE-2.0.txt"
-        },
-        {
-            "id": "com.google.dagger:dagger",
-            "name": "Dagger",
-            "uri": "https://github.com/google/dagger",
-            "author": "Google, Inc.",
-            "license_name": "Apache 2.0",
-            "license_uri": "https://www.apache.org/licenses/LICENSE-2.0.txt"
-        },
-        {
-            "id": "com.google.dagger:dagger-lint-aar",
-            "name": "Dagger Lint Rules AAR Distribution",
-            "uri": "https://github.com/google/dagger",
-            "author": "Google, Inc.",
-            "license_name": "Apache 2.0",
-            "license_uri": "https://www.apache.org/licenses/LICENSE-2.0.txt"
-        },
-        {
-            "id": "com.google.dagger:hilt-android",
-            "name": "Hilt Android",
-            "uri": "https://github.com/google/dagger",
-            "author": "Google, Inc.",
-            "license_name": "Apache 2.0",
-            "license_uri": "https://www.apache.org/licenses/LICENSE-2.0.txt"
-        },
-        {
-            "id": "com.google.dagger:hilt-core",
-            "name": "Hilt Core",
-            "uri": "https://github.com/google/dagger",
-            "author": "Google, Inc.",
-            "license_name": "Apache 2.0",
-            "license_uri": "https://www.apache.org/licenses/LICENSE-2.0.txt"
-        },
-        {
             "id": "com.google.guava:listenablefuture",
             "name": "Guava ListenableFuture only",
             "uri": "https://github.com/google/guava",
@@ -685,22 +581,6 @@
             "name": "napier",
             "uri": "https://github.com/aakira/Napier",
             "author": "aakira",
-            "license_name": "The Apache Software License, Version 2.0",
-            "license_uri": "http://www.apache.org/licenses/LICENSE-2.0.txt"
-        },
-        {
-            "id": "jakarta.inject:jakarta.inject-api",
-            "name": "Jakarta Dependency Injection",
-            "uri": "https://github.com/eclipse-ee4j/injection-api",
-            "author": "Jakarta EE",
-            "license_name": "The Apache Software License, Version 2.0",
-            "license_uri": "http://www.apache.org/licenses/LICENSE-2.0.txt"
-        },
-        {
-            "id": "javax.inject:javax.inject",
-            "name": "javax.inject",
-            "uri": "http://code.google.com/p/atinject/",
-            "author": "The JSR-330 Expert Group",
             "license_name": "The Apache Software License, Version 2.0",
             "license_uri": "http://www.apache.org/licenses/LICENSE-2.0.txt"
         },

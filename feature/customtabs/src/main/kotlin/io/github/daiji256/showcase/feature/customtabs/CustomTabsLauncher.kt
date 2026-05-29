@@ -11,11 +11,6 @@ import androidx.browser.customtabs.CustomTabsIntent
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ActivityRetainedComponent
-import dagger.hilt.android.qualifiers.ApplicationContext
 import io.github.aakira.napier.Napier
 
 /**
@@ -58,19 +53,11 @@ private fun Context.findActivity(): Activity? =
         else -> null
     }
 
-@Module
-@InstallIn(ActivityRetainedComponent::class)
-internal object CustomTabsLauncherModule {
-    @Provides
-    fun providesCustomTabsLauncher(@ApplicationContext context: Context): CustomTabsLauncher =
-        CustomTabsLauncher(context = context)
-}
-
 /**
  * Creates a [CustomTabsLauncher] that is remembered across compositions.
  */
 @Composable
-fun rememberCustomTabsLauncher(): CustomTabsLauncher {
-    val context = LocalContext.current
-    return remember(context) { CustomTabsLauncher(context = context) }
-}
+fun rememberCustomTabsLauncher(
+    context: Context = LocalContext.current,
+): CustomTabsLauncher =
+    remember(context) { CustomTabsLauncher(context = context) }
