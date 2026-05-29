@@ -18,6 +18,7 @@
     "buildlogic.android.application",
     "buildlogic.android.library",
     "buildlogic.compose",
+    "buildlogic.dependencies",
     "buildlogic.robolectric",
     "buildlogic.roborazzi"
   ]
