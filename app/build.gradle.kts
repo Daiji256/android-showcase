@@ -72,6 +72,7 @@ dependencies {
     implementation(projects.feature.ktlint)
     implementation(projects.feature.license)
     implementation(projects.feature.localsnackbarhoststate)
+    implementation(projects.feature.mixedfonts)
     implementation(projects.feature.navnode)
     implementation(projects.feature.pastel)
     implementation(projects.feature.roborazzi)

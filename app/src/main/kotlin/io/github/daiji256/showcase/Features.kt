@@ -5,6 +5,7 @@ import io.github.daiji256.showcase.feature.customtabs.CustomTabsSummary
 import io.github.daiji256.showcase.feature.ktlint.KtlintSummary
 import io.github.daiji256.showcase.feature.license.LicenseSummary
 import io.github.daiji256.showcase.feature.localsnackbarhoststate.LocalSnackbarHostStateSummary
+import io.github.daiji256.showcase.feature.mixedfonts.MixedFontsSummary
 import io.github.daiji256.showcase.feature.navnode.NavNodeSummary
 import io.github.daiji256.showcase.feature.pastel.PastelSummary
 import io.github.daiji256.showcase.feature.roborazzi.RoborazziSummary
@@ -19,6 +20,7 @@ internal val Features: ImmutableList<FeatureSummary> =
         KtlintSummary,
         LicenseSummary,
         LocalSnackbarHostStateSummary,
+        MixedFontsSummary,
         NavNodeSummary,
         PastelSummary,
         RoborazziSummary,
