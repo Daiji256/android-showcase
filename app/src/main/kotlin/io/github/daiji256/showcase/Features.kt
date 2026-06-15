@@ -17,11 +17,11 @@ import kotlinx.collections.immutable.persistentListOf
 internal val Features: ImmutableList<FeatureSummary> =
     persistentListOf(
         CustomTabsSummary,
-        NavNodeSummary,
+        FallbackFontSummary,
         KtlintSummary,
         LicenseSummary,
         LocalSnackbarHostStateSummary,
-        FallbackFontSummary,
+        NavNodeSummary,
         PastelSummary,
         RoborazziSummary,
         SafeUriHandlerSummary,
