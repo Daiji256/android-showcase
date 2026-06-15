@@ -687,6 +687,22 @@
             "author": "Kevin Bourrillion",
             "license_name": "The Apache License, Version 2.0",
             "license_uri": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+        },
+        {
+            "id": "quicksand",
+            "name": "Quicksand",
+            "uri": "https://github.com/andrew-paglinawan/QuicksandFamily",
+            "author": "Andrew Paglinawan",
+            "license_name": "SIL Open Font License, Version 1.1",
+            "license_uri": "https://openfontlicense.org/open-font-license-official-text/"
+        },
+        {
+            "id": "zen_maru_gothic",
+            "name": "Zen Maru Gothic",
+            "uri": "https://github.com/googlefonts/zen-marugothic",
+            "author": "Yoshimichi Ohira",
+            "license_name": "SIL Open Font License, Version 1.1",
+            "license_uri": "https://openfontlicense.org/open-font-license-official-text/"
         }
     ]
 }
