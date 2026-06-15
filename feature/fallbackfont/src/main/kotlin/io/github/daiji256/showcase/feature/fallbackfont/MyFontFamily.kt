@@ -1,4 +1,4 @@
-package io.github.daiji256.showcase.feature.mixedfonts
+package io.github.daiji256.showcase.feature.fallbackfont
 
 import android.content.Context
 import androidx.compose.ui.text.font.AndroidFont

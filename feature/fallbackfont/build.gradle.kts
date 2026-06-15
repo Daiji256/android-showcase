@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "io.github.daiji256.showcase.feature.mixedfonts"
+    namespace = "io.github.daiji256.showcase.feature.fallbackfont"
 }
 
 dependencies {

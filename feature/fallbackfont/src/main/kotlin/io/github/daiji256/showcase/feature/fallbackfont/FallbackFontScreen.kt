@@ -1,4 +1,4 @@
-package io.github.daiji256.showcase.feature.mixedfonts
+package io.github.daiji256.showcase.feature.fallbackfont
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
@@ -8,19 +8,19 @@ import io.github.daiji256.showcase.core.ui.document.Document
 import io.github.daiji256.showcase.core.ui.navigation.LocalNavigator
 
 @Composable
-internal fun MixedFontsScreen() {
+internal fun FallbackFontScreen() {
     val navigator = LocalNavigator.current
-    MixedFontsScreen(
+    FallbackFontScreen(
         onNavigateUpClick = navigator::navigateUp,
     )
 }
 
 @Composable
-private fun MixedFontsScreen(
+private fun FallbackFontScreen(
     onNavigateUpClick: () -> Unit,
 ) {
     Document(
-        title = stringResource(id = R.string.feature_mixed_fonts_title),
+        title = stringResource(id = R.string.feature_fallback_font_title),
         markdown = "TODO",
         onNavigateUpClick = onNavigateUpClick,
     )
@@ -28,9 +28,9 @@ private fun MixedFontsScreen(
 
 @Preview(showSystemUi = true)
 @Composable
-private fun MixedFontsScreenPreview() {
+private fun FallbackFontScreenPreview() {
     ShowcaseTheme {
-        MixedFontsScreen(
+        FallbackFontScreen(
             onNavigateUpClick = {},
         )
     }
