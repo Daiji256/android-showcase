@@ -26,11 +26,11 @@ private fun FallbackFontScreen(
         onNavigateUpClick = onNavigateUpClick,
     ) {
         Text(
-            text = stringResource(id = R.string.feature_fallback_font_title),
+            text = stringResource(id = R.string.feature_fallback_font_demo),
             fontFamily = MyFontFamily,
         )
         Text(
-            text = stringResource(id = R.string.feature_fallback_font_title),
+            text = stringResource(id = R.string.feature_fallback_font_demo),
             fontFamily = MyFontFamily,
             fontWeight = FontWeight.Bold,
         )
