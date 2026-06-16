@@ -1,6 +1,22 @@
 {
   "dependencies": [
     {
+      "id": "quicksand",
+      "name": "Quicksand",
+      "uri": "https://github.com/andrew-paglinawan/QuicksandFamily",
+      "author": "Andrew Paglinawan",
+      "license_name": "SIL Open Font License, Version 1.1",
+      "license_uri": "https://openfontlicense.org/open-font-license-official-text/"
+    },
+    {
+      "id": "zen_maru_gothic",
+      "name": "Zen Maru Gothic",
+      "uri": "https://github.com/googlefonts/zen-marugothic",
+      "author": "Yoshimichi Ohira",
+      "license_name": "SIL Open Font License, Version 1.1",
+      "license_uri": "https://openfontlicense.org/open-font-license-official-text/"
+    },
+    {
       "id": "material_symbols_and_icons",
       "name": "Material Symbols and Icons",
       "uri": "https://fonts.google.com/icons",

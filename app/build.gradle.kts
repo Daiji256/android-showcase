@@ -69,6 +69,7 @@ dependencies {
     implementation(projects.core.designsystem)
     implementation(projects.core.ui)
     implementation(projects.feature.customtabs)
+    implementation(projects.feature.fallbackfont)
     implementation(projects.feature.ktlint)
     implementation(projects.feature.license)
     implementation(projects.feature.localsnackbarhoststate)

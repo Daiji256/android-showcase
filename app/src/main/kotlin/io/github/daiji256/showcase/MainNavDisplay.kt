@@ -12,6 +12,7 @@ import io.github.daiji256.showcase.core.ui.navigation.NavState
 import io.github.daiji256.showcase.core.ui.navigation.toDecoratedNavEntries
 import io.github.daiji256.showcase.core.ui.showcase.showcase
 import io.github.daiji256.showcase.feature.customtabs.customTabs
+import io.github.daiji256.showcase.feature.fallbackfont.fallbackFont
 import io.github.daiji256.showcase.feature.ktlint.ktlint
 import io.github.daiji256.showcase.feature.license.license
 import io.github.daiji256.showcase.feature.localsnackbarhoststate.localSnackbarHostState
@@ -35,6 +36,7 @@ internal fun MainNavDisplay(
         entryProvider = entryProvider {
             showcase(features = Features)
             customTabs()
+            fallbackFont()
             ktlint()
             license(dependenciesResId = R.raw.dependencies)
             localSnackbarHostState()
