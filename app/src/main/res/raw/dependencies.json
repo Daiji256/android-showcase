@@ -91,7 +91,7 @@
         {
             "id": "androidx.compose.animation:animation",
             "name": "Compose Animation",
-            "uri": "https://developer.android.com/jetpack/androidx/releases/compose-animation#1.11.2",
+            "uri": "https://developer.android.com/jetpack/androidx/releases/compose-animation#1.11.3",
             "author": "The Android Open Source Project",
             "license_name": "The Apache Software License, Version 2.0",
             "license_uri": "http://www.apache.org/licenses/LICENSE-2.0.txt"
@@ -99,7 +99,7 @@
         {
             "id": "androidx.compose.animation:animation-core",
             "name": "Compose Animation Core",
-            "uri": "https://developer.android.com/jetpack/androidx/releases/compose-animation#1.11.2",
+            "uri": "https://developer.android.com/jetpack/androidx/releases/compose-animation#1.11.3",
             "author": "The Android Open Source Project",
             "license_name": "The Apache Software License, Version 2.0",
             "license_uri": "http://www.apache.org/licenses/LICENSE-2.0.txt"
@@ -107,7 +107,7 @@
         {
             "id": "androidx.compose.foundation:foundation",
             "name": "Compose Foundation",
-            "uri": "https://developer.android.com/jetpack/androidx/releases/compose-foundation#1.11.2",
+            "uri": "https://developer.android.com/jetpack/androidx/releases/compose-foundation#1.11.3",
             "author": "The Android Open Source Project",
             "license_name": "The Apache Software License, Version 2.0",
             "license_uri": "http://www.apache.org/licenses/LICENSE-2.0.txt"
@@ -115,7 +115,7 @@
         {
             "id": "androidx.compose.foundation:foundation-layout",
             "name": "Compose Layouts",
-            "uri": "https://developer.android.com/jetpack/androidx/releases/compose-foundation#1.11.2",
+            "uri": "https://developer.android.com/jetpack/androidx/releases/compose-foundation#1.11.3",
             "author": "The Android Open Source Project",
             "license_name": "The Apache Software License, Version 2.0",
             "license_uri": "http://www.apache.org/licenses/LICENSE-2.0.txt"
@@ -131,7 +131,7 @@
         {
             "id": "androidx.compose.material:material-ripple",
             "name": "Compose Material Ripple",
-            "uri": "https://developer.android.com/jetpack/androidx/releases/compose-material#1.11.2",
+            "uri": "https://developer.android.com/jetpack/androidx/releases/compose-material#1.11.3",
             "author": "The Android Open Source Project",
             "license_name": "The Apache Software License, Version 2.0",
             "license_uri": "http://www.apache.org/licenses/LICENSE-2.0.txt"
@@ -139,7 +139,7 @@
         {
             "id": "androidx.compose.runtime:runtime",
             "name": "Compose Runtime",
-            "uri": "https://developer.android.com/jetpack/androidx/releases/compose-runtime#1.11.2",
+            "uri": "https://developer.android.com/jetpack/androidx/releases/compose-runtime#1.11.3",
             "author": "The Android Open Source Project",
             "license_name": "The Apache Software License, Version 2.0",
             "license_uri": "http://www.apache.org/licenses/LICENSE-2.0.txt"
@@ -147,7 +147,7 @@
         {
             "id": "androidx.compose.runtime:runtime-annotation",
             "name": "Compose Runtime Annotation",
-            "uri": "https://developer.android.com/jetpack/androidx/releases/compose-runtime#1.11.2",
+            "uri": "https://developer.android.com/jetpack/androidx/releases/compose-runtime#1.11.3",
             "author": "The Android Open Source Project",
             "license_name": "The Apache Software License, Version 2.0",
             "license_uri": "http://www.apache.org/licenses/LICENSE-2.0.txt"
@@ -155,7 +155,7 @@
         {
             "id": "androidx.compose.runtime:runtime-retain",
             "name": "Compose Runtime Retain",
-            "uri": "https://developer.android.com/jetpack/androidx/releases/compose-runtime#1.11.2",
+            "uri": "https://developer.android.com/jetpack/androidx/releases/compose-runtime#1.11.3",
             "author": "The Android Open Source Project",
             "license_name": "The Apache Software License, Version 2.0",
             "license_uri": "http://www.apache.org/licenses/LICENSE-2.0.txt"
@@ -163,7 +163,7 @@
         {
             "id": "androidx.compose.runtime:runtime-saveable",
             "name": "Compose Saveable",
-            "uri": "https://developer.android.com/jetpack/androidx/releases/compose-runtime#1.11.2",
+            "uri": "https://developer.android.com/jetpack/androidx/releases/compose-runtime#1.11.3",
             "author": "The Android Open Source Project",
             "license_name": "The Apache Software License, Version 2.0",
             "license_uri": "http://www.apache.org/licenses/LICENSE-2.0.txt"
@@ -171,7 +171,7 @@
         {
             "id": "androidx.compose.ui:ui",
             "name": "Compose UI",
-            "uri": "https://developer.android.com/jetpack/androidx/releases/compose-ui#1.11.2",
+            "uri": "https://developer.android.com/jetpack/androidx/releases/compose-ui#1.11.3",
             "author": "The Android Open Source Project",
             "license_name": "The Apache Software License, Version 2.0",
             "license_uri": "http://www.apache.org/licenses/LICENSE-2.0.txt"
@@ -179,7 +179,7 @@
         {
             "id": "androidx.compose.ui:ui-geometry",
             "name": "Compose Geometry",
-            "uri": "https://developer.android.com/jetpack/androidx/releases/compose-ui#1.11.2",
+            "uri": "https://developer.android.com/jetpack/androidx/releases/compose-ui#1.11.3",
             "author": "The Android Open Source Project",
             "license_name": "The Apache Software License, Version 2.0",
             "license_uri": "http://www.apache.org/licenses/LICENSE-2.0.txt"
@@ -187,7 +187,7 @@
         {
             "id": "androidx.compose.ui:ui-graphics",
             "name": "Compose Graphics",
-            "uri": "https://developer.android.com/jetpack/androidx/releases/compose-ui#1.11.2",
+            "uri": "https://developer.android.com/jetpack/androidx/releases/compose-ui#1.11.3",
             "author": "The Android Open Source Project",
             "license_name": "The Apache Software License, Version 2.0",
             "license_uri": "http://www.apache.org/licenses/LICENSE-2.0.txt"
@@ -195,7 +195,7 @@
         {
             "id": "androidx.compose.ui:ui-text",
             "name": "Compose UI Text",
-            "uri": "https://developer.android.com/jetpack/androidx/releases/compose-ui#1.11.2",
+            "uri": "https://developer.android.com/jetpack/androidx/releases/compose-ui#1.11.3",
             "author": "The Android Open Source Project",
             "license_name": "The Apache Software License, Version 2.0",
             "license_uri": "http://www.apache.org/licenses/LICENSE-2.0.txt"
@@ -203,7 +203,7 @@
         {
             "id": "androidx.compose.ui:ui-tooling-preview",
             "name": "Compose UI Preview Tooling",
-            "uri": "https://developer.android.com/jetpack/androidx/releases/compose-ui#1.11.2",
+            "uri": "https://developer.android.com/jetpack/androidx/releases/compose-ui#1.11.3",
             "author": "The Android Open Source Project",
             "license_name": "The Apache Software License, Version 2.0",
             "license_uri": "http://www.apache.org/licenses/LICENSE-2.0.txt"
@@ -211,7 +211,7 @@
         {
             "id": "androidx.compose.ui:ui-unit",
             "name": "Compose Unit",
-            "uri": "https://developer.android.com/jetpack/androidx/releases/compose-ui#1.11.2",
+            "uri": "https://developer.android.com/jetpack/androidx/releases/compose-ui#1.11.3",
             "author": "The Android Open Source Project",
             "license_name": "The Apache Software License, Version 2.0",
             "license_uri": "http://www.apache.org/licenses/LICENSE-2.0.txt"
@@ -219,7 +219,7 @@
         {
             "id": "androidx.compose.ui:ui-util",
             "name": "Compose Util",
-            "uri": "https://developer.android.com/jetpack/androidx/releases/compose-ui#1.11.2",
+            "uri": "https://developer.android.com/jetpack/androidx/releases/compose-ui#1.11.3",
             "author": "The Android Open Source Project",
             "license_name": "The Apache Software License, Version 2.0",
             "license_uri": "http://www.apache.org/licenses/LICENSE-2.0.txt"
