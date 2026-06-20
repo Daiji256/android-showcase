@@ -323,7 +323,7 @@
         {
             "id": "androidx.lifecycle:lifecycle-common",
             "name": "Lifecycle-Common",
-            "uri": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.10.0",
+            "uri": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.11.0",
             "author": "The Android Open Source Project",
             "license_name": "The Apache Software License, Version 2.0",
             "license_uri": "http://www.apache.org/licenses/LICENSE-2.0.txt"
@@ -331,7 +331,7 @@
         {
             "id": "androidx.lifecycle:lifecycle-common-java8",
             "name": "Lifecycle-Common for Java 8",
-            "uri": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.10.0",
+            "uri": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.11.0",
             "author": "The Android Open Source Project",
             "license_name": "The Apache Software License, Version 2.0",
             "license_uri": "http://www.apache.org/licenses/LICENSE-2.0.txt"
@@ -339,7 +339,7 @@
         {
             "id": "androidx.lifecycle:lifecycle-livedata",
             "name": "Lifecycle LiveData",
-            "uri": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.10.0",
+            "uri": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.11.0",
             "author": "The Android Open Source Project",
             "license_name": "The Apache Software License, Version 2.0",
             "license_uri": "http://www.apache.org/licenses/LICENSE-2.0.txt"
@@ -347,7 +347,7 @@
         {
             "id": "androidx.lifecycle:lifecycle-livedata-core",
             "name": "Lifecycle LiveData Core",
-            "uri": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.10.0",
+            "uri": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.11.0",
             "author": "The Android Open Source Project",
             "license_name": "The Apache Software License, Version 2.0",
             "license_uri": "http://www.apache.org/licenses/LICENSE-2.0.txt"
@@ -355,7 +355,7 @@
         {
             "id": "androidx.lifecycle:lifecycle-livedata-core-ktx",
             "name": "LiveData Core Kotlin Extensions",
-            "uri": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.10.0",
+            "uri": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.11.0",
             "author": "The Android Open Source Project",
             "license_name": "The Apache Software License, Version 2.0",
             "license_uri": "http://www.apache.org/licenses/LICENSE-2.0.txt"
@@ -363,7 +363,7 @@
         {
             "id": "androidx.lifecycle:lifecycle-process",
             "name": "Lifecycle Process",
-            "uri": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.10.0",
+            "uri": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.11.0",
             "author": "The Android Open Source Project",
             "license_name": "The Apache Software License, Version 2.0",
             "license_uri": "http://www.apache.org/licenses/LICENSE-2.0.txt"
@@ -371,7 +371,7 @@
         {
             "id": "androidx.lifecycle:lifecycle-runtime",
             "name": "Lifecycle Runtime",
-            "uri": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.10.0",
+            "uri": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.11.0",
             "author": "The Android Open Source Project",
             "license_name": "The Apache Software License, Version 2.0",
             "license_uri": "http://www.apache.org/licenses/LICENSE-2.0.txt"
@@ -379,7 +379,7 @@
         {
             "id": "androidx.lifecycle:lifecycle-runtime-compose",
             "name": "Lifecycle Runtime Compose",
-            "uri": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.10.0",
+            "uri": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.11.0",
             "author": "The Android Open Source Project",
             "license_name": "The Apache Software License, Version 2.0",
             "license_uri": "http://www.apache.org/licenses/LICENSE-2.0.txt"
@@ -387,7 +387,7 @@
         {
             "id": "androidx.lifecycle:lifecycle-runtime-ktx",
             "name": "Lifecycle Kotlin Extensions",
-            "uri": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.10.0",
+            "uri": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.11.0",
             "author": "The Android Open Source Project",
             "license_name": "The Apache Software License, Version 2.0",
             "license_uri": "http://www.apache.org/licenses/LICENSE-2.0.txt"
@@ -395,7 +395,7 @@
         {
             "id": "androidx.lifecycle:lifecycle-viewmodel",
             "name": "Lifecycle ViewModel",
-            "uri": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.10.0",
+            "uri": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.11.0",
             "author": "The Android Open Source Project",
             "license_name": "The Apache Software License, Version 2.0",
             "license_uri": "http://www.apache.org/licenses/LICENSE-2.0.txt"
@@ -403,7 +403,7 @@
         {
             "id": "androidx.lifecycle:lifecycle-viewmodel-compose",
             "name": "Lifecycle ViewModel Compose",
-            "uri": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.10.0",
+            "uri": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.11.0",
             "author": "The Android Open Source Project",
             "license_name": "The Apache Software License, Version 2.0",
             "license_uri": "http://www.apache.org/licenses/LICENSE-2.0.txt"
@@ -411,7 +411,7 @@
         {
             "id": "androidx.lifecycle:lifecycle-viewmodel-ktx",
             "name": "Lifecycle ViewModel Kotlin Extensions",
-            "uri": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.10.0",
+            "uri": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.11.0",
             "author": "The Android Open Source Project",
             "license_name": "The Apache Software License, Version 2.0",
             "license_uri": "http://www.apache.org/licenses/LICENSE-2.0.txt"
@@ -419,7 +419,7 @@
         {
             "id": "androidx.lifecycle:lifecycle-viewmodel-navigation3",
             "name": "Androidx Lifecycle Navigation3 ViewModel",
-            "uri": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.10.0",
+            "uri": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.11.0",
             "author": "The Android Open Source Project",
             "license_name": "The Apache Software License, Version 2.0",
             "license_uri": "http://www.apache.org/licenses/LICENSE-2.0.txt"
@@ -427,7 +427,7 @@
         {
             "id": "androidx.lifecycle:lifecycle-viewmodel-savedstate",
             "name": "Lifecycle ViewModel with SavedState",
-            "uri": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.10.0",
+            "uri": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.11.0",
             "author": "The Android Open Source Project",
             "license_name": "The Apache Software License, Version 2.0",
             "license_uri": "http://www.apache.org/licenses/LICENSE-2.0.txt"
