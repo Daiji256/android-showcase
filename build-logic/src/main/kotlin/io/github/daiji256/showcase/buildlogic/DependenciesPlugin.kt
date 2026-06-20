@@ -30,20 +30,16 @@ class DependenciesPlugin : Plugin<Project> {
         val pomFilesProvider = target.providers.provider {
             collectResolvedDependencyPomFiles(target)
         }
-        val generateDependencies =
-            target.tasks.register("generateDependencies", GenerateDependenciesTask::class.java) {
-                pomFiles.from(pomFilesProvider)
-                dependencyOverridesFile.set(
-                    target.layout.projectDirectory
-                        .file("dependencies-config/dependency-overrides.json"),
-                )
-                dependenciesOutputFile.set(
-                    target.layout.projectDirectory
-                        .file("src/main/res/raw/dependencies.json"),
-                )
-            }
-        target.tasks.matching { it.name == "preBuild" }.configureEach {
-            dependsOn(generateDependencies)
+        target.tasks.register("generateDependencies", GenerateDependenciesTask::class.java) {
+            pomFiles.from(pomFilesProvider)
+            dependencyOverridesFile.set(
+                target.layout.projectDirectory
+                    .file("dependencies-config/dependency-overrides.json"),
+            )
+            dependenciesOutputFile.set(
+                target.layout.projectDirectory
+                    .file("src/main/res/raw/dependencies.json"),
+            )
         }
     }
 }
