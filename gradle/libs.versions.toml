@@ -12,6 +12,7 @@ browser = "1.10.0"
 compose-bom = "2026.06.00"
 junit = "4.13.2"
 kotlin = "2.4.0"
+kotlin-dsl = "6.7.3"
 kotlinx-collections-immutable = "0.5.0"
 kotlinx-coroutines = "1.11.0"
 kotlinx-serialization = "1.11.0"
@@ -62,6 +63,7 @@ roborazzi-gradlePlugin = { group = "io.github.takahirom.roborazzi", name = "robo
 android-application = { id = "com.android.application", version.ref = "agp" }
 android-library = { id = "com.android.library", version.ref = "agp" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+kotlin-dsl = { id = "org.gradle.kotlin.kotlin-dsl", version.ref = "kotlin-dsl" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 roborazzi = { id = "io.github.takahirom.roborazzi", version.ref = "roborazzi" }
 
