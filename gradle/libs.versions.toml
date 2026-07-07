@@ -21,7 +21,7 @@ napier = "2.7.1"
 navigation3 = "1.1.4"
 preview-scanner = "0.9.1"
 robolectric = "4.16.1"
-roborazzi = "1.65.0"
+roborazzi = "1.67.0"
 turbine = "1.2.1"
 
 [libraries]
