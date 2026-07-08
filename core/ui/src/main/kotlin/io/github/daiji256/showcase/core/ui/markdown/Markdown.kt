@@ -41,6 +41,7 @@ import org.intellij.markdown.MarkdownTokenTypes
 import org.intellij.markdown.ast.ASTNode
 import org.intellij.markdown.ast.getTextInNode
 import org.intellij.markdown.flavours.commonmark.CommonMarkFlavourDescriptor
+import org.intellij.markdown.parser.CancellationToken
 import org.intellij.markdown.parser.MarkdownParser
 
 /*
@@ -69,10 +70,14 @@ fun Markdown(
         modifier = modifier,
     ) {
         val markdownParser = remember {
-            MarkdownParser(CommonMarkFlavourDescriptor())
+            MarkdownParser(
+                flavour = CommonMarkFlavourDescriptor(),
+                assertionsEnabled = true,
+                cancellationToken = CancellationToken.NonCancellable
+            )
         }
         val blocks = remember(markdown) {
-            markdownParser.buildMarkdownTreeFromString(markdown).getBlocks(markdown)
+            markdownParser.buildMarkdownTreeFromString(markdown as CharSequence).getBlocks(markdown)
         }
         blocks.forEach { block ->
             when (block) {
