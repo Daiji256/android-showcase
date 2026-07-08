@@ -17,7 +17,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.toAndroidRect
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
@@ -25,9 +24,7 @@ import androidx.compose.ui.test.DeviceConfigurationOverride
 import androidx.compose.ui.test.WindowInsets
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.unit.DpRect
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.roundToIntRect
 import androidx.core.graphics.Insets
 import androidx.core.view.WindowInsetsCompat
 import com.github.takahirom.roborazzi.AndroidComposePreviewTester
@@ -93,20 +90,18 @@ class PreviewTester :
 
     @Composable
     private fun windowInsets() =
-        WindowInsetsCompat.Builder()
-            .setInsets(
-                WindowInsetsCompat.Type.statusBars(),
-                DpRect(left = 0.dp, top = 24.dp, right = 0.dp, bottom = 0.dp).toInsets(),
-            )
-            .setInsets(
-                WindowInsetsCompat.Type.navigationBars(),
-                DpRect(left = 0.dp, top = 0.dp, right = 0.dp, bottom = 24.dp).toInsets(),
-            )
-            .build()
-
-    @Composable
-    private fun DpRect.toInsets(): Insets =
-        Insets.of(with(LocalDensity.current) { toRect() }.roundToIntRect().toAndroidRect())
+        with(LocalDensity.current) {
+            WindowInsetsCompat.Builder()
+                .setInsets(
+                    WindowInsetsCompat.Type.statusBars(),
+                    Insets.of(0, 24.dp.roundToPx(), 0, 0),
+                )
+                .setInsets(
+                    WindowInsetsCompat.Type.navigationBars(),
+                    Insets.of(0, 0, 0, 24.dp.roundToPx()),
+                )
+                .build()
+        }
 
     @Composable
     private fun SystemUi() {
