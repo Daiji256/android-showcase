@@ -84,30 +84,6 @@ object ShowcaseAnimations {
             initialContentExit = ExitTransition.None,
         )
     }
-
-    val enterTransition: AnimatedContentTransitionScope<*>.() -> EnterTransition = {
-        sharedIn(
-            towards = AnimatedContentTransitionScope.SlideDirection.Start,
-        )
-    }
-
-    val exitTransition: AnimatedContentTransitionScope<*>.() -> ExitTransition = {
-        sharedOut(
-            towards = AnimatedContentTransitionScope.SlideDirection.Start,
-        )
-    }
-
-    val popEnterTransition: AnimatedContentTransitionScope<*>.() -> EnterTransition = {
-        sharedIn(
-            towards = AnimatedContentTransitionScope.SlideDirection.End,
-        )
-    }
-
-    val popExitTransition: AnimatedContentTransitionScope<*>.() -> ExitTransition = {
-        sharedOut(
-            towards = AnimatedContentTransitionScope.SlideDirection.End,
-        )
-    }
 }
 
 @Stable
