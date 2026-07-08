@@ -73,7 +73,7 @@ fun Markdown(
             MarkdownParser(
                 flavour = CommonMarkFlavourDescriptor(),
                 assertionsEnabled = true,
-                cancellationToken = CancellationToken.NonCancellable
+                cancellationToken = CancellationToken.NonCancellable,
             )
         }
         val blocks = remember(markdown) {
