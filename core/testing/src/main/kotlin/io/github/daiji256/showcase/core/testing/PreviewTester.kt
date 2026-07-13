@@ -51,14 +51,6 @@ import sergio.sastre.composable.preview.scanner.core.preview.ComposablePreview
 @OptIn(ExperimentalRoborazziApi::class)
 class PreviewTester :
     ComposePreviewTester<AndroidPreviewJUnit4TestParameter> by AndroidComposePreviewTester() {
-    override fun options(): ComposePreviewTester.Options = super.options().copy(
-        testLifecycleOptions = ComposePreviewTester.Options.JUnit4TestLifecycleOptions(
-            testRuleFactory = { composeTestRule ->
-                composeTestRule
-            },
-        ),
-    )
-
     override fun test(testParameter: AndroidPreviewJUnit4TestParameter) {
         val roborazziComposeOptions = RoborazziComposeOptions {
             testParameter.preview.previewInfo.run {
