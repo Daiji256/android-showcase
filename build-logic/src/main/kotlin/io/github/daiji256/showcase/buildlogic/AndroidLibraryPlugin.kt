@@ -25,7 +25,6 @@ class AndroidLibraryPlugin : Plugin<Project> {
                 compilerOptions {
                     allWarningsAsErrors = getAllWarningsAsErrors()
                     optIn.add("kotlinx.coroutines.ExperimentalCoroutinesApi")
-                    freeCompilerArgs.add("-Xcontext-parameters")
                 }
             }
 
