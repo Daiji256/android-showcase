@@ -1,6 +1,7 @@
 package io.github.daiji256.showcase.buildlogic
 
 import com.android.build.api.dsl.CommonExtension
+import com.github.takahirom.roborazzi.ExperimentalRoborazziApi
 import io.github.daiji256.showcase.buildlogic.util.library
 import io.github.daiji256.showcase.buildlogic.util.libs
 import io.github.daiji256.showcase.buildlogic.util.plugin
@@ -14,6 +15,7 @@ import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.dependencies
 import org.gradle.kotlin.dsl.getByType
 
+@OptIn(ExperimentalRoborazziApi::class)
 @Suppress("unused")
 class RoborazziPlugin : Plugin<Project> {
     override fun apply(target: Project) {
