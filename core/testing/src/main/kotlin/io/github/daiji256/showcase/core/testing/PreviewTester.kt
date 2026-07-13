@@ -34,6 +34,7 @@ import com.github.takahirom.roborazzi.ExperimentalRoborazziApi
 import com.github.takahirom.roborazzi.RoborazziComposeOptions
 import com.github.takahirom.roborazzi.background
 import com.github.takahirom.roborazzi.captureRoboImage
+import com.github.takahirom.roborazzi.composeTestRule
 import com.github.takahirom.roborazzi.fontScale
 import com.github.takahirom.roborazzi.inspectionMode
 import com.github.takahirom.roborazzi.locale
@@ -59,7 +60,7 @@ class PreviewTester :
     )
 
     override fun test(testParameter: AndroidPreviewJUnit4TestParameter) {
-        val composable = RoborazziComposeOptions {
+        val roborazziComposeOptions = RoborazziComposeOptions {
             testParameter.preview.previewInfo.run {
                 previewDevice(previewDevice = device)
                 size(widthDp = widthDp, heightDp = heightDp)
@@ -69,8 +70,12 @@ class PreviewTester :
                 fontScale(fontScale = fontScale)
                 inspectionMode(inspectionMode = true)
             }
-        }.configured(
-            activityScenario = testParameter.composeTestRule.activityRule.scenario,
+            composeTestRule(testParameter.composeTestRule)
+        }
+        val composable = roborazziComposeOptions.configured(
+            activityScenario = roborazziComposeOptions.createScenario {
+                error("Roborazzi: ActivityScenario not found in ComposeTestRule")
+            },
         ) {
             DeviceConfigurationOverride(
                 override = DeviceConfigurationOverride.WindowInsets(windowInsets = windowInsets()),
