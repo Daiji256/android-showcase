@@ -18,7 +18,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.dropShadow
-import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.shadow.Shadow
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
