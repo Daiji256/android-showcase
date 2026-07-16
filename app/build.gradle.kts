@@ -59,7 +59,6 @@ android {
     }
 
     lint {
-        sarifReport = true
         checkDependencies = true
     }
 }
