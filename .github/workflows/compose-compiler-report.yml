@@ -1,0 +1,61 @@
+name: compose-compiler-report
+
+on: pull_request
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  compose-compiler-report:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: read
+      pull-requests: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+
+      - name: Setup JDK
+        uses: actions/setup-java@0f481fcb613427c0f801b606911222b5b6f3083a # v5.5.0
+        with:
+          distribution: temurin
+          java-version: 25
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@3f131e8634966bd73d06cc69884922b02e6faf92 # v6.2.0
+
+      - name: Generate Compose Compiler Reports
+        run: |
+          ./gradlew assembleDebug \
+            -PenableComposeCompilerMetrics=true \
+            -PenableComposeCompilerReports=true
+
+      - name: Generate Summary Report
+        run: ./gradlew generateComposeCompilerReport
+
+      - name: Post Report Comment
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: |
+          comment_ids=$(
+            gh api "repos/${GITHUB_REPOSITORY}/issues/${PR_NUMBER}/comments" |
+            jq -r '
+              .[]
+              | select(.user.login == "github-actions[bot]")
+              | select(.body | contains("<!-- compose-compiler-report -->"))
+              | .id'
+          )
+          for comment_id in $comment_ids; do
+            gh api -X DELETE "repos/${GITHUB_REPOSITORY}/issues/comments/${comment_id}"
+          done
+          report="<!-- compose-compiler-report -->"$'\n'
+          report+=$(cat "build/compose-compiler-report.md")
+          gh pr comment "$PR_NUMBER" --body "$report"
