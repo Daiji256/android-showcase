@@ -10,6 +10,7 @@ import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.dependencies
+import org.jetbrains.kotlin.compose.compiler.gradle.ComposeCompilerGradlePluginExtension
 import org.jetbrains.kotlin.gradle.dsl.KotlinAndroidProjectExtension
 
 @Suppress("unused")
@@ -27,6 +28,24 @@ class ComposePlugin : Plugin<Project> {
             extensions.configure<KotlinAndroidProjectExtension> {
                 compilerOptions {
                     optIn.add("androidx.compose.material3.ExperimentalMaterial3Api")
+                }
+            }
+
+            extensions.configure<ComposeCompilerGradlePluginExtension> {
+                val enableMetrics = providers.gradleProperty("enableComposeCompilerMetrics")
+                    .orNull?.toBoolean() ?: false
+                val enableReports = providers.gradleProperty("enableComposeCompilerReports")
+                    .orNull?.toBoolean() ?: false
+                val relativePath = projectDir.toRelativeString(rootDir)
+                if (enableMetrics) {
+                    metricsDestination.set(
+                        rootProject.layout.buildDirectory.dir("compose-metrics/$relativePath"),
+                    )
+                }
+                if (enableReports) {
+                    reportsDestination.set(
+                        rootProject.layout.buildDirectory.dir("compose-reports/$relativePath"),
+                    )
                 }
             }
 
