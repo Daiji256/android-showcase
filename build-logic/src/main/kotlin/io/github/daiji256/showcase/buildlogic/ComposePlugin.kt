@@ -39,12 +39,16 @@ class ComposePlugin : Plugin<Project> {
                 val relativePath = projectDir.toRelativeString(rootDir)
                 if (enableMetrics) {
                     metricsDestination.set(
-                        rootProject.layout.buildDirectory.dir("compose-metrics/$relativePath"),
+                        rootProject.layout.buildDirectory.dir(
+                            "compose-compiler/metrics/$relativePath",
+                        ),
                     )
                 }
                 if (enableReports) {
                     reportsDestination.set(
-                        rootProject.layout.buildDirectory.dir("compose-reports/$relativePath"),
+                        rootProject.layout.buildDirectory.dir(
+                            "compose-compiler/reports/$relativePath",
+                        ),
                     )
                 }
             }

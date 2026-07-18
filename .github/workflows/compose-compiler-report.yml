@@ -39,7 +39,7 @@ jobs:
         uses: daiji256/download-from-orphan-branch@d1bdd0b00dbb1dd7145324d93631a5a3226d715d # v1.0.0
         with:
           branch: ${{ needs.orphan-branch-name.outputs.base-report }}
-          path: base-metrics
+          path: base-compose-compiler
 
       - name: Generate Compose Compiler Reports
         run: |
@@ -50,14 +50,14 @@ jobs:
       - name: Generate Summary Report
         run: |
           ./gradlew generateComposeCompilerReport \
-            -PbaseMetricsDir=base-metrics
+            -PbaseMetricsDir=base-compose-compiler/metrics
 
       - name: Upload head metrics
         uses: daiji256/upload-to-orphan-branch@8d353234c31aaf2134dc6081b863fcd876fcb2d0 # v1.0.0
         with:
           branch: ${{ needs.orphan-branch-name.outputs.head-report }}
           overwrite: true
-          path: "build/compose-metrics"
+          path: "build/compose-compiler"
 
       - name: Post Report Comment
         env:
@@ -120,7 +120,7 @@ jobs:
         uses: daiji256/upload-to-orphan-branch@8d353234c31aaf2134dc6081b863fcd876fcb2d0 # v1.0.0
         with:
           branch: ${{ needs.orphan-branch-name.outputs.base-report }}
-          path: "build/compose-metrics"
+          path: "build/compose-compiler"
 
   orphan-branch-name:
     runs-on: ubuntu-latest

@@ -22,7 +22,7 @@ class ComposeCompilerReportPlugin : Plugin<Project> {
             tasks.register("generateComposeCompilerReport", ComposeCompilerReportTask::class.java) {
                 group = "verification"
                 description = "Generates compose compiler report"
-                metricsDir.set(rootProject.layout.buildDirectory.dir("compose-metrics"))
+                metricsDir.set(rootProject.layout.buildDirectory.dir("compose-compiler/metrics"))
 
                 val baseMetricsDirProperty = project.findProperty("baseMetricsDir")
                 if (baseMetricsDirProperty is String) {
