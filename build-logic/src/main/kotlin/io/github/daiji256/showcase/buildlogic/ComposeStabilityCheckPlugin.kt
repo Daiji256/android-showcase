@@ -100,7 +100,7 @@ abstract class ComposeStabilityCheckTask : DefaultTask() {
             fileNames.distinct().sorted().forEach { fileName ->
                 val baseFile = base?.find { it.name == fileName }
                 val headFile = head?.find { it.name == fileName }
-                val result = generateDiffWithStats(base = baseFile, head = headFile)
+                val result = diff(base = baseFile, head = headFile)
                 if (result != null) {
                     diffs += result.diff
                     totalAdded += result.added
@@ -462,7 +462,7 @@ private fun tableRow(type: String, base: Int?, head: Int?): String {
 
 private data class DiffResult(val diff: String, val added: Int, val removed: Int)
 
-private fun generateDiffWithStats(base: File?, head: File?): DiffResult? {
+private fun diff(base: File?, head: File?): DiffResult? {
     val baseLines = base?.readLines().orEmpty()
     val headLines = head?.readLines().orEmpty()
     val patch = DiffUtils.diff(baseLines, headLines)
