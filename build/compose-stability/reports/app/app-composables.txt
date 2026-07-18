@@ -1,0 +1,10 @@
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun io.github.daiji256.showcase.Hoge(
+  stable modifier: Modifier? = @static <expression>
+)
+restartable skippable fun io.github.daiji256.showcase.MainContent(
+  stable modifier: Modifier? = @static <expression>
+)
+restartable skippable fun io.github.daiji256.showcase.MainNavDisplay(
+  navState: NavState
+  stable modifier: Modifier? = @static <expression>
+)
