@@ -54,32 +54,26 @@ abstract class ComposeStabilityCheckTask : DefaultTask() {
     fun generate() {
         val baseDirFile = baseDir.get().asFile
         val headDirFile = headDir.get().asFile
-
         val baseMetricsDir = File(baseDirFile, "metrics")
         val baseReportsDir = File(baseDirFile, "reports")
         val headMetricsDir = File(headDirFile, "metrics")
         val headReportsDir = File(headDirFile, "reports")
-
-        val baseModuleMetrics =
-            baseMetricsDir
-                .walkBottomUp()
-                .filter { it.extension == "json" }
-                .associate { it.parentFile.parentFile.name to decodeMetrics(it.readText()) }
-        val baseModuleReports =
-            baseReportsDir
-                .walkBottomUp()
-                .filter { it.extension == "txt" }
-                .groupBy { it.parentFile.name }
-        val moduleMetrics =
-            headMetricsDir
-                .walkBottomUp()
-                .filter { it.extension == "json" }
-                .associate { it.parentFile.parentFile.name to decodeMetrics(it.readText()) }
-        val moduleReports =
-            headReportsDir
-                .walkBottomUp()
-                .filter { it.extension == "txt" }
-                .groupBy { it.parentFile.name }
+        val baseMetrics = baseMetricsDir
+            .walkBottomUp()
+            .filter { it.extension == "json" }
+            .associate { it.parentFile.parentFile.name to decodeMetrics(it.readText()) }
+        val baseReports = baseReportsDir
+            .walkBottomUp()
+            .filter { it.extension == "txt" }
+            .groupBy { it.parentFile.name }
+        val headMetrics = headMetricsDir
+            .walkBottomUp()
+            .filter { it.extension == "json" }
+            .associate { it.parentFile.parentFile.name to decodeMetrics(it.readText()) }
+        val headReports = headReportsDir
+            .walkBottomUp()
+            .filter { it.extension == "txt" }
+            .groupBy { it.parentFile.name }
 
         val report = buildString {
             appendLine("# Compose Stability Check Report")
@@ -88,37 +82,27 @@ abstract class ComposeStabilityCheckTask : DefaultTask() {
             appendLine()
             appendLine("<details><summary>Expand for details</summary>")
             appendLine()
-            appendLine(
-                tables(
-                    base = baseModuleMetrics.values.takeIf { it.isNotEmpty() }?.sum(),
-                    head = moduleMetrics.values.sum(),
-                ),
-            )
+            appendLine(tables(base = baseMetrics.values.sum(), head = headMetrics.values.sum()))
             appendLine()
             appendLine("</details>")
             appendLine()
 
             appendLine("## Modules")
-            (moduleMetrics.keys + baseModuleMetrics.keys).sorted().forEach { module ->
+            (baseMetrics.keys + headMetrics.keys).sorted().forEach { module ->
                 appendLine()
                 appendLine("### $module")
                 appendLine()
                 appendLine("<details><summary>Expand for details</summary>")
                 appendLine()
-                appendLine(
-                    tables(
-                        base = baseModuleMetrics[module],
-                        head = moduleMetrics[module],
-                    ),
-                )
+                appendLine(tables(base = baseMetrics[module], head = headMetrics[module]))
                 appendLine()
-                val reports = moduleReports[module]
-                val baseReports = baseModuleReports[module]
-                reports?.sortedBy { it.name }?.forEach { reportFile ->
-                    val baseReportFile = baseReports?.find { it.name == reportFile.name }
-                    val diff = generateDiff(base = baseReportFile, head = reportFile)
+                val head = headReports[module]
+                val base = baseReports[module]
+                head?.sortedBy { it.name }?.forEach { headFile ->
+                    val baseFile = base?.find { it.name == headFile.name }
+                    val diff = generateDiff(base = baseFile, head = headFile)
                     if (diff != null) {
-                        appendLine("#### Diff: ${reportFile.name}")
+                        appendLine("#### Diff: ${headFile.name}")
                         appendLine()
                         appendLine("```diff")
                         appendLine(diff)
