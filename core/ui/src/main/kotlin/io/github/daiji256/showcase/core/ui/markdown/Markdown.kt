@@ -377,7 +377,6 @@ private sealed interface Block {
     data object HorizontalRule : Block
 }
 
-@Immutable
 private sealed interface Content {
     data class Text(val text: String) : Content
     data class Emph(val contents: List<Content>) : Content
