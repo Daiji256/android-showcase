@@ -1,0 +1,8 @@
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun io.github.daiji256.showcase.feature.fallbackfont.FallbackFontScreen()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun io.github.daiji256.showcase.feature.fallbackfont.FallbackFontScreen(
+  stable onNavigateUpClick: Function0<Unit>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun io.github.daiji256.showcase.feature.fallbackfont.FallbackFontScreenPreview()
+open fun io.github.daiji256.showcase.feature.fallbackfont.FallbackFontSummary.<no name provided>.<get-title>(
+  <this>: <no name provided>
+): String
