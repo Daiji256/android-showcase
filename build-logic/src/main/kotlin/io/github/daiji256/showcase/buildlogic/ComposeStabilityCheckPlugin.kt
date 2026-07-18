@@ -12,6 +12,8 @@ import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.file.DirectoryProperty
 import org.gradle.api.file.RegularFileProperty
+import org.gradle.api.provider.ListProperty
+import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.InputDirectory
 import org.gradle.api.tasks.OutputFile
 import org.gradle.api.tasks.TaskAction
@@ -35,6 +37,7 @@ class ComposeStabilityCheckPlugin : Plugin<Project> {
                 baseDir.set(rootProject.layout.projectDirectory.dir(baseProperty))
                 headDir.set(rootProject.layout.projectDirectory.dir(headProperty))
                 outputFile.set(rootProject.layout.projectDirectory.file(outputProperty))
+                modules.set(rootProject.subprojects.map { it.path })
             }
         }
     }
@@ -50,6 +53,9 @@ abstract class ComposeStabilityCheckTask : DefaultTask() {
     @get:OutputFile
     abstract val outputFile: RegularFileProperty
 
+    @get:Input
+    abstract val modules: ListProperty<String>
+
     @TaskAction
     fun generate() {
         val baseDirFile = baseDir.get().asFile
@@ -58,22 +64,30 @@ abstract class ComposeStabilityCheckTask : DefaultTask() {
         val baseReportsDir = File(baseDirFile, "reports")
         val headMetricsDir = File(headDirFile, "metrics")
         val headReportsDir = File(headDirFile, "reports")
+
+        val sortedModules = modules.get().sortedByDescending { it.length }
+        fun module(file: File, metricsDir: File): String {
+            val relativePath = file.parentFile.toRelativeString(metricsDir)
+            val path = ":" + relativePath.replace(File.separator, ":")
+            return sortedModules.find { path == it || path.startsWith("$it:") } ?: path
+        }
+
         val baseMetrics = baseMetricsDir
             .walkBottomUp()
             .filter { it.extension == "json" }
-            .associate { it.parentFile.parentFile.name to decodeMetrics(it.readText()) }
+            .associate { module(it, baseMetricsDir) to decodeMetrics(it.readText()) }
         val baseReports = baseReportsDir
             .walkBottomUp()
             .filter { it.extension == "txt" }
-            .groupBy { it.parentFile.name }
+            .groupBy { module(it, baseReportsDir) }
         val headMetrics = headMetricsDir
             .walkBottomUp()
             .filter { it.extension == "json" }
-            .associate { it.parentFile.parentFile.name to decodeMetrics(it.readText()) }
+            .associate { module(it, headMetricsDir) to decodeMetrics(it.readText()) }
         val headReports = headReportsDir
             .walkBottomUp()
             .filter { it.extension == "txt" }
-            .groupBy { it.parentFile.name }
+            .groupBy { module(it, headReportsDir) }
 
         val report = buildString {
             appendLine("# Compose Stability Check Report")
