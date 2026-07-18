@@ -1,0 +1,11 @@
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun io.github.daiji256.showcase.feature.systemstyle.SystemStyleScreen()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun io.github.daiji256.showcase.feature.systemstyle.SystemStyleScreen(
+  stable onNavigateUpClick: Function0<Unit>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun io.github.daiji256.showcase.feature.systemstyle.SystemStyleScreenPreview()
+open fun io.github.daiji256.showcase.feature.systemstyle.SystemStyleSummary.<no name provided>.<get-title>(
+  <this>: <no name provided>
+): String
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun io.github.daiji256.showcase.feature.systemstyle.SystemStyleValues(
+  stable modifier: Modifier? = @static <expression>
+)
