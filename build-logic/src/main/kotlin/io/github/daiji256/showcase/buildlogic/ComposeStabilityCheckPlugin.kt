@@ -401,18 +401,18 @@ private fun tables(base: ComposeMetrics?, head: ComposeMetrics?): String = build
             head = head?.effectivelyStableClasses,
         ),
     )
+    appendLine(
+        tableRow(
+            type = "Total",
+            base = base?.totalClasses,
+            head = head?.totalClasses,
+        ),
+    )
     appendLine()
     appendLine("**Lambdas**:")
     appendLine()
     appendLine("| Type | Value | Diff |")
     appendLine("| :--- | ---: | ---: |")
-    appendLine(
-        tableRow(
-            type = "Total",
-            base = base?.totalLambdas,
-            head = head?.totalLambdas,
-        ),
-    )
     appendLine(
         tableRow(
             type = "Memoized",
