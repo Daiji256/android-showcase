@@ -92,16 +92,19 @@ abstract class ComposeStabilityCheckTask : DefaultTask() {
         val diffs = mutableListOf<String>()
         var totalAdded = 0
         var totalRemoved = 0
-        (baseReports.keys + headReports.keys).sorted().forEach { module ->
-            val head = headReports[module]
+        val modules = baseReports.keys + headReports.keys
+        modules.sorted().forEach { module ->
             val base = baseReports[module]
-            head?.sortedBy { it.name }?.forEach { headFile ->
-                val baseFile = base?.find { it.name == headFile.name }
-                val (diff, added, removed) = generateDiffWithStats(base = baseFile, head = headFile)
-                if (diff != null) {
-                    diffs += diff
-                    totalAdded += added
-                    totalRemoved += removed
+            val head = headReports[module]
+            val fileNames = base.orEmpty().map { it.name } + head.orEmpty().map { it.name }
+            fileNames.distinct().sorted().forEach { fileName ->
+                val baseFile = base?.find { it.name == fileName }
+                val headFile = head?.find { it.name == fileName }
+                val result = generateDiffWithStats(base = baseFile, head = headFile)
+                if (result != null) {
+                    diffs += result.diff
+                    totalAdded += result.added
+                    totalRemoved += result.removed
                 }
             }
         }
@@ -457,13 +460,13 @@ private fun tableRow(type: String, base: Int?, head: Int?): String {
     return "| $type | ${head ?: "-"} | $diffString |"
 }
 
-private data class DiffResult(val diff: String?, val added: Int, val removed: Int)
+private data class DiffResult(val diff: String, val added: Int, val removed: Int)
 
-private fun generateDiffWithStats(base: File?, head: File?): DiffResult {
+private fun generateDiffWithStats(base: File?, head: File?): DiffResult? {
     val baseLines = base?.readLines().orEmpty()
     val headLines = head?.readLines().orEmpty()
     val patch = DiffUtils.diff(baseLines, headLines)
-    if (patch.deltas.isEmpty()) return DiffResult(diff = null, added = 0, removed = 0)
+    if (patch.deltas.isEmpty()) return null
     return DiffResult(
         diff = UnifiedDiffUtils.generateUnifiedDiff(
             base?.name,
