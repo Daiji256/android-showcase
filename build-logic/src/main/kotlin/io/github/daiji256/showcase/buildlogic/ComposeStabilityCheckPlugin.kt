@@ -99,7 +99,7 @@ abstract class ComposeStabilityCheckTask : DefaultTask() {
             appendLine()
 
             appendLine("## Modules")
-            (moduleMetrics.keys + baseModuleMetrics.keys).sorted().distinct().forEach { module ->
+            (moduleMetrics.keys + baseModuleMetrics.keys).sorted().forEach { module ->
                 appendLine()
                 appendLine("### $module")
                 appendLine()
