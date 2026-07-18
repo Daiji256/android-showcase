@@ -6,6 +6,7 @@ build/
 captures/
 local.properties
 .kotlin
+.artifacts
 
 !/.idea/codeStyles
 /.idea/codeStyles/*
