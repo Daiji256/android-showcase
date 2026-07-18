@@ -35,31 +35,29 @@ jobs:
       - name: Copy GitHub Actions gradle.properties
         run: mkdir -p ~/.gradle ; cp .github/gradle.properties ~/.gradle/gradle.properties
 
-      - name: Download base metrics
+      - name: Download base compose-stability
         uses: daiji256/download-from-orphan-branch@d1bdd0b00dbb1dd7145324d93631a5a3226d715d # v1.0.0
         with:
           branch: ${{ needs.orphan-branch-name.outputs.base-report }}
           path: base
 
-      - name: Generate Compose Compiler Reports
+      - name: Generate head compose-stability
         run: |
-          ./gradlew assembleDebug \
-            -PenableComposeCompilerMetrics=true \
-            -PenableComposeCompilerReports=true
+          ./gradlew assembleDebug -PenableComposeStability=true
 
       - name: Generate Report
         run: |
           ./gradlew generateComposeStabilityCheck \
-            -Pbase=base/build/compose-compiler \
-            -Phead=build/compose-compiler \
+            -Pbase=base/build/compose-stability \
+            -Phead=build/compose-stability \
             -Poutput=build/compose-stability-check.md
 
-      - name: Upload head metrics
+      - name: Upload head compose-stability
         uses: daiji256/upload-to-orphan-branch@8d353234c31aaf2134dc6081b863fcd876fcb2d0 # v1.0.0
         with:
           branch: ${{ needs.orphan-branch-name.outputs.head-report }}
           overwrite: true
-          path: "**/build/compose-compiler/**"
+          path: "**/build/compose-stability/**"
 
       - name: Post Report Comment
         env:
@@ -110,19 +108,17 @@ jobs:
         if: ${{ !cancelled() && success() && steps.check-base-report-branch.outputs.exists == 'false' }}
         run: mkdir -p ~/.gradle ; cp .github/gradle.properties ~/.gradle/gradle.properties
 
-      - name: Generate base metrics
+      - name: Generate base compose-stability
         if: ${{ !cancelled() && success() && steps.check-base-report-branch.outputs.exists == 'false' }}
         run: |
-          ./gradlew assembleDebug \
-            -PenableComposeCompilerMetrics=true \
-            -PenableComposeCompilerReports=true
+          ./gradlew assembleDebug -PenableComposeStability=true
 
-      - name: Upload base metrics
+      - name: Upload base compose-stability
         if: ${{ !cancelled() && success() && steps.check-base-report-branch.outputs.exists == 'false' }}
         uses: daiji256/upload-to-orphan-branch@8d353234c31aaf2134dc6081b863fcd876fcb2d0 # v1.0.0
         with:
           branch: ${{ needs.orphan-branch-name.outputs.base-report }}
-          path: "**/build/compose-compiler/**"
+          path: "**/build/compose-stability/**"
 
   orphan-branch-name:
     runs-on: ubuntu-latest
