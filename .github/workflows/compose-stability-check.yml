@@ -1,4 +1,4 @@
-name: compose-compiler-report
+name: compose-stability-check
 
 on: pull_request
 
@@ -11,7 +11,7 @@ defaults:
     shell: bash
 
 jobs:
-  compose-compiler-report:
+  compose-stability-check:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     needs: [cleanup, orphan-branch-name, ensure-base-report]
@@ -47,9 +47,9 @@ jobs:
             -PenableComposeCompilerMetrics=true \
             -PenableComposeCompilerReports=true
 
-      - name: Generate Summary Report
+      - name: Generate Report
         run: |
-          ./gradlew generateComposeCompilerReport \
+          ./gradlew generateComposeStabilityCheck \
             -PbaseMetricsDir=base/build/compose-compiler/metrics \
             -PbaseReportsDir=base/build/compose-compiler/reports
 
@@ -65,8 +65,8 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PR_NUMBER: ${{ github.event.pull_request.number }}
         run: |
-          report="<!-- compose-compiler-report -->"$'\n'
-          report+=$(cat "build/compose-compiler-report.md")
+          report="<!-- compose-stability-check -->"$'\n'
+          report+=$(cat "build/compose-stability-check.md")
           gh pr comment "$PR_NUMBER" --body "$report"
 
   ensure-base-report:
@@ -160,8 +160,8 @@ jobs:
           BASE_FILES_HASH: ${{ steps.base.outputs.hash }}
           HEAD_FILES_HASH: ${{ steps.head.outputs.hash }}
         run: |
-          echo "base=_compose_compiler_report_${BASE_FILES_HASH}" >> "$GITHUB_OUTPUT"
-          echo "head=_compose_compiler_report_${HEAD_FILES_HASH}" >> "$GITHUB_OUTPUT"
+          echo "base=_compose_stability_check_${BASE_FILES_HASH}" >> "$GITHUB_OUTPUT"
+          echo "head=_compose_stability_check_${HEAD_FILES_HASH}" >> "$GITHUB_OUTPUT"
 
   cleanup:
     runs-on: ubuntu-latest
@@ -179,7 +179,7 @@ jobs:
       - name: Delete outdated orphan branches
         uses: daiji256/delete-orphan-branch@4369ee37e443cb638898ac6ad471eb84be4a0da9 # v1.1.0
         with:
-          branch-regex: ^_compose_compiler_report_.*
+          branch-regex: ^_compose_stability_check_.*
           older-than-seconds: 1209600 # 14 days
 
       - name: Delete outdated report comments
@@ -192,7 +192,7 @@ jobs:
             jq -r '
               .[]
               | select(.user.login == "github-actions[bot]")
-              | select(.body | contains("<!-- compose-compiler-report -->"))
+              | select(.body | contains("<!-- compose-stability-check -->"))
               | .id'
           )
           for comment_id in $comment_ids; do

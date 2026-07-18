@@ -19,12 +19,12 @@ import org.gradle.api.tasks.TaskAction
 import java.io.File
 
 @Suppress("unused")
-class ComposeCompilerReportPlugin : Plugin<Project> {
+class ComposeStabilityCheckPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {
-            tasks.register("generateComposeCompilerReport", ComposeCompilerReportTask::class.java) {
+            tasks.register("generateComposeStabilityCheck", ComposeStabilityCheckTask::class.java) {
                 group = "verification"
-                description = "Generates compose compiler report"
+                description = "Generates compose stability check report"
                 metricsDir.set(rootProject.layout.buildDirectory.dir("compose-compiler/metrics"))
                 reportsDir.set(rootProject.layout.buildDirectory.dir("compose-compiler/reports"))
                 val baseMetricsDirProperty = project.findProperty("baseMetricsDir") as? String
@@ -39,13 +39,13 @@ class ComposeCompilerReportPlugin : Plugin<Project> {
                         rootProject.layout.projectDirectory.dir(baseReportsDirProperty),
                     )
                 }
-                reportFile.set(rootProject.layout.buildDirectory.file("compose-compiler-report.md"))
+                reportFile.set(rootProject.layout.buildDirectory.file("compose-stability-check.md"))
             }
         }
     }
 }
 
-abstract class ComposeCompilerReportTask : DefaultTask() {
+abstract class ComposeStabilityCheckTask : DefaultTask() {
     @get:InputDirectory
     abstract val metricsDir: DirectoryProperty
 
@@ -95,7 +95,7 @@ abstract class ComposeCompilerReportTask : DefaultTask() {
         }
 
         val report = buildString {
-            appendLine("# Compose Compiler Report")
+            appendLine("# Compose Stability Check Report")
             appendLine()
             appendLine("## Total")
             appendLine()

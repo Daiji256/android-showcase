@@ -70,7 +70,7 @@ roborazzi = { id = "io.github.takahirom.roborazzi", version.ref = "roborazzi" }
 buildlogic-android-application = { id = "buildlogic.android.application", version = "unspecified" }
 buildlogic-android-library = { id = "buildlogic.android.library", version = "unspecified" }
 buildlogic-compose = { id = "buildlogic.compose", version = "unspecified" }
-buildlogic-compose-compiler-report = { id = "buildlogic.compose.compiler.report", version = "unspecified" }
+buildlogic-compose-stability-check = { id = "buildlogic.compose.stability.check", version = "unspecified" }
 buildlogic-dependencies = { id = "buildlogic.dependencies", version = "unspecified" }
 buildlogic-robolectric = { id = "buildlogic.robolectric", version = "unspecified" }
 buildlogic-roborazzi = { id = "buildlogic.roborazzi", version = "unspecified" }

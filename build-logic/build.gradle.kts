@@ -37,10 +37,10 @@ gradlePlugin {
             id = "buildlogic.compose"
             implementationClass = "io.github.daiji256.showcase.buildlogic.ComposePlugin"
         }
-        register("compose.compiler.report") {
-            id = "buildlogic.compose.compiler.report"
+        register("compose.stability.check") {
+            id = "buildlogic.compose.stability.check"
             implementationClass =
-                "io.github.daiji256.showcase.buildlogic.ComposeCompilerReportPlugin"
+                "io.github.daiji256.showcase.buildlogic.ComposeStabilityCheckPlugin"
         }
         register("dependencies") {
             id = "buildlogic.dependencies"
