@@ -13,7 +13,6 @@ import org.gradle.api.Project
 import org.gradle.api.file.DirectoryProperty
 import org.gradle.api.file.RegularFileProperty
 import org.gradle.api.tasks.InputDirectory
-import org.gradle.api.tasks.Optional
 import org.gradle.api.tasks.OutputFile
 import org.gradle.api.tasks.TaskAction
 import java.io.File
@@ -25,21 +24,17 @@ class ComposeStabilityCheckPlugin : Plugin<Project> {
             tasks.register("generateComposeStabilityCheck", ComposeStabilityCheckTask::class.java) {
                 group = "verification"
                 description = "Generates compose stability check report"
-                metricsDir.set(rootProject.layout.buildDirectory.dir("compose-compiler/metrics"))
-                reportsDir.set(rootProject.layout.buildDirectory.dir("compose-compiler/reports"))
-                val baseMetricsDirProperty = project.findProperty("baseMetricsDir") as? String
-                val baseReportsDirProperty = project.findProperty("baseReportsDir") as? String
-                if (baseMetricsDirProperty != null) {
-                    baseMetricsDir.set(
-                        rootProject.layout.projectDirectory.dir(baseMetricsDirProperty),
-                    )
-                }
-                if (baseReportsDirProperty != null) {
-                    baseReportsDir.set(
-                        rootProject.layout.projectDirectory.dir(baseReportsDirProperty),
-                    )
-                }
-                reportFile.set(rootProject.layout.buildDirectory.file("compose-stability-check.md"))
+
+                val headProperty = providers.gradleProperty("head").orNull
+                    ?: error("-Phead is required")
+                val baseProperty = providers.gradleProperty("base").orNull
+                    ?: error("-Pbase is required")
+                val outputProperty = providers.gradleProperty("output").orNull
+                    ?: error("-Poutput is required")
+
+                headDir.set(rootProject.layout.projectDirectory.dir(headProperty))
+                baseDir.set(rootProject.layout.projectDirectory.dir(baseProperty))
+                outputFile.set(rootProject.layout.projectDirectory.file(outputProperty))
             }
         }
     }
@@ -47,51 +42,56 @@ class ComposeStabilityCheckPlugin : Plugin<Project> {
 
 abstract class ComposeStabilityCheckTask : DefaultTask() {
     @get:InputDirectory
-    abstract val metricsDir: DirectoryProperty
+    abstract val headDir: DirectoryProperty
 
     @get:InputDirectory
-    abstract val reportsDir: DirectoryProperty
-
-    @get:InputDirectory
-    @get:Optional
-    abstract val baseMetricsDir: DirectoryProperty
-
-    @get:InputDirectory
-    @get:Optional
-    abstract val baseReportsDir: DirectoryProperty
+    abstract val baseDir: DirectoryProperty
 
     @get:OutputFile
-    abstract val reportFile: RegularFileProperty
+    abstract val outputFile: RegularFileProperty
 
     @TaskAction
     fun generate() {
-        val moduleMetrics = metricsDir
-            .asFileTree
-            .matching { include("**/*.json") }
-            .files
-            .associate { it.parentFile.parentFile.name to decodeMetrics(it.readText()) }
-        val moduleReports = reportsDir
-            .asFileTree
-            .matching { include("**/*.txt") }
-            .files
-            .groupBy { it.parentFile.name }
-        val baseModuleMetrics = if (baseMetricsDir.isPresent) {
-            baseMetricsDir
-                .asFileTree
-                .matching { include("**/*.json") }
-                .files
+        val headDirFile = headDir.get().asFile
+        val baseDirFile = baseDir.get().asFile
+
+        val headMetricsDir = File(headDirFile, "metrics")
+        val headReportsDir = File(headDirFile, "reports")
+        val baseMetricsDir = File(baseDirFile, "metrics")
+        val baseReportsDir = File(baseDirFile, "reports")
+
+        val moduleMetrics = if (headMetricsDir.exists()) {
+            headMetricsDir
+                .walkBottomUp()
+                .filter { it.extension == "json" }
                 .associate { it.parentFile.parentFile.name to decodeMetrics(it.readText()) }
         } else {
-            null
+            emptyMap()
         }
-        val baseModuleReports = if (baseReportsDir.isPresent) {
-            baseReportsDir
-                .asFileTree
-                .matching { include("**/*.txt") }
-                .files
+        val moduleReports = if (headReportsDir.exists()) {
+            headReportsDir
+                .walkBottomUp()
+                .filter { it.extension == "txt" }
                 .groupBy { it.parentFile.name }
         } else {
-            null
+            emptyMap()
+        }
+
+        val baseModuleMetrics = if (baseMetricsDir.exists()) {
+            baseMetricsDir
+                .walkBottomUp()
+                .filter { it.extension == "json" }
+                .associate { it.parentFile.parentFile.name to decodeMetrics(it.readText()) }
+        } else {
+            emptyMap()
+        }
+        val baseModuleReports = if (baseReportsDir.exists()) {
+            baseReportsDir
+                .walkBottomUp()
+                .filter { it.extension == "txt" }
+                .groupBy { it.parentFile.name }
+        } else {
+            emptyMap()
         }
 
         val report = buildString {
@@ -104,7 +104,7 @@ abstract class ComposeStabilityCheckTask : DefaultTask() {
             appendLine(
                 tables(
                     metrics = moduleMetrics.values.sum(),
-                    baseMetrics = baseModuleMetrics?.values?.sum(),
+                    baseMetrics = baseModuleMetrics.values.takeIf { it.isNotEmpty() }?.sum(),
                 ),
             )
             appendLine()
@@ -112,7 +112,7 @@ abstract class ComposeStabilityCheckTask : DefaultTask() {
             appendLine()
 
             appendLine("## Modules")
-            (moduleMetrics.keys + (baseModuleMetrics?.keys.orEmpty())).sorted().forEach { module ->
+            (moduleMetrics.keys + baseModuleMetrics.keys).sorted().distinct().forEach { module ->
                 appendLine()
                 appendLine("### $module")
                 appendLine()
@@ -121,12 +121,12 @@ abstract class ComposeStabilityCheckTask : DefaultTask() {
                 appendLine(
                     tables(
                         metrics = moduleMetrics[module],
-                        baseMetrics = baseModuleMetrics?.get(module),
+                        baseMetrics = baseModuleMetrics[module],
                     ),
                 )
                 appendLine()
                 val reports = moduleReports[module]
-                val baseReports = baseModuleReports?.get(module)
+                val baseReports = baseModuleReports[module]
                 reports?.sortedBy { it.name }?.forEach { reportFile ->
                     val baseReportFile = baseReports?.find { it.name == reportFile.name }
                     val diff = generateDiff(baseFile = baseReportFile, headFile = reportFile)
@@ -144,7 +144,7 @@ abstract class ComposeStabilityCheckTask : DefaultTask() {
             }
         }
 
-        reportFile.get().asFile.writeText(report)
+        outputFile.get().asFile.writeText(report)
     }
 }
 

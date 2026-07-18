@@ -50,8 +50,9 @@ jobs:
       - name: Generate Report
         run: |
           ./gradlew generateComposeStabilityCheck \
-            -PbaseMetricsDir=base/build/compose-compiler/metrics \
-            -PbaseReportsDir=base/build/compose-compiler/reports
+            -Phead=build/compose-compiler \
+            -Pbase=base/build/compose-compiler \
+            -Poutput=build/compose-stability-check.md
 
       - name: Upload head metrics
         uses: daiji256/upload-to-orphan-branch@8d353234c31aaf2134dc6081b863fcd876fcb2d0 # v1.0.0
