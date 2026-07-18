@@ -25,15 +25,15 @@ class ComposeStabilityCheckPlugin : Plugin<Project> {
                 group = "verification"
                 description = "Generates compose stability check report"
 
-                val headProperty = providers.gradleProperty("head").orNull
-                    ?: error("-Phead is required")
                 val baseProperty = providers.gradleProperty("base").orNull
                     ?: error("-Pbase is required")
+                val headProperty = providers.gradleProperty("head").orNull
+                    ?: error("-Phead is required")
                 val outputProperty = providers.gradleProperty("output").orNull
                     ?: error("-Poutput is required")
 
-                headDir.set(rootProject.layout.projectDirectory.dir(headProperty))
                 baseDir.set(rootProject.layout.projectDirectory.dir(baseProperty))
+                headDir.set(rootProject.layout.projectDirectory.dir(headProperty))
                 outputFile.set(rootProject.layout.projectDirectory.file(outputProperty))
             }
         }
@@ -42,34 +42,23 @@ class ComposeStabilityCheckPlugin : Plugin<Project> {
 
 abstract class ComposeStabilityCheckTask : DefaultTask() {
     @get:InputDirectory
-    abstract val headDir: DirectoryProperty
+    abstract val baseDir: DirectoryProperty
 
     @get:InputDirectory
-    abstract val baseDir: DirectoryProperty
+    abstract val headDir: DirectoryProperty
 
     @get:OutputFile
     abstract val outputFile: RegularFileProperty
 
     @TaskAction
     fun generate() {
-        val headDirFile = headDir.get().asFile
         val baseDirFile = baseDir.get().asFile
+        val headDirFile = headDir.get().asFile
 
-        val headMetricsDir = File(headDirFile, "metrics")
-        val headReportsDir = File(headDirFile, "reports")
         val baseMetricsDir = File(baseDirFile, "metrics")
         val baseReportsDir = File(baseDirFile, "reports")
-
-        val moduleMetrics =
-            headMetricsDir
-                .walkBottomUp()
-                .filter { it.extension == "json" }
-                .associate { it.parentFile.parentFile.name to decodeMetrics(it.readText()) }
-        val moduleReports =
-            headReportsDir
-                .walkBottomUp()
-                .filter { it.extension == "txt" }
-                .groupBy { it.parentFile.name }
+        val headMetricsDir = File(headDirFile, "metrics")
+        val headReportsDir = File(headDirFile, "reports")
 
         val baseModuleMetrics =
             baseMetricsDir
@@ -78,6 +67,16 @@ abstract class ComposeStabilityCheckTask : DefaultTask() {
                 .associate { it.parentFile.parentFile.name to decodeMetrics(it.readText()) }
         val baseModuleReports =
             baseReportsDir
+                .walkBottomUp()
+                .filter { it.extension == "txt" }
+                .groupBy { it.parentFile.name }
+        val moduleMetrics =
+            headMetricsDir
+                .walkBottomUp()
+                .filter { it.extension == "json" }
+                .associate { it.parentFile.parentFile.name to decodeMetrics(it.readText()) }
+        val moduleReports =
+            headReportsDir
                 .walkBottomUp()
                 .filter { it.extension == "txt" }
                 .groupBy { it.parentFile.name }
@@ -91,8 +90,8 @@ abstract class ComposeStabilityCheckTask : DefaultTask() {
             appendLine()
             appendLine(
                 tables(
-                    metrics = moduleMetrics.values.sum(),
-                    baseMetrics = baseModuleMetrics.values.takeIf { it.isNotEmpty() }?.sum(),
+                    base = baseModuleMetrics.values.takeIf { it.isNotEmpty() }?.sum(),
+                    head = moduleMetrics.values.sum(),
                 ),
             )
             appendLine()
@@ -108,8 +107,8 @@ abstract class ComposeStabilityCheckTask : DefaultTask() {
                 appendLine()
                 appendLine(
                     tables(
-                        metrics = moduleMetrics[module],
-                        baseMetrics = baseModuleMetrics[module],
+                        base = baseModuleMetrics[module],
+                        head = moduleMetrics[module],
                     ),
                 )
                 appendLine()
@@ -117,7 +116,7 @@ abstract class ComposeStabilityCheckTask : DefaultTask() {
                 val baseReports = baseModuleReports[module]
                 reports?.sortedBy { it.name }?.forEach { reportFile ->
                     val baseReportFile = baseReports?.find { it.name == reportFile.name }
-                    val diff = generateDiff(baseFile = baseReportFile, headFile = reportFile)
+                    val diff = generateDiff(base = baseReportFile, head = reportFile)
                     if (diff != null) {
                         appendLine("#### Diff: ${reportFile.name}")
                         appendLine()
@@ -268,7 +267,7 @@ private fun Collection<ComposeMetrics>.sum(): ComposeMetrics {
     )
 }
 
-private fun tables(metrics: ComposeMetrics?, baseMetrics: ComposeMetrics?): String = buildString {
+private fun tables(base: ComposeMetrics?, head: ComposeMetrics?): String = buildString {
     appendLine("#### Composables")
     appendLine()
     appendLine("| Type | Value | Diff |")
@@ -276,29 +275,29 @@ private fun tables(metrics: ComposeMetrics?, baseMetrics: ComposeMetrics?): Stri
     appendLine(
         tableRow(
             type = "Skippable",
-            value = metrics?.skippableComposables,
-            baseValue = baseMetrics?.skippableComposables,
+            base = base?.skippableComposables,
+            head = head?.skippableComposables,
         ),
     )
     appendLine(
         tableRow(
             type = "Restartable",
-            value = metrics?.restartableComposables,
-            baseValue = baseMetrics?.restartableComposables,
+            base = base?.restartableComposables,
+            head = head?.restartableComposables,
         ),
     )
     appendLine(
         tableRow(
             type = "Readonly",
-            value = metrics?.readonlyComposables,
-            baseValue = baseMetrics?.readonlyComposables,
+            base = base?.readonlyComposables,
+            head = head?.readonlyComposables,
         ),
     )
     appendLine(
         tableRow(
             type = "Total",
-            value = metrics?.totalComposables,
-            baseValue = baseMetrics?.totalComposables,
+            base = base?.totalComposables,
+            head = head?.totalComposables,
         ),
     )
     appendLine()
@@ -309,15 +308,15 @@ private fun tables(metrics: ComposeMetrics?, baseMetrics: ComposeMetrics?): Stri
     appendLine(
         tableRow(
             type = "Restart",
-            value = metrics?.restartGroups,
-            baseValue = baseMetrics?.restartGroups,
+            base = base?.restartGroups,
+            head = head?.restartGroups,
         ),
     )
     appendLine(
         tableRow(
             type = "Total",
-            value = metrics?.totalGroups,
-            baseValue = baseMetrics?.totalGroups,
+            base = base?.totalGroups,
+            head = head?.totalGroups,
         ),
     )
     appendLine()
@@ -328,43 +327,43 @@ private fun tables(metrics: ComposeMetrics?, baseMetrics: ComposeMetrics?): Stri
     appendLine(
         tableRow(
             type = "Static",
-            value = metrics?.staticArguments,
-            baseValue = baseMetrics?.staticArguments,
+            base = base?.staticArguments,
+            head = head?.staticArguments,
         ),
     )
     appendLine(
         tableRow(
             type = "Certain",
-            value = metrics?.certainArguments,
-            baseValue = baseMetrics?.certainArguments,
+            base = base?.certainArguments,
+            head = head?.certainArguments,
         ),
     )
     appendLine(
         tableRow(
             type = "Known Stable",
-            value = metrics?.knownStableArguments,
-            baseValue = baseMetrics?.knownStableArguments,
+            base = base?.knownStableArguments,
+            head = head?.knownStableArguments,
         ),
     )
     appendLine(
         tableRow(
             type = "Known Unstable",
-            value = metrics?.knownUnstableArguments,
-            baseValue = baseMetrics?.knownUnstableArguments,
+            base = base?.knownUnstableArguments,
+            head = head?.knownUnstableArguments,
         ),
     )
     appendLine(
         tableRow(
             type = "Unknown Stable",
-            value = metrics?.unknownStableArguments,
-            baseValue = baseMetrics?.unknownStableArguments,
+            base = base?.unknownStableArguments,
+            head = head?.unknownStableArguments,
         ),
     )
     appendLine(
         tableRow(
             type = "Total",
-            value = metrics?.totalArguments,
-            baseValue = baseMetrics?.totalArguments,
+            base = base?.totalArguments,
+            head = head?.totalArguments,
         ),
     )
     appendLine()
@@ -375,36 +374,36 @@ private fun tables(metrics: ComposeMetrics?, baseMetrics: ComposeMetrics?): Stri
     appendLine(
         tableRow(
             type = "Marked Stable",
-            value = metrics?.markedStableClasses,
-            baseValue = baseMetrics?.markedStableClasses,
+            base = base?.markedStableClasses,
+            head = head?.markedStableClasses,
         ),
     )
     appendLine(
         tableRow(
             type = "Inferred Stable",
-            value = metrics?.inferredStableClasses,
-            baseValue = baseMetrics?.inferredStableClasses,
+            base = base?.inferredStableClasses,
+            head = head?.inferredStableClasses,
         ),
     )
     appendLine(
         tableRow(
             type = "Inferred Unstable",
-            value = metrics?.inferredUnstableClasses,
-            baseValue = baseMetrics?.inferredUnstableClasses,
+            base = base?.inferredUnstableClasses,
+            head = head?.inferredUnstableClasses,
         ),
     )
     appendLine(
         tableRow(
             type = "Inferred Uncertain",
-            value = metrics?.inferredUncertainClasses,
-            baseValue = baseMetrics?.inferredUncertainClasses,
+            base = base?.inferredUncertainClasses,
+            head = head?.inferredUncertainClasses,
         ),
     )
     appendLine(
         tableRow(
             type = "Effectively Stable",
-            value = metrics?.effectivelyStableClasses,
-            baseValue = baseMetrics?.effectivelyStableClasses,
+            base = base?.effectivelyStableClasses,
+            head = head?.effectivelyStableClasses,
         ),
     )
     appendLine()
@@ -415,58 +414,58 @@ private fun tables(metrics: ComposeMetrics?, baseMetrics: ComposeMetrics?): Stri
     appendLine(
         tableRow(
             type = "Total",
-            value = metrics?.totalLambdas,
-            baseValue = baseMetrics?.totalLambdas,
+            base = base?.totalLambdas,
+            head = head?.totalLambdas,
         ),
     )
     appendLine(
         tableRow(
             type = "Memoized",
-            value = metrics?.memoizedLambdas,
-            baseValue = baseMetrics?.memoizedLambdas,
+            base = base?.memoizedLambdas,
+            head = head?.memoizedLambdas,
         ),
     )
     appendLine(
         tableRow(
             type = "Singleton",
-            value = metrics?.singletonLambdas,
-            baseValue = baseMetrics?.singletonLambdas,
+            base = base?.singletonLambdas,
+            head = head?.singletonLambdas,
         ),
     )
     appendLine(
         tableRow(
             type = "Singleton Composable",
-            value = metrics?.singletonComposableLambdas,
-            baseValue = baseMetrics?.singletonComposableLambdas,
+            base = base?.singletonComposableLambdas,
+            head = head?.singletonComposableLambdas,
         ),
     )
     appendLine(
         tableRow(
             type = "Composable",
-            value = metrics?.composableLambdas,
-            baseValue = baseMetrics?.composableLambdas,
+            base = base?.composableLambdas,
+            head = head?.composableLambdas,
         ),
     )
     appendLine(
         tableRow(
             type = "Total",
-            value = metrics?.totalLambdas,
-            baseValue = baseMetrics?.totalLambdas,
+            base = base?.totalLambdas,
+            head = head?.totalLambdas,
         ),
     )
 }
 
-private fun tableRow(type: String, value: Int?, baseValue: Int?): String =
-    "| $type | ${value ?: "-"} | ${(value ?: 0) - (baseValue ?: 0)} |"
+private fun tableRow(type: String, base: Int?, head: Int?): String =
+    "| $type | ${head ?: "-"} | ${(head ?: 0) - (base ?: 0)} |"
 
-private fun generateDiff(baseFile: File?, headFile: File?): String? {
-    val headLines = headFile?.readLines().orEmpty()
-    val baseLines = baseFile?.readLines().orEmpty()
+private fun generateDiff(base: File?, head: File?): String? {
+    val baseLines = base?.readLines().orEmpty()
+    val headLines = head?.readLines().orEmpty()
     val patch = DiffUtils.diff(baseLines, headLines)
     if (patch.deltas.isEmpty()) return null
     return UnifiedDiffUtils.generateUnifiedDiff(
-        baseFile?.name,
-        headFile?.name,
+        base?.name,
+        head?.name,
         baseLines,
         patch,
         3,
