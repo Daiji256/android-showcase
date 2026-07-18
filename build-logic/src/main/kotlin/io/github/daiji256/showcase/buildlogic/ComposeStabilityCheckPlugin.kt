@@ -60,39 +60,27 @@ abstract class ComposeStabilityCheckTask : DefaultTask() {
         val baseMetricsDir = File(baseDirFile, "metrics")
         val baseReportsDir = File(baseDirFile, "reports")
 
-        val moduleMetrics = if (headMetricsDir.exists()) {
+        val moduleMetrics =
             headMetricsDir
                 .walkBottomUp()
                 .filter { it.extension == "json" }
                 .associate { it.parentFile.parentFile.name to decodeMetrics(it.readText()) }
-        } else {
-            emptyMap()
-        }
-        val moduleReports = if (headReportsDir.exists()) {
+        val moduleReports =
             headReportsDir
                 .walkBottomUp()
                 .filter { it.extension == "txt" }
                 .groupBy { it.parentFile.name }
-        } else {
-            emptyMap()
-        }
 
-        val baseModuleMetrics = if (baseMetricsDir.exists()) {
+        val baseModuleMetrics =
             baseMetricsDir
                 .walkBottomUp()
                 .filter { it.extension == "json" }
                 .associate { it.parentFile.parentFile.name to decodeMetrics(it.readText()) }
-        } else {
-            emptyMap()
-        }
-        val baseModuleReports = if (baseReportsDir.exists()) {
+        val baseModuleReports =
             baseReportsDir
                 .walkBottomUp()
                 .filter { it.extension == "txt" }
                 .groupBy { it.parentFile.name }
-        } else {
-            emptyMap()
-        }
 
         val report = buildString {
             appendLine("# Compose Stability Check Report")
