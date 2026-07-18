@@ -11,6 +11,7 @@ import org.gradle.api.Project
 import org.gradle.api.file.DirectoryProperty
 import org.gradle.api.file.RegularFileProperty
 import org.gradle.api.tasks.InputDirectory
+import org.gradle.api.tasks.Optional
 import org.gradle.api.tasks.OutputFile
 import org.gradle.api.tasks.TaskAction
 
@@ -22,6 +23,14 @@ class ComposeCompilerReportPlugin : Plugin<Project> {
                 group = "verification"
                 description = "Generates compose compiler report"
                 metricsDir.set(rootProject.layout.buildDirectory.dir("compose-metrics"))
+
+                val baseMetricsDirProperty = project.findProperty("baseMetricsDir")
+                if (baseMetricsDirProperty is String) {
+                    baseMetricsDir.set(
+                        rootProject.layout.projectDirectory.dir(baseMetricsDirProperty),
+                    )
+                }
+
                 reportFile.set(rootProject.layout.buildDirectory.file("compose-compiler-report.md"))
             }
         }
@@ -32,17 +41,35 @@ abstract class ComposeCompilerReportTask : DefaultTask() {
     @get:InputDirectory
     abstract val metricsDir: DirectoryProperty
 
+    @get:InputDirectory
+    @get:Optional
+    abstract val baseMetricsDir: DirectoryProperty
+
     @get:OutputFile
     abstract val reportFile: RegularFileProperty
 
     @TaskAction
     fun generate() {
-        val metricsFiles = metricsDir.asFileTree.matching { include("**/*.json") }.files
-        val moduleMetrics = metricsFiles.associate { file ->
-            val moduleName = file.parentFile.parentFile.name
-            val metrics = decodeMetrics(file.readText())
-            moduleName to metrics
+        val moduleMetrics = metricsDir
+            .asFileTree
+            .matching { include("**/*.json") }
+            .files
+            .associate { file ->
+                file.parentFile.parentFile.name to decodeMetrics(file.readText())
+            }
+
+        val baseModuleMetrics = if (baseMetricsDir.isPresent) {
+            baseMetricsDir
+                .asFileTree
+                .matching { include("**/*.json") }
+                .files
+                .associate { file ->
+                    file.parentFile.parentFile.name to decodeMetrics(file.readText())
+                }
+        } else {
+            null
         }
+
         val report = buildString {
             appendLine("# Compose Compiler Report")
             appendLine()
@@ -50,19 +77,30 @@ abstract class ComposeCompilerReportTask : DefaultTask() {
             appendLine()
             appendLine("<details><summary>Expand for details</summary>")
             appendLine()
-            appendLine(moduleMetrics.values.sum().toTablesMd())
+            appendLine(
+                tables(
+                    metrics = moduleMetrics.values.sum(),
+                    baseMetrics = baseModuleMetrics?.values?.sum(),
+                ),
+            )
             appendLine()
             appendLine("</details>")
             appendLine()
 
             appendLine("## Modules")
-            moduleMetrics.toList().sortedBy { (module, _) -> module }.forEach { (module, metrics) ->
+            val modules = (moduleMetrics.keys + (baseModuleMetrics?.keys ?: emptySet())).sorted()
+            modules.forEach { module ->
                 appendLine()
                 appendLine("### $module")
                 appendLine()
                 appendLine("<details><summary>Expand for details</summary>")
                 appendLine()
-                appendLine(metrics.toTablesMd())
+                appendLine(
+                    tables(
+                        metrics = moduleMetrics[module],
+                        baseMetrics = baseModuleMetrics?.get(module),
+                    ),
+                )
                 appendLine()
                 appendLine("</details>")
             }
@@ -204,54 +242,193 @@ private fun Collection<ComposeMetrics>.sum(): ComposeMetrics {
     )
 }
 
-private fun ComposeMetrics.toTablesMd(): String = buildString {
-    fun value(value: Int, total: Int) =
-        "$value (${if (total == 0) "-" else 100 * value / total}%)"
+private fun tables(metrics: ComposeMetrics?, baseMetrics: ComposeMetrics?): String = buildString {
     appendLine("#### Composables")
     appendLine()
-    appendLine("| Type | Value |")
-    appendLine("| :--- | ---: |")
-    appendLine("| Skippable | ${value(skippableComposables, totalComposables)} |")
-    appendLine("| Restartable | ${value(restartableComposables, totalComposables)} |")
-    appendLine("| Readonly | ${value(readonlyComposables, totalComposables)} |")
-    appendLine("| Total | $totalComposables |")
+    appendLine("| Type | Value | Diff |")
+    appendLine("| :--- | ---: | ---: |")
+    appendLine(
+        tableRow(
+            type = "Skippable",
+            value = metrics?.skippableComposables,
+            baseValue = baseMetrics?.skippableComposables,
+        ),
+    )
+    appendLine(
+        tableRow(
+            type = "Restartable",
+            value = metrics?.restartableComposables,
+            baseValue = baseMetrics?.restartableComposables,
+        ),
+    )
+    appendLine(
+        tableRow(
+            type = "Readonly",
+            value = metrics?.readonlyComposables,
+            baseValue = baseMetrics?.readonlyComposables,
+        ),
+    )
+    appendLine(
+        tableRow(
+            type = "Total",
+            value = metrics?.totalComposables,
+            baseValue = baseMetrics?.totalComposables,
+        ),
+    )
     appendLine()
     appendLine("#### Groups")
     appendLine()
-    appendLine("| Type | Value |")
-    appendLine("| :--- | ---: |")
-    appendLine("| Restart Groups | ${value(restartGroups, totalGroups)} |")
-    appendLine("| Total | $totalGroups |")
+    appendLine("| Type | Value | Diff |")
+    appendLine("| :--- | ---: | ---: |")
+    appendLine(
+        tableRow(
+            type = "Restart",
+            value = metrics?.restartGroups,
+            baseValue = baseMetrics?.restartGroups,
+        ),
+    )
+    appendLine(
+        tableRow(
+            type = "Total",
+            value = metrics?.totalGroups,
+            baseValue = baseMetrics?.totalGroups,
+        ),
+    )
     appendLine()
     appendLine("#### Arguments")
     appendLine()
-    appendLine("| Type | Value |")
-    appendLine("| :--- | ---: |")
-    appendLine("| Static | ${value(staticArguments, totalArguments)} |")
-    appendLine("| Certain | ${value(certainArguments, totalArguments)} |")
-    appendLine("| Known Stable | ${value(knownStableArguments, totalArguments)} |")
-    appendLine("| Known Unstable | ${value(knownUnstableArguments, totalArguments)} |")
-    appendLine("| Unknown Stable | ${value(unknownStableArguments, totalArguments)} |")
-    appendLine("| Total | $totalArguments |")
+    appendLine("| Type | Value | Diff |")
+    appendLine("| :--- | ---: | ---: |")
+    appendLine(
+        tableRow(
+            type = "Static",
+            value = metrics?.staticArguments,
+            baseValue = baseMetrics?.staticArguments,
+        ),
+    )
+    appendLine(
+        tableRow(
+            type = "Certain",
+            value = metrics?.certainArguments,
+            baseValue = baseMetrics?.certainArguments,
+        ),
+    )
+    appendLine(
+        tableRow(
+            type = "Known Stable",
+            value = metrics?.knownStableArguments,
+            baseValue = baseMetrics?.knownStableArguments,
+        ),
+    )
+    appendLine(
+        tableRow(
+            type = "Known Unstable",
+            value = metrics?.knownUnstableArguments,
+            baseValue = baseMetrics?.knownUnstableArguments,
+        ),
+    )
+    appendLine(
+        tableRow(
+            type = "Unknown Stable",
+            value = metrics?.unknownStableArguments,
+            baseValue = baseMetrics?.unknownStableArguments,
+        ),
+    )
+    appendLine(
+        tableRow(
+            type = "Total",
+            value = metrics?.totalArguments,
+            baseValue = baseMetrics?.totalArguments,
+        ),
+    )
     appendLine()
     appendLine("#### Classes")
     appendLine()
-    appendLine("| Type | Value |")
-    appendLine("| :--- | ---: |")
-    appendLine("| Marked Stable | ${value(markedStableClasses, totalClasses)} |")
-    appendLine("| Inferred Stable | ${value(inferredStableClasses, totalClasses)} |")
-    appendLine("| Inferred Unstable | ${value(inferredUnstableClasses, totalClasses)} |")
-    appendLine("| Inferred Uncertain | ${value(inferredUncertainClasses, totalClasses)} |")
-    appendLine("| Effectively Stable | ${value(effectivelyStableClasses, totalClasses)} |")
-    appendLine("| Total | $totalClasses |")
+    appendLine("| Type | Value | Diff |")
+    appendLine("| :--- | ---: | ---: |")
+    appendLine(
+        tableRow(
+            type = "Marked Stable",
+            value = metrics?.markedStableClasses,
+            baseValue = baseMetrics?.markedStableClasses,
+        ),
+    )
+    appendLine(
+        tableRow(
+            type = "Inferred Stable",
+            value = metrics?.inferredStableClasses,
+            baseValue = baseMetrics?.inferredStableClasses,
+        ),
+    )
+    appendLine(
+        tableRow(
+            type = "Inferred Unstable",
+            value = metrics?.inferredUnstableClasses,
+            baseValue = baseMetrics?.inferredUnstableClasses,
+        ),
+    )
+    appendLine(
+        tableRow(
+            type = "Inferred Uncertain",
+            value = metrics?.inferredUncertainClasses,
+            baseValue = baseMetrics?.inferredUncertainClasses,
+        ),
+    )
+    appendLine(
+        tableRow(
+            type = "Effectively Stable",
+            value = metrics?.effectivelyStableClasses,
+            baseValue = baseMetrics?.effectivelyStableClasses,
+        ),
+    )
     appendLine()
     appendLine("#### Lambdas")
     appendLine()
-    appendLine("| Type | Value |")
-    appendLine("| :--- | ---: |")
-    appendLine("| Memoized | ${value(memoizedLambdas, totalLambdas)} |")
-    appendLine("| Singleton | ${value(singletonLambdas, totalLambdas)} |")
-    appendLine("| Singleton Composable | ${value(singletonComposableLambdas, totalLambdas)} |")
-    appendLine("| Composable | ${value(composableLambdas, totalLambdas)} |")
-    appendLine("| Total | $totalLambdas |")
+    appendLine("| Type | Value | Diff |")
+    appendLine("| :--- | ---: | ---: |")
+    appendLine(
+        tableRow(
+            type = "Total",
+            value = metrics?.totalLambdas,
+            baseValue = baseMetrics?.totalLambdas,
+        ),
+    )
+    appendLine(
+        tableRow(
+            type = "Memoized",
+            value = metrics?.memoizedLambdas,
+            baseValue = baseMetrics?.memoizedLambdas,
+        ),
+    )
+    appendLine(
+        tableRow(
+            type = "Singleton",
+            value = metrics?.singletonLambdas,
+            baseValue = baseMetrics?.singletonLambdas,
+        ),
+    )
+    appendLine(
+        tableRow(
+            type = "Singleton Composable",
+            value = metrics?.singletonComposableLambdas,
+            baseValue = baseMetrics?.singletonComposableLambdas,
+        ),
+    )
+    appendLine(
+        tableRow(
+            type = "Composable",
+            value = metrics?.composableLambdas,
+            baseValue = baseMetrics?.composableLambdas,
+        ),
+    )
+    appendLine(
+        tableRow(
+            type = "Total",
+            value = metrics?.totalLambdas,
+            baseValue = baseMetrics?.totalLambdas,
+        ),
+    )
 }
+
+private fun tableRow(type: String, value: Int?, baseValue: Int?): String =
+    "| $type | ${value ?: "-"} | ${(value ?: 0) - (baseValue ?: 0)} |"
