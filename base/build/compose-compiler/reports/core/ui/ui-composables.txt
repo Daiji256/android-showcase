@@ -1,0 +1,66 @@
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun io.github.daiji256.showcase.core.ui.component.NavigateUpButton(
+  stable onClick: Function0<Unit>
+  stable modifier: Modifier? = @static <expression>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun io.github.daiji256.showcase.core.ui.component.NavigateUpButtonPreview()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun io.github.daiji256.showcase.core.ui.document.Document(
+  stable title: String
+  stable markdown: String
+  stable onNavigateUpClick: Function0<Unit>
+  stable modifier: Modifier? = @static <expression>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable, [androidx.compose.ui.UiComposable]]") fun io.github.daiji256.showcase.core.ui.document.Document(
+  stable title: String
+  stable onNavigateUpClick: Function0<Unit>
+  stable modifier: Modifier? = @static <expression>
+  stable content: @[ExtensionFunctionType] Function3<ColumnScope, Composer, Int, Unit>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun io.github.daiji256.showcase.core.ui.document.DocumentMarkdownPreview()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun io.github.daiji256.showcase.core.ui.document.DocumentContentPreview()
+abstract fun io.github.daiji256.showcase.core.ui.feature.FeatureSummary.<get-title>(
+  <this>: FeatureSummary
+): String
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun io.github.daiji256.showcase.core.ui.markdown.Markdown(
+  stable markdown: String
+  stable modifier: Modifier? = @static <expression>
+  stable style: TextStyle? = @dynamic <expression>
+  stable markdownStyle: MarkdownStyle? = @dynamic <expression>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun io.github.daiji256.showcase.core.ui.markdown.CodeBlock(
+  stable block: Code
+  stable style: TextStyle
+  stable markdownStyle: MarkdownStyle
+  stable modifier: Modifier? = @static <expression>
+)
+fun io.github.daiji256.showcase.core.ui.markdown.MarkdownStyle.Companion.<get-Default>(
+  unused stable <this>: Companion
+): MarkdownStyle
+fun io.github.daiji256.showcase.core.ui.markdown.CodeBlockStyle.Companion.<get-Default>(
+  unused stable <this>: Companion
+): CodeBlockStyle
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun io.github.daiji256.showcase.core.ui.markdown.MarkdownPreview()
+fun io.github.daiji256.showcase.core.ui.navigation.rememberNavState(
+  start: NavKey
+  pending: List<NavKey>? = @static <expression>
+): NavState
+fun io.github.daiji256.showcase.core.ui.navigation.toDecoratedNavEntries(
+  <this>: NavState
+  entryDecorators: List<@[JvmSuppressWildcards(suppress = <null>)] NavEntryDecorator<NavKey>>? = @static <expression>
+  stable entryProvider: Function1<NavKey, NavEntry<NavKey>>
+): List<NavEntry<NavKey>>
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun io.github.daiji256.showcase.core.ui.showcase.ShowcaseScreen(
+  features: ImmutableList<FeatureSummary>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun io.github.daiji256.showcase.core.ui.showcase.ShowcaseScreen(
+  features: ImmutableList<FeatureSummary>
+  stable onFeatureClick: @[ExtensionFunctionType] Function1<FeatureSummary, Unit>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun io.github.daiji256.showcase.core.ui.showcase.FeatureItem(
+  feature: FeatureSummary
+  stable onClick: Function0<Unit>
+  stable modifier: Modifier? = @static <expression>
+)
+open fun io.github.daiji256.showcase.core.ui.showcase.ComposableSingletons$ShowcaseScreenKt.lambda$-879437203.<anonymous>.<anonymous>.<anonymous>.<no name provided>.<get-title>(
+  <this>: <no name provided>
+): String
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun io.github.daiji256.showcase.core.ui.showcase.ShowcaseScreenPreview()
