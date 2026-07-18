@@ -19,6 +19,7 @@ dependencies {
     compileOnly(libs.kotlin.gradlePlugin)
     compileOnly(libs.compose.gradlePlugin)
     compileOnly(libs.roborazzi.gradlePlugin)
+    implementation(libs.java.diff.utils)
     implementation(libs.kotlinx.serialization.json)
 }
 
@@ -35,6 +36,11 @@ gradlePlugin {
         register("compose") {
             id = "buildlogic.compose"
             implementationClass = "io.github.daiji256.showcase.buildlogic.ComposePlugin"
+        }
+        register("compose.stability.check") {
+            id = "buildlogic.compose.stability.check"
+            implementationClass =
+                "io.github.daiji256.showcase.buildlogic.ComposeStabilityCheckPlugin"
         }
         register("dependencies") {
             id = "buildlogic.dependencies"

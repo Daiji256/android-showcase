@@ -1,0 +1,201 @@
+name: compose-stability-check
+
+on: pull_request
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  compose-stability-check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    needs: [cleanup, orphan-branch-name, ensure-base-report]
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+
+      - name: Setup JDK
+        uses: actions/setup-java@0f481fcb613427c0f801b606911222b5b6f3083a # v5.5.0
+        with:
+          distribution: temurin
+          java-version: 25
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@3f131e8634966bd73d06cc69884922b02e6faf92 # v6.2.0
+
+      - name: Copy GitHub Actions gradle.properties
+        run: mkdir -p ~/.gradle ; cp .github/gradle.properties ~/.gradle/gradle.properties
+
+      - name: Download base metrics
+        uses: daiji256/download-from-orphan-branch@d1bdd0b00dbb1dd7145324d93631a5a3226d715d # v1.0.0
+        with:
+          branch: ${{ needs.orphan-branch-name.outputs.base-report }}
+          path: base
+
+      - name: Generate Compose Compiler Reports
+        run: |
+          ./gradlew assembleDebug \
+            -PenableComposeCompilerMetrics=true \
+            -PenableComposeCompilerReports=true
+
+      - name: Generate Report
+        run: |
+          ./gradlew generateComposeStabilityCheck \
+            -Pbase=base/build/compose-compiler \
+            -Phead=build/compose-compiler \
+            -Poutput=build/compose-stability-check.md
+
+      - name: Upload head metrics
+        uses: daiji256/upload-to-orphan-branch@8d353234c31aaf2134dc6081b863fcd876fcb2d0 # v1.0.0
+        with:
+          branch: ${{ needs.orphan-branch-name.outputs.head-report }}
+          overwrite: true
+          path: "**/build/compose-compiler/**"
+
+      - name: Post Report Comment
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: |
+          report="<!-- compose-stability-check -->"$'\n'
+          report+=$(cat "build/compose-stability-check.md")
+          gh pr comment "$PR_NUMBER" --body "$report"
+
+  ensure-base-report:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    needs: [cleanup, orphan-branch-name]
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout base (fetch all)
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        with:
+          ref: ${{ github.event.pull_request.base.sha }}
+          fetch-depth: 0
+
+      - name: Check if base report branch exists
+        id: check-base-report-branch
+        env:
+          BRANCH: ${{ needs.orphan-branch-name.outputs.base-report }}
+        run: |
+          if git show-ref --verify --quiet "refs/remotes/origin/${BRANCH}"; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Setup JDK
+        if: ${{ !cancelled() && success() && steps.check-base-report-branch.outputs.exists == 'false' }}
+        uses: actions/setup-java@0f481fcb613427c0f801b606911222b5b6f3083a # v5.5.0
+        with:
+          distribution: temurin
+          java-version: 25
+
+      - name: Setup Gradle
+        if: ${{ !cancelled() && success() && steps.check-base-report-branch.outputs.exists == 'false' }}
+        uses: gradle/actions/setup-gradle@3f131e8634966bd73d06cc69884922b02e6faf92 # v6.2.0
+
+      - name: Copy GitHub Actions gradle.properties
+        if: ${{ !cancelled() && success() && steps.check-base-report-branch.outputs.exists == 'false' }}
+        run: mkdir -p ~/.gradle ; cp .github/gradle.properties ~/.gradle/gradle.properties
+
+      - name: Generate base metrics
+        if: ${{ !cancelled() && success() && steps.check-base-report-branch.outputs.exists == 'false' }}
+        run: |
+          ./gradlew assembleDebug \
+            -PenableComposeCompilerMetrics=true \
+            -PenableComposeCompilerReports=true
+
+      - name: Upload base metrics
+        if: ${{ !cancelled() && success() && steps.check-base-report-branch.outputs.exists == 'false' }}
+        uses: daiji256/upload-to-orphan-branch@8d353234c31aaf2134dc6081b863fcd876fcb2d0 # v1.0.0
+        with:
+          branch: ${{ needs.orphan-branch-name.outputs.base-report }}
+          path: "**/build/compose-compiler/**"
+
+  orphan-branch-name:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    outputs:
+      base-report: ${{ steps.branch-names.outputs.base }}
+      head-report: ${{ steps.branch-names.outputs.head }}
+
+    steps:
+      - name: Checkout base
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        with:
+          ref: ${{ github.event.pull_request.base.sha }}
+
+      - name: Get base files hash
+        id: base
+        run: |
+          hash=$(git ls-files -z | xargs -0 sha256sum | sha256sum | awk '{print $1}')
+          echo "hash=${hash:0:7}" >> "$GITHUB_OUTPUT"
+
+      - name: Checkout head
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - name: Get head files hash
+        id: head
+        run: |
+          hash=$(git ls-files -z | xargs -0 sha256sum | sha256sum | awk '{print $1}')
+          echo "hash=${hash:0:7}" >> "$GITHUB_OUTPUT"
+
+      - name: Get branch names
+        id: branch-names
+        env:
+          BASE_FILES_HASH: ${{ steps.base.outputs.hash }}
+          HEAD_FILES_HASH: ${{ steps.head.outputs.hash }}
+        run: |
+          echo "base=_compose_stability_check_${BASE_FILES_HASH}" >> "$GITHUB_OUTPUT"
+          echo "head=_compose_stability_check_${HEAD_FILES_HASH}" >> "$GITHUB_OUTPUT"
+
+  cleanup:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - name: Checkout (fetch all)
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        with:
+          fetch-depth: 0
+
+      - name: Delete outdated orphan branches
+        uses: daiji256/delete-orphan-branch@4369ee37e443cb638898ac6ad471eb84be4a0da9 # v1.1.0
+        with:
+          branch-regex: ^_compose_stability_check_.*
+          older-than-seconds: 1209600 # 14 days
+
+      - name: Delete outdated report comments
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: |
+          comment_ids=$(
+            gh api "repos/${GITHUB_REPOSITORY}/issues/${PR_NUMBER}/comments" |
+            jq -r '
+              .[]
+              | select(.user.login == "github-actions[bot]")
+              | select(.body | contains("<!-- compose-stability-check -->"))
+              | .id'
+          )
+          for comment_id in $comment_ids; do
+            gh api -X DELETE "repos/${GITHUB_REPOSITORY}/issues/comments/${comment_id}"
+          done

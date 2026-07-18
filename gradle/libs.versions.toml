@@ -10,6 +10,7 @@ agp = "9.3.0"
 androidxTestRules = "1.7.0"
 browser = "1.10.0"
 compose-bom = "2026.06.01"
+java-diff-utils = "4.17"
 junit = "4.13.2"
 kotlin = "2.4.10"
 kotlinx-collections-immutable = "0.5.1"
@@ -35,6 +36,7 @@ compose-ui = { group = "androidx.compose.ui", name = "ui" }
 compose-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
 compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
+java-diff-utils = { group = "io.github.java-diff-utils", name = "java-diff-utils", version.ref = "java-diff-utils" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 kotlin-test-junit = { group = "org.jetbrains.kotlin", name = "kotlin-test-junit", version.ref = "kotlin" }
 kotlinx-collections-immutable = { group = "org.jetbrains.kotlinx", name = "kotlinx-collections-immutable", version.ref = "kotlinx-collections-immutable" }
@@ -68,6 +70,7 @@ roborazzi = { id = "io.github.takahirom.roborazzi", version.ref = "roborazzi" }
 buildlogic-android-application = { id = "buildlogic.android.application", version = "unspecified" }
 buildlogic-android-library = { id = "buildlogic.android.library", version = "unspecified" }
 buildlogic-compose = { id = "buildlogic.compose", version = "unspecified" }
+buildlogic-compose-stability-check = { id = "buildlogic.compose.stability.check", version = "unspecified" }
 buildlogic-dependencies = { id = "buildlogic.dependencies", version = "unspecified" }
 buildlogic-robolectric = { id = "buildlogic.robolectric", version = "unspecified" }
 buildlogic-roborazzi = { id = "buildlogic.roborazzi", version = "unspecified" }
