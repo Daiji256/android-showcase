@@ -32,22 +32,18 @@ class ComposePlugin : Plugin<Project> {
             }
 
             extensions.configure<ComposeCompilerGradlePluginExtension> {
-                val enableMetrics = providers.gradleProperty("enableComposeCompilerMetrics")
-                    .orNull?.toBoolean() ?: false
-                val enableReports = providers.gradleProperty("enableComposeCompilerReports")
+                val enableStability = providers.gradleProperty("enableComposeStability")
                     .orNull?.toBoolean() ?: false
                 val relativePath = projectDir.toRelativeString(rootDir)
-                if (enableMetrics) {
+                if (enableStability) {
                     metricsDestination.set(
                         rootProject.layout.buildDirectory.dir(
-                            "compose-compiler/metrics/$relativePath",
+                            "compose-stability/metrics/$relativePath",
                         ),
                     )
-                }
-                if (enableReports) {
                     reportsDestination.set(
                         rootProject.layout.buildDirectory.dir(
-                            "compose-compiler/reports/$relativePath",
+                            "compose-stability/reports/$relativePath",
                         ),
                     )
                 }
