@@ -1,0 +1,120 @@
+stable class io.github.daiji256.showcase.core.ui.markdown.MarkdownStyle {
+  stable val emph: SpanStyle
+  stable val strong: SpanStyle
+  stable val code: SpanStyle
+  stable val link: TextLinkStyles
+  stable val h1: SpanStyle
+  stable val h2: SpanStyle
+  stable val h3: SpanStyle
+  stable val h4: SpanStyle
+  stable val h5: SpanStyle
+  stable val h6: SpanStyle
+  stable val codeBlock: CodeBlockStyle
+  stable val space: Dp
+}
+stable class io.github.daiji256.showcase.core.ui.markdown.CodeBlockStyle {
+  stable val spanStyle: SpanStyle
+  stable val borderStroke: BorderStroke
+  stable val contentPadding: PaddingValues
+}
+stable class io.github.daiji256.showcase.core.ui.markdown.Block.Paragraph {
+  runtime val contents: List<Content>
+  <runtime stability> = Stable
+}
+stable class io.github.daiji256.showcase.core.ui.markdown.Block.H1 {
+  runtime val contents: List<Content>
+  <runtime stability> = Stable
+}
+stable class io.github.daiji256.showcase.core.ui.markdown.Block.H2 {
+  runtime val contents: List<Content>
+  <runtime stability> = Stable
+}
+stable class io.github.daiji256.showcase.core.ui.markdown.Block.H3 {
+  runtime val contents: List<Content>
+  <runtime stability> = Stable
+}
+stable class io.github.daiji256.showcase.core.ui.markdown.Block.H4 {
+  runtime val contents: List<Content>
+  <runtime stability> = Stable
+}
+stable class io.github.daiji256.showcase.core.ui.markdown.Block.H5 {
+  runtime val contents: List<Content>
+  <runtime stability> = Stable
+}
+stable class io.github.daiji256.showcase.core.ui.markdown.Block.H6 {
+  runtime val contents: List<Content>
+  <runtime stability> = Stable
+}
+stable class io.github.daiji256.showcase.core.ui.markdown.Block.Code {
+  runtime val contents: List<Content>
+  <runtime stability> = Stable
+}
+stable class io.github.daiji256.showcase.core.ui.markdown.Block.HorizontalRule {
+  <runtime stability> = Stable
+}
+stable class io.github.daiji256.showcase.core.ui.markdown.Content.Text {
+  stable val text: String
+  <runtime stability> = Stable
+}
+runtime class io.github.daiji256.showcase.core.ui.markdown.Content.Emph {
+  runtime val contents: List<Content>
+  <runtime stability> = Uncertain(List)
+}
+runtime class io.github.daiji256.showcase.core.ui.markdown.Content.Strong {
+  runtime val contents: List<Content>
+  <runtime stability> = Uncertain(List)
+}
+runtime class io.github.daiji256.showcase.core.ui.markdown.Content.Code {
+  runtime val contents: List<Content>
+  <runtime stability> = Uncertain(List)
+}
+runtime class io.github.daiji256.showcase.core.ui.markdown.Content.Link {
+  runtime val contents: List<Content>
+  stable val url: String
+  <runtime stability> = Uncertain(List)
+}
+runtime class io.github.daiji256.showcase.core.ui.navigation.AnyNavKeySerializer {
+  <runtime stability> = Parameter(T),Runtime(NavKeySerializer)
+}
+runtime class io.github.daiji256.showcase.core.ui.navigation.NavNode {
+  runtime val key: NavKey
+  stable var currentChild$delegate: MutableState<NavNode?>
+  stable val children: SnapshotStateSet<NavNode>
+  <runtime stability> = Uncertain(NavKey)
+}
+stable class io.github.daiji256.showcase.core.ui.navigation.NavNodeKeys {
+  runtime val active: List<NavKey>
+  runtime val inactive: List<NavKey>
+  runtime val all: List<NavKey>
+  <runtime stability> = 
+}
+stable class io.github.daiji256.showcase.core.ui.navigation.NavNodeSerializer.NavNodeDto.$serializer {
+  runtime val descriptor: SerialDescriptor
+  <runtime stability> = Stable
+}
+stable class io.github.daiji256.showcase.core.ui.navigation.NavNodeSerializer {
+  runtime val dtoSerializer: KSerializer<NavNodeDto>
+  runtime val descriptor: SerialDescriptor
+  <runtime stability> = 
+}
+runtime class io.github.daiji256.showcase.core.ui.navigation.NavState {
+  runtime val root: NavNode
+  stable val pending: SnapshotStateList<NavKey>
+  <runtime stability> = Runtime(NavNode)
+}
+runtime class io.github.daiji256.showcase.core.ui.navigation.Navigator {
+  runtime val state: NavState
+  <runtime stability> = Runtime(NavState)
+}
+stable class io.github.daiji256.showcase.core.ui.navigation.RootNavKey {
+  runtime val $cachedSerializer$delegate: Lazy<KSerializer<Any>>
+  <runtime stability> = Stable
+}
+stable class io.github.daiji256.showcase.core.ui.showcase.ShowcaseNavKey {
+  runtime val $cachedSerializer$delegate: Lazy<KSerializer<Any>>
+  <runtime stability> = Stable
+}
+unstable class io.github.daiji256.showcase.core.ui.urihandler.SafeUriHandler {
+  unstable val context: Context
+  <runtime stability> = Unstable
+}
