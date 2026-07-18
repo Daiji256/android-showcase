@@ -46,11 +46,17 @@ jobs:
           ./gradlew assembleDebug -PenableComposeStability=true
 
       - name: Generate Report
+        id: generate-report
         run: |
           ./gradlew generateComposeStabilityCheck \
             -Pbase=base/build/compose-stability \
             -Phead=build/compose-stability \
             -Poutput=build/compose-stability-check.md
+          if [ -f build/compose-stability-check.md ]; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+          fi
 
       - name: Upload head compose-stability
         uses: daiji256/upload-to-orphan-branch@8d353234c31aaf2134dc6081b863fcd876fcb2d0 # v1.0.0
@@ -60,6 +66,7 @@ jobs:
           path: "**/build/compose-stability/**"
 
       - name: Post Report Comment
+        if: ${{ !cancelled() && success() && steps.generate-report.outputs.exists == 'true' }}
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PR_NUMBER: ${{ github.event.pull_request.number }}

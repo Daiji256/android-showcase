@@ -15,6 +15,7 @@ import org.gradle.api.file.RegularFileProperty
 import org.gradle.api.provider.ListProperty
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.InputDirectory
+import org.gradle.api.tasks.Optional
 import org.gradle.api.tasks.OutputFile
 import org.gradle.api.tasks.TaskAction
 import java.io.File
@@ -50,6 +51,7 @@ abstract class ComposeStabilityCheckTask : DefaultTask() {
     @get:InputDirectory
     abstract val headDir: DirectoryProperty
 
+    @get:Optional
     @get:OutputFile
     abstract val outputFile: RegularFileProperty
 
@@ -109,24 +111,26 @@ abstract class ComposeStabilityCheckTask : DefaultTask() {
             }
         }
 
-        val report = buildString {
-            appendLine("> [!NOTE]")
-            appendLine("> Compose stability changed by +$totalAdded, -$totalRemoved lines.")
-            appendLine()
-            appendLine("<details><summary>Expand for details</summary>")
-            appendLine()
-            appendLine(tables(base = baseMetrics.values.sum(), head = headMetrics.values.sum()))
-            diffs.forEach { diff ->
+        if (diffs.isNotEmpty()) {
+            val report = buildString {
+                appendLine("> [!NOTE]")
+                appendLine("> Compose stability changed by +$totalAdded, -$totalRemoved lines.")
                 appendLine()
-                appendLine("```diff")
-                appendLine(diff)
-                appendLine("```")
+                appendLine("<details><summary>Expand for details</summary>")
+                appendLine()
+                appendLine(tables(base = baseMetrics.values.sum(), head = headMetrics.values.sum()))
+                diffs.forEach { diff ->
+                    appendLine()
+                    appendLine("```diff")
+                    appendLine(diff)
+                    appendLine("```")
+                }
+                appendLine()
+                appendLine("</details>")
             }
-            appendLine()
-            appendLine("</details>")
-        }
 
-        outputFile.get().asFile.writeText(report)
+            outputFile.get().asFile.writeText(report)
+        }
     }
 }
 
