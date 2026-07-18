@@ -89,44 +89,38 @@ abstract class ComposeStabilityCheckTask : DefaultTask() {
             .filter { it.extension == "txt" }
             .groupBy { module(it, headReportsDir) }
 
+        val diffs = mutableListOf<String>()
+        var totalAdded = 0
+        var totalRemoved = 0
+        (baseReports.keys + headReports.keys).sorted().forEach { module ->
+            val head = headReports[module]
+            val base = baseReports[module]
+            head?.sortedBy { it.name }?.forEach { headFile ->
+                val baseFile = base?.find { it.name == headFile.name }
+                val (diff, added, removed) = generateDiffWithStats(base = baseFile, head = headFile)
+                if (diff != null) {
+                    diffs += diff
+                    totalAdded += added
+                    totalRemoved += removed
+                }
+            }
+        }
+
         val report = buildString {
-            appendLine("# Compose Stability Check Report")
-            appendLine()
-            appendLine("## Total")
+            appendLine("> [!NOTE]")
+            appendLine("> Compose stability changed by +$totalAdded, -$totalRemoved lines.")
             appendLine()
             appendLine("<details><summary>Expand for details</summary>")
             appendLine()
             appendLine(tables(base = baseMetrics.values.sum(), head = headMetrics.values.sum()))
+            diffs.forEach { diff ->
+                appendLine()
+                appendLine("```diff")
+                appendLine(diff)
+                appendLine("```")
+            }
             appendLine()
             appendLine("</details>")
-            appendLine()
-
-            appendLine("## Modules")
-            (baseMetrics.keys + headMetrics.keys).sorted().forEach { module ->
-                appendLine()
-                appendLine("### $module")
-                appendLine()
-                appendLine("<details><summary>Expand for details</summary>")
-                appendLine()
-                appendLine(tables(base = baseMetrics[module], head = headMetrics[module]))
-                appendLine()
-                val head = headReports[module]
-                val base = baseReports[module]
-                head?.sortedBy { it.name }?.forEach { headFile ->
-                    val baseFile = base?.find { it.name == headFile.name }
-                    val diff = generateDiff(base = baseFile, head = headFile)
-                    if (diff != null) {
-                        appendLine("#### Diff: ${headFile.name}")
-                        appendLine()
-                        appendLine("```diff")
-                        appendLine(diff)
-                        appendLine("```")
-                        appendLine()
-                    }
-                }
-
-                appendLine("</details>")
-            }
         }
 
         outputFile.get().asFile.writeText(report)
@@ -266,7 +260,7 @@ private fun Collection<ComposeMetrics>.sum(): ComposeMetrics {
 }
 
 private fun tables(base: ComposeMetrics?, head: ComposeMetrics?): String = buildString {
-    appendLine("#### Composables")
+    appendLine("**Composables**:")
     appendLine()
     appendLine("| Type | Value | Diff |")
     appendLine("| :--- | ---: | ---: |")
@@ -299,7 +293,7 @@ private fun tables(base: ComposeMetrics?, head: ComposeMetrics?): String = build
         ),
     )
     appendLine()
-    appendLine("#### Groups")
+    appendLine("**Groups**:")
     appendLine()
     appendLine("| Type | Value | Diff |")
     appendLine("| :--- | ---: | ---: |")
@@ -318,7 +312,7 @@ private fun tables(base: ComposeMetrics?, head: ComposeMetrics?): String = build
         ),
     )
     appendLine()
-    appendLine("#### Arguments")
+    appendLine("**Arguments**:")
     appendLine()
     appendLine("| Type | Value | Diff |")
     appendLine("| :--- | ---: | ---: |")
@@ -365,7 +359,7 @@ private fun tables(base: ComposeMetrics?, head: ComposeMetrics?): String = build
         ),
     )
     appendLine()
-    appendLine("#### Classes")
+    appendLine("**Classes**:")
     appendLine()
     appendLine("| Type | Value | Diff |")
     appendLine("| :--- | ---: | ---: |")
@@ -405,7 +399,7 @@ private fun tables(base: ComposeMetrics?, head: ComposeMetrics?): String = build
         ),
     )
     appendLine()
-    appendLine("#### Lambdas")
+    appendLine("**Lambdas**:")
     appendLine()
     appendLine("| Type | Value | Diff |")
     appendLine("| :--- | ---: | ---: |")
@@ -463,16 +457,22 @@ private fun tableRow(type: String, base: Int?, head: Int?): String {
     return "| $type | ${head ?: "-"} | $diffString |"
 }
 
-private fun generateDiff(base: File?, head: File?): String? {
+private data class DiffResult(val diff: String?, val added: Int, val removed: Int)
+
+private fun generateDiffWithStats(base: File?, head: File?): DiffResult {
     val baseLines = base?.readLines().orEmpty()
     val headLines = head?.readLines().orEmpty()
     val patch = DiffUtils.diff(baseLines, headLines)
-    if (patch.deltas.isEmpty()) return null
-    return UnifiedDiffUtils.generateUnifiedDiff(
-        base?.name,
-        head?.name,
-        baseLines,
-        patch,
-        3,
-    ).joinToString("\n")
+    if (patch.deltas.isEmpty()) return DiffResult(diff = null, added = 0, removed = 0)
+    return DiffResult(
+        diff = UnifiedDiffUtils.generateUnifiedDiff(
+            base?.name,
+            head?.name,
+            baseLines,
+            patch,
+            3,
+        ).joinToString("\n"),
+        added = patch.deltas.sumOf { it.target.size() },
+        removed = patch.deltas.sumOf { it.source.size() },
+    )
 }
