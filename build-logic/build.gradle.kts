@@ -19,6 +19,7 @@ dependencies {
     compileOnly(libs.kotlin.gradlePlugin)
     compileOnly(libs.compose.gradlePlugin)
     compileOnly(libs.roborazzi.gradlePlugin)
+    implementation(libs.java.diff.utils)
     implementation(libs.kotlinx.serialization.json)
 }
 

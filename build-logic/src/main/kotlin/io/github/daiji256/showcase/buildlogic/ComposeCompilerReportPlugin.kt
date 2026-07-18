@@ -1,5 +1,7 @@
 package io.github.daiji256.showcase.buildlogic
 
+import com.github.difflib.DiffUtils
+import com.github.difflib.UnifiedDiffUtils
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.int
@@ -14,6 +16,7 @@ import org.gradle.api.tasks.InputDirectory
 import org.gradle.api.tasks.Optional
 import org.gradle.api.tasks.OutputFile
 import org.gradle.api.tasks.TaskAction
+import java.io.File
 
 @Suppress("unused")
 class ComposeCompilerReportPlugin : Plugin<Project> {
@@ -23,14 +26,19 @@ class ComposeCompilerReportPlugin : Plugin<Project> {
                 group = "verification"
                 description = "Generates compose compiler report"
                 metricsDir.set(rootProject.layout.buildDirectory.dir("compose-compiler/metrics"))
-
-                val baseMetricsDirProperty = project.findProperty("baseMetricsDir")
-                if (baseMetricsDirProperty is String) {
+                reportsDir.set(rootProject.layout.buildDirectory.dir("compose-compiler/reports"))
+                val baseMetricsDirProperty = project.findProperty("baseMetricsDir") as? String
+                val baseReportsDirProperty = project.findProperty("baseReportsDir") as? String
+                if (baseMetricsDirProperty != null) {
                     baseMetricsDir.set(
                         rootProject.layout.projectDirectory.dir(baseMetricsDirProperty),
                     )
                 }
-
+                if (baseReportsDirProperty != null) {
+                    baseReportsDir.set(
+                        rootProject.layout.projectDirectory.dir(baseReportsDirProperty),
+                    )
+                }
                 reportFile.set(rootProject.layout.buildDirectory.file("compose-compiler-report.md"))
             }
         }
@@ -42,8 +50,15 @@ abstract class ComposeCompilerReportTask : DefaultTask() {
     abstract val metricsDir: DirectoryProperty
 
     @get:InputDirectory
+    abstract val reportsDir: DirectoryProperty
+
+    @get:InputDirectory
     @get:Optional
     abstract val baseMetricsDir: DirectoryProperty
+
+    @get:InputDirectory
+    @get:Optional
+    abstract val baseReportsDir: DirectoryProperty
 
     @get:OutputFile
     abstract val reportFile: RegularFileProperty
@@ -54,18 +69,27 @@ abstract class ComposeCompilerReportTask : DefaultTask() {
             .asFileTree
             .matching { include("**/*.json") }
             .files
-            .associate { file ->
-                file.parentFile.parentFile.name to decodeMetrics(file.readText())
-            }
-
+            .associate { it.parentFile.parentFile.name to decodeMetrics(it.readText()) }
+        val moduleReports = reportsDir
+            .asFileTree
+            .matching { include("**/*.txt") }
+            .files
+            .groupBy { it.parentFile.name }
         val baseModuleMetrics = if (baseMetricsDir.isPresent) {
             baseMetricsDir
                 .asFileTree
                 .matching { include("**/*.json") }
                 .files
-                .associate { file ->
-                    file.parentFile.parentFile.name to decodeMetrics(file.readText())
-                }
+                .associate { it.parentFile.parentFile.name to decodeMetrics(it.readText()) }
+        } else {
+            null
+        }
+        val baseModuleReports = if (baseReportsDir.isPresent) {
+            baseReportsDir
+                .asFileTree
+                .matching { include("**/*.txt") }
+                .files
+                .groupBy { it.parentFile.name }
         } else {
             null
         }
@@ -88,8 +112,7 @@ abstract class ComposeCompilerReportTask : DefaultTask() {
             appendLine()
 
             appendLine("## Modules")
-            val modules = (moduleMetrics.keys + (baseModuleMetrics?.keys ?: emptySet())).sorted()
-            modules.forEach { module ->
+            (moduleMetrics.keys + (baseModuleMetrics?.keys.orEmpty())).sorted().forEach { module ->
                 appendLine()
                 appendLine("### $module")
                 appendLine()
@@ -102,6 +125,21 @@ abstract class ComposeCompilerReportTask : DefaultTask() {
                     ),
                 )
                 appendLine()
+                val reports = moduleReports[module]
+                val baseReports = baseModuleReports?.get(module)
+                reports?.sortedBy { it.name }?.forEach { reportFile ->
+                    val baseReportFile = baseReports?.find { it.name == reportFile.name }
+                    val diff = generateDiff(baseFile = baseReportFile, headFile = reportFile)
+                    if (diff != null) {
+                        appendLine("#### Diff: ${reportFile.name}")
+                        appendLine()
+                        appendLine("```diff")
+                        appendLine(diff)
+                        appendLine("```")
+                        appendLine()
+                    }
+                }
+
                 appendLine("</details>")
             }
         }
@@ -432,3 +470,17 @@ private fun tables(metrics: ComposeMetrics?, baseMetrics: ComposeMetrics?): Stri
 
 private fun tableRow(type: String, value: Int?, baseValue: Int?): String =
     "| $type | ${value ?: "-"} | ${(value ?: 0) - (baseValue ?: 0)} |"
+
+private fun generateDiff(baseFile: File?, headFile: File?): String? {
+    val headLines = headFile?.readLines().orEmpty()
+    val baseLines = baseFile?.readLines().orEmpty()
+    val patch = DiffUtils.diff(baseLines, headLines)
+    if (patch.deltas.isEmpty()) return null
+    return UnifiedDiffUtils.generateUnifiedDiff(
+        baseFile?.name,
+        headFile?.name,
+        baseLines,
+        patch,
+        3,
+    ).joinToString("\n")
+}
