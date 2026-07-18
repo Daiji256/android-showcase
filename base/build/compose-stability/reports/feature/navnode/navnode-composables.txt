@@ -1,0 +1,28 @@
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun io.github.daiji256.showcase.feature.navnode.NavNodeScreen()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun io.github.daiji256.showcase.feature.navnode.NavNodeScreen(
+  stable onNavigateUpClick: Function0<Unit>
+  stable onNavigateToDemo: Function1<DemoInitial, Unit>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun io.github.daiji256.showcase.feature.navnode.NavNodeScreenPreview()
+open fun io.github.daiji256.showcase.feature.navnode.NavNodeSummary.<no name provided>.<get-title>(
+  <this>: <no name provided>
+): String
+restartable skippable scheme("[androidx.compose.ui.UiComposable, [androidx.compose.ui.UiComposable]]") fun io.github.daiji256.showcase.feature.navnode.demo.DemoScaffold(
+  stable <this>: SharedTransitionScope
+  key: NavKey
+  stable buttons: @[ExtensionFunctionType] Function3<ColumnScope, Composer, Int, Unit>? = @static <expression>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun io.github.daiji256.showcase.feature.navnode.demo.NavNodeDemoScreen(
+  stable initial: DemoInitial
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun io.github.daiji256.showcase.feature.navnode.demo.NavNodeDemoScreen(
+  stable $context-SharedTransitionScope: SharedTransitionScope
+  stable initial: DemoInitial
+  stable onNavigateUpClick: Function0<Unit>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun io.github.daiji256.showcase.feature.navnode.demo.NavNodeView(
+  node: NavNode
+  stable modifier: Modifier? = @static <expression>
+  stable isActive: Boolean = @static true
+)
+restartable skippable fun io.github.daiji256.showcase.feature.navnode.demo.NavNodeDemoScreenPreview()
