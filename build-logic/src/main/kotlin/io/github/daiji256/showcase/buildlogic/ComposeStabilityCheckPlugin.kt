@@ -453,8 +453,15 @@ private fun tables(base: ComposeMetrics?, head: ComposeMetrics?): String = build
     )
 }
 
-private fun tableRow(type: String, base: Int?, head: Int?): String =
-    "| $type | ${head ?: "-"} | ${(head ?: 0) - (base ?: 0)} |"
+private fun tableRow(type: String, base: Int?, head: Int?): String {
+    val diff = (head ?: 0) - (base ?: 0)
+    val diffString = when {
+        diff > 0 -> "+$diff"
+        diff < 0 -> "$diff"
+        else -> ""
+    }
+    return "| $type | ${head ?: "-"} | $diffString |"
+}
 
 private fun generateDiff(base: File?, head: File?): String? {
     val baseLines = base?.readLines().orEmpty()
