@@ -1,0 +1,3 @@
+restartable skippable scheme("[0, [0]]") fun io.github.daiji256.showcase.core.designsystem.theme.ShowcaseTheme(
+  stable content: Function2<Composer, Int, Unit>
+)
