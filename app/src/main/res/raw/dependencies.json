@@ -395,7 +395,7 @@
         {
             "id": "androidx.navigation3:navigation3-runtime",
             "name": "Androidx Navigation 3 Runtime",
-            "uri": "https://developer.android.com/jetpack/androidx/releases/navigation3#1.1.6",
+            "uri": "https://developer.android.com/jetpack/androidx/releases/navigation3#1.1.7",
             "author": "The Android Open Source Project",
             "license_name": "The Apache Software License, Version 2.0",
             "license_uri": "http://www.apache.org/licenses/LICENSE-2.0.txt"
@@ -403,7 +403,7 @@
         {
             "id": "androidx.navigation3:navigation3-ui",
             "name": "Androidx Navigation 3 UI",
-            "uri": "https://developer.android.com/jetpack/androidx/releases/navigation3#1.1.6",
+            "uri": "https://developer.android.com/jetpack/androidx/releases/navigation3#1.1.7",
             "author": "The Android Open Source Project",
             "license_name": "The Apache Software License, Version 2.0",
             "license_uri": "http://www.apache.org/licenses/LICENSE-2.0.txt"
