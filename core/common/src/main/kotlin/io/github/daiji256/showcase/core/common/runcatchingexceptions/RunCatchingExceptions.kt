@@ -133,7 +133,7 @@ suspend inline fun <R, T> Result<T>.suspendMapCatchingExceptions(
  * This function catches any [Exception] (except [CancellationException]) thrown by [transform]
  * function and encapsulates it as a failure.
  *
- * Note: Unlike [recoverCatching], which catches all [Throwable] [Throwable] (including [Error] and
+ * Note: Unlike [recoverCatching], which catches all [Throwable] (including [Error] and
  * [CancellationException]), this function only catches [Exception] (except
  * [CancellationException]).
  */
