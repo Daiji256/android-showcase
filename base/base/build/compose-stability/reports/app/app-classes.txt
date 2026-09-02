@@ -1,0 +1,6 @@
+unstable class io.github.daiji256.showcase.MainActivity {
+  <runtime stability> = Unstable
+}
+unstable class io.github.daiji256.showcase.MainApplication {
+  <runtime stability> = Unstable
+}
