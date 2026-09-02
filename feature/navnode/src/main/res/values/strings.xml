@@ -1,4 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="feature_nav_node_title">"NavNode"</string>
+    <string name="feature_nav_node_navigate_to_demo">Navigate to Demo(%1$s)</string>
+    <string name="feature_nav_node_demo_nav_display_header_md">## NavDisplay</string>
+    <string name="feature_nav_node_demo_nav_state_header_md">## NavState</string>
+    <string name="feature_nav_node_demo_root_label">root:</string>
+    <string name="feature_nav_node_demo_pending_label">pending:</string>
+    <string name="feature_nav_node_demo_empty_label">empty</string>
+    <string name="feature_nav_node_demo_navigate_to_navigation_bar">Navigate to NavigationBar</string>
+    <string name="feature_nav_node_demo_navigate_to_navigation_bar_a1">Navigate to NavigationBarA1</string>
+    <string name="feature_nav_node_demo_navigate_to_navigation_bar_b_switch">Navigate to NavigationBarBSwitch</string>
+    <string name="feature_nav_node_demo_switch_to_navigation_bar_b_switch_y">Switch to NavigationBarBSwitchY</string>
+    <string name="feature_nav_node_demo_switch_to_navigation_bar_b_switch_x">Switch to NavigationBarBSwitchX</string>
+    <string name="feature_nav_node_demo_navigate_to_outer1">Navigate to Outer1</string>
+    <string name="feature_nav_node_demo_navigate_to_outer2">Navigate to Outer2</string>
+    <string name="feature_nav_node_demo_tab_a">A</string>
+    <string name="feature_nav_node_demo_tab_b">B</string>
+    <string name="feature_nav_node_demo_tab_c">C</string>
+    <string name="feature_nav_node_demo_count">Count: %1$d</string>
 </resources>
