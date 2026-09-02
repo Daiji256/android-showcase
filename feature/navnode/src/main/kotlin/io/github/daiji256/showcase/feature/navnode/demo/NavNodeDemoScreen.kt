@@ -91,8 +91,11 @@ private fun NavNodeDemoScreen(
         title = stringResource(id = R.string.feature_nav_node_title),
         onNavigateUpClick = onNavigateUpClick,
     ) {
-        // TODO
-        Markdown(markdown = "## NavDisplay")
+        Markdown(
+            markdown = stringResource(
+                id = R.string.feature_nav_node_demo_nav_display_header_md,
+            ),
+        )
         CompositionLocalProvider(
             LocalNavigator provides navigator,
         ) {
@@ -117,17 +120,26 @@ private fun NavNodeDemoScreen(
             }
         }
 
-        // TODO
-        Markdown(markdown = "## NavState")
+        Markdown(
+            markdown = stringResource(
+                id = R.string.feature_nav_node_demo_nav_state_header_md,
+            ),
+        )
         Column {
-            Text(text = "root:", fontWeight = FontWeight.Bold)
+            Text(
+                text = stringResource(id = R.string.feature_nav_node_demo_root_label),
+                fontWeight = FontWeight.Bold,
+            )
             NavNodeView(node = navState.root)
 
             Spacer(modifier = Modifier.height(2.dp))
 
-            Text(text = "pending:", fontWeight = FontWeight.Bold)
+            Text(
+                text = stringResource(id = R.string.feature_nav_node_demo_pending_label),
+                fontWeight = FontWeight.Bold,
+            )
             if (navState.pending.isEmpty()) {
-                Text(text = "empty")
+                Text(text = stringResource(id = R.string.feature_nav_node_demo_empty_label))
             } else {
                 Text(text = navState.pending.toList().toString())
             }

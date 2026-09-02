@@ -22,6 +22,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.dropUnlessResumed
 import androidx.navigation3.runtime.EntryProviderScope
@@ -34,6 +35,7 @@ import io.github.daiji256.showcase.core.designsystem.theme.ShowcaseAnimations
 import io.github.daiji256.showcase.core.ui.component.NavigateUpButton
 import io.github.daiji256.showcase.core.ui.navigation.LocalNavigator
 import io.github.daiji256.showcase.core.ui.window.LocalWindowShape
+import io.github.daiji256.showcase.feature.navnode.R
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -51,8 +53,11 @@ internal fun EntryProviderScope<NavKey>.onboarding() {
                         navigator.restart(start = NavigationBarANavKey)
                     },
                 ) {
-                    // TODO
-                    Text("Navigate to NavigationBar")
+                    Text(
+                        text = stringResource(
+                            id = R.string.feature_nav_node_demo_navigate_to_navigation_bar,
+                        ),
+                    )
                 }
             },
         )
@@ -92,8 +97,11 @@ internal fun EntryProviderScope<NavKey>.navigationBarA() {
                         navigator.push(key = NavigationBarA1NavKey)
                     },
                 ) {
-                    // TODO
-                    Text("Navigate to NavigationBarA1")
+                    Text(
+                        text = stringResource(
+                            id = R.string.feature_nav_node_demo_navigate_to_navigation_bar_a1,
+                        ),
+                    )
                 }
             },
         )
@@ -161,8 +169,11 @@ internal fun EntryProviderScope<NavKey>.navigationBarB() {
                         navigator.push(key = NavigationBarBSwitchXNavKey)
                     },
                 ) {
-                    // TODO
-                    Text("Navigate to NavigationBarBSwitch")
+                    Text(
+                        text = stringResource(
+                            id = R.string.feature_nav_node_demo_navigate_to_navigation_bar_b_switch,
+                        ),
+                    )
                 }
             },
         )
@@ -211,8 +222,11 @@ internal fun EntryProviderScope<NavKey>.navigationBarBSwitchX() {
                         )
                     },
                 ) {
-                    // TODO
-                    Text("Switch to NavigationBarBSwitchY")
+                    Text(
+                        text = stringResource(
+                            id = R.string.feature_nav_node_demo_switch_to_navigation_bar_b_switch_y,
+                        ),
+                    )
                 }
             },
         )
@@ -261,8 +275,11 @@ internal fun EntryProviderScope<NavKey>.navigationBarBSwitchY() {
                         )
                     },
                 ) {
-                    // TODO
-                    Text("Switch to NavigationBarBSwitchX")
+                    Text(
+                        text = stringResource(
+                            id = R.string.feature_nav_node_demo_switch_to_navigation_bar_b_switch_x,
+                        ),
+                    )
                 }
             },
         )
@@ -305,8 +322,11 @@ internal fun EntryProviderScope<NavKey>.navigationBarC() {
                         navigator.push(key = Outer1NavKey)
                     },
                 ) {
-                    // TODO
-                    Text("Navigate to Outer1")
+                    Text(
+                        text = stringResource(
+                            id = R.string.feature_nav_node_demo_navigate_to_outer1,
+                        ),
+                    )
                 }
             },
         )
@@ -342,8 +362,11 @@ internal fun EntryProviderScope<NavKey>.outer1() {
                         navigator.push(key = Outer2NavKey)
                     },
                 ) {
-                    // TODO
-                    Text("Navigate to Outer2")
+                    Text(
+                        text = stringResource(
+                            id = R.string.feature_nav_node_demo_navigate_to_outer2,
+                        ),
+                    )
                 }
             },
         )
@@ -465,7 +488,9 @@ private fun SharedTransitionScope.DemoScaffold(
                                 to = listOf(NavigationBarANavKey, NavigationBarA1NavKey),
                             )
                         },
-                        icon = { Text("A") }, // TODO
+                        icon = {
+                            Text(text = stringResource(id = R.string.feature_nav_node_demo_tab_a))
+                        },
                         modifier = Modifier
                             .sharedElement(
                                 sharedContentState = rememberSharedContentState(
@@ -486,7 +511,9 @@ private fun SharedTransitionScope.DemoScaffold(
                                 ),
                             )
                         },
-                        icon = { Text("B") }, // TODO
+                        icon = {
+                            Text(text = stringResource(id = R.string.feature_nav_node_demo_tab_b))
+                        },
                         modifier = Modifier
                             .sharedElement(
                                 sharedContentState = rememberSharedContentState(
@@ -503,7 +530,9 @@ private fun SharedTransitionScope.DemoScaffold(
                                 to = NavigationBarCNavKey,
                             )
                         },
-                        icon = { Text("C") }, // TODO
+                        icon = {
+                            Text(text = stringResource(id = R.string.feature_nav_node_demo_tab_c))
+                        },
                         modifier = Modifier
                             .sharedElement(
                                 sharedContentState = rememberSharedContentState(
@@ -527,8 +556,7 @@ private fun SharedTransitionScope.DemoScaffold(
         ) {
             var count by rememberSaveable { mutableIntStateOf(0) }
             Button(onClick = { count++ }) {
-                // TODO
-                Text("Count: $count")
+                Text(text = stringResource(id = R.string.feature_nav_node_demo_count, count))
             }
 
             buttons()

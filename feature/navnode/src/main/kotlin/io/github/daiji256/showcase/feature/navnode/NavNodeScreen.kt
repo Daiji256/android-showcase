@@ -33,8 +33,12 @@ private fun NavNodeScreen(
             Button(
                 onClick = { onNavigateToDemo(initial) },
             ) {
-                // TODO
-                Text(text = "Navigate to Demo($initial)")
+                Text(
+                    text = stringResource(
+                        id = R.string.feature_nav_node_navigate_to_demo,
+                        initial,
+                    ),
+                )
             }
         }
     }
