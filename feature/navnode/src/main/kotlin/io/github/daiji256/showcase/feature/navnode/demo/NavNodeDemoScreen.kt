@@ -182,6 +182,11 @@ private fun NavNodeView(
 @Composable
 private fun NavNodeDemoScreenPreview() {
     ShowcaseTheme {
-        // TODO
+        SharedTransitionLayout {
+            NavNodeDemoScreen(
+                initial = DemoInitial.Onboarding,
+                onNavigateUpClick = {},
+            )
+        }
     }
 }
