@@ -27,7 +27,9 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.withStyle
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import io.github.daiji256.showcase.core.designsystem.theme.ShowcaseTheme
 import io.github.daiji256.showcase.feature.systemstyle.colorcontrast.ColorContrast
 import io.github.daiji256.showcase.feature.systemstyle.colorcontrast.LocalColorContrast
 
@@ -152,5 +154,13 @@ internal fun SystemStyleValues(modifier: Modifier = Modifier) {
                 )
             }
         }
+    }
+}
+
+@Preview
+@Composable
+private fun SystemStyleValuesPreview() {
+    ShowcaseTheme {
+        SystemStyleValues()
     }
 }
