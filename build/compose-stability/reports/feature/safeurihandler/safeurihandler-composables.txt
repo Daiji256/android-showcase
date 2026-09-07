@@ -1,0 +1,9 @@
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun io.github.daiji256.showcase.feature.safeurihandler.SafeUriHandlerScreen()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun io.github.daiji256.showcase.feature.safeurihandler.SafeUriHandlerScreen(
+  stable onNavigateUpClick: Function0<Unit>
+  stable openUri: Function1<@[ParameterName(name = 'uri')] String, Unit>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun io.github.daiji256.showcase.feature.safeurihandler.SafeUriHandlerScreenPreview()
+open fun io.github.daiji256.showcase.feature.safeurihandler.SafeUriHandlerSummary.<no name provided>.<get-title>(
+  <this>: <no name provided>
+): String
