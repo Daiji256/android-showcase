@@ -1,0 +1,13 @@
+fun io.github.daiji256.showcase.feature.customtabs.rememberCustomTabsLauncher(
+  unstable context: Context? = @dynamic <expression>
+): CustomTabsLauncher
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun io.github.daiji256.showcase.feature.customtabs.CustomTabsScreen()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun io.github.daiji256.showcase.feature.customtabs.CustomTabsScreen(
+  stable onNavigateUpClick: Function0<Unit>
+  stable launchCustomTabFromActivityContext: Function1<@[ParameterName(name = 'uri')] String, Unit>
+  stable launchCustomTabFromApplicationContext: Function1<@[ParameterName(name = 'uri')] String, Unit>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun io.github.daiji256.showcase.feature.customtabs.CustomTabsScreenPreview()
+open fun io.github.daiji256.showcase.feature.customtabs.CustomTabsSummary.<no name provided>.<get-title>(
+  <this>: <no name provided>
+): String

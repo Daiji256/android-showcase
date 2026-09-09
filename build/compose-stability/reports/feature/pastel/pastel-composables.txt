@@ -1,0 +1,22 @@
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun io.github.daiji256.showcase.feature.pastel.PastelScreen()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun io.github.daiji256.showcase.feature.pastel.PastelScreen(
+  stable onNavigateUpClick: Function0<Unit>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun io.github.daiji256.showcase.feature.pastel.ColorPalette(
+  stable modifier: Modifier? = @static <expression>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun io.github.daiji256.showcase.feature.pastel.ColorPaletteItem(
+  stable color: Color
+  stable modifier: Modifier? = @static <expression>
+  stable onColor: Color? = @static null
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun io.github.daiji256.showcase.feature.pastel.ColorPaletteEmptyItem(
+  stable modifier: Modifier? = @static <expression>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun io.github.daiji256.showcase.feature.pastel.PastelScreenPreview()
+open fun io.github.daiji256.showcase.feature.pastel.PastelSummary.<no name provided>.<get-title>(
+  <this>: <no name provided>
+): String
+restartable skippable scheme("[0, [0]]") fun io.github.daiji256.showcase.feature.pastel.PastelTheme(
+  stable content: Function2<Composer, Int, Unit>
+)
