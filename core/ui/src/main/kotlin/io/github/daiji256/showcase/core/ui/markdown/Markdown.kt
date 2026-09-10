@@ -311,7 +311,7 @@ private fun ASTNode.getBlocks(markdownString: String): List<Block> =
         MarkdownTokenTypes.HORIZONTAL_RULE ->
             listOf(Block.HorizontalRule)
 
-        else -> emptyList()
+        else -> listOf()
     }
 
 private fun ASTNode.getContent(markdownString: String): Content? =
