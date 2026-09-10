@@ -142,7 +142,7 @@ private fun CodeBlock(
  * @property h5 the style for fifth-level header
  * @property h6 the style for sixth-level header
  * @property codeBlock the style for code block
- * @property space the space to be applied between markdown elements
+ * @property space the space to be applied between Markdown elements
  */
 @Immutable
 data class MarkdownStyle(
