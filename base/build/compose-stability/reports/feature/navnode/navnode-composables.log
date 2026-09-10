@@ -1,0 +1,1 @@
+applier inference DemoEntries.kt:447:13: Type disagreement [Binding(407), [Binding(token = androidx.compose.ui.UiComposable)], [Binding(token = androidx.compose.ui.UiComposable)], [Binding(408)]] <=> [Binding(407), [Binding(407)], [Binding(407)]]
