@@ -1,0 +1,8 @@
+stable class io.github.daiji256.showcase.feature.localsnackbarhoststate.first.LocalSnackbarHostStateFirstNavKey {
+  runtime val $cachedSerializer$delegate: Lazy<KSerializer<Any>>
+  <runtime stability> = Stable
+}
+stable class io.github.daiji256.showcase.feature.localsnackbarhoststate.second.LocalSnackbarHostStateSecondNavKey {
+  runtime val $cachedSerializer$delegate: Lazy<KSerializer<Any>>
+  <runtime stability> = Stable
+}
