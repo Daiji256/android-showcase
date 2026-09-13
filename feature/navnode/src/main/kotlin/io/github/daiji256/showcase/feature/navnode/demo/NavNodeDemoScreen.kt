@@ -22,6 +22,8 @@ import androidx.compose.ui.graphics.shadow.Shadow
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
@@ -30,9 +32,12 @@ import io.github.daiji256.showcase.core.designsystem.theme.ShowcaseAnimations
 import io.github.daiji256.showcase.core.designsystem.theme.ShowcaseTheme
 import io.github.daiji256.showcase.core.ui.document.Document
 import io.github.daiji256.showcase.core.ui.markdown.Markdown
+import io.github.daiji256.showcase.core.ui.navigation.InternalNavStateApi
 import io.github.daiji256.showcase.core.ui.navigation.LocalNavigator
 import io.github.daiji256.showcase.core.ui.navigation.NavNode
+import io.github.daiji256.showcase.core.ui.navigation.NavState
 import io.github.daiji256.showcase.core.ui.navigation.Navigator
+import io.github.daiji256.showcase.core.ui.navigation.createNavState
 import io.github.daiji256.showcase.core.ui.navigation.rememberNavState
 import io.github.daiji256.showcase.core.ui.navigation.toDecoratedNavEntries
 import io.github.daiji256.showcase.core.ui.window.LocalWindowShape
@@ -43,20 +48,6 @@ internal fun NavNodeDemoScreen(
     initial: DemoInitial,
 ) {
     val navigator = LocalNavigator.current
-    SharedTransitionLayout {
-        NavNodeDemoScreen(
-            initial = initial,
-            onNavigateUpClick = navigator::navigateUp,
-        )
-    }
-}
-
-@Composable
-context(_: SharedTransitionScope)
-private fun NavNodeDemoScreen(
-    initial: DemoInitial,
-    onNavigateUpClick: () -> Unit,
-) {
     val navState = rememberNavState(
         start = when (initial) {
             DemoInitial.Onboarding -> OnboardingNavKey
@@ -71,6 +62,20 @@ private fun NavNodeDemoScreen(
             DemoInitial.Outer2 -> mutableListOf(NavigationBarCNavKey, Outer1NavKey)
         },
     )
+    SharedTransitionLayout {
+        NavNodeDemoScreen(
+            navState = navState,
+            onNavigateUpClick = navigator::navigateUp,
+        )
+    }
+}
+
+@Composable
+context(_: SharedTransitionScope)
+private fun NavNodeDemoScreen(
+    navState: NavState,
+    onNavigateUpClick: () -> Unit,
+) {
     val navigator = remember(navState) { Navigator(state = navState) }
     val entries = navState.toDecoratedNavEntries(
         entryDecorators = listOf(rememberSaveableStateHolderNavEntryDecorator()),
@@ -178,13 +183,42 @@ private fun NavNodeView(
     }
 }
 
+@OptIn(InternalNavStateApi::class)
+private class NavStatePreviewParameterProvider : PreviewParameterProvider<NavState> {
+    override val values: Sequence<NavState> = sequenceOf(
+        createNavState(
+            start = OnboardingNavKey,
+            pending = listOf(),
+        ),
+        createNavState(
+            start = NavigationBarANavKey,
+            pending = listOf(),
+        ),
+        createNavState(
+            start = Outer2NavKey,
+            pending = listOf(NavigationBarCNavKey, Outer1NavKey),
+        ),
+        createNavState(
+            start = NavigationBarANavKey,
+            pending = listOf(NavigationBarCNavKey, Outer1NavKey),
+        ).also { state ->
+            val navigator = Navigator(state = state)
+            navigator.push(NavigationBarA1NavKey)
+            navigator.switch(NavigationBarANavKey, NavigationBarBNavKey)
+            navigator.push(NavigationBarBSwitchXNavKey)
+        },
+    )
+}
+
 @Preview(showSystemUi = true)
 @Composable
-private fun NavNodeDemoScreenPreview() {
+private fun NavNodeDemoScreenPreview(
+    @PreviewParameter(NavStatePreviewParameterProvider::class) navState: NavState,
+) {
     ShowcaseTheme {
         SharedTransitionLayout {
             NavNodeDemoScreen(
-                initial = DemoInitial.Onboarding,
+                navState = remember { navState },
                 onNavigateUpClick = {},
             )
         }
