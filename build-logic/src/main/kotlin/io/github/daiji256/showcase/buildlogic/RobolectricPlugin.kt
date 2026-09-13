@@ -17,6 +17,12 @@ class RobolectricPlugin : Plugin<Project> {
             extensions.configure<CommonExtension> {
                 testOptions.unitTests {
                     isIncludeAndroidResources = true
+                    all {
+                        it.jvmArgs(
+                            "--add-opens=java.base/jdk.internal.access=ALL-UNNAMED",
+                            "--enable-native-access=ALL-UNNAMED",
+                        )
+                    }
                 }
             }
 
