@@ -1,0 +1,14 @@
+open fun io.github.daiji256.showcase.feature.localsnackbarhoststate.LocalSnackbarHostStateSummary.<no name provided>.<get-title>(
+  <this>: <no name provided>
+): String
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun io.github.daiji256.showcase.feature.localsnackbarhoststate.first.LocalSnackbarHostStateFirstScreen()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun io.github.daiji256.showcase.feature.localsnackbarhoststate.first.LocalSnackbarHostStateFirstScreen(
+  stable onNavigateUpClick: Function0<Unit>
+  stable onNavigateToSecondClick: Function0<Unit>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun io.github.daiji256.showcase.feature.localsnackbarhoststate.first.LocalSnackbarHostStateFirstScreenPreview()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun io.github.daiji256.showcase.feature.localsnackbarhoststate.second.LocalSnackbarHostStateSecondScreen()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun io.github.daiji256.showcase.feature.localsnackbarhoststate.second.LocalSnackbarHostStateSecondScreen(
+  stable onNavigateUpClick: Function0<Unit>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun io.github.daiji256.showcase.feature.localsnackbarhoststate.second.LocalSnackbarHostStateSecondScreenPreview()
