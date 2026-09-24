@@ -1,0 +1,24 @@
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun io.github.daiji256.showcase.feature.license.LicenseScreen(
+  stable dependenciesResId: Int
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun io.github.daiji256.showcase.feature.license.LicenseScreen(
+  dependencies: List<Pair<String, List<Dependency>>>
+  stable onNavigateUpClick: Function0<Unit>
+  stable onUriClick: Function1<String, Unit>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun io.github.daiji256.showcase.feature.license.DependencyItem(
+  stable isFirst: Boolean
+  stable isLast: Boolean
+  dependency: Dependency
+  stable onClick: Function0<Unit>
+  stable onLicenseClick: Function0<Unit>
+  stable modifier: Modifier? = @static <expression>
+)
+fun io.github.daiji256.showcase.feature.license.dependencyItemShape(
+  stable isFirst: Boolean
+  stable isLast: Boolean
+): Shape
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun io.github.daiji256.showcase.feature.license.LicenseScreenPreview()
+open fun io.github.daiji256.showcase.feature.license.LicenseSummary.<no name provided>.<get-title>(
+  <this>: <no name provided>
+): String
