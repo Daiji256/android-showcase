@@ -1,0 +1,5 @@
+package,name,composable,skippable,restartable,readonly,inline,isLambda,hasDefaults,defaultsGroup,groups,calls,
+io.github.daiji256.showcase.feature.fallbackfont.FallbackFontScreen,FallbackFontScreen,1,1,1,0,0,0,0,0,1,2,
+io.github.daiji256.showcase.feature.fallbackfont.FallbackFontScreen,FallbackFontScreen,1,1,1,0,0,0,0,0,1,2,
+io.github.daiji256.showcase.feature.fallbackfont.FallbackFontScreenPreview,FallbackFontScreenPreview,1,1,1,0,0,0,0,0,1,1,
+io.github.daiji256.showcase.feature.fallbackfont.FallbackFontSummary.<no name provided>.<get-title>,<get-title>,1,0,0,0,0,0,0,0,1,1,
