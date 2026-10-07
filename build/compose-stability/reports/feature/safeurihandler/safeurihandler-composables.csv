@@ -1,0 +1,5 @@
+package,name,composable,skippable,restartable,readonly,inline,isLambda,hasDefaults,defaultsGroup,groups,calls,
+io.github.daiji256.showcase.feature.safeurihandler.SafeUriHandlerScreen,SafeUriHandlerScreen,1,1,1,0,0,0,0,0,1,3,
+io.github.daiji256.showcase.feature.safeurihandler.SafeUriHandlerScreen,SafeUriHandlerScreen,1,1,1,0,0,0,0,0,1,3,
+io.github.daiji256.showcase.feature.safeurihandler.SafeUriHandlerScreenPreview,SafeUriHandlerScreenPreview,1,1,1,0,0,0,0,0,1,1,
+io.github.daiji256.showcase.feature.safeurihandler.SafeUriHandlerSummary.<no name provided>.<get-title>,<get-title>,1,0,0,0,0,0,0,0,1,1,
