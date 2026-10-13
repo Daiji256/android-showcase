@@ -1,0 +1,9 @@
+unstable class io.github.daiji256.showcase.feature.customtabs.CustomTabsLauncher {
+  unstable val context: Context
+  runtime val activity$delegate: Lazy<Activity?>
+  <runtime stability> = Unstable
+}
+stable class io.github.daiji256.showcase.feature.customtabs.CustomTabsNavKey {
+  runtime val $cachedSerializer$delegate: Lazy<KSerializer<Any>>
+  <runtime stability> = Stable
+}
