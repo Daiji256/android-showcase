@@ -1,0 +1,4 @@
+stable class io.github.daiji256.showcase.feature.pastel.PastelNavKey {
+  runtime val $cachedSerializer$delegate: Lazy<KSerializer<Any>>
+  <runtime stability> = Stable
+}
