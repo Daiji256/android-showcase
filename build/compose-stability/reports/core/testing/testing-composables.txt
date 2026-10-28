@@ -1,0 +1,6 @@
+fun io.github.daiji256.showcase.core.testing.PreviewTester.windowInsets(
+  unused <this>: PreviewTester
+): @[NonNull] WindowInsetsCompat
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun io.github.daiji256.showcase.core.testing.PreviewTester.SystemUi(
+  unused <this>: PreviewTester
+)
