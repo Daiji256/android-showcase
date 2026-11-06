@@ -1,0 +1,8 @@
+unstable class io.github.daiji256.showcase.core.testing.MainDispatcherRule {
+  unstable val testDispatcher: TestDispatcher
+  <runtime stability> = Unstable
+}
+runtime class io.github.daiji256.showcase.core.testing.PreviewTester {
+  runtime var $$delegate_0: AndroidComposePreviewTester
+  <runtime stability> = Runtime(AndroidComposePreviewTester)
+}
