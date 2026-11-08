@@ -1,0 +1,48 @@
+stable class io.github.daiji256.showcase.feature.navnode.NavNodeNavKey {
+  runtime val $cachedSerializer$delegate: Lazy<KSerializer<Any>>
+  <runtime stability> = Stable
+}
+stable class io.github.daiji256.showcase.feature.navnode.demo.OnboardingNavKey {
+  runtime val $cachedSerializer$delegate: Lazy<KSerializer<Any>>
+  <runtime stability> = Stable
+}
+stable class io.github.daiji256.showcase.feature.navnode.demo.NavigationBarANavKey {
+  runtime val $cachedSerializer$delegate: Lazy<KSerializer<Any>>
+  <runtime stability> = Stable
+}
+stable class io.github.daiji256.showcase.feature.navnode.demo.NavigationBarA1NavKey {
+  runtime val $cachedSerializer$delegate: Lazy<KSerializer<Any>>
+  <runtime stability> = Stable
+}
+stable class io.github.daiji256.showcase.feature.navnode.demo.NavigationBarBNavKey {
+  runtime val $cachedSerializer$delegate: Lazy<KSerializer<Any>>
+  <runtime stability> = Stable
+}
+stable class io.github.daiji256.showcase.feature.navnode.demo.NavigationBarBSwitchXNavKey {
+  runtime val $cachedSerializer$delegate: Lazy<KSerializer<Any>>
+  <runtime stability> = Stable
+}
+stable class io.github.daiji256.showcase.feature.navnode.demo.NavigationBarBSwitchYNavKey {
+  runtime val $cachedSerializer$delegate: Lazy<KSerializer<Any>>
+  <runtime stability> = Stable
+}
+stable class io.github.daiji256.showcase.feature.navnode.demo.NavigationBarCNavKey {
+  runtime val $cachedSerializer$delegate: Lazy<KSerializer<Any>>
+  <runtime stability> = Stable
+}
+stable class io.github.daiji256.showcase.feature.navnode.demo.Outer1NavKey {
+  runtime val $cachedSerializer$delegate: Lazy<KSerializer<Any>>
+  <runtime stability> = Stable
+}
+stable class io.github.daiji256.showcase.feature.navnode.demo.Outer2NavKey {
+  runtime val $cachedSerializer$delegate: Lazy<KSerializer<Any>>
+  <runtime stability> = Stable
+}
+stable class io.github.daiji256.showcase.feature.navnode.demo.NavNodeDemoNavKey.$serializer {
+  runtime val descriptor: SerialDescriptor
+  <runtime stability> = Stable
+}
+stable class io.github.daiji256.showcase.feature.navnode.demo.NavNodeDemoNavKey {
+  stable val initial: DemoInitial
+  <runtime stability> = Stable
+}
