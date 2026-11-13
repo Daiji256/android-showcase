@@ -21,7 +21,7 @@ markdown = "0.7.18"
 napier = "2.7.1"
 navigation3 = "1.2.0"
 preview-scanner = "0.10.0"
-robolectric = "4.17"
+robolectric = "4.18"
 roborazzi = "1.78.0"
 turbine = "1.2.1"
 
