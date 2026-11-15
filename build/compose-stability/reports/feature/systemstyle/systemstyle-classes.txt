@@ -1,0 +1,4 @@
+stable class io.github.daiji256.showcase.feature.systemstyle.SystemStyleNavKey {
+  runtime val $cachedSerializer$delegate: Lazy<KSerializer<Any>>
+  <runtime stability> = Stable
+}
