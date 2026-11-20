@@ -1,0 +1,1 @@
+applier inference LicenseScreen.kt:88:13: Type disagreement [Binding(114), [Binding(115)], [Binding(token = androidx.compose.ui.UiComposable)], [Binding(116)]] <=> [Binding(114), [Binding(114)], [Binding(114)]]
