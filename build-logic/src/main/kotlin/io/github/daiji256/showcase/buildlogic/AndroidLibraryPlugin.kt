@@ -1,6 +1,7 @@
 package io.github.daiji256.showcase.buildlogic
 
 import com.android.build.api.dsl.LibraryExtension
+import io.github.daiji256.showcase.buildlogic.util.configureCompileSdk
 import io.github.daiji256.showcase.buildlogic.util.getAllWarningsAsErrors
 import io.github.daiji256.showcase.buildlogic.util.libs
 import io.github.daiji256.showcase.buildlogic.util.plugin
@@ -29,7 +30,7 @@ class AndroidLibraryPlugin : Plugin<Project> {
 
             extensions.configure<LibraryExtension> {
                 compileSdk {
-                    version = release(libs.version("compileSdk").toInt())
+                    configureCompileSdk(libs.version("compileSdk"))
                 }
                 defaultConfig {
                     minSdk {

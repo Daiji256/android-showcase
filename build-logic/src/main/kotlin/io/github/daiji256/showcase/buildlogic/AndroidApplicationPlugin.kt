@@ -1,6 +1,7 @@
 package io.github.daiji256.showcase.buildlogic
 
 import com.android.build.api.dsl.ApplicationExtension
+import io.github.daiji256.showcase.buildlogic.util.configureCompileSdk
 import io.github.daiji256.showcase.buildlogic.util.getAllWarningsAsErrors
 import io.github.daiji256.showcase.buildlogic.util.libs
 import io.github.daiji256.showcase.buildlogic.util.plugin
@@ -30,7 +31,7 @@ class AndroidApplicationPlugin : Plugin<Project> {
                 ndkVersion = libs.version("ndk")
 
                 compileSdk {
-                    version = release(libs.version("compileSdk").toInt())
+                    configureCompileSdk(libs.version("compileSdk"))
                 }
 
                 defaultConfig {
