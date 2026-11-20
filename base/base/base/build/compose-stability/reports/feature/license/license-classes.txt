@@ -1,0 +1,30 @@
+stable class io.github.daiji256.showcase.feature.license.Dependency {
+  stable val id: String
+  stable val name: String
+  stable val uri: String
+  stable val author: String
+  stable val licenseName: String
+  stable val licenseUri: String
+  <runtime stability> = Stable
+}
+stable class io.github.daiji256.showcase.feature.license.Metadata.SerializableDependency.$serializer {
+  runtime val descriptor: SerialDescriptor
+  <runtime stability> = Stable
+}
+stable class io.github.daiji256.showcase.feature.license.Metadata.SerializableDependency {
+  stable val id: String
+  stable val name: String
+  stable val uri: String
+  stable val author: String
+  stable val licenseName: String
+  stable val licenseUri: String
+  <runtime stability> = Stable
+}
+stable class io.github.daiji256.showcase.feature.license.Metadata.$serializer {
+  runtime val descriptor: SerialDescriptor
+  <runtime stability> = Stable
+}
+stable class io.github.daiji256.showcase.feature.license.LicenseNavKey {
+  runtime val $cachedSerializer$delegate: Lazy<KSerializer<Any>>
+  <runtime stability> = Stable
+}
