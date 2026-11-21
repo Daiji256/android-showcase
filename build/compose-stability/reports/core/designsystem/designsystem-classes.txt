@@ -1,0 +1,7 @@
+stable class io.github.daiji256.showcase.core.designsystem.theme.ShowcaseAnimations {
+  stable val transitionSpec: @[ExtensionFunctionType] Function1<AnimatedContentTransitionScope<*>, ContentTransform>
+  stable val popTransitionSpec: @[ExtensionFunctionType] Function1<AnimatedContentTransitionScope<*>, ContentTransform>
+  stable val predictivePopTransitionSpec: @[ExtensionFunctionType] Function2<AnimatedContentTransitionScope<*>, @[ParameterName(name = 'swipeEdge')] @[SwipeEdge] Int, ContentTransform>
+  stable val topLevelTransitionSpec: @[ExtensionFunctionType] Function1<AnimatedContentTransitionScope<*>, ContentTransform>
+  <runtime stability> = Stable
+}

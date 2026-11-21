@@ -1,0 +1,8 @@
+restartable skippable fun io.github.daiji256.showcase.MainContent(
+  stable modifier: Modifier? = @static <expression>
+)
+restartable skippable fun io.github.daiji256.showcase.MainContentPreview()
+restartable skippable fun io.github.daiji256.showcase.MainNavDisplay(
+  navState: NavState
+  stable modifier: Modifier? = @static <expression>
+)
