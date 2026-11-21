@@ -26,6 +26,7 @@ import androidx.compose.material3.SnackbarDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
+import androidx.compose.material3.rememberSliderState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -100,7 +101,7 @@ private fun PastelScreen(
                     contentDescription = null,
                 )
             }
-            Slider(value = 0.3f, onValueChange = {})
+            Slider(state = rememberSliderState(value = 0.3f), onValueChange = {})
             Snackbar(
                 action = {
                     TextButton(

@@ -29,7 +29,9 @@ class AndroidLibraryPlugin : Plugin<Project> {
 
             extensions.configure<LibraryExtension> {
                 compileSdk {
-                    version = release(libs.version("compileSdk").toInt())
+                    version = release(libs.version("compileSdk").toInt()) {
+                        minorApiLevel = libs.version("compileSdkMinor").toInt()
+                    }
                 }
                 defaultConfig {
                     minSdk {

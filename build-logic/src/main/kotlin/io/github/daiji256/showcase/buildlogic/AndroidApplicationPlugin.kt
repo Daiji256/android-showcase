@@ -30,7 +30,9 @@ class AndroidApplicationPlugin : Plugin<Project> {
                 ndkVersion = libs.version("ndk")
 
                 compileSdk {
-                    version = release(libs.version("compileSdk").toInt())
+                    version = release(libs.version("compileSdk").toInt()) {
+                        minorApiLevel = libs.version("compileSdkMinor").toInt()
+                    }
                 }
 
                 defaultConfig {
