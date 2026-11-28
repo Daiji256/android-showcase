@@ -1,0 +1,8 @@
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun io.github.daiji256.showcase.feature.ktlint.KtlintScreen()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun io.github.daiji256.showcase.feature.ktlint.KtlintScreen(
+  stable onNavigateUpClick: Function0<Unit>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun io.github.daiji256.showcase.feature.ktlint.KtlintScreenPreview()
+open fun io.github.daiji256.showcase.feature.ktlint.KtlintSummary.<no name provided>.<get-title>(
+  <this>: <no name provided>
+): String
